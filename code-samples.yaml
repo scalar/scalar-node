@@ -1,0 +1,239 @@
+overlay: 1.0.0
+info:
+  title: CodeSamples overlay for typescript target
+  version: 0.0.0
+actions:
+  - target: $["paths"]["/v1/apis/{namespace}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1ApisNamespace"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.getv1ApisNamespace({\n    namespace: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1ApisNamespace"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.postv1ApisNamespace({\n    namespace: \"<value>\",\n    requestBody: {\n      title: \"<value>\",\n      version: \"<value>\",\n      slug: \"<value>\",\n      document: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1ApisNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.deletev1ApisNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "patchv1ApisNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.patchv1ApisNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}/access-group"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1ApisNamespaceSlugAccessGroup"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.deletev1ApisNamespaceSlugAccessGroup({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      accessGroupSlug: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}/access-group"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1ApisNamespaceSlugAccessGroup"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.postv1ApisNamespaceSlugAccessGroup({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      accessGroupSlug: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}/version"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1ApisNamespaceSlugVersion"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.postv1ApisNamespaceSlugVersion({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      version: \"<value>\",\n      document: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}/version/{semver}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1ApisNamespaceSlugVersionSemver"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.deletev1ApisNamespaceSlugVersionSemver({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    semver: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/apis/{namespace}/{slug}/version/{semver}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1ApisNamespaceSlugVersionSemver"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.getv1ApisNamespaceSlugVersionSemver({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    semver: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/guides"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1Guides"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.guides.getv1Guides();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/guides"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1Guides"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.guides.postv1Guides({\n    name: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/guides/{slug}/publish"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1GuidesSlugPublish"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.guides.postv1GuidesSlugPublish({\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/login-portals"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1LoginPortals"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.loginPortals.getv1LoginPortals();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/login-portals"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1LoginPortals"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.loginPortals.postv1LoginPortals({\n    title: \"<value>\",\n    slug: \"<value>\",\n    email: {},\n    page: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/login-portals/{slug}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1LoginPortalsSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.loginPortals.deletev1LoginPortalsSlug({\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/login-portals/{slug}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1LoginPortalsSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.loginPortals.getv1LoginPortalsSlug({\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/login-portals/{slug}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "patchv1LoginPortalsSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.loginPortals.patchv1LoginPortalsSlug({\n    slug: \"<value>\",\n    requestBody: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1RulesetsNamespace"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.getv1RulesetsNamespace({\n    namespace: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1RulesetsNamespace"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.postv1RulesetsNamespace({\n    namespace: \"<value>\",\n    requestBody: {\n      title: \"<value>\",\n      slug: \"<value>\",\n      document: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}/{slug}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1RulesetsNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.deletev1RulesetsNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}/{slug}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1RulesetsNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.getv1RulesetsNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}/{slug}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "patchv1RulesetsNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.patchv1RulesetsNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}/{slug}/access-group"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1RulesetsNamespaceSlugAccessGroup"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.deletev1RulesetsNamespaceSlugAccessGroup({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      accessGroupSlug: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/rulesets/{namespace}/{slug}/access-group"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1RulesetsNamespaceSlugAccessGroup"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.rules.postv1RulesetsNamespaceSlugAccessGroup({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      accessGroupSlug: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1SchemasNamespace"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.getv1SchemasNamespace({\n    namespace: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1SchemasNamespace"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.postv1SchemasNamespace({\n    namespace: \"<value>\",\n    requestBody: {\n      title: \"<value>\",\n      version: \"<value>\",\n      slug: \"<value>\",\n      document: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1SchemasNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.deletev1SchemasNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "patchv1SchemasNamespaceSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.patchv1SchemasNamespaceSlug({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}/access-group"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1SchemasNamespaceSlugAccessGroup"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.deletev1SchemasNamespaceSlugAccessGroup({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      accessGroupSlug: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}/access-group"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1SchemasNamespaceSlugAccessGroup"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.postv1SchemasNamespaceSlugAccessGroup({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      accessGroupSlug: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}/version"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1SchemasNamespaceSlugVersion"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.postv1SchemasNamespaceSlugVersion({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    requestBody: {\n      version: \"<value>\",\n      document: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}/version/{semver}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1SchemasNamespaceSlugVersionSemver"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.deletev1SchemasNamespaceSlugVersionSemver({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    semver: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/schemas/{namespace}/{slug}/version/{semver}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1SchemasNamespaceSlugVersionSemver"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.schemas.getv1SchemasNamespaceSlugVersionSemver({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    semver: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/themes"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1Themes"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.themes.getv1Themes();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/themes"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1Themes"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.themes.postv1Themes({\n    name: \"<value>\",\n    slug: \"<value>\",\n    document: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/themes/{slug}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "deletev1ThemesSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.themes.deletev1ThemesSlug({\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/themes/{slug}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "getv1ThemesSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.themes.getv1ThemesSlug({\n    slug: \"<value>\",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/themes/{slug}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "patchv1ThemesSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.themes.patchv1ThemesSlug({\n    slug: \"<value>\",\n    requestBody: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/themes/{slug}"]["put"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "putv1ThemesSlug"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.themes.putv1ThemesSlug({\n    slug: \"<value>\",\n    requestBody: {\n      document: \"<value>\",\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();"
