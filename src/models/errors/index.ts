@@ -10,4 +10,5 @@ export * from "./fourhundredandone.js";
 export * from "./fourhundredandthree.js";
 export * from "./fourhundredandtwentytwo.js";
 export * from "./httpclienterrors.js";
+export * from "./responsevalidationerror.js";
 export * from "./sdkvalidationerror.js";

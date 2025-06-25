@@ -8,7 +8,6 @@ import { Patchv1ApisNamespaceSlugRequest } from "@scalar/sdk/models/operations";
 let value: Patchv1ApisNamespaceSlugRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {},
 };
 ```
 

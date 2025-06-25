@@ -8,9 +8,6 @@ import { Deletev1ApisNamespaceSlugAccessGroupRequest } from "@scalar/sdk/models/
 let value: Deletev1ApisNamespaceSlugAccessGroupRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {
-    accessGroupSlug: "<value>",
-  },
 };
 ```
 

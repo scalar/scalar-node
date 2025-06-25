@@ -30,7 +30,6 @@ const scalar = new Scalar({
 async function run() {
   const result = await scalar.themes.getv1Themes();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -53,15 +52,12 @@ const scalar = new ScalarCore({
 
 async function run() {
   const res = await themesGetv1Themes(scalar);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("themesGetv1Themes failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -111,7 +107,6 @@ async function run() {
     document: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -138,15 +133,12 @@ async function run() {
     slug: "<value>",
     document: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("themesPostv1Themes failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -196,7 +188,6 @@ async function run() {
     requestBody: {},
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -222,15 +213,12 @@ async function run() {
     slug: "<value>",
     requestBody: {},
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("themesPatchv1ThemesSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -282,7 +270,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -310,15 +297,12 @@ async function run() {
       document: "<value>",
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("themesPutv1ThemesSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -367,7 +351,6 @@ async function run() {
     slug: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -392,15 +375,12 @@ async function run() {
   const res = await themesDeletev1ThemesSlug(scalar, {
     slug: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("themesDeletev1ThemesSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -449,7 +429,6 @@ async function run() {
     slug: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -474,15 +453,12 @@ async function run() {
   const res = await themesGetv1ThemesSlug(scalar, {
     slug: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("themesGetv1ThemesSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

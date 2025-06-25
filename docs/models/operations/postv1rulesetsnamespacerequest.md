@@ -7,11 +7,6 @@ import { Postv1RulesetsNamespaceRequest } from "@scalar/sdk/models/operations";
 
 let value: Postv1RulesetsNamespaceRequest = {
   namespace: "<value>",
-  requestBody: {
-    title: "<value>",
-    slug: "<value>",
-    document: "<value>",
-  },
 };
 ```
 

@@ -8,10 +8,6 @@ import { Postv1SchemasNamespaceSlugVersionRequest } from "@scalar/sdk/models/ope
 let value: Postv1SchemasNamespaceSlugVersionRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {
-    version: "<value>",
-    document: "<value>",
-  },
 };
 ```
 

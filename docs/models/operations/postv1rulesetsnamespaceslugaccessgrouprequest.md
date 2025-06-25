@@ -8,9 +8,6 @@ import { Postv1RulesetsNamespaceSlugAccessGroupRequest } from "@scalar/sdk/model
 let value: Postv1RulesetsNamespaceSlugAccessGroupRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {
-    accessGroupSlug: "<value>",
-  },
 };
 ```
 

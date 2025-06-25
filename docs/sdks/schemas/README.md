@@ -35,7 +35,6 @@ async function run() {
     namespace: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -60,15 +59,12 @@ async function run() {
   const res = await schemasGetv1SchemasNamespace(scalar, {
     namespace: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasGetv1SchemasNamespace failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -123,7 +119,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -154,15 +149,12 @@ async function run() {
       document: "<value>",
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasPostv1SchemasNamespace failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -213,7 +205,6 @@ async function run() {
     requestBody: {},
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -240,15 +231,12 @@ async function run() {
     slug: "<value>",
     requestBody: {},
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasPatchv1SchemasNamespaceSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -298,7 +286,6 @@ async function run() {
     slug: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -324,15 +311,12 @@ async function run() {
     namespace: "<value>",
     slug: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasDeletev1SchemasNamespaceSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -383,7 +367,6 @@ async function run() {
     semver: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -410,15 +393,12 @@ async function run() {
     slug: "<value>",
     semver: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasGetv1SchemasNamespaceSlugVersionSemver failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -469,7 +449,6 @@ async function run() {
     semver: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -496,15 +475,12 @@ async function run() {
     slug: "<value>",
     semver: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasDeletev1SchemasNamespaceSlugVersionSemver failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -558,7 +534,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -588,15 +563,12 @@ async function run() {
       document: "<value>",
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasPostv1SchemasNamespaceSlugVersion failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -649,7 +621,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -678,15 +649,12 @@ async function run() {
       accessGroupSlug: "<value>",
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasPostv1SchemasNamespaceSlugAccessGroup failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -739,7 +707,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -768,15 +735,12 @@ async function run() {
       accessGroupSlug: "<value>",
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("schemasDeletev1SchemasNamespaceSlugAccessGroup failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
