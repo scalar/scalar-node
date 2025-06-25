@@ -11,7 +11,6 @@ async function run() {
     namespace: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 

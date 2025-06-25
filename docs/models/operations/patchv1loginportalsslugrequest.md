@@ -7,7 +7,6 @@ import { Patchv1LoginPortalsSlugRequest } from "@scalar/sdk/models/operations";
 
 let value: Patchv1LoginPortalsSlugRequest = {
   slug: "<value>",
-  requestBody: {},
 };
 ```
 

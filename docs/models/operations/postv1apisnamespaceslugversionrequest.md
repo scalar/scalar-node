@@ -8,10 +8,6 @@ import { Postv1ApisNamespaceSlugVersionRequest } from "@scalar/sdk/models/operat
 let value: Postv1ApisNamespaceSlugVersionRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {
-    version: "<value>",
-    document: "<value>",
-  },
 };
 ```
 

@@ -31,7 +31,6 @@ async function run() {
     slug: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -56,15 +55,12 @@ async function run() {
   const res = await loginPortalsGetv1LoginPortalsSlug(scalar, {
     slug: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("loginPortalsGetv1LoginPortalsSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -114,7 +110,6 @@ async function run() {
     requestBody: {},
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -140,15 +135,12 @@ async function run() {
     slug: "<value>",
     requestBody: {},
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("loginPortalsPatchv1LoginPortalsSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -197,7 +189,6 @@ async function run() {
     slug: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -222,15 +213,12 @@ async function run() {
   const res = await loginPortalsDeletev1LoginPortalsSlug(scalar, {
     slug: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("loginPortalsDeletev1LoginPortalsSlug failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -282,7 +270,6 @@ async function run() {
     page: {},
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -310,15 +297,12 @@ async function run() {
     email: {},
     page: {},
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("loginPortalsPostv1LoginPortals failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -365,7 +349,6 @@ const scalar = new Scalar({
 async function run() {
   const result = await scalar.loginPortals.getv1LoginPortals();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -388,15 +371,12 @@ const scalar = new ScalarCore({
 
 async function run() {
   const res = await loginPortalsGetv1LoginPortals(scalar);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("loginPortalsGetv1LoginPortals failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

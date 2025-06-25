@@ -8,7 +8,6 @@ import { Patchv1SchemasNamespaceSlugRequest } from "@scalar/sdk/models/operation
 let value: Patchv1SchemasNamespaceSlugRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {},
 };
 ```
 

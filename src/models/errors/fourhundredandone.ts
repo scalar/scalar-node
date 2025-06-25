@@ -3,25 +3,28 @@
  */
 
 import * as z from "zod";
+import { ScalarError } from "./scalarerror.js";
 
 export type FourHundredAndOneData = {
   message: string;
   code: string;
 };
 
-export class FourHundredAndOne extends Error {
+export class FourHundredAndOne extends ScalarError {
   code: string;
 
   /** The original data that was passed to this error instance. */
   data$: FourHundredAndOneData;
 
-  constructor(err: FourHundredAndOneData) {
+  constructor(
+    err: FourHundredAndOneData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
     const message = "message" in err && typeof err.message === "string"
       ? err.message
       : `API error occurred: ${JSON.stringify(err)}`;
-    super(message);
+    super(message, httpMeta);
     this.data$ = err;
-
     this.code = err.code;
 
     this.name = "FourHundredAndOne";
@@ -36,9 +39,16 @@ export const FourHundredAndOne$inboundSchema: z.ZodType<
 > = z.object({
   message: z.string(),
   code: z.string(),
+  request$: z.instanceof(Request),
+  response$: z.instanceof(Response),
+  body$: z.string(),
 })
   .transform((v) => {
-    return new FourHundredAndOne(v);
+    return new FourHundredAndOne(v, {
+      request: v.request$,
+      response: v.response$,
+      body: v.body$,
+    });
   });
 
 /** @internal */

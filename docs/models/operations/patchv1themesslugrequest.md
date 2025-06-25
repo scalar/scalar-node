@@ -7,7 +7,6 @@ import { Patchv1ThemesSlugRequest } from "@scalar/sdk/models/operations";
 
 let value: Patchv1ThemesSlugRequest = {
   slug: "<value>",
-  requestBody: {},
 };
 ```
 

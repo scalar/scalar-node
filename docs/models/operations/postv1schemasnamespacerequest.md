@@ -7,12 +7,6 @@ import { Postv1SchemasNamespaceRequest } from "@scalar/sdk/models/operations";
 
 let value: Postv1SchemasNamespaceRequest = {
   namespace: "<value>",
-  requestBody: {
-    title: "<value>",
-    version: "<value>",
-    slug: "<value>",
-    document: "<value>",
-  },
 };
 ```
 

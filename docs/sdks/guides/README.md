@@ -27,7 +27,6 @@ const scalar = new Scalar({
 async function run() {
   const result = await scalar.guides.getv1Guides();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -50,15 +49,12 @@ const scalar = new ScalarCore({
 
 async function run() {
   const res = await guidesGetv1Guides(scalar);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("guidesGetv1Guides failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -106,7 +102,6 @@ async function run() {
     name: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -131,15 +126,12 @@ async function run() {
   const res = await guidesPostv1Guides(scalar, {
     name: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("guidesPostv1Guides failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -188,7 +180,6 @@ async function run() {
     slug: "<value>",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -213,15 +204,12 @@ async function run() {
   const res = await guidesPostv1GuidesSlugPublish(scalar, {
     slug: "<value>",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("guidesPostv1GuidesSlugPublish failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

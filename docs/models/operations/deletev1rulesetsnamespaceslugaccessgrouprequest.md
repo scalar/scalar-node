@@ -8,9 +8,6 @@ import { Deletev1RulesetsNamespaceSlugAccessGroupRequest } from "@scalar/sdk/mod
 let value: Deletev1RulesetsNamespaceSlugAccessGroupRequest = {
   namespace: "<value>",
   slug: "<value>",
-  requestBody: {
-    accessGroupSlug: "<value>",
-  },
 };
 ```
 

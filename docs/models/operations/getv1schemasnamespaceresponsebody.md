@@ -7,9 +7,7 @@ import { Getv1SchemasNamespaceResponseBody } from "@scalar/sdk/models/operations
 
 let value: Getv1SchemasNamespaceResponseBody = {
   namespace: "<value>",
-  versions: [
-    {},
-  ],
+  versions: [],
 };
 ```
 

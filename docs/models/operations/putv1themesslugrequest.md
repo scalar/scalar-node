@@ -7,9 +7,6 @@ import { Putv1ThemesSlugRequest } from "@scalar/sdk/models/operations";
 
 let value: Putv1ThemesSlugRequest = {
   slug: "<value>",
-  requestBody: {
-    document: "<value>",
-  },
 };
 ```
 

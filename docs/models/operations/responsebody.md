@@ -11,7 +11,7 @@ let value: ResponseBody = {
   versions: [
     {
       uid: "<id>",
-      createdAt: 8382.62,
+      createdAt: 915.12,
       version: "<value>",
     },
   ],
