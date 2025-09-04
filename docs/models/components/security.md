@@ -5,13 +5,11 @@
 ```typescript
 import { Security } from "@scalar/sdk/models/components";
 
-let value: Security = {
-  bearerAuth: "<value>",
-};
+let value: Security = {};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `bearerAuth`       | *string*           | :heavy_check_mark: | N/A                |
+| `bearerAuth`       | *string*           | :heavy_minus_sign: | N/A                |

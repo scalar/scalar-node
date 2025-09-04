@@ -31,6 +31,7 @@ export * from "./patchv1themesslug.js";
 export * from "./postv1apisnamespace.js";
 export * from "./postv1apisnamespaceslugaccessgroup.js";
 export * from "./postv1apisnamespaceslugversion.js";
+export * from "./postv1authexchange.js";
 export * from "./postv1guides.js";
 export * from "./postv1guidesslugpublish.js";
 export * from "./postv1loginportals.js";

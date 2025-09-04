@@ -13,6 +13,6 @@ let value: Getv1SchemasNamespaceVersions = {};
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
 | `uid`              | *string*           | :heavy_minus_sign: | N/A                |
-| `version`          | *string*           | :heavy_minus_sign: | N/A                |
 | `createdAt`        | *number*           | :heavy_minus_sign: | N/A                |
 | `updatedAt`        | *number*           | :heavy_minus_sign: | N/A                |
+| `version`          | *string*           | :heavy_minus_sign: | N/A                |

@@ -4,6 +4,7 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
@@ -11,12 +12,19 @@ export type Getv1ApisNamespaceRequest = {
   namespace: string;
 };
 
+export const EmbedStatus = {
+  Complete: "complete",
+  Failed: "failed",
+} as const;
+export type EmbedStatus = ClosedEnum<typeof EmbedStatus>;
+
 export type Versions = {
   uid: string;
   createdAt: number;
   version: string;
+  upgraded?: boolean | undefined;
+  embedStatus?: EmbedStatus | null | undefined;
   tags?: Array<string> | undefined;
-  corpusUid?: string | null | undefined;
 };
 
 export type ResponseBody = {
@@ -86,6 +94,25 @@ export function getv1ApisNamespaceRequestFromJSON(
 }
 
 /** @internal */
+export const EmbedStatus$inboundSchema: z.ZodNativeEnum<typeof EmbedStatus> = z
+  .nativeEnum(EmbedStatus);
+
+/** @internal */
+export const EmbedStatus$outboundSchema: z.ZodNativeEnum<typeof EmbedStatus> =
+  EmbedStatus$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace EmbedStatus$ {
+  /** @deprecated use `EmbedStatus$inboundSchema` instead. */
+  export const inboundSchema = EmbedStatus$inboundSchema;
+  /** @deprecated use `EmbedStatus$outboundSchema` instead. */
+  export const outboundSchema = EmbedStatus$outboundSchema;
+}
+
+/** @internal */
 export const Versions$inboundSchema: z.ZodType<
   Versions,
   z.ZodTypeDef,
@@ -94,8 +121,9 @@ export const Versions$inboundSchema: z.ZodType<
   uid: z.string(),
   createdAt: z.number(),
   version: z.string(),
+  upgraded: z.boolean().default(false),
+  embedStatus: z.nullable(EmbedStatus$inboundSchema).optional(),
   tags: z.array(z.string()).optional(),
-  corpusUid: z.nullable(z.string()).optional(),
 });
 
 /** @internal */
@@ -103,8 +131,9 @@ export type Versions$Outbound = {
   uid: string;
   createdAt: number;
   version: string;
+  upgraded: boolean;
+  embedStatus?: string | null | undefined;
   tags?: Array<string> | undefined;
-  corpusUid?: string | null | undefined;
 };
 
 /** @internal */
@@ -116,8 +145,9 @@ export const Versions$outboundSchema: z.ZodType<
   uid: z.string(),
   createdAt: z.number(),
   version: z.string(),
+  upgraded: z.boolean().default(false),
+  embedStatus: z.nullable(EmbedStatus$outboundSchema).optional(),
   tags: z.array(z.string()).optional(),
-  corpusUid: z.nullable(z.string()).optional(),
 });
 
 /**
@@ -153,10 +183,10 @@ export const ResponseBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  uid: z.string().default("amI88WF4as9cEKCly3gmf"),
+  uid: z.string().default("CiyS1tx4Woh7xpHKxsUiL"),
   version: z.string(),
   title: z.string().default(""),
-  slug: z.string().default("descriptive-toucan-aqxgdb4"),
+  slug: z.string().default("felicitous-crystal-ctkqos6"),
   description: z.string().default(""),
   namespace: z.string(),
   isPrivate: z.boolean().default(false),
@@ -183,10 +213,10 @@ export const ResponseBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ResponseBody
 > = z.object({
-  uid: z.string().default("amI88WF4as9cEKCly3gmf"),
+  uid: z.string().default("CiyS1tx4Woh7xpHKxsUiL"),
   version: z.string(),
   title: z.string().default(""),
-  slug: z.string().default("descriptive-toucan-aqxgdb4"),
+  slug: z.string().default("felicitous-crystal-ctkqos6"),
   description: z.string().default(""),
   namespace: z.string(),
   isPrivate: z.boolean().default(false),
