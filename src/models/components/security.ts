@@ -9,7 +9,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Security = {
-  bearerAuth: string;
+  bearerAuth?: string | undefined;
 };
 
 /** @internal */
@@ -18,7 +18,7 @@ export const Security$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  BearerAuth: z.string(),
+  BearerAuth: z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
     "BearerAuth": "bearerAuth",
@@ -27,7 +27,7 @@ export const Security$inboundSchema: z.ZodType<
 
 /** @internal */
 export type Security$Outbound = {
-  BearerAuth: string;
+  BearerAuth?: string | undefined;
 };
 
 /** @internal */
@@ -36,7 +36,7 @@ export const Security$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Security
 > = z.object({
-  bearerAuth: z.string(),
+  bearerAuth: z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
     bearerAuth: "BearerAuth",

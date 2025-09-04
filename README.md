@@ -13,7 +13,7 @@ Developer-friendly, idiomatic Typescript SDK for the *access-service-typescript*
 
 ## Summary
 
-Scalar API: Public facing api to manage all scalar platform entities
+Access Service: Public facing api to manage all scalar platform entities
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -154,6 +154,10 @@ run();
 * [postv1ApisNamespaceSlugAccessGroup](docs/sdks/apidocs/README.md#postv1apisnamespaceslugaccessgroup) - Add API access group
 * [deletev1ApisNamespaceSlugAccessGroup](docs/sdks/apidocs/README.md#deletev1apisnamespaceslugaccessgroup) - Delete API access group
 
+### [auth](docs/sdks/auth/README.md)
+
+* [postv1AuthExchange](docs/sdks/auth/README.md#postv1authexchange) - Exchange token
+
 ### [guides](docs/sdks/guides/README.md)
 
 * [getv1Guides](docs/sdks/guides/README.md#getv1guides) - List all projects
@@ -227,6 +231,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`apiDocsPostv1ApisNamespace`](docs/sdks/apidocs/README.md#postv1apisnamespace) - Create an API
 - [`apiDocsPostv1ApisNamespaceSlugAccessGroup`](docs/sdks/apidocs/README.md#postv1apisnamespaceslugaccessgroup) - Add API access group
 - [`apiDocsPostv1ApisNamespaceSlugVersion`](docs/sdks/apidocs/README.md#postv1apisnamespaceslugversion) - Create version
+- [`authPostv1AuthExchange`](docs/sdks/auth/README.md#postv1authexchange) - Exchange token
 - [`guidesGetv1Guides`](docs/sdks/guides/README.md#getv1guides) - List all projects
 - [`guidesPostv1Guides`](docs/sdks/guides/README.md#postv1guides) - Create new project
 - [`guidesPostv1GuidesSlugPublish`](docs/sdks/guides/README.md#postv1guidesslugpublish) - Publish project

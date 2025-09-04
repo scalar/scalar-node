@@ -22,3 +22,6 @@ let value: Repository = {
 | `configPath`       | *string*           | :heavy_minus_sign: | N/A                |
 | `branch`           | *string*           | :heavy_minus_sign: | N/A                |
 | `publishOnMerge`   | *boolean*          | :heavy_minus_sign: | N/A                |
+| `publishPreviews`  | *boolean*          | :heavy_minus_sign: | N/A                |
+| `prComments`       | *boolean*          | :heavy_minus_sign: | N/A                |
+| `expired`          | *boolean*          | :heavy_minus_sign: | N/A                |

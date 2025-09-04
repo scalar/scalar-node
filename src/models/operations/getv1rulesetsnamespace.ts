@@ -82,10 +82,10 @@ export const Getv1RulesetsNamespaceResponseBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  uid: z.string().default("a4O07DTYy35wPEJBedtFC"),
+  uid: z.string().default("IvAH525rwBfOMVz0QrKDo"),
   title: z.string().default(""),
   description: z.string().default(""),
-  slug: z.string().default("cheerful-structure-4r3xs45"),
+  slug: z.string().default("select-vapor-uw2trbi"),
   namespace: z.string(),
   isPrivate: z.boolean().default(false),
 });
@@ -106,10 +106,10 @@ export const Getv1RulesetsNamespaceResponseBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Getv1RulesetsNamespaceResponseBody
 > = z.object({
-  uid: z.string().default("a4O07DTYy35wPEJBedtFC"),
+  uid: z.string().default("IvAH525rwBfOMVz0QrKDo"),
   title: z.string().default(""),
   description: z.string().default(""),
-  slug: z.string().default("cheerful-structure-4r3xs45"),
+  slug: z.string().default("select-vapor-uw2trbi"),
   namespace: z.string(),
   isPrivate: z.boolean().default(false),
 });

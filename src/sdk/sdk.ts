@@ -4,6 +4,7 @@
 
 import { ClientSDK } from "../lib/sdks.js";
 import { APIDocs } from "./apidocs.js";
+import { Auth } from "./auth.js";
 import { Guides } from "./guides.js";
 import { LoginPortals } from "./loginportals.js";
 import { Rules } from "./rules.js";
@@ -39,5 +40,10 @@ export class Scalar extends ClientSDK {
   private _guides?: Guides;
   get guides(): Guides {
     return (this._guides ??= new Guides(this._options));
+  }
+
+  private _auth?: Auth;
+  get auth(): Auth {
+    return (this._auth ??= new Auth(this._options));
   }
 }

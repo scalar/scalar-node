@@ -57,6 +57,12 @@ actions:
         - "lang": "typescript"
           "label": "getv1ApisNamespaceSlugVersionSemver"
           "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await scalar.apiDocs.getv1ApisNamespaceSlugVersionSemver({\n    namespace: \"<value>\",\n    slug: \"<value>\",\n    semver: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+  - target: $["paths"]["/v1/auth/exchange"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "typescript"
+          "label": "postv1AuthExchange"
+          "source": "import { Scalar } from \"@scalar/sdk\";\n\nconst scalar = new Scalar();\n\nasync function run() {\n  const result = await scalar.auth.postv1AuthExchange({\n    personalToken: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/v1/guides"]["get"]
     update:
       "x-codeSamples":
