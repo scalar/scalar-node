@@ -20,10 +20,15 @@ export type Repository = {
   configPath?: string | undefined;
   branch?: string | undefined;
   publishOnMerge?: boolean | undefined;
+  publishPreviews?: boolean | undefined;
+  prComments?: boolean | undefined;
+  expired?: boolean | undefined;
 };
 
 export type Getv1GuidesResponseBody = {
-  uid: string;
+  uid?: string | undefined;
+  createdAt?: number | undefined;
+  updatedAt?: number | undefined;
   name: string;
   activeDeployment?: ActiveDeployment | null | undefined;
   lastPublished?: number | null | undefined;
@@ -33,8 +38,6 @@ export type Getv1GuidesResponseBody = {
   typesenseId?: number | undefined;
   isPrivate?: boolean | undefined;
   accessGroups?: Array<string> | undefined;
-  createdAt?: number | undefined;
-  updatedAt?: number | undefined;
   slug?: string | undefined;
   publishStatus?: string | undefined;
   publishMessage?: string | undefined;
@@ -113,6 +116,9 @@ export const Repository$inboundSchema: z.ZodType<
   configPath: z.string().default(""),
   branch: z.string().default(""),
   publishOnMerge: z.boolean().default(false),
+  publishPreviews: z.boolean().default(false),
+  prComments: z.boolean().default(false),
+  expired: z.boolean().default(false),
 });
 
 /** @internal */
@@ -123,6 +129,9 @@ export type Repository$Outbound = {
   configPath: string;
   branch: string;
   publishOnMerge: boolean;
+  publishPreviews: boolean;
+  prComments: boolean;
+  expired: boolean;
 };
 
 /** @internal */
@@ -137,6 +146,9 @@ export const Repository$outboundSchema: z.ZodType<
   configPath: z.string().default(""),
   branch: z.string().default(""),
   publishOnMerge: z.boolean().default(false),
+  publishPreviews: z.boolean().default(false),
+  prComments: z.boolean().default(false),
+  expired: z.boolean().default(false),
 });
 
 /**
@@ -172,7 +184,9 @@ export const Getv1GuidesResponseBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  uid: z.string(),
+  uid: z.string().default("wPtEJmUnuUZPNWLjBWNqW"),
+  createdAt: z.number().int().default(1756935697),
+  updatedAt: z.number().int().default(1756935697),
   name: z.string(),
   activeDeployment: z.nullable(z.lazy(() => ActiveDeployment$inboundSchema))
     .optional(),
@@ -183,8 +197,6 @@ export const Getv1GuidesResponseBody$inboundSchema: z.ZodType<
   typesenseId: z.number().optional(),
   isPrivate: z.boolean().default(false),
   accessGroups: z.array(z.string()).optional(),
-  createdAt: z.number().int().default(1749789036),
-  updatedAt: z.number().int().default(1749789036),
   slug: z.string().optional(),
   publishStatus: z.string().default(""),
   publishMessage: z.string().default(""),
@@ -194,6 +206,8 @@ export const Getv1GuidesResponseBody$inboundSchema: z.ZodType<
 /** @internal */
 export type Getv1GuidesResponseBody$Outbound = {
   uid: string;
+  createdAt: number;
+  updatedAt: number;
   name: string;
   activeDeployment?: ActiveDeployment$Outbound | null | undefined;
   lastPublished?: number | null | undefined;
@@ -203,8 +217,6 @@ export type Getv1GuidesResponseBody$Outbound = {
   typesenseId?: number | undefined;
   isPrivate: boolean;
   accessGroups?: Array<string> | undefined;
-  createdAt: number;
-  updatedAt: number;
   slug?: string | undefined;
   publishStatus: string;
   publishMessage: string;
@@ -217,7 +229,9 @@ export const Getv1GuidesResponseBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Getv1GuidesResponseBody
 > = z.object({
-  uid: z.string(),
+  uid: z.string().default("wPtEJmUnuUZPNWLjBWNqW"),
+  createdAt: z.number().int().default(1756935697),
+  updatedAt: z.number().int().default(1756935697),
   name: z.string(),
   activeDeployment: z.nullable(z.lazy(() => ActiveDeployment$outboundSchema))
     .optional(),
@@ -228,8 +242,6 @@ export const Getv1GuidesResponseBody$outboundSchema: z.ZodType<
   typesenseId: z.number().optional(),
   isPrivate: z.boolean().default(false),
   accessGroups: z.array(z.string()).optional(),
-  createdAt: z.number().int().default(1749789036),
-  updatedAt: z.number().int().default(1749789036),
   slug: z.string().optional(),
   publishStatus: z.string().default(""),
   publishMessage: z.string().default(""),

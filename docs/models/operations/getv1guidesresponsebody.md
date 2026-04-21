@@ -6,7 +6,6 @@
 import { Getv1GuidesResponseBody } from "@scalar/sdk/models/operations";
 
 let value: Getv1GuidesResponseBody = {
-  uid: "<id>",
   name: "<value>",
 };
 ```
@@ -15,7 +14,9 @@ let value: Getv1GuidesResponseBody = {
 
 | Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
 | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `uid`                                                                      | *string*                                                                   | :heavy_check_mark:                                                         | N/A                                                                        |
+| `uid`                                                                      | *string*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `createdAt`                                                                | *number*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
+| `updatedAt`                                                                | *number*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `name`                                                                     | *string*                                                                   | :heavy_check_mark:                                                         | N/A                                                                        |
 | `activeDeployment`                                                         | [operations.ActiveDeployment](../../models/operations/activedeployment.md) | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `lastPublished`                                                            | *number*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
@@ -25,8 +26,6 @@ let value: Getv1GuidesResponseBody = {
 | `typesenseId`                                                              | *number*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `isPrivate`                                                                | *boolean*                                                                  | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `accessGroups`                                                             | *string*[]                                                                 | :heavy_minus_sign:                                                         | N/A                                                                        |
-| `createdAt`                                                                | *number*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
-| `updatedAt`                                                                | *number*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `slug`                                                                     | *string*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `publishStatus`                                                            | *string*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |
 | `publishMessage`                                                           | *string*                                                                   | :heavy_minus_sign:                                                         | N/A                                                                        |

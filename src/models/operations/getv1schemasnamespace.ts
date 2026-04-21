@@ -13,9 +13,9 @@ export type Getv1SchemasNamespaceRequest = {
 
 export type Getv1SchemasNamespaceVersions = {
   uid?: string | undefined;
-  version?: string | undefined;
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
+  version?: string | undefined;
 };
 
 export type Getv1SchemasNamespaceResponseBody = {
@@ -90,18 +90,18 @@ export const Getv1SchemasNamespaceVersions$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  uid: z.string().default("HbRUPunHKcEEEJyqQKK12"),
+  uid: z.string().default("gYCFCtsCLKtk5GWx9DNyK"),
+  createdAt: z.number().int().default(1756935697),
+  updatedAt: z.number().int().default(1756935697),
   version: z.string().default("0.0.1"),
-  createdAt: z.number().default(1749789036),
-  updatedAt: z.number().default(1749789036),
 });
 
 /** @internal */
 export type Getv1SchemasNamespaceVersions$Outbound = {
   uid: string;
-  version: string;
   createdAt: number;
   updatedAt: number;
+  version: string;
 };
 
 /** @internal */
@@ -110,10 +110,10 @@ export const Getv1SchemasNamespaceVersions$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Getv1SchemasNamespaceVersions
 > = z.object({
-  uid: z.string().default("HbRUPunHKcEEEJyqQKK12"),
+  uid: z.string().default("gYCFCtsCLKtk5GWx9DNyK"),
+  createdAt: z.number().int().default(1756935697),
+  updatedAt: z.number().int().default(1756935697),
   version: z.string().default("0.0.1"),
-  createdAt: z.number().default(1749789036),
-  updatedAt: z.number().default(1749789036),
 });
 
 /**
@@ -155,10 +155,10 @@ export const Getv1SchemasNamespaceResponseBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  uid: z.string().default("EJf7mbMSAiOlgOAR6b06M"),
+  uid: z.string().default("RE3V55oO1ILdO0pxd2CeR"),
   title: z.string().default(""),
   description: z.string().default(""),
-  slug: z.string().default("commendable-heron-wb1p68i"),
+  slug: z.string().default("animated-peak-waam2gl"),
   namespace: z.string(),
   isPrivate: z.boolean().default(false),
   versions: z.array(z.lazy(() => Getv1SchemasNamespaceVersions$inboundSchema)),
@@ -181,10 +181,10 @@ export const Getv1SchemasNamespaceResponseBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Getv1SchemasNamespaceResponseBody
 > = z.object({
-  uid: z.string().default("EJf7mbMSAiOlgOAR6b06M"),
+  uid: z.string().default("RE3V55oO1ILdO0pxd2CeR"),
   title: z.string().default(""),
   description: z.string().default(""),
-  slug: z.string().default("commendable-heron-wb1p68i"),
+  slug: z.string().default("animated-peak-waam2gl"),
   namespace: z.string(),
   isPrivate: z.boolean().default(false),
   versions: z.array(z.lazy(() => Getv1SchemasNamespaceVersions$outboundSchema)),
