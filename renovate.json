@@ -4,5 +4,18 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests"
   ],
-  "enabledManagers": ["github-actions"]
+  "enabledManagers": ["github-actions"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "schedule": ["on the first day of the month"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  }
 }
