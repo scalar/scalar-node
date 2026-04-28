@@ -1,9 +1,9 @@
-# access-service-typescript
+# scalar-typescript-sdk
 
-Developer-friendly, idiomatic Typescript SDK for the *access-service-typescript* API.
+Developer-friendly, idiomatic Typescript SDK for the *scalar-typescript-sdk* API.
 
 <div align="left">
-    <a href="https://www.scalar.com/?utm_source=access-service-typescript&utm_campaign=typescript"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20scalar+speakeasy-212015?style=for-the-badge&logo=scalar&labelColor=252525" /></a>
+    <a href="https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=typescript"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20scalar+speakeasy-212015?style=for-the-badge&logo=scalar&labelColor=252525" /></a>
     <a href="https://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
     </a>
@@ -590,4 +590,4 @@ const sdk = new Scalar({ debugLogger: console });
 While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
 We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.
 
-### SDK Created by [Scalar](https://www.scalar.com/?utm_source=access-service-typescript&utm_campaign=typescript)
+### SDK Created by [Scalar](https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=typescript)
