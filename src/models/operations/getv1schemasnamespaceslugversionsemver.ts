@@ -13,11 +13,6 @@ export type Getv1SchemasNamespaceSlugVersionSemverRequest = {
   semver: string;
 };
 
-/**
- * Default Response
- */
-export type Getv1SchemasNamespaceSlugVersionSemverResponseBody = {};
-
 /** @internal */
 export const Getv1SchemasNamespaceSlugVersionSemverRequest$inboundSchema:
   z.ZodType<
@@ -88,67 +83,5 @@ export function getv1SchemasNamespaceSlugVersionSemverRequestFromJSON(
         JSON.parse(x),
       ),
     `Failed to parse 'Getv1SchemasNamespaceSlugVersionSemverRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const Getv1SchemasNamespaceSlugVersionSemverResponseBody$inboundSchema:
-  z.ZodType<
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody,
-    z.ZodTypeDef,
-    unknown
-  > = z.object({});
-
-/** @internal */
-export type Getv1SchemasNamespaceSlugVersionSemverResponseBody$Outbound = {};
-
-/** @internal */
-export const Getv1SchemasNamespaceSlugVersionSemverResponseBody$outboundSchema:
-  z.ZodType<
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody$Outbound,
-    z.ZodTypeDef,
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody
-  > = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Getv1SchemasNamespaceSlugVersionSemverResponseBody$ {
-  /** @deprecated use `Getv1SchemasNamespaceSlugVersionSemverResponseBody$inboundSchema` instead. */
-  export const inboundSchema =
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody$inboundSchema;
-  /** @deprecated use `Getv1SchemasNamespaceSlugVersionSemverResponseBody$outboundSchema` instead. */
-  export const outboundSchema =
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody$outboundSchema;
-  /** @deprecated use `Getv1SchemasNamespaceSlugVersionSemverResponseBody$Outbound` instead. */
-  export type Outbound =
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody$Outbound;
-}
-
-export function getv1SchemasNamespaceSlugVersionSemverResponseBodyToJSON(
-  getv1SchemasNamespaceSlugVersionSemverResponseBody:
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody,
-): string {
-  return JSON.stringify(
-    Getv1SchemasNamespaceSlugVersionSemverResponseBody$outboundSchema.parse(
-      getv1SchemasNamespaceSlugVersionSemverResponseBody,
-    ),
-  );
-}
-
-export function getv1SchemasNamespaceSlugVersionSemverResponseBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  Getv1SchemasNamespaceSlugVersionSemverResponseBody,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      Getv1SchemasNamespaceSlugVersionSemverResponseBody$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'Getv1SchemasNamespaceSlugVersionSemverResponseBody' from JSON`,
   );
 }

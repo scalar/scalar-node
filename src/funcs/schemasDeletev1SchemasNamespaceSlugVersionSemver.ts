@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Delete a shared component version
  *
  * @remarks
- * Delete a specific schema version
+ * Delete a schema version.
  */
 export function schemasDeletev1SchemasNamespaceSlugVersionSemver(
   client: ScalarCore,

@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Add shared component access group
  *
  * @remarks
- * Add access group to schema
+ * Add an access group to a schema.
  */
 export function schemasPostv1SchemasNamespaceSlugAccessGroup(
   client: ScalarCore,
@@ -99,7 +99,7 @@ async function $do(
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.RequestBody, { explode: true });
+  const body = encodeJSON("body", payload["access-group"], { explode: true });
 
   const pathParams = {
     namespace: encodeSimple("namespace", payload.namespace, {

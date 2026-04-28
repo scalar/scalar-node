@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Update shared component metadata
  *
  * @remarks
- * Update schema metadata
+ * Update schema metadata.
  */
 export function schemasPatchv1SchemasNamespaceSlug(
   client: ScalarCore,

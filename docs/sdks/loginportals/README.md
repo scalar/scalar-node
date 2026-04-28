@@ -8,14 +8,14 @@ Login Portals
 ### Available Operations
 
 * [getv1LoginPortalsSlug](#getv1loginportalsslug) - Get a login portal
-* [patchv1LoginPortalsSlug](#patchv1loginportalsslug) - Update metadata
+* [patchv1LoginPortalsSlug](#patchv1loginportalsslug) - Update portal metadata
 * [deletev1LoginPortalsSlug](#deletev1loginportalsslug) - Delete a login portal
 * [postv1LoginPortals](#postv1loginportals) - Create a portal
 * [getv1LoginPortals](#getv1loginportals) - List all portals
 
 ## getv1LoginPortalsSlug
 
-Get a login portal
+Get a login portal by slug.
 
 ### Example Usage
 
@@ -93,7 +93,7 @@ run();
 
 ## patchv1LoginPortalsSlug
 
-Update login portals metadata
+Update metadata for a login portal.
 
 ### Example Usage
 
@@ -173,7 +173,7 @@ run();
 
 ## deletev1LoginPortalsSlug
 
-Delete a specific login portal
+Delete a login portal.
 
 ### Example Usage
 
@@ -251,7 +251,7 @@ run();
 
 ## postv1LoginPortals
 
-Create a new login portal for the team
+Create a login portal for the current team.
 
 ### Example Usage
 
@@ -319,7 +319,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Postv1LoginPortalsResponseBody](../../models/operations/postv1loginportalsresponsebody.md)\>**
+**Promise\<[components.Uid](../../models/components/uid.md)\>**
 
 ### Errors
 
@@ -335,7 +335,7 @@ run();
 
 ## getv1LoginPortals
 
-Get a list of all login portals for the team
+List all login portals for the current team.
 
 ### Example Usage
 
@@ -392,7 +392,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Getv1LoginPortalsResponseBody[]](../../models/.md)\>**
+**Promise\<[components.LoginPortal[]](../../models/.md)\>**
 
 ### Errors
 

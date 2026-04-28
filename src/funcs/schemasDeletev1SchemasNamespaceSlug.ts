@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Delete a shared component
  *
  * @remarks
- * Delete a specific schema and all of the related versions
+ * Delete a schema and all related versions.
  */
 export function schemasDeletev1SchemasNamespaceSlug(
   client: ScalarCore,

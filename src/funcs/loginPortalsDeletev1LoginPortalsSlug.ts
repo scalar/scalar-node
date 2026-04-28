@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Delete a login portal
  *
  * @remarks
- * Delete a specific login portal
+ * Delete a login portal.
  */
 export function loginPortalsDeletev1LoginPortalsSlug(
   client: ScalarCore,

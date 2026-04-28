@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Delete a theme
  *
  * @remarks
- * Delete a specific themes
+ * Delete a theme by slug.
  */
 export function themesDeletev1ThemesSlug(
   client: ScalarCore,

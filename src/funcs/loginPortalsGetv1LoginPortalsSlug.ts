@@ -29,7 +29,7 @@ import { Result } from "../types/fp.js";
  * Get a login portal
  *
  * @remarks
- * Get a login portal
+ * Get a login portal by slug.
  */
 export function loginPortalsGetv1LoginPortalsSlug(
   client: ScalarCore,

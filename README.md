@@ -13,13 +13,81 @@ Developer-friendly, idiomatic Typescript SDK for the *access-service-typescript*
 
 ## Summary
 
-Access Service: Public facing api to manage all scalar platform entities
+Scalar API: API for managing Scalar platform resources.
+
+## TypeScript SDK
+
+For TypeScript, we provide a SDK that makes using our API even easier.
+
+### Install
+
+```bash
+npm add @scalar/sdk
+```
+
+### Get a Scalar API key
+
+Create an API key in your Scalar account:
+
+- Dashboard: https://dashboard.scalar.com/account
+- Store it in `.env`, for example:
+
+```bash
+SCALAR_API_KEY=your_personal_token
+```
+
+### Exchange your API key for an access token
+
+The personal token is not an access token. Exchange it first with `postv1AuthExchange`.
+
+If you use the personal token directly for authenticated API calls, the API returns `401 Invalid authentication token`.
+
+```ts
+import { Scalar } from '@scalar/sdk'
+
+const scalar = new Scalar()
+
+const exchange = await scalar.auth.postv1AuthExchange({
+  personalToken: process.env.SCALAR_API_KEY!,
+})
+
+const accessToken = exchange.accessToken
+```
+
+### Use the access token
+
+Construct a second client with bearer auth. Use this authenticated client for API calls.
+
+```ts
+import { Scalar } from '@scalar/sdk'
+
+const scalar = new Scalar()
+
+const exchange = await scalar.auth.postv1AuthExchange({
+  personalToken: process.env.SCALAR_API_KEY!,
+})
+
+const authedScalar = new Scalar({
+  bearerAuth: exchange.accessToken,
+})
+```
+
+### Notes
+
+- The exchange request itself can be made from a client constructed with no arguments (`new Scalar()`).
+- The exchanged access token is valid for 12 hours.
+- Timestamps are Unix seconds.
+
+### Read more
+
+- [@scalar/sdk on npm](https://www.npmjs.com/package/@scalar/sdk)
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [@scalar/sdk](#scalarsdk)
+  * [TypeScript SDK](#typescript-sdk)
   * [SDK Installation](#sdk-installation)
   * [Requirements](#requirements)
   * [SDK Example Usage](#sdk-example-usage)
@@ -92,7 +160,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.apiDocs.getv1ApisNamespace({
+  const result = await scalar.registry.getv1ApisNamespace({
     namespace: "<value>",
   });
 
@@ -124,7 +192,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.apiDocs.getv1ApisNamespace({
+  const result = await scalar.registry.getv1ApisNamespace({
     namespace: "<value>",
   });
 
@@ -142,35 +210,34 @@ run();
 <details open>
 <summary>Available methods</summary>
 
-### [apiDocs](docs/sdks/apidocs/README.md)
+### [authentication](docs/sdks/authentication/README.md)
 
-* [getv1ApisNamespace](docs/sdks/apidocs/README.md#getv1apisnamespace) - List all APIs
-* [postv1ApisNamespace](docs/sdks/apidocs/README.md#postv1apisnamespace) - Create an API
-* [patchv1ApisNamespaceSlug](docs/sdks/apidocs/README.md#patchv1apisnamespaceslug) - Update metadata
-* [deletev1ApisNamespaceSlug](docs/sdks/apidocs/README.md#deletev1apisnamespaceslug) - Delete an API
-* [getv1ApisNamespaceSlugVersionSemver](docs/sdks/apidocs/README.md#getv1apisnamespaceslugversionsemver) - Get API document
-* [deletev1ApisNamespaceSlugVersionSemver](docs/sdks/apidocs/README.md#deletev1apisnamespaceslugversionsemver) - Delete version
-* [postv1ApisNamespaceSlugVersion](docs/sdks/apidocs/README.md#postv1apisnamespaceslugversion) - Create version
-* [postv1ApisNamespaceSlugAccessGroup](docs/sdks/apidocs/README.md#postv1apisnamespaceslugaccessgroup) - Add API access group
-* [deletev1ApisNamespaceSlugAccessGroup](docs/sdks/apidocs/README.md#deletev1apisnamespaceslugaccessgroup) - Delete API access group
-
-### [auth](docs/sdks/auth/README.md)
-
-* [postv1AuthExchange](docs/sdks/auth/README.md#postv1authexchange) - Exchange token
-
-### [guides](docs/sdks/guides/README.md)
-
-* [getv1Guides](docs/sdks/guides/README.md#getv1guides) - List all projects
-* [postv1Guides](docs/sdks/guides/README.md#postv1guides) - Create new project
-* [postv1GuidesSlugPublish](docs/sdks/guides/README.md#postv1guidesslugpublish) - Publish project
+* [postv1AuthExchange](docs/sdks/authentication/README.md#postv1authexchange) - Exchange token
+* [getv1AuthMe](docs/sdks/authentication/README.md#getv1authme) - Get current user
 
 ### [loginPortals](docs/sdks/loginportals/README.md)
 
 * [getv1LoginPortalsSlug](docs/sdks/loginportals/README.md#getv1loginportalsslug) - Get a login portal
-* [patchv1LoginPortalsSlug](docs/sdks/loginportals/README.md#patchv1loginportalsslug) - Update metadata
+* [patchv1LoginPortalsSlug](docs/sdks/loginportals/README.md#patchv1loginportalsslug) - Update portal metadata
 * [deletev1LoginPortalsSlug](docs/sdks/loginportals/README.md#deletev1loginportalsslug) - Delete a login portal
 * [postv1LoginPortals](docs/sdks/loginportals/README.md#postv1loginportals) - Create a portal
 * [getv1LoginPortals](docs/sdks/loginportals/README.md#getv1loginportals) - List all portals
+
+### [namespaces](docs/sdks/namespaces/README.md)
+
+* [getv1Namespaces](docs/sdks/namespaces/README.md#getv1namespaces) - List namespaces
+
+### [registry](docs/sdks/registry/README.md)
+
+* [getv1ApisNamespace](docs/sdks/registry/README.md#getv1apisnamespace) - List all API Documents
+* [postv1ApisNamespace](docs/sdks/registry/README.md#postv1apisnamespace) - Create API Document
+* [patchv1ApisNamespaceSlug](docs/sdks/registry/README.md#patchv1apisnamespaceslug) - Update API Document metadata
+* [deletev1ApisNamespaceSlug](docs/sdks/registry/README.md#deletev1apisnamespaceslug) - Delete API Document
+* [getv1ApisNamespaceSlugVersionSemver](docs/sdks/registry/README.md#getv1apisnamespaceslugversionsemver) - Get API Document
+* [deletev1ApisNamespaceSlugVersionSemver](docs/sdks/registry/README.md#deletev1apisnamespaceslugversionsemver) - Delete API Document version
+* [postv1ApisNamespaceSlugVersion](docs/sdks/registry/README.md#postv1apisnamespaceslugversion) - Create API Document version
+* [postv1ApisNamespaceSlugAccessGroup](docs/sdks/registry/README.md#postv1apisnamespaceslugaccessgroup) - Add access group
+* [deletev1ApisNamespaceSlugAccessGroup](docs/sdks/registry/README.md#deletev1apisnamespaceslugaccessgroup) - Remove access group
 
 ### [rules](docs/sdks/rules/README.md)
 
@@ -183,6 +250,12 @@ run();
 * [deletev1RulesetsNamespaceSlugAccessGroup](docs/sdks/rules/README.md#deletev1rulesetsnamespaceslugaccessgroup) - Remove rule access group
 
 
+### [scalarDocs](docs/sdks/scalardocs/README.md)
+
+* [getv1Guides](docs/sdks/scalardocs/README.md#getv1guides) - List all projects
+* [postv1Guides](docs/sdks/scalardocs/README.md#postv1guides) - Create a project
+* [postv1GuidesSlugPublish](docs/sdks/scalardocs/README.md#postv1guidesslugpublish) - Publish a project
+
 ### [schemas](docs/sdks/schemas/README.md)
 
 * [getv1SchemasNamespace](docs/sdks/schemas/README.md#getv1schemasnamespace) - List all shared components
@@ -194,6 +267,10 @@ run();
 * [postv1SchemasNamespaceSlugVersion](docs/sdks/schemas/README.md#postv1schemasnamespaceslugversion) - Create a shared component version
 * [postv1SchemasNamespaceSlugAccessGroup](docs/sdks/schemas/README.md#postv1schemasnamespaceslugaccessgroup) - Add shared component access group
 * [deletev1SchemasNamespaceSlugAccessGroup](docs/sdks/schemas/README.md#deletev1schemasnamespaceslugaccessgroup) - Remove shared component access group
+
+### [teams](docs/sdks/teams/README.md)
+
+* [getv1Teams](docs/sdks/teams/README.md#getv1teams) - List teams
 
 ### [themes](docs/sdks/themes/README.md)
 
@@ -222,24 +299,23 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`apiDocsDeletev1ApisNamespaceSlug`](docs/sdks/apidocs/README.md#deletev1apisnamespaceslug) - Delete an API
-- [`apiDocsDeletev1ApisNamespaceSlugAccessGroup`](docs/sdks/apidocs/README.md#deletev1apisnamespaceslugaccessgroup) - Delete API access group
-- [`apiDocsDeletev1ApisNamespaceSlugVersionSemver`](docs/sdks/apidocs/README.md#deletev1apisnamespaceslugversionsemver) - Delete version
-- [`apiDocsGetv1ApisNamespace`](docs/sdks/apidocs/README.md#getv1apisnamespace) - List all APIs
-- [`apiDocsGetv1ApisNamespaceSlugVersionSemver`](docs/sdks/apidocs/README.md#getv1apisnamespaceslugversionsemver) - Get API document
-- [`apiDocsPatchv1ApisNamespaceSlug`](docs/sdks/apidocs/README.md#patchv1apisnamespaceslug) - Update metadata
-- [`apiDocsPostv1ApisNamespace`](docs/sdks/apidocs/README.md#postv1apisnamespace) - Create an API
-- [`apiDocsPostv1ApisNamespaceSlugAccessGroup`](docs/sdks/apidocs/README.md#postv1apisnamespaceslugaccessgroup) - Add API access group
-- [`apiDocsPostv1ApisNamespaceSlugVersion`](docs/sdks/apidocs/README.md#postv1apisnamespaceslugversion) - Create version
-- [`authPostv1AuthExchange`](docs/sdks/auth/README.md#postv1authexchange) - Exchange token
-- [`guidesGetv1Guides`](docs/sdks/guides/README.md#getv1guides) - List all projects
-- [`guidesPostv1Guides`](docs/sdks/guides/README.md#postv1guides) - Create new project
-- [`guidesPostv1GuidesSlugPublish`](docs/sdks/guides/README.md#postv1guidesslugpublish) - Publish project
+- [`authenticationGetv1AuthMe`](docs/sdks/authentication/README.md#getv1authme) - Get current user
+- [`authenticationPostv1AuthExchange`](docs/sdks/authentication/README.md#postv1authexchange) - Exchange token
 - [`loginPortalsDeletev1LoginPortalsSlug`](docs/sdks/loginportals/README.md#deletev1loginportalsslug) - Delete a login portal
 - [`loginPortalsGetv1LoginPortals`](docs/sdks/loginportals/README.md#getv1loginportals) - List all portals
 - [`loginPortalsGetv1LoginPortalsSlug`](docs/sdks/loginportals/README.md#getv1loginportalsslug) - Get a login portal
-- [`loginPortalsPatchv1LoginPortalsSlug`](docs/sdks/loginportals/README.md#patchv1loginportalsslug) - Update metadata
+- [`loginPortalsPatchv1LoginPortalsSlug`](docs/sdks/loginportals/README.md#patchv1loginportalsslug) - Update portal metadata
 - [`loginPortalsPostv1LoginPortals`](docs/sdks/loginportals/README.md#postv1loginportals) - Create a portal
+- [`namespacesGetv1Namespaces`](docs/sdks/namespaces/README.md#getv1namespaces) - List namespaces
+- [`registryDeletev1ApisNamespaceSlug`](docs/sdks/registry/README.md#deletev1apisnamespaceslug) - Delete API Document
+- [`registryDeletev1ApisNamespaceSlugAccessGroup`](docs/sdks/registry/README.md#deletev1apisnamespaceslugaccessgroup) - Remove access group
+- [`registryDeletev1ApisNamespaceSlugVersionSemver`](docs/sdks/registry/README.md#deletev1apisnamespaceslugversionsemver) - Delete API Document version
+- [`registryGetv1ApisNamespace`](docs/sdks/registry/README.md#getv1apisnamespace) - List all API Documents
+- [`registryGetv1ApisNamespaceSlugVersionSemver`](docs/sdks/registry/README.md#getv1apisnamespaceslugversionsemver) - Get API Document
+- [`registryPatchv1ApisNamespaceSlug`](docs/sdks/registry/README.md#patchv1apisnamespaceslug) - Update API Document metadata
+- [`registryPostv1ApisNamespace`](docs/sdks/registry/README.md#postv1apisnamespace) - Create API Document
+- [`registryPostv1ApisNamespaceSlugAccessGroup`](docs/sdks/registry/README.md#postv1apisnamespaceslugaccessgroup) - Add access group
+- [`registryPostv1ApisNamespaceSlugVersion`](docs/sdks/registry/README.md#postv1apisnamespaceslugversion) - Create API Document version
 - [`rulesDeletev1RulesetsNamespaceSlug`](docs/sdks/rules/README.md#deletev1rulesetsnamespaceslug) - Delete a rule
 - [`rulesDeletev1RulesetsNamespaceSlugAccessGroup`](docs/sdks/rules/README.md#deletev1rulesetsnamespaceslugaccessgroup) - Remove rule access group
 - [`rulesGetv1RulesetsNamespace`](docs/sdks/rules/README.md#getv1rulesetsnamespace) - List all rules
@@ -247,6 +323,9 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`rulesPatchv1RulesetsNamespaceSlug`](docs/sdks/rules/README.md#patchv1rulesetsnamespaceslug) - Update rule metadata
 - [`rulesPostv1RulesetsNamespace`](docs/sdks/rules/README.md#postv1rulesetsnamespace) - Create a rule
 - [`rulesPostv1RulesetsNamespaceSlugAccessGroup`](docs/sdks/rules/README.md#postv1rulesetsnamespaceslugaccessgroup) - Add rule access group
+- [`scalarDocsGetv1Guides`](docs/sdks/scalardocs/README.md#getv1guides) - List all projects
+- [`scalarDocsPostv1Guides`](docs/sdks/scalardocs/README.md#postv1guides) - Create a project
+- [`scalarDocsPostv1GuidesSlugPublish`](docs/sdks/scalardocs/README.md#postv1guidesslugpublish) - Publish a project
 - [`schemasDeletev1SchemasNamespaceSlug`](docs/sdks/schemas/README.md#deletev1schemasnamespaceslug) - Delete a shared component
 - [`schemasDeletev1SchemasNamespaceSlugAccessGroup`](docs/sdks/schemas/README.md#deletev1schemasnamespaceslugaccessgroup) - Remove shared component access group
 - [`schemasDeletev1SchemasNamespaceSlugVersionSemver`](docs/sdks/schemas/README.md#deletev1schemasnamespaceslugversionsemver) - Delete a shared component version
@@ -256,6 +335,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`schemasPostv1SchemasNamespace`](docs/sdks/schemas/README.md#postv1schemasnamespace) - Create a shared component
 - [`schemasPostv1SchemasNamespaceSlugAccessGroup`](docs/sdks/schemas/README.md#postv1schemasnamespaceslugaccessgroup) - Add shared component access group
 - [`schemasPostv1SchemasNamespaceSlugVersion`](docs/sdks/schemas/README.md#postv1schemasnamespaceslugversion) - Create a shared component version
+- [`teamsGetv1Teams`](docs/sdks/teams/README.md#getv1teams) - List teams
 - [`themesDeletev1ThemesSlug`](docs/sdks/themes/README.md#deletev1themesslug) - Delete a theme
 - [`themesGetv1Themes`](docs/sdks/themes/README.md#getv1themes) - List all themes
 - [`themesGetv1ThemesSlug`](docs/sdks/themes/README.md#getv1themesslug) - Get a theme
@@ -280,7 +360,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.apiDocs.getv1ApisNamespace({
+  const result = await scalar.registry.getv1ApisNamespace({
     namespace: "<value>",
   }, {
     retries: {
@@ -321,7 +401,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.apiDocs.getv1ApisNamespace({
+  const result = await scalar.registry.getv1ApisNamespace({
     namespace: "<value>",
   });
 
@@ -358,7 +438,7 @@ const scalar = new Scalar({
 
 async function run() {
   try {
-    const result = await scalar.apiDocs.getv1ApisNamespace({
+    const result = await scalar.registry.getv1ApisNamespace({
       namespace: "<value>",
     });
 
@@ -427,7 +507,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.apiDocs.getv1ApisNamespace({
+  const result = await scalar.registry.getv1ApisNamespace({
     namespace: "<value>",
   });
 

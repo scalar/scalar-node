@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Remove rule access group
  *
  * @remarks
- * Delete an access group from rule
+ * Remove an access group from a rule.
  */
 export function rulesDeletev1RulesetsNamespaceSlugAccessGroup(
   client: ScalarCore,
@@ -99,7 +99,7 @@ async function $do(
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.RequestBody, { explode: true });
+  const body = encodeJSON("body", payload["access-group"], { explode: true });
 
   const pathParams = {
     namespace: encodeSimple("namespace", payload.namespace, {

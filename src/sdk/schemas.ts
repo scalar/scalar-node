@@ -12,6 +12,7 @@ import { schemasPostv1SchemasNamespace } from "../funcs/schemasPostv1SchemasName
 import { schemasPostv1SchemasNamespaceSlugAccessGroup } from "../funcs/schemasPostv1SchemasNamespaceSlugAccessGroup.js";
 import { schemasPostv1SchemasNamespaceSlugVersion } from "../funcs/schemasPostv1SchemasNamespaceSlugVersion.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -20,12 +21,12 @@ export class Schemas extends ClientSDK {
    * List all shared components
    *
    * @remarks
-   * Get a list of all schemas for the namespace
+   * List schemas in a namespace.
    */
   async getv1SchemasNamespace(
     request: operations.Getv1SchemasNamespaceRequest,
     options?: RequestOptions,
-  ): Promise<Array<operations.Getv1SchemasNamespaceResponseBody>> {
+  ): Promise<Array<components.Schema>> {
     return unwrapAsync(schemasGetv1SchemasNamespace(
       this,
       request,
@@ -37,12 +38,12 @@ export class Schemas extends ClientSDK {
    * Create a shared component
    *
    * @remarks
-   * Create a new schema for the namespace
+   * Create a schema in a namespace.
    */
   async postv1SchemasNamespace(
     request: operations.Postv1SchemasNamespaceRequest,
     options?: RequestOptions,
-  ): Promise<operations.Postv1SchemasNamespaceResponseBody> {
+  ): Promise<components.Uid> {
     return unwrapAsync(schemasPostv1SchemasNamespace(
       this,
       request,
@@ -54,7 +55,7 @@ export class Schemas extends ClientSDK {
    * Update shared component metadata
    *
    * @remarks
-   * Update schema metadata
+   * Update schema metadata.
    */
   async patchv1SchemasNamespaceSlug(
     request: operations.Patchv1SchemasNamespaceSlugRequest,
@@ -71,7 +72,7 @@ export class Schemas extends ClientSDK {
    * Delete a shared component
    *
    * @remarks
-   * Delete a specific schema and all of the related versions
+   * Delete a schema and all related versions.
    */
   async deletev1SchemasNamespaceSlug(
     request: operations.Deletev1SchemasNamespaceSlugRequest,
@@ -88,12 +89,12 @@ export class Schemas extends ClientSDK {
    * Get a shared component document
    *
    * @remarks
-   * Get a specific schema document
+   * Get a specific schema version document.
    */
   async getv1SchemasNamespaceSlugVersionSemver(
     request: operations.Getv1SchemasNamespaceSlugVersionSemverRequest,
     options?: RequestOptions,
-  ): Promise<operations.Getv1SchemasNamespaceSlugVersionSemverResponseBody> {
+  ): Promise<string> {
     return unwrapAsync(schemasGetv1SchemasNamespaceSlugVersionSemver(
       this,
       request,
@@ -105,7 +106,7 @@ export class Schemas extends ClientSDK {
    * Delete a shared component version
    *
    * @remarks
-   * Delete a specific schema version
+   * Delete a schema version.
    */
   async deletev1SchemasNamespaceSlugVersionSemver(
     request: operations.Deletev1SchemasNamespaceSlugVersionSemverRequest,
@@ -122,12 +123,12 @@ export class Schemas extends ClientSDK {
    * Create a shared component version
    *
    * @remarks
-   * Create a shared component version
+   * Create a schema version.
    */
   async postv1SchemasNamespaceSlugVersion(
     request: operations.Postv1SchemasNamespaceSlugVersionRequest,
     options?: RequestOptions,
-  ): Promise<operations.Postv1SchemasNamespaceSlugVersionResponseBody> {
+  ): Promise<components.Uid> {
     return unwrapAsync(schemasPostv1SchemasNamespaceSlugVersion(
       this,
       request,
@@ -139,7 +140,7 @@ export class Schemas extends ClientSDK {
    * Add shared component access group
    *
    * @remarks
-   * Add access group to schema
+   * Add an access group to a schema.
    */
   async postv1SchemasNamespaceSlugAccessGroup(
     request: operations.Postv1SchemasNamespaceSlugAccessGroupRequest,
@@ -156,7 +157,7 @@ export class Schemas extends ClientSDK {
    * Remove shared component access group
    *
    * @remarks
-   * Delete access group for schema
+   * Remove an access group from a schema.
    */
   async deletev1SchemasNamespaceSlugAccessGroup(
     request: operations.Deletev1SchemasNamespaceSlugAccessGroupRequest,

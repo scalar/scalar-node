@@ -17,7 +17,7 @@ Rules
 
 ## getv1RulesetsNamespace
 
-Get a list of all rulesets for the namespace
+List all rulesets in a namespace.
 
 ### Example Usage
 
@@ -79,7 +79,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Getv1RulesetsNamespaceResponseBody[]](../../models/.md)\>**
+**Promise\<[components.Rule[]](../../models/.md)\>**
 
 ### Errors
 
@@ -95,7 +95,7 @@ run();
 
 ## postv1RulesetsNamespace
 
-Create a new rule for the namespace
+Create a rule in a namespace.
 
 ### Example Usage
 
@@ -167,7 +167,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Postv1RulesetsNamespaceResponseBody](../../models/operations/postv1rulesetsnamespaceresponsebody.md)\>**
+**Promise\<[components.Uid](../../models/components/uid.md)\>**
 
 ### Errors
 
@@ -183,7 +183,7 @@ run();
 
 ## patchv1RulesetsNamespaceSlug
 
-Update rule metadata
+Update rule metadata by slug.
 
 ### Example Usage
 
@@ -265,7 +265,7 @@ run();
 
 ## deletev1RulesetsNamespaceSlug
 
-Delete a specific rule
+Delete a rule by slug.
 
 ### Example Usage
 
@@ -345,7 +345,7 @@ run();
 
 ## getv1RulesetsNamespaceSlug
 
-Get a the rule document
+Get a rule document by slug.
 
 ### Example Usage
 
@@ -409,7 +409,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Getv1RulesetsNamespaceSlugResponseBody](../../models/operations/getv1rulesetsnamespaceslugresponsebody.md)\>**
+**Promise\<[string](../../models/.md)\>**
 
 ### Errors
 
@@ -425,7 +425,7 @@ run();
 
 ## postv1RulesetsNamespaceSlugAccessGroup
 
-Add an access group for the rule
+Grant an access group to a rule.
 
 ### Example Usage
 
@@ -440,7 +440,7 @@ async function run() {
   const result = await scalar.rules.postv1RulesetsNamespaceSlugAccessGroup({
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });
@@ -469,7 +469,7 @@ async function run() {
   const res = await rulesPostv1RulesetsNamespaceSlugAccessGroup(scalar, {
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });
@@ -511,7 +511,7 @@ run();
 
 ## deletev1RulesetsNamespaceSlugAccessGroup
 
-Delete an access group from rule
+Remove an access group from a rule.
 
 ### Example Usage
 
@@ -526,7 +526,7 @@ async function run() {
   const result = await scalar.rules.deletev1RulesetsNamespaceSlugAccessGroup({
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });
@@ -555,7 +555,7 @@ async function run() {
   const res = await rulesDeletev1RulesetsNamespaceSlugAccessGroup(scalar, {
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });

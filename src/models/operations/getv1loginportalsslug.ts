@@ -5,41 +5,11 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Getv1LoginPortalsSlugRequest = {
   slug: string;
-};
-
-export type Getv1LoginPortalsSlugEmail = {
-  logo?: string | undefined;
-  logoSize?: string | undefined;
-  buttonText?: string | undefined;
-  message?: string | undefined;
-  title?: string | undefined;
-  mainColor?: string | undefined;
-  mainBackground?: string | undefined;
-  cardColor?: string | undefined;
-  cardBackground?: string | undefined;
-  buttonColor?: string | undefined;
-  buttonBackground?: string | undefined;
-};
-
-export type Getv1LoginPortalsSlugPage = {
-  title?: string | undefined;
-  description?: string | undefined;
-  head?: string | undefined;
-  script?: string | undefined;
-  theme?: string | undefined;
-  companyName?: string | undefined;
-  logo?: string | undefined;
-  logoURL?: string | undefined;
-  favicon?: string | undefined;
-  termsLink?: string | undefined;
-  privacyLink?: string | undefined;
-  formTitle?: string | undefined;
-  formDescription?: string | undefined;
-  formImage?: string | undefined;
 };
 
 /**
@@ -49,8 +19,8 @@ export type Getv1LoginPortalsSlugResponseBody = {
   uid: string;
   title: string;
   slug: string;
-  email: Getv1LoginPortalsSlugEmail;
-  page: Getv1LoginPortalsSlugPage;
+  email: components.LoginPortalEmail;
+  page: components.LoginPortalPage;
 };
 
 /** @internal */
@@ -110,187 +80,6 @@ export function getv1LoginPortalsSlugRequestFromJSON(
 }
 
 /** @internal */
-export const Getv1LoginPortalsSlugEmail$inboundSchema: z.ZodType<
-  Getv1LoginPortalsSlugEmail,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  logo: z.string().default(""),
-  logoSize: z.string().default("100"),
-  buttonText: z.string().default("Login"),
-  message: z.string().default(
-    "Click to access private documentation hosted by scalar.com",
-  ),
-  title: z.string().default("Private Docs"),
-  mainColor: z.string().default("#2a2f45"),
-  mainBackground: z.string().default("#f6f6f6"),
-  cardColor: z.string().default("2a2f45"),
-  cardBackground: z.string().default("#fff"),
-  buttonColor: z.string().default("#fff"),
-  buttonBackground: z.string().default("#0f0f0f"),
-});
-
-/** @internal */
-export type Getv1LoginPortalsSlugEmail$Outbound = {
-  logo: string;
-  logoSize: string;
-  buttonText: string;
-  message: string;
-  title: string;
-  mainColor: string;
-  mainBackground: string;
-  cardColor: string;
-  cardBackground: string;
-  buttonColor: string;
-  buttonBackground: string;
-};
-
-/** @internal */
-export const Getv1LoginPortalsSlugEmail$outboundSchema: z.ZodType<
-  Getv1LoginPortalsSlugEmail$Outbound,
-  z.ZodTypeDef,
-  Getv1LoginPortalsSlugEmail
-> = z.object({
-  logo: z.string().default(""),
-  logoSize: z.string().default("100"),
-  buttonText: z.string().default("Login"),
-  message: z.string().default(
-    "Click to access private documentation hosted by scalar.com",
-  ),
-  title: z.string().default("Private Docs"),
-  mainColor: z.string().default("#2a2f45"),
-  mainBackground: z.string().default("#f6f6f6"),
-  cardColor: z.string().default("2a2f45"),
-  cardBackground: z.string().default("#fff"),
-  buttonColor: z.string().default("#fff"),
-  buttonBackground: z.string().default("#0f0f0f"),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Getv1LoginPortalsSlugEmail$ {
-  /** @deprecated use `Getv1LoginPortalsSlugEmail$inboundSchema` instead. */
-  export const inboundSchema = Getv1LoginPortalsSlugEmail$inboundSchema;
-  /** @deprecated use `Getv1LoginPortalsSlugEmail$outboundSchema` instead. */
-  export const outboundSchema = Getv1LoginPortalsSlugEmail$outboundSchema;
-  /** @deprecated use `Getv1LoginPortalsSlugEmail$Outbound` instead. */
-  export type Outbound = Getv1LoginPortalsSlugEmail$Outbound;
-}
-
-export function getv1LoginPortalsSlugEmailToJSON(
-  getv1LoginPortalsSlugEmail: Getv1LoginPortalsSlugEmail,
-): string {
-  return JSON.stringify(
-    Getv1LoginPortalsSlugEmail$outboundSchema.parse(getv1LoginPortalsSlugEmail),
-  );
-}
-
-export function getv1LoginPortalsSlugEmailFromJSON(
-  jsonString: string,
-): SafeParseResult<Getv1LoginPortalsSlugEmail, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Getv1LoginPortalsSlugEmail$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Getv1LoginPortalsSlugEmail' from JSON`,
-  );
-}
-
-/** @internal */
-export const Getv1LoginPortalsSlugPage$inboundSchema: z.ZodType<
-  Getv1LoginPortalsSlugPage,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  title: z.string().default("Scalar Private Docs"),
-  description: z.string().default("Login to access your documentation"),
-  head: z.string().default(""),
-  script: z.string().default(""),
-  theme: z.string().default(""),
-  companyName: z.string().default(""),
-  logo: z.string().default(""),
-  logoURL: z.string().default(""),
-  favicon: z.string().default(""),
-  termsLink: z.string().default(""),
-  privacyLink: z.string().default(""),
-  formTitle: z.string().default("Scalar Private Docs"),
-  formDescription: z.string().default("Login to access your documentation"),
-  formImage: z.string().default(""),
-});
-
-/** @internal */
-export type Getv1LoginPortalsSlugPage$Outbound = {
-  title: string;
-  description: string;
-  head: string;
-  script: string;
-  theme: string;
-  companyName: string;
-  logo: string;
-  logoURL: string;
-  favicon: string;
-  termsLink: string;
-  privacyLink: string;
-  formTitle: string;
-  formDescription: string;
-  formImage: string;
-};
-
-/** @internal */
-export const Getv1LoginPortalsSlugPage$outboundSchema: z.ZodType<
-  Getv1LoginPortalsSlugPage$Outbound,
-  z.ZodTypeDef,
-  Getv1LoginPortalsSlugPage
-> = z.object({
-  title: z.string().default("Scalar Private Docs"),
-  description: z.string().default("Login to access your documentation"),
-  head: z.string().default(""),
-  script: z.string().default(""),
-  theme: z.string().default(""),
-  companyName: z.string().default(""),
-  logo: z.string().default(""),
-  logoURL: z.string().default(""),
-  favicon: z.string().default(""),
-  termsLink: z.string().default(""),
-  privacyLink: z.string().default(""),
-  formTitle: z.string().default("Scalar Private Docs"),
-  formDescription: z.string().default("Login to access your documentation"),
-  formImage: z.string().default(""),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Getv1LoginPortalsSlugPage$ {
-  /** @deprecated use `Getv1LoginPortalsSlugPage$inboundSchema` instead. */
-  export const inboundSchema = Getv1LoginPortalsSlugPage$inboundSchema;
-  /** @deprecated use `Getv1LoginPortalsSlugPage$outboundSchema` instead. */
-  export const outboundSchema = Getv1LoginPortalsSlugPage$outboundSchema;
-  /** @deprecated use `Getv1LoginPortalsSlugPage$Outbound` instead. */
-  export type Outbound = Getv1LoginPortalsSlugPage$Outbound;
-}
-
-export function getv1LoginPortalsSlugPageToJSON(
-  getv1LoginPortalsSlugPage: Getv1LoginPortalsSlugPage,
-): string {
-  return JSON.stringify(
-    Getv1LoginPortalsSlugPage$outboundSchema.parse(getv1LoginPortalsSlugPage),
-  );
-}
-
-export function getv1LoginPortalsSlugPageFromJSON(
-  jsonString: string,
-): SafeParseResult<Getv1LoginPortalsSlugPage, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Getv1LoginPortalsSlugPage$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Getv1LoginPortalsSlugPage' from JSON`,
-  );
-}
-
-/** @internal */
 export const Getv1LoginPortalsSlugResponseBody$inboundSchema: z.ZodType<
   Getv1LoginPortalsSlugResponseBody,
   z.ZodTypeDef,
@@ -299,8 +88,8 @@ export const Getv1LoginPortalsSlugResponseBody$inboundSchema: z.ZodType<
   uid: z.string(),
   title: z.string(),
   slug: z.string(),
-  email: z.lazy(() => Getv1LoginPortalsSlugEmail$inboundSchema),
-  page: z.lazy(() => Getv1LoginPortalsSlugPage$inboundSchema),
+  email: components.LoginPortalEmail$inboundSchema,
+  page: components.LoginPortalPage$inboundSchema,
 });
 
 /** @internal */
@@ -308,8 +97,8 @@ export type Getv1LoginPortalsSlugResponseBody$Outbound = {
   uid: string;
   title: string;
   slug: string;
-  email: Getv1LoginPortalsSlugEmail$Outbound;
-  page: Getv1LoginPortalsSlugPage$Outbound;
+  email: components.LoginPortalEmail$Outbound;
+  page: components.LoginPortalPage$Outbound;
 };
 
 /** @internal */
@@ -321,8 +110,8 @@ export const Getv1LoginPortalsSlugResponseBody$outboundSchema: z.ZodType<
   uid: z.string(),
   title: z.string(),
   slug: z.string(),
-  email: z.lazy(() => Getv1LoginPortalsSlugEmail$outboundSchema),
-  page: z.lazy(() => Getv1LoginPortalsSlugPage$outboundSchema),
+  email: components.LoginPortalEmail$outboundSchema,
+  page: components.LoginPortalPage$outboundSchema,
 });
 
 /**

@@ -1,0 +1,27 @@
+# GithubProjectRepository
+
+## Example Usage
+
+```typescript
+import { GithubProjectRepository } from "@scalar/sdk/models/components";
+
+let value: GithubProjectRepository = {
+  linkedBy: "<value>",
+  id: 5514.52,
+  name: "<value>",
+};
+```
+
+## Fields
+
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `linkedBy`         | *string*           | :heavy_check_mark: | N/A                |
+| `id`               | *number*           | :heavy_check_mark: | N/A                |
+| `name`             | *string*           | :heavy_check_mark: | N/A                |
+| `configPath`       | *string*           | :heavy_minus_sign: | N/A                |
+| `branch`           | *string*           | :heavy_minus_sign: | N/A                |
+| `publishOnMerge`   | *boolean*          | :heavy_minus_sign: | N/A                |
+| `publishPreviews`  | *boolean*          | :heavy_minus_sign: | N/A                |
+| `prComments`       | *boolean*          | :heavy_minus_sign: | N/A                |
+| `expired`          | *boolean*          | :heavy_minus_sign: | N/A                |

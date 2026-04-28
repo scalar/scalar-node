@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Update theme document
  *
  * @remarks
- * Update themes document
+ * Replace the theme document.
  */
 export function themesPutv1ThemesSlug(
   client: ScalarCore,

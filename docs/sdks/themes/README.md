@@ -16,7 +16,7 @@ Themes
 
 ## getv1Themes
 
-Get a list of all themes for the team
+List all team themes.
 
 ### Example Usage
 
@@ -73,7 +73,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Getv1ThemesResponseBody[]](../../models/.md)\>**
+**Promise\<[components.Theme[]](../../models/.md)\>**
 
 ### Errors
 
@@ -89,7 +89,7 @@ run();
 
 ## postv1Themes
 
-Create a new theme for the team
+Create a team theme.
 
 ### Example Usage
 
@@ -155,7 +155,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Postv1ThemesResponseBody](../../models/operations/postv1themesresponsebody.md)\>**
+**Promise\<[components.Uid](../../models/components/uid.md)\>**
 
 ### Errors
 
@@ -171,7 +171,7 @@ run();
 
 ## patchv1ThemesSlug
 
-Update themes metadata
+Update theme metadata.
 
 ### Example Usage
 
@@ -251,7 +251,7 @@ run();
 
 ## putv1ThemesSlug
 
-Update themes document
+Replace the theme document.
 
 ### Example Usage
 
@@ -335,7 +335,7 @@ run();
 
 ## deletev1ThemesSlug
 
-Delete a specific themes
+Delete a theme by slug.
 
 ### Example Usage
 
@@ -413,7 +413,7 @@ run();
 
 ## getv1ThemesSlug
 
-Get a the themes document
+Get the theme document by slug.
 
 ### Example Usage
 
