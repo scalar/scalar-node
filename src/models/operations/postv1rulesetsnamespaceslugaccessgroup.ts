@@ -6,85 +6,14 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-
-export type Postv1RulesetsNamespaceSlugAccessGroupRequestBody = {
-  accessGroupSlug: string;
-};
 
 export type Postv1RulesetsNamespaceSlugAccessGroupRequest = {
   namespace: string;
   slug: string;
-  requestBody: Postv1RulesetsNamespaceSlugAccessGroupRequestBody;
+  accessGroup: components.AccessGroup;
 };
-
-/** @internal */
-export const Postv1RulesetsNamespaceSlugAccessGroupRequestBody$inboundSchema:
-  z.ZodType<
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody,
-    z.ZodTypeDef,
-    unknown
-  > = z.object({
-    accessGroupSlug: z.string(),
-  });
-
-/** @internal */
-export type Postv1RulesetsNamespaceSlugAccessGroupRequestBody$Outbound = {
-  accessGroupSlug: string;
-};
-
-/** @internal */
-export const Postv1RulesetsNamespaceSlugAccessGroupRequestBody$outboundSchema:
-  z.ZodType<
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody$Outbound,
-    z.ZodTypeDef,
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody
-  > = z.object({
-    accessGroupSlug: z.string(),
-  });
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Postv1RulesetsNamespaceSlugAccessGroupRequestBody$ {
-  /** @deprecated use `Postv1RulesetsNamespaceSlugAccessGroupRequestBody$inboundSchema` instead. */
-  export const inboundSchema =
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody$inboundSchema;
-  /** @deprecated use `Postv1RulesetsNamespaceSlugAccessGroupRequestBody$outboundSchema` instead. */
-  export const outboundSchema =
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody$outboundSchema;
-  /** @deprecated use `Postv1RulesetsNamespaceSlugAccessGroupRequestBody$Outbound` instead. */
-  export type Outbound =
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody$Outbound;
-}
-
-export function postv1RulesetsNamespaceSlugAccessGroupRequestBodyToJSON(
-  postv1RulesetsNamespaceSlugAccessGroupRequestBody:
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody,
-): string {
-  return JSON.stringify(
-    Postv1RulesetsNamespaceSlugAccessGroupRequestBody$outboundSchema.parse(
-      postv1RulesetsNamespaceSlugAccessGroupRequestBody,
-    ),
-  );
-}
-
-export function postv1RulesetsNamespaceSlugAccessGroupRequestBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  Postv1RulesetsNamespaceSlugAccessGroupRequestBody,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      Postv1RulesetsNamespaceSlugAccessGroupRequestBody$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'Postv1RulesetsNamespaceSlugAccessGroupRequestBody' from JSON`,
-  );
-}
 
 /** @internal */
 export const Postv1RulesetsNamespaceSlugAccessGroupRequest$inboundSchema:
@@ -95,12 +24,10 @@ export const Postv1RulesetsNamespaceSlugAccessGroupRequest$inboundSchema:
   > = z.object({
     namespace: z.string(),
     slug: z.string(),
-    RequestBody: z.lazy(() =>
-      Postv1RulesetsNamespaceSlugAccessGroupRequestBody$inboundSchema
-    ),
+    "access-group": components.AccessGroup$inboundSchema,
   }).transform((v) => {
     return remap$(v, {
-      "RequestBody": "requestBody",
+      "access-group": "accessGroup",
     });
   });
 
@@ -108,7 +35,7 @@ export const Postv1RulesetsNamespaceSlugAccessGroupRequest$inboundSchema:
 export type Postv1RulesetsNamespaceSlugAccessGroupRequest$Outbound = {
   namespace: string;
   slug: string;
-  RequestBody: Postv1RulesetsNamespaceSlugAccessGroupRequestBody$Outbound;
+  "access-group": components.AccessGroup$Outbound;
 };
 
 /** @internal */
@@ -120,12 +47,10 @@ export const Postv1RulesetsNamespaceSlugAccessGroupRequest$outboundSchema:
   > = z.object({
     namespace: z.string(),
     slug: z.string(),
-    requestBody: z.lazy(() =>
-      Postv1RulesetsNamespaceSlugAccessGroupRequestBody$outboundSchema
-    ),
+    accessGroup: components.AccessGroup$outboundSchema,
   }).transform((v) => {
     return remap$(v, {
-      requestBody: "RequestBody",
+      accessGroup: "access-group",
     });
   });
 

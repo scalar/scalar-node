@@ -19,13 +19,6 @@ export type Postv1SchemasNamespaceSlugVersionRequest = {
   requestBody: Postv1SchemasNamespaceSlugVersionRequestBody;
 };
 
-/**
- * Default Response
- */
-export type Postv1SchemasNamespaceSlugVersionResponseBody = {
-  uid: string;
-};
-
 /** @internal */
 export const Postv1SchemasNamespaceSlugVersionRequestBody$inboundSchema:
   z.ZodType<
@@ -176,72 +169,5 @@ export function postv1SchemasNamespaceSlugVersionRequestFromJSON(
         JSON.parse(x),
       ),
     `Failed to parse 'Postv1SchemasNamespaceSlugVersionRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const Postv1SchemasNamespaceSlugVersionResponseBody$inboundSchema:
-  z.ZodType<
-    Postv1SchemasNamespaceSlugVersionResponseBody,
-    z.ZodTypeDef,
-    unknown
-  > = z.object({
-    uid: z.string(),
-  });
-
-/** @internal */
-export type Postv1SchemasNamespaceSlugVersionResponseBody$Outbound = {
-  uid: string;
-};
-
-/** @internal */
-export const Postv1SchemasNamespaceSlugVersionResponseBody$outboundSchema:
-  z.ZodType<
-    Postv1SchemasNamespaceSlugVersionResponseBody$Outbound,
-    z.ZodTypeDef,
-    Postv1SchemasNamespaceSlugVersionResponseBody
-  > = z.object({
-    uid: z.string(),
-  });
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Postv1SchemasNamespaceSlugVersionResponseBody$ {
-  /** @deprecated use `Postv1SchemasNamespaceSlugVersionResponseBody$inboundSchema` instead. */
-  export const inboundSchema =
-    Postv1SchemasNamespaceSlugVersionResponseBody$inboundSchema;
-  /** @deprecated use `Postv1SchemasNamespaceSlugVersionResponseBody$outboundSchema` instead. */
-  export const outboundSchema =
-    Postv1SchemasNamespaceSlugVersionResponseBody$outboundSchema;
-  /** @deprecated use `Postv1SchemasNamespaceSlugVersionResponseBody$Outbound` instead. */
-  export type Outbound = Postv1SchemasNamespaceSlugVersionResponseBody$Outbound;
-}
-
-export function postv1SchemasNamespaceSlugVersionResponseBodyToJSON(
-  postv1SchemasNamespaceSlugVersionResponseBody:
-    Postv1SchemasNamespaceSlugVersionResponseBody,
-): string {
-  return JSON.stringify(
-    Postv1SchemasNamespaceSlugVersionResponseBody$outboundSchema.parse(
-      postv1SchemasNamespaceSlugVersionResponseBody,
-    ),
-  );
-}
-
-export function postv1SchemasNamespaceSlugVersionResponseBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  Postv1SchemasNamespaceSlugVersionResponseBody,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      Postv1SchemasNamespaceSlugVersionResponseBody$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'Postv1SchemasNamespaceSlugVersionResponseBody' from JSON`,
   );
 }

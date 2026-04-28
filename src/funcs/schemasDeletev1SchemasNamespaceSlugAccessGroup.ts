@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Remove shared component access group
  *
  * @remarks
- * Delete access group for schema
+ * Remove an access group from a schema.
  */
 export function schemasDeletev1SchemasNamespaceSlugAccessGroup(
   client: ScalarCore,
@@ -99,7 +99,7 @@ async function $do(
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.RequestBody, { explode: true });
+  const body = encodeJSON("body", payload["access-group"], { explode: true });
 
   const pathParams = {
     namespace: encodeSimple("namespace", payload.namespace, {

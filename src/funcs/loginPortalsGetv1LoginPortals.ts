@@ -9,6 +9,7 @@ import { compactMap } from "../lib/primitives.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -20,7 +21,6 @@ import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { ScalarError } from "../models/errors/scalarerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -28,14 +28,14 @@ import { Result } from "../types/fp.js";
  * List all portals
  *
  * @remarks
- * Get a list of all login portals for the team
+ * List all login portals for the current team.
  */
 export function loginPortalsGetv1LoginPortals(
   client: ScalarCore,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    Array<operations.Getv1LoginPortalsResponseBody>,
+    Array<components.LoginPortal>,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -64,7 +64,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      Array<operations.Getv1LoginPortalsResponseBody>,
+      Array<components.LoginPortal>,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -138,7 +138,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    Array<operations.Getv1LoginPortalsResponseBody>,
+    Array<components.LoginPortal>,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -154,10 +154,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(
-      200,
-      z.array(operations.Getv1LoginPortalsResponseBody$inboundSchema),
-    ),
+    M.json(200, z.array(components.LoginPortal$inboundSchema)),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

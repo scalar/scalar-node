@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Add rule access group
  *
  * @remarks
- * Add an access group for the rule
+ * Grant an access group to a rule.
  */
 export function rulesPostv1RulesetsNamespaceSlugAccessGroup(
   client: ScalarCore,
@@ -99,7 +99,7 @@ async function $do(
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.RequestBody, { explode: true });
+  const body = encodeJSON("body", payload["access-group"], { explode: true });
 
   const pathParams = {
     namespace: encodeSimple("namespace", payload.namespace, {

@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Delete a rule
  *
  * @remarks
- * Delete a specific rule
+ * Delete a rule by slug.
  */
 export function rulesDeletev1RulesetsNamespaceSlug(
   client: ScalarCore,

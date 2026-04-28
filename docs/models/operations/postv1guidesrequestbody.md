@@ -7,6 +7,14 @@ import { Postv1GuidesRequestBody } from "@scalar/sdk/models/operations";
 
 let value: Postv1GuidesRequestBody = {
   name: "<value>",
+  allowedUsers: [
+    "<value 1>",
+  ],
+  allowedDomains: [
+    "<value 1>",
+    "<value 2>",
+    "<value 3>",
+  ],
 };
 ```
 
@@ -17,5 +25,5 @@ let value: Postv1GuidesRequestBody = {
 | `name`             | *string*           | :heavy_check_mark: | N/A                |
 | `slug`             | *string*           | :heavy_minus_sign: | N/A                |
 | `isPrivate`        | *boolean*          | :heavy_minus_sign: | N/A                |
-| `allowedUsers`     | *string*[]         | :heavy_minus_sign: | N/A                |
-| `allowedDomains`   | *string*[]         | :heavy_minus_sign: | N/A                |
+| `allowedUsers`     | *string*[]         | :heavy_check_mark: | N/A                |
+| `allowedDomains`   | *string*[]         | :heavy_check_mark: | N/A                |

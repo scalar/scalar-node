@@ -11,8 +11,8 @@ export type Postv1GuidesRequestBody = {
   name: string;
   slug?: string | undefined;
   isPrivate?: boolean | undefined;
-  allowedUsers?: Array<string> | undefined;
-  allowedDomains?: Array<string> | undefined;
+  allowedUsers: Array<string>;
+  allowedDomains: Array<string>;
 };
 
 /**
@@ -32,8 +32,8 @@ export const Postv1GuidesRequestBody$inboundSchema: z.ZodType<
   name: z.string(),
   slug: z.string().optional(),
   isPrivate: z.boolean().default(false),
-  allowedUsers: z.array(z.string()).optional(),
-  allowedDomains: z.array(z.string()).optional(),
+  allowedUsers: z.array(z.string()),
+  allowedDomains: z.array(z.string()),
 });
 
 /** @internal */
@@ -41,8 +41,8 @@ export type Postv1GuidesRequestBody$Outbound = {
   name: string;
   slug?: string | undefined;
   isPrivate: boolean;
-  allowedUsers?: Array<string> | undefined;
-  allowedDomains?: Array<string> | undefined;
+  allowedUsers: Array<string>;
+  allowedDomains: Array<string>;
 };
 
 /** @internal */
@@ -54,8 +54,8 @@ export const Postv1GuidesRequestBody$outboundSchema: z.ZodType<
   name: z.string(),
   slug: z.string().optional(),
   isPrivate: z.boolean().default(false),
-  allowedUsers: z.array(z.string()).optional(),
-  allowedDomains: z.array(z.string()).optional(),
+  allowedUsers: z.array(z.string()),
+  allowedDomains: z.array(z.string()),
 });
 
 /**

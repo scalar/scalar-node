@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Update theme metadata
  *
  * @remarks
- * Update themes metadata
+ * Update theme metadata.
  */
 export function themesPatchv1ThemesSlug(
   client: ScalarCore,

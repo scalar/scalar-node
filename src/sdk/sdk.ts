@@ -3,18 +3,20 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
-import { APIDocs } from "./apidocs.js";
-import { Auth } from "./auth.js";
-import { Guides } from "./guides.js";
+import { Authentication } from "./authentication.js";
 import { LoginPortals } from "./loginportals.js";
+import { Namespaces } from "./namespaces.js";
+import { Registry } from "./registry.js";
 import { Rules } from "./rules.js";
+import { ScalarDocs } from "./scalardocs.js";
 import { Schemas } from "./schemas.js";
+import { Teams } from "./teams.js";
 import { Themes } from "./themes.js";
 
 export class Scalar extends ClientSDK {
-  private _apiDocs?: APIDocs;
-  get apiDocs(): APIDocs {
-    return (this._apiDocs ??= new APIDocs(this._options));
+  private _registry?: Registry;
+  get registry(): Registry {
+    return (this._registry ??= new Registry(this._options));
   }
 
   private _schemas?: Schemas;
@@ -37,13 +39,23 @@ export class Scalar extends ClientSDK {
     return (this._themes ??= new Themes(this._options));
   }
 
-  private _guides?: Guides;
-  get guides(): Guides {
-    return (this._guides ??= new Guides(this._options));
+  private _teams?: Teams;
+  get teams(): Teams {
+    return (this._teams ??= new Teams(this._options));
   }
 
-  private _auth?: Auth;
-  get auth(): Auth {
-    return (this._auth ??= new Auth(this._options));
+  private _scalarDocs?: ScalarDocs;
+  get scalarDocs(): ScalarDocs {
+    return (this._scalarDocs ??= new ScalarDocs(this._options));
+  }
+
+  private _namespaces?: Namespaces;
+  get namespaces(): Namespaces {
+    return (this._namespaces ??= new Namespaces(this._options));
+  }
+
+  private _authentication?: Authentication;
+  get authentication(): Authentication {
+    return (this._authentication ??= new Authentication(this._options));
   }
 }

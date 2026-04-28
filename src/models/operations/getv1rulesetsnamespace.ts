@@ -11,15 +11,6 @@ export type Getv1RulesetsNamespaceRequest = {
   namespace: string;
 };
 
-export type Getv1RulesetsNamespaceResponseBody = {
-  uid?: string | undefined;
-  title?: string | undefined;
-  description?: string | undefined;
-  slug?: string | undefined;
-  namespace: string;
-  isPrivate?: boolean | undefined;
-};
-
 /** @internal */
 export const Getv1RulesetsNamespaceRequest$inboundSchema: z.ZodType<
   Getv1RulesetsNamespaceRequest,
@@ -73,78 +64,5 @@ export function getv1RulesetsNamespaceRequestFromJSON(
     jsonString,
     (x) => Getv1RulesetsNamespaceRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'Getv1RulesetsNamespaceRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const Getv1RulesetsNamespaceResponseBody$inboundSchema: z.ZodType<
-  Getv1RulesetsNamespaceResponseBody,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  uid: z.string().default("IvAH525rwBfOMVz0QrKDo"),
-  title: z.string().default(""),
-  description: z.string().default(""),
-  slug: z.string().default("select-vapor-uw2trbi"),
-  namespace: z.string(),
-  isPrivate: z.boolean().default(false),
-});
-
-/** @internal */
-export type Getv1RulesetsNamespaceResponseBody$Outbound = {
-  uid: string;
-  title: string;
-  description: string;
-  slug: string;
-  namespace: string;
-  isPrivate: boolean;
-};
-
-/** @internal */
-export const Getv1RulesetsNamespaceResponseBody$outboundSchema: z.ZodType<
-  Getv1RulesetsNamespaceResponseBody$Outbound,
-  z.ZodTypeDef,
-  Getv1RulesetsNamespaceResponseBody
-> = z.object({
-  uid: z.string().default("IvAH525rwBfOMVz0QrKDo"),
-  title: z.string().default(""),
-  description: z.string().default(""),
-  slug: z.string().default("select-vapor-uw2trbi"),
-  namespace: z.string(),
-  isPrivate: z.boolean().default(false),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Getv1RulesetsNamespaceResponseBody$ {
-  /** @deprecated use `Getv1RulesetsNamespaceResponseBody$inboundSchema` instead. */
-  export const inboundSchema = Getv1RulesetsNamespaceResponseBody$inboundSchema;
-  /** @deprecated use `Getv1RulesetsNamespaceResponseBody$outboundSchema` instead. */
-  export const outboundSchema =
-    Getv1RulesetsNamespaceResponseBody$outboundSchema;
-  /** @deprecated use `Getv1RulesetsNamespaceResponseBody$Outbound` instead. */
-  export type Outbound = Getv1RulesetsNamespaceResponseBody$Outbound;
-}
-
-export function getv1RulesetsNamespaceResponseBodyToJSON(
-  getv1RulesetsNamespaceResponseBody: Getv1RulesetsNamespaceResponseBody,
-): string {
-  return JSON.stringify(
-    Getv1RulesetsNamespaceResponseBody$outboundSchema.parse(
-      getv1RulesetsNamespaceResponseBody,
-    ),
-  );
-}
-
-export function getv1RulesetsNamespaceResponseBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<Getv1RulesetsNamespaceResponseBody, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      Getv1RulesetsNamespaceResponseBody$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Getv1RulesetsNamespaceResponseBody' from JSON`,
   );
 }

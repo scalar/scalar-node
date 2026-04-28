@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Update metadata
+ * Update portal metadata
  *
  * @remarks
- * Update login portals metadata
+ * Update metadata for a login portal.
  */
 export function loginPortalsPatchv1LoginPortalsSlug(
   client: ScalarCore,

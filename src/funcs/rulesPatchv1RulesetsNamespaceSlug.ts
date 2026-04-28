@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Update rule metadata
  *
  * @remarks
- * Update rule metadata
+ * Update rule metadata by slug.
  */
 export function rulesPatchv1RulesetsNamespaceSlug(
   client: ScalarCore,

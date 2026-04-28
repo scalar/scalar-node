@@ -10,6 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -29,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Create a shared component
  *
  * @remarks
- * Create a new schema for the namespace
+ * Create a schema in a namespace.
  */
 export function schemasPostv1SchemasNamespace(
   client: ScalarCore,
@@ -37,7 +38,7 @@ export function schemasPostv1SchemasNamespace(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.Postv1SchemasNamespaceResponseBody,
+    components.Uid,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -68,7 +69,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.Postv1SchemasNamespaceResponseBody,
+      components.Uid,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -163,7 +164,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.Postv1SchemasNamespaceResponseBody,
+    components.Uid,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -179,7 +180,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.Postv1SchemasNamespaceResponseBody$inboundSchema),
+    M.json(200, components.Uid$inboundSchema),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

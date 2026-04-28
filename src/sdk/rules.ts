@@ -10,6 +10,7 @@ import { rulesPatchv1RulesetsNamespaceSlug } from "../funcs/rulesPatchv1Rulesets
 import { rulesPostv1RulesetsNamespace } from "../funcs/rulesPostv1RulesetsNamespace.js";
 import { rulesPostv1RulesetsNamespaceSlugAccessGroup } from "../funcs/rulesPostv1RulesetsNamespaceSlugAccessGroup.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -18,12 +19,12 @@ export class Rules extends ClientSDK {
    * List all rules
    *
    * @remarks
-   * Get a list of all rulesets for the namespace
+   * List all rulesets in a namespace.
    */
   async getv1RulesetsNamespace(
     request: operations.Getv1RulesetsNamespaceRequest,
     options?: RequestOptions,
-  ): Promise<Array<operations.Getv1RulesetsNamespaceResponseBody>> {
+  ): Promise<Array<components.Rule>> {
     return unwrapAsync(rulesGetv1RulesetsNamespace(
       this,
       request,
@@ -35,12 +36,12 @@ export class Rules extends ClientSDK {
    * Create a rule
    *
    * @remarks
-   * Create a new rule for the namespace
+   * Create a rule in a namespace.
    */
   async postv1RulesetsNamespace(
     request: operations.Postv1RulesetsNamespaceRequest,
     options?: RequestOptions,
-  ): Promise<operations.Postv1RulesetsNamespaceResponseBody> {
+  ): Promise<components.Uid> {
     return unwrapAsync(rulesPostv1RulesetsNamespace(
       this,
       request,
@@ -52,7 +53,7 @@ export class Rules extends ClientSDK {
    * Update rule metadata
    *
    * @remarks
-   * Update rule metadata
+   * Update rule metadata by slug.
    */
   async patchv1RulesetsNamespaceSlug(
     request: operations.Patchv1RulesetsNamespaceSlugRequest,
@@ -69,7 +70,7 @@ export class Rules extends ClientSDK {
    * Delete a rule
    *
    * @remarks
-   * Delete a specific rule
+   * Delete a rule by slug.
    */
   async deletev1RulesetsNamespaceSlug(
     request: operations.Deletev1RulesetsNamespaceSlugRequest,
@@ -86,12 +87,12 @@ export class Rules extends ClientSDK {
    * Get a rule
    *
    * @remarks
-   * Get a the rule document
+   * Get a rule document by slug.
    */
   async getv1RulesetsNamespaceSlug(
     request: operations.Getv1RulesetsNamespaceSlugRequest,
     options?: RequestOptions,
-  ): Promise<operations.Getv1RulesetsNamespaceSlugResponseBody> {
+  ): Promise<string> {
     return unwrapAsync(rulesGetv1RulesetsNamespaceSlug(
       this,
       request,
@@ -103,7 +104,7 @@ export class Rules extends ClientSDK {
    * Add rule access group
    *
    * @remarks
-   * Add an access group for the rule
+   * Grant an access group to a rule.
    */
   async postv1RulesetsNamespaceSlugAccessGroup(
     request: operations.Postv1RulesetsNamespaceSlugAccessGroupRequest,
@@ -120,7 +121,7 @@ export class Rules extends ClientSDK {
    * Remove rule access group
    *
    * @remarks
-   * Delete an access group from rule
+   * Remove an access group from a rule.
    */
   async deletev1RulesetsNamespaceSlugAccessGroup(
     request: operations.Deletev1RulesetsNamespaceSlugAccessGroupRequest,

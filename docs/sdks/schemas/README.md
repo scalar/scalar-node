@@ -19,7 +19,7 @@ Schemas
 
 ## getv1SchemasNamespace
 
-Get a list of all schemas for the namespace
+List schemas in a namespace.
 
 ### Example Usage
 
@@ -81,7 +81,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Getv1SchemasNamespaceResponseBody[]](../../models/.md)\>**
+**Promise\<[components.Schema[]](../../models/.md)\>**
 
 ### Errors
 
@@ -97,7 +97,7 @@ run();
 
 ## postv1SchemasNamespace
 
-Create a new schema for the namespace
+Create a schema in a namespace.
 
 ### Example Usage
 
@@ -171,7 +171,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Postv1SchemasNamespaceResponseBody](../../models/operations/postv1schemasnamespaceresponsebody.md)\>**
+**Promise\<[components.Uid](../../models/components/uid.md)\>**
 
 ### Errors
 
@@ -187,7 +187,7 @@ run();
 
 ## patchv1SchemasNamespaceSlug
 
-Update schema metadata
+Update schema metadata.
 
 ### Example Usage
 
@@ -269,7 +269,7 @@ run();
 
 ## deletev1SchemasNamespaceSlug
 
-Delete a specific schema and all of the related versions
+Delete a schema and all related versions.
 
 ### Example Usage
 
@@ -349,7 +349,7 @@ run();
 
 ## getv1SchemasNamespaceSlugVersionSemver
 
-Get a specific schema document
+Get a specific schema version document.
 
 ### Example Usage
 
@@ -415,7 +415,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Getv1SchemasNamespaceSlugVersionSemverResponseBody](../../models/operations/getv1schemasnamespaceslugversionsemverresponsebody.md)\>**
+**Promise\<[string](../../models/.md)\>**
 
 ### Errors
 
@@ -431,7 +431,7 @@ run();
 
 ## deletev1SchemasNamespaceSlugVersionSemver
 
-Delete a specific schema version
+Delete a schema version.
 
 ### Example Usage
 
@@ -513,7 +513,7 @@ run();
 
 ## postv1SchemasNamespaceSlugVersion
 
-Create a shared component version
+Create a schema version.
 
 ### Example Usage
 
@@ -585,7 +585,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.Postv1SchemasNamespaceSlugVersionResponseBody](../../models/operations/postv1schemasnamespaceslugversionresponsebody.md)\>**
+**Promise\<[components.Uid](../../models/components/uid.md)\>**
 
 ### Errors
 
@@ -601,7 +601,7 @@ run();
 
 ## postv1SchemasNamespaceSlugAccessGroup
 
-Add access group to schema
+Add an access group to a schema.
 
 ### Example Usage
 
@@ -616,7 +616,7 @@ async function run() {
   const result = await scalar.schemas.postv1SchemasNamespaceSlugAccessGroup({
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });
@@ -645,7 +645,7 @@ async function run() {
   const res = await schemasPostv1SchemasNamespaceSlugAccessGroup(scalar, {
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });
@@ -687,7 +687,7 @@ run();
 
 ## deletev1SchemasNamespaceSlugAccessGroup
 
-Delete access group for schema
+Remove an access group from a schema.
 
 ### Example Usage
 
@@ -702,7 +702,7 @@ async function run() {
   const result = await scalar.schemas.deletev1SchemasNamespaceSlugAccessGroup({
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });
@@ -731,7 +731,7 @@ async function run() {
   const res = await schemasDeletev1SchemasNamespaceSlugAccessGroup(scalar, {
     namespace: "<value>",
     slug: "<value>",
-    requestBody: {
+    accessGroup: {
       accessGroupSlug: "<value>",
     },
   });

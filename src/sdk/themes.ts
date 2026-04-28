@@ -9,6 +9,7 @@ import { themesPatchv1ThemesSlug } from "../funcs/themesPatchv1ThemesSlug.js";
 import { themesPostv1Themes } from "../funcs/themesPostv1Themes.js";
 import { themesPutv1ThemesSlug } from "../funcs/themesPutv1ThemesSlug.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -17,11 +18,11 @@ export class Themes extends ClientSDK {
    * List all themes
    *
    * @remarks
-   * Get a list of all themes for the team
+   * List all team themes.
    */
   async getv1Themes(
     options?: RequestOptions,
-  ): Promise<Array<operations.Getv1ThemesResponseBody>> {
+  ): Promise<Array<components.Theme>> {
     return unwrapAsync(themesGetv1Themes(
       this,
       options,
@@ -32,12 +33,12 @@ export class Themes extends ClientSDK {
    * Create a theme
    *
    * @remarks
-   * Create a new theme for the team
+   * Create a team theme.
    */
   async postv1Themes(
     request: operations.Postv1ThemesRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.Postv1ThemesResponseBody> {
+  ): Promise<components.Uid> {
     return unwrapAsync(themesPostv1Themes(
       this,
       request,
@@ -49,7 +50,7 @@ export class Themes extends ClientSDK {
    * Update theme metadata
    *
    * @remarks
-   * Update themes metadata
+   * Update theme metadata.
    */
   async patchv1ThemesSlug(
     request: operations.Patchv1ThemesSlugRequest,
@@ -66,7 +67,7 @@ export class Themes extends ClientSDK {
    * Update theme document
    *
    * @remarks
-   * Update themes document
+   * Replace the theme document.
    */
   async putv1ThemesSlug(
     request: operations.Putv1ThemesSlugRequest,
@@ -83,7 +84,7 @@ export class Themes extends ClientSDK {
    * Delete a theme
    *
    * @remarks
-   * Delete a specific themes
+   * Delete a theme by slug.
    */
   async deletev1ThemesSlug(
     request: operations.Deletev1ThemesSlugRequest,
@@ -100,7 +101,7 @@ export class Themes extends ClientSDK {
    * Get a theme
    *
    * @remarks
-   * Get a the themes document
+   * Get the theme document by slug.
    */
   async getv1ThemesSlug(
     request: operations.Getv1ThemesSlugRequest,

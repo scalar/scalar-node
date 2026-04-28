@@ -23,13 +23,6 @@ export type Postv1ApisNamespaceRequest = {
   requestBody: Postv1ApisNamespaceRequestBody;
 };
 
-/**
- * Default Response
- */
-export type Postv1ApisNamespaceResponseBody = {
-  uid: string;
-};
-
 /** @internal */
 export const Postv1ApisNamespaceRequestBody$inboundSchema: z.ZodType<
   Postv1ApisNamespaceRequestBody,
@@ -166,61 +159,5 @@ export function postv1ApisNamespaceRequestFromJSON(
     jsonString,
     (x) => Postv1ApisNamespaceRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'Postv1ApisNamespaceRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const Postv1ApisNamespaceResponseBody$inboundSchema: z.ZodType<
-  Postv1ApisNamespaceResponseBody,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  uid: z.string(),
-});
-
-/** @internal */
-export type Postv1ApisNamespaceResponseBody$Outbound = {
-  uid: string;
-};
-
-/** @internal */
-export const Postv1ApisNamespaceResponseBody$outboundSchema: z.ZodType<
-  Postv1ApisNamespaceResponseBody$Outbound,
-  z.ZodTypeDef,
-  Postv1ApisNamespaceResponseBody
-> = z.object({
-  uid: z.string(),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Postv1ApisNamespaceResponseBody$ {
-  /** @deprecated use `Postv1ApisNamespaceResponseBody$inboundSchema` instead. */
-  export const inboundSchema = Postv1ApisNamespaceResponseBody$inboundSchema;
-  /** @deprecated use `Postv1ApisNamespaceResponseBody$outboundSchema` instead. */
-  export const outboundSchema = Postv1ApisNamespaceResponseBody$outboundSchema;
-  /** @deprecated use `Postv1ApisNamespaceResponseBody$Outbound` instead. */
-  export type Outbound = Postv1ApisNamespaceResponseBody$Outbound;
-}
-
-export function postv1ApisNamespaceResponseBodyToJSON(
-  postv1ApisNamespaceResponseBody: Postv1ApisNamespaceResponseBody,
-): string {
-  return JSON.stringify(
-    Postv1ApisNamespaceResponseBody$outboundSchema.parse(
-      postv1ApisNamespaceResponseBody,
-    ),
-  );
-}
-
-export function postv1ApisNamespaceResponseBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<Postv1ApisNamespaceResponseBody, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Postv1ApisNamespaceResponseBody$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Postv1ApisNamespaceResponseBody' from JSON`,
   );
 }

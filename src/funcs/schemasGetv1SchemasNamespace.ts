@@ -11,6 +11,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -30,7 +31,7 @@ import { Result } from "../types/fp.js";
  * List all shared components
  *
  * @remarks
- * Get a list of all schemas for the namespace
+ * List schemas in a namespace.
  */
 export function schemasGetv1SchemasNamespace(
   client: ScalarCore,
@@ -38,7 +39,7 @@ export function schemasGetv1SchemasNamespace(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    Array<operations.Getv1SchemasNamespaceResponseBody>,
+    Array<components.Schema>,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -69,7 +70,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      Array<operations.Getv1SchemasNamespaceResponseBody>,
+      Array<components.Schema>,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -163,7 +164,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    Array<operations.Getv1SchemasNamespaceResponseBody>,
+    Array<components.Schema>,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -179,10 +180,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(
-      200,
-      z.array(operations.Getv1SchemasNamespaceResponseBody$inboundSchema),
-    ),
+    M.json(200, z.array(components.Schema$inboundSchema)),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

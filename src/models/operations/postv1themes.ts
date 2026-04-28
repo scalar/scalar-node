@@ -14,13 +14,6 @@ export type Postv1ThemesRequestBody = {
   document: string;
 };
 
-/**
- * Default Response
- */
-export type Postv1ThemesResponseBody = {
-  uid: string;
-};
-
 /** @internal */
 export const Postv1ThemesRequestBody$inboundSchema: z.ZodType<
   Postv1ThemesRequestBody,
@@ -81,59 +74,5 @@ export function postv1ThemesRequestBodyFromJSON(
     jsonString,
     (x) => Postv1ThemesRequestBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'Postv1ThemesRequestBody' from JSON`,
-  );
-}
-
-/** @internal */
-export const Postv1ThemesResponseBody$inboundSchema: z.ZodType<
-  Postv1ThemesResponseBody,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  uid: z.string(),
-});
-
-/** @internal */
-export type Postv1ThemesResponseBody$Outbound = {
-  uid: string;
-};
-
-/** @internal */
-export const Postv1ThemesResponseBody$outboundSchema: z.ZodType<
-  Postv1ThemesResponseBody$Outbound,
-  z.ZodTypeDef,
-  Postv1ThemesResponseBody
-> = z.object({
-  uid: z.string(),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Postv1ThemesResponseBody$ {
-  /** @deprecated use `Postv1ThemesResponseBody$inboundSchema` instead. */
-  export const inboundSchema = Postv1ThemesResponseBody$inboundSchema;
-  /** @deprecated use `Postv1ThemesResponseBody$outboundSchema` instead. */
-  export const outboundSchema = Postv1ThemesResponseBody$outboundSchema;
-  /** @deprecated use `Postv1ThemesResponseBody$Outbound` instead. */
-  export type Outbound = Postv1ThemesResponseBody$Outbound;
-}
-
-export function postv1ThemesResponseBodyToJSON(
-  postv1ThemesResponseBody: Postv1ThemesResponseBody,
-): string {
-  return JSON.stringify(
-    Postv1ThemesResponseBody$outboundSchema.parse(postv1ThemesResponseBody),
-  );
-}
-
-export function postv1ThemesResponseBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<Postv1ThemesResponseBody, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Postv1ThemesResponseBody$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Postv1ThemesResponseBody' from JSON`,
   );
 }

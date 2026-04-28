@@ -21,13 +21,6 @@ export type Postv1RulesetsNamespaceRequest = {
   requestBody: Postv1RulesetsNamespaceRequestBody;
 };
 
-/**
- * Default Response
- */
-export type Postv1RulesetsNamespaceResponseBody = {
-  uid: string;
-};
-
 /** @internal */
 export const Postv1RulesetsNamespaceRequestBody$inboundSchema: z.ZodType<
   Postv1RulesetsNamespaceRequestBody,
@@ -162,64 +155,5 @@ export function postv1RulesetsNamespaceRequestFromJSON(
     jsonString,
     (x) => Postv1RulesetsNamespaceRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'Postv1RulesetsNamespaceRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const Postv1RulesetsNamespaceResponseBody$inboundSchema: z.ZodType<
-  Postv1RulesetsNamespaceResponseBody,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  uid: z.string(),
-});
-
-/** @internal */
-export type Postv1RulesetsNamespaceResponseBody$Outbound = {
-  uid: string;
-};
-
-/** @internal */
-export const Postv1RulesetsNamespaceResponseBody$outboundSchema: z.ZodType<
-  Postv1RulesetsNamespaceResponseBody$Outbound,
-  z.ZodTypeDef,
-  Postv1RulesetsNamespaceResponseBody
-> = z.object({
-  uid: z.string(),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Postv1RulesetsNamespaceResponseBody$ {
-  /** @deprecated use `Postv1RulesetsNamespaceResponseBody$inboundSchema` instead. */
-  export const inboundSchema =
-    Postv1RulesetsNamespaceResponseBody$inboundSchema;
-  /** @deprecated use `Postv1RulesetsNamespaceResponseBody$outboundSchema` instead. */
-  export const outboundSchema =
-    Postv1RulesetsNamespaceResponseBody$outboundSchema;
-  /** @deprecated use `Postv1RulesetsNamespaceResponseBody$Outbound` instead. */
-  export type Outbound = Postv1RulesetsNamespaceResponseBody$Outbound;
-}
-
-export function postv1RulesetsNamespaceResponseBodyToJSON(
-  postv1RulesetsNamespaceResponseBody: Postv1RulesetsNamespaceResponseBody,
-): string {
-  return JSON.stringify(
-    Postv1RulesetsNamespaceResponseBody$outboundSchema.parse(
-      postv1RulesetsNamespaceResponseBody,
-    ),
-  );
-}
-
-export function postv1RulesetsNamespaceResponseBodyFromJSON(
-  jsonString: string,
-): SafeParseResult<Postv1RulesetsNamespaceResponseBody, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      Postv1RulesetsNamespaceResponseBody$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Postv1RulesetsNamespaceResponseBody' from JSON`,
   );
 }

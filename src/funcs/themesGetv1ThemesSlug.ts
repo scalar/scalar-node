@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * Get a theme
  *
  * @remarks
- * Get a the themes document
+ * Get the theme document by slug.
  */
 export function themesGetv1ThemesSlug(
   client: ScalarCore,
@@ -109,7 +109,7 @@ async function $do(
   const path = pathToFunc("/v1/themes/{slug}")(pathParams);
 
   const headers = new Headers(compactMap({
-    Accept: "application/json",
+    Accept: "text/plain",
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -178,7 +178,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, z.string()),
+    M.text(200, z.string()),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

@@ -8,6 +8,7 @@ import { loginPortalsGetv1LoginPortalsSlug } from "../funcs/loginPortalsGetv1Log
 import { loginPortalsPatchv1LoginPortalsSlug } from "../funcs/loginPortalsPatchv1LoginPortalsSlug.js";
 import { loginPortalsPostv1LoginPortals } from "../funcs/loginPortalsPostv1LoginPortals.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -16,7 +17,7 @@ export class LoginPortals extends ClientSDK {
    * Get a login portal
    *
    * @remarks
-   * Get a login portal
+   * Get a login portal by slug.
    */
   async getv1LoginPortalsSlug(
     request: operations.Getv1LoginPortalsSlugRequest,
@@ -30,10 +31,10 @@ export class LoginPortals extends ClientSDK {
   }
 
   /**
-   * Update metadata
+   * Update portal metadata
    *
    * @remarks
-   * Update login portals metadata
+   * Update metadata for a login portal.
    */
   async patchv1LoginPortalsSlug(
     request: operations.Patchv1LoginPortalsSlugRequest,
@@ -50,7 +51,7 @@ export class LoginPortals extends ClientSDK {
    * Delete a login portal
    *
    * @remarks
-   * Delete a specific login portal
+   * Delete a login portal.
    */
   async deletev1LoginPortalsSlug(
     request: operations.Deletev1LoginPortalsSlugRequest,
@@ -67,12 +68,12 @@ export class LoginPortals extends ClientSDK {
    * Create a portal
    *
    * @remarks
-   * Create a new login portal for the team
+   * Create a login portal for the current team.
    */
   async postv1LoginPortals(
     request: operations.Postv1LoginPortalsRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.Postv1LoginPortalsResponseBody> {
+  ): Promise<components.Uid> {
     return unwrapAsync(loginPortalsPostv1LoginPortals(
       this,
       request,
@@ -84,11 +85,11 @@ export class LoginPortals extends ClientSDK {
    * List all portals
    *
    * @remarks
-   * Get a list of all login portals for the team
+   * List all login portals for the current team.
    */
   async getv1LoginPortals(
     options?: RequestOptions,
-  ): Promise<Array<operations.Getv1LoginPortalsResponseBody>> {
+  ): Promise<Array<components.LoginPortal>> {
     return unwrapAsync(loginPortalsGetv1LoginPortals(
       this,
       options,
