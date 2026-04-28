@@ -1,8 +1,9 @@
-name: Publish Package to npmjs
+name: CI
 on:
   push:
     branches:
       - main
+  pull_request:
   workflow_dispatch: null
 jobs:
   build:
@@ -23,5 +24,6 @@ jobs:
       - run: npm install
       - run: npm run prepublishOnly
       - run: npm publish --access public
+        if: github.event_name != 'pull_request'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
