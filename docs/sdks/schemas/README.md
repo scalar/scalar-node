@@ -7,17 +7,17 @@ Schemas
 
 ### Available Operations
 
-* [getv1SchemasNamespace](#getv1schemasnamespace) - List all shared components
-* [postv1SchemasNamespace](#postv1schemasnamespace) - Create a shared component
-* [patchv1SchemasNamespaceSlug](#patchv1schemasnamespaceslug) - Update shared component metadata
-* [deletev1SchemasNamespaceSlug](#deletev1schemasnamespaceslug) - Delete a shared component
-* [getv1SchemasNamespaceSlugVersionSemver](#getv1schemasnamespaceslugversionsemver) - Get a shared component document
-* [deletev1SchemasNamespaceSlugVersionSemver](#deletev1schemasnamespaceslugversionsemver) - Delete a shared component version
-* [postv1SchemasNamespaceSlugVersion](#postv1schemasnamespaceslugversion) - Create a shared component version
-* [postv1SchemasNamespaceSlugAccessGroup](#postv1schemasnamespaceslugaccessgroup) - Add shared component access group
-* [deletev1SchemasNamespaceSlugAccessGroup](#deletev1schemasnamespaceslugaccessgroup) - Remove shared component access group
+* [listSchemas](#listschemas) - List all shared components
+* [createSchema](#createschema) - Create a shared component
+* [updateSchema](#updateschema) - Update shared component metadata
+* [deleteSchema](#deleteschema) - Delete a shared component
+* [getSchemaVersion](#getschemaversion) - Get a shared component document
+* [deleteSchemaVersion](#deleteschemaversion) - Delete a shared component version
+* [createSchemaVersion](#createschemaversion) - Create a shared component version
+* [addSchemaAccessGroup](#addschemaaccessgroup) - Add shared component access group
+* [removeSchemaAccessGroup](#removeschemaaccessgroup) - Remove shared component access group
 
-## getv1SchemasNamespace
+## listSchemas
 
 List schemas in a namespace.
 
@@ -31,7 +31,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.getv1SchemasNamespace({
+  const result = await scalar.schemas.listSchemas({
     namespace: "<value>",
   });
 
@@ -47,7 +47,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasGetv1SchemasNamespace } from "@scalar/sdk/funcs/schemasGetv1SchemasNamespace.js";
+import { schemasListSchemas } from "@scalar/sdk/funcs/schemasListSchemas.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -56,14 +56,14 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasGetv1SchemasNamespace(scalar, {
+  const res = await schemasListSchemas(scalar, {
     namespace: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasGetv1SchemasNamespace failed:", res.error);
+    console.log("schemasListSchemas failed:", res.error);
   }
 }
 
@@ -74,7 +74,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Getv1SchemasNamespaceRequest](../../models/operations/getv1schemasnamespacerequest.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.ListSchemasRequest](../../models/operations/listschemasrequest.md)                                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -95,7 +95,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1SchemasNamespace
+## createSchema
 
 Create a schema in a namespace.
 
@@ -109,7 +109,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.postv1SchemasNamespace({
+  const result = await scalar.schemas.createSchema({
     namespace: "<value>",
     requestBody: {
       title: "<value>",
@@ -131,7 +131,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasPostv1SchemasNamespace } from "@scalar/sdk/funcs/schemasPostv1SchemasNamespace.js";
+import { schemasCreateSchema } from "@scalar/sdk/funcs/schemasCreateSchema.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -140,7 +140,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasPostv1SchemasNamespace(scalar, {
+  const res = await schemasCreateSchema(scalar, {
     namespace: "<value>",
     requestBody: {
       title: "<value>",
@@ -153,7 +153,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasPostv1SchemasNamespace failed:", res.error);
+    console.log("schemasCreateSchema failed:", res.error);
   }
 }
 
@@ -164,7 +164,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1SchemasNamespaceRequest](../../models/operations/postv1schemasnamespacerequest.md)                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateSchemaRequest](../../models/operations/createschemarequest.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -185,7 +185,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## patchv1SchemasNamespaceSlug
+## updateSchema
 
 Update schema metadata.
 
@@ -199,7 +199,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.patchv1SchemasNamespaceSlug({
+  const result = await scalar.schemas.updateSchema({
     namespace: "<value>",
     slug: "<value>",
     requestBody: {},
@@ -217,7 +217,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasPatchv1SchemasNamespaceSlug } from "@scalar/sdk/funcs/schemasPatchv1SchemasNamespaceSlug.js";
+import { schemasUpdateSchema } from "@scalar/sdk/funcs/schemasUpdateSchema.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -226,7 +226,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasPatchv1SchemasNamespaceSlug(scalar, {
+  const res = await schemasUpdateSchema(scalar, {
     namespace: "<value>",
     slug: "<value>",
     requestBody: {},
@@ -235,7 +235,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasPatchv1SchemasNamespaceSlug failed:", res.error);
+    console.log("schemasUpdateSchema failed:", res.error);
   }
 }
 
@@ -246,7 +246,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Patchv1SchemasNamespaceSlugRequest](../../models/operations/patchv1schemasnamespaceslugrequest.md)                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.UpdateSchemaRequest](../../models/operations/updateschemarequest.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -267,7 +267,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## deletev1SchemasNamespaceSlug
+## deleteSchema
 
 Delete a schema and all related versions.
 
@@ -281,7 +281,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.deletev1SchemasNamespaceSlug({
+  const result = await scalar.schemas.deleteSchema({
     namespace: "<value>",
     slug: "<value>",
   });
@@ -298,7 +298,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasDeletev1SchemasNamespaceSlug } from "@scalar/sdk/funcs/schemasDeletev1SchemasNamespaceSlug.js";
+import { schemasDeleteSchema } from "@scalar/sdk/funcs/schemasDeleteSchema.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -307,7 +307,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasDeletev1SchemasNamespaceSlug(scalar, {
+  const res = await schemasDeleteSchema(scalar, {
     namespace: "<value>",
     slug: "<value>",
   });
@@ -315,7 +315,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasDeletev1SchemasNamespaceSlug failed:", res.error);
+    console.log("schemasDeleteSchema failed:", res.error);
   }
 }
 
@@ -326,7 +326,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Deletev1SchemasNamespaceSlugRequest](../../models/operations/deletev1schemasnamespaceslugrequest.md)                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.DeleteSchemaRequest](../../models/operations/deleteschemarequest.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -347,7 +347,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## getv1SchemasNamespaceSlugVersionSemver
+## getSchemaVersion
 
 Get a specific schema version document.
 
@@ -361,7 +361,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.getv1SchemasNamespaceSlugVersionSemver({
+  const result = await scalar.schemas.getSchemaVersion({
     namespace: "<value>",
     slug: "<value>",
     semver: "<value>",
@@ -379,7 +379,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasGetv1SchemasNamespaceSlugVersionSemver } from "@scalar/sdk/funcs/schemasGetv1SchemasNamespaceSlugVersionSemver.js";
+import { schemasGetSchemaVersion } from "@scalar/sdk/funcs/schemasGetSchemaVersion.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -388,7 +388,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasGetv1SchemasNamespaceSlugVersionSemver(scalar, {
+  const res = await schemasGetSchemaVersion(scalar, {
     namespace: "<value>",
     slug: "<value>",
     semver: "<value>",
@@ -397,7 +397,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasGetv1SchemasNamespaceSlugVersionSemver failed:", res.error);
+    console.log("schemasGetSchemaVersion failed:", res.error);
   }
 }
 
@@ -408,7 +408,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Getv1SchemasNamespaceSlugVersionSemverRequest](../../models/operations/getv1schemasnamespaceslugversionsemverrequest.md)                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetSchemaVersionRequest](../../models/operations/getschemaversionrequest.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -429,7 +429,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## deletev1SchemasNamespaceSlugVersionSemver
+## deleteSchemaVersion
 
 Delete a schema version.
 
@@ -443,7 +443,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.deletev1SchemasNamespaceSlugVersionSemver({
+  const result = await scalar.schemas.deleteSchemaVersion({
     namespace: "<value>",
     slug: "<value>",
     semver: "<value>",
@@ -461,7 +461,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasDeletev1SchemasNamespaceSlugVersionSemver } from "@scalar/sdk/funcs/schemasDeletev1SchemasNamespaceSlugVersionSemver.js";
+import { schemasDeleteSchemaVersion } from "@scalar/sdk/funcs/schemasDeleteSchemaVersion.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -470,7 +470,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasDeletev1SchemasNamespaceSlugVersionSemver(scalar, {
+  const res = await schemasDeleteSchemaVersion(scalar, {
     namespace: "<value>",
     slug: "<value>",
     semver: "<value>",
@@ -479,7 +479,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasDeletev1SchemasNamespaceSlugVersionSemver failed:", res.error);
+    console.log("schemasDeleteSchemaVersion failed:", res.error);
   }
 }
 
@@ -490,7 +490,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Deletev1SchemasNamespaceSlugVersionSemverRequest](../../models/operations/deletev1schemasnamespaceslugversionsemverrequest.md)                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.DeleteSchemaVersionRequest](../../models/operations/deleteschemaversionrequest.md)                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -511,7 +511,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1SchemasNamespaceSlugVersion
+## createSchemaVersion
 
 Create a schema version.
 
@@ -525,7 +525,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.postv1SchemasNamespaceSlugVersion({
+  const result = await scalar.schemas.createSchemaVersion({
     namespace: "<value>",
     slug: "<value>",
     requestBody: {
@@ -546,7 +546,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasPostv1SchemasNamespaceSlugVersion } from "@scalar/sdk/funcs/schemasPostv1SchemasNamespaceSlugVersion.js";
+import { schemasCreateSchemaVersion } from "@scalar/sdk/funcs/schemasCreateSchemaVersion.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -555,7 +555,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasPostv1SchemasNamespaceSlugVersion(scalar, {
+  const res = await schemasCreateSchemaVersion(scalar, {
     namespace: "<value>",
     slug: "<value>",
     requestBody: {
@@ -567,7 +567,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasPostv1SchemasNamespaceSlugVersion failed:", res.error);
+    console.log("schemasCreateSchemaVersion failed:", res.error);
   }
 }
 
@@ -578,7 +578,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1SchemasNamespaceSlugVersionRequest](../../models/operations/postv1schemasnamespaceslugversionrequest.md)                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateSchemaVersionRequest](../../models/operations/createschemaversionrequest.md)                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -599,7 +599,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1SchemasNamespaceSlugAccessGroup
+## addSchemaAccessGroup
 
 Add an access group to a schema.
 
@@ -613,7 +613,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.postv1SchemasNamespaceSlugAccessGroup({
+  const result = await scalar.schemas.addSchemaAccessGroup({
     namespace: "<value>",
     slug: "<value>",
     accessGroup: {
@@ -633,7 +633,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasPostv1SchemasNamespaceSlugAccessGroup } from "@scalar/sdk/funcs/schemasPostv1SchemasNamespaceSlugAccessGroup.js";
+import { schemasAddSchemaAccessGroup } from "@scalar/sdk/funcs/schemasAddSchemaAccessGroup.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -642,7 +642,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasPostv1SchemasNamespaceSlugAccessGroup(scalar, {
+  const res = await schemasAddSchemaAccessGroup(scalar, {
     namespace: "<value>",
     slug: "<value>",
     accessGroup: {
@@ -653,7 +653,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasPostv1SchemasNamespaceSlugAccessGroup failed:", res.error);
+    console.log("schemasAddSchemaAccessGroup failed:", res.error);
   }
 }
 
@@ -664,7 +664,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1SchemasNamespaceSlugAccessGroupRequest](../../models/operations/postv1schemasnamespaceslugaccessgrouprequest.md)                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.AddSchemaAccessGroupRequest](../../models/operations/addschemaaccessgrouprequest.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -685,7 +685,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## deletev1SchemasNamespaceSlugAccessGroup
+## removeSchemaAccessGroup
 
 Remove an access group from a schema.
 
@@ -699,7 +699,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.schemas.deletev1SchemasNamespaceSlugAccessGroup({
+  const result = await scalar.schemas.removeSchemaAccessGroup({
     namespace: "<value>",
     slug: "<value>",
     accessGroup: {
@@ -719,7 +719,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { schemasDeletev1SchemasNamespaceSlugAccessGroup } from "@scalar/sdk/funcs/schemasDeletev1SchemasNamespaceSlugAccessGroup.js";
+import { schemasRemoveSchemaAccessGroup } from "@scalar/sdk/funcs/schemasRemoveSchemaAccessGroup.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -728,7 +728,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await schemasDeletev1SchemasNamespaceSlugAccessGroup(scalar, {
+  const res = await schemasRemoveSchemaAccessGroup(scalar, {
     namespace: "<value>",
     slug: "<value>",
     accessGroup: {
@@ -739,7 +739,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("schemasDeletev1SchemasNamespaceSlugAccessGroup failed:", res.error);
+    console.log("schemasRemoveSchemaAccessGroup failed:", res.error);
   }
 }
 
@@ -750,7 +750,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Deletev1SchemasNamespaceSlugAccessGroupRequest](../../models/operations/deletev1schemasnamespaceslugaccessgrouprequest.md)                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.RemoveSchemaAccessGroupRequest](../../models/operations/removeschemaaccessgrouprequest.md)                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |

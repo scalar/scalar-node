@@ -7,10 +7,10 @@ Authentication
 
 ### Available Operations
 
-* [postv1AuthExchange](#postv1authexchange) - Exchange token
-* [getv1AuthMe](#getv1authme) - Get current user
+* [exchangePersonalToken](#exchangepersonaltoken) - Exchange token
+* [getCurrentUser](#getcurrentuser) - Get current user
 
-## postv1AuthExchange
+## exchangePersonalToken
 
 Exchange an API key for an access token.
 
@@ -22,7 +22,7 @@ import { Scalar } from "@scalar/sdk";
 const scalar = new Scalar();
 
 async function run() {
-  const result = await scalar.authentication.postv1AuthExchange({
+  const result = await scalar.authentication.exchangePersonalToken({
     personalToken: "<value>",
   });
 
@@ -38,21 +38,21 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { authenticationPostv1AuthExchange } from "@scalar/sdk/funcs/authenticationPostv1AuthExchange.js";
+import { authenticationExchangePersonalToken } from "@scalar/sdk/funcs/authenticationExchangePersonalToken.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const scalar = new ScalarCore();
 
 async function run() {
-  const res = await authenticationPostv1AuthExchange(scalar, {
+  const res = await authenticationExchangePersonalToken(scalar, {
     personalToken: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("authenticationPostv1AuthExchange failed:", res.error);
+    console.log("authenticationExchangePersonalToken failed:", res.error);
   }
 }
 
@@ -63,14 +63,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1AuthExchangeRequestBody](../../models/operations/postv1authexchangerequestbody.md)                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.ExchangePersonalTokenRequestBody](../../models/operations/exchangepersonaltokenrequestbody.md)                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.Postv1AuthExchangeResponseBody](../../models/operations/postv1authexchangeresponsebody.md)\>**
+**Promise\<[operations.ExchangePersonalTokenResponseBody](../../models/operations/exchangepersonaltokenresponsebody.md)\>**
 
 ### Errors
 
@@ -84,7 +84,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## getv1AuthMe
+## getCurrentUser
 
 Get the authenticated user, including their available teams and theme.
 
@@ -98,7 +98,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.authentication.getv1AuthMe();
+  const result = await scalar.authentication.getCurrentUser();
 
   console.log(result);
 }
@@ -112,7 +112,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { authenticationGetv1AuthMe } from "@scalar/sdk/funcs/authenticationGetv1AuthMe.js";
+import { authenticationGetCurrentUser } from "@scalar/sdk/funcs/authenticationGetCurrentUser.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -121,12 +121,12 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await authenticationGetv1AuthMe(scalar);
+  const res = await authenticationGetCurrentUser(scalar);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("authenticationGetv1AuthMe failed:", res.error);
+    console.log("authenticationGetCurrentUser failed:", res.error);
   }
 }
 

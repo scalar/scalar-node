@@ -7,9 +7,9 @@ Namespaces
 
 ### Available Operations
 
-* [getv1Namespaces](#getv1namespaces) - List namespaces
+* [listNamespaces](#listnamespaces) - List namespaces
 
-## getv1Namespaces
+## listNamespaces
 
 Get all namespaces for the current team
 
@@ -23,7 +23,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.namespaces.getv1Namespaces();
+  const result = await scalar.namespaces.listNamespaces();
 
   console.log(result);
 }
@@ -37,7 +37,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { namespacesGetv1Namespaces } from "@scalar/sdk/funcs/namespacesGetv1Namespaces.js";
+import { namespacesListNamespaces } from "@scalar/sdk/funcs/namespacesListNamespaces.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -46,12 +46,12 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await namespacesGetv1Namespaces(scalar);
+  const res = await namespacesListNamespaces(scalar);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("namespacesGetv1Namespaces failed:", res.error);
+    console.log("namespacesListNamespaces failed:", res.error);
   }
 }
 

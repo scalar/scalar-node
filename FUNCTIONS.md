@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { registryGetv1ApisNamespace } from "@scalar/sdk/funcs/registryGetv1ApisNamespace.js";
+import { registryListAllApiDocuments } from "@scalar/sdk/funcs/registryListAllApiDocuments.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -29,14 +29,12 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await registryGetv1ApisNamespace(scalar, {
-    namespace: "<value>",
-  });
+  const res = await registryListAllApiDocuments(scalar);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("registryGetv1ApisNamespace failed:", res.error);
+    console.log("registryListAllApiDocuments failed:", res.error);
   }
 }
 

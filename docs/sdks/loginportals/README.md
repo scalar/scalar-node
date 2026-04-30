@@ -7,13 +7,13 @@ Login Portals
 
 ### Available Operations
 
-* [getv1LoginPortalsSlug](#getv1loginportalsslug) - Get a login portal
-* [patchv1LoginPortalsSlug](#patchv1loginportalsslug) - Update portal metadata
-* [deletev1LoginPortalsSlug](#deletev1loginportalsslug) - Delete a login portal
-* [postv1LoginPortals](#postv1loginportals) - Create a portal
-* [getv1LoginPortals](#getv1loginportals) - List all portals
+* [getLoginPortal](#getloginportal) - Get a login portal
+* [updateLoginPortal](#updateloginportal) - Update portal metadata
+* [deleteLoginPortal](#deleteloginportal) - Delete a login portal
+* [createLoginPortal](#createloginportal) - Create a portal
+* [listLoginPortals](#listloginportals) - List all portals
 
-## getv1LoginPortalsSlug
+## getLoginPortal
 
 Get a login portal by slug.
 
@@ -27,7 +27,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.loginPortals.getv1LoginPortalsSlug({
+  const result = await scalar.loginPortals.getLoginPortal({
     slug: "<value>",
   });
 
@@ -43,7 +43,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { loginPortalsGetv1LoginPortalsSlug } from "@scalar/sdk/funcs/loginPortalsGetv1LoginPortalsSlug.js";
+import { loginPortalsGetLoginPortal } from "@scalar/sdk/funcs/loginPortalsGetLoginPortal.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -52,14 +52,14 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await loginPortalsGetv1LoginPortalsSlug(scalar, {
+  const res = await loginPortalsGetLoginPortal(scalar, {
     slug: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("loginPortalsGetv1LoginPortalsSlug failed:", res.error);
+    console.log("loginPortalsGetLoginPortal failed:", res.error);
   }
 }
 
@@ -70,14 +70,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Getv1LoginPortalsSlugRequest](../../models/operations/getv1loginportalsslugrequest.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetLoginPortalRequest](../../models/operations/getloginportalrequest.md)                                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.Getv1LoginPortalsSlugResponseBody](../../models/operations/getv1loginportalsslugresponsebody.md)\>**
+**Promise\<[operations.GetLoginPortalResponseBody](../../models/operations/getloginportalresponsebody.md)\>**
 
 ### Errors
 
@@ -91,7 +91,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## patchv1LoginPortalsSlug
+## updateLoginPortal
 
 Update metadata for a login portal.
 
@@ -105,7 +105,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.loginPortals.patchv1LoginPortalsSlug({
+  const result = await scalar.loginPortals.updateLoginPortal({
     slug: "<value>",
     requestBody: {},
   });
@@ -122,7 +122,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { loginPortalsPatchv1LoginPortalsSlug } from "@scalar/sdk/funcs/loginPortalsPatchv1LoginPortalsSlug.js";
+import { loginPortalsUpdateLoginPortal } from "@scalar/sdk/funcs/loginPortalsUpdateLoginPortal.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -131,7 +131,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await loginPortalsPatchv1LoginPortalsSlug(scalar, {
+  const res = await loginPortalsUpdateLoginPortal(scalar, {
     slug: "<value>",
     requestBody: {},
   });
@@ -139,7 +139,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("loginPortalsPatchv1LoginPortalsSlug failed:", res.error);
+    console.log("loginPortalsUpdateLoginPortal failed:", res.error);
   }
 }
 
@@ -150,7 +150,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Patchv1LoginPortalsSlugRequest](../../models/operations/patchv1loginportalsslugrequest.md)                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.UpdateLoginPortalRequest](../../models/operations/updateloginportalrequest.md)                                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -171,7 +171,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## deletev1LoginPortalsSlug
+## deleteLoginPortal
 
 Delete a login portal.
 
@@ -185,7 +185,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.loginPortals.deletev1LoginPortalsSlug({
+  const result = await scalar.loginPortals.deleteLoginPortal({
     slug: "<value>",
   });
 
@@ -201,7 +201,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { loginPortalsDeletev1LoginPortalsSlug } from "@scalar/sdk/funcs/loginPortalsDeletev1LoginPortalsSlug.js";
+import { loginPortalsDeleteLoginPortal } from "@scalar/sdk/funcs/loginPortalsDeleteLoginPortal.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -210,14 +210,14 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await loginPortalsDeletev1LoginPortalsSlug(scalar, {
+  const res = await loginPortalsDeleteLoginPortal(scalar, {
     slug: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("loginPortalsDeletev1LoginPortalsSlug failed:", res.error);
+    console.log("loginPortalsDeleteLoginPortal failed:", res.error);
   }
 }
 
@@ -228,7 +228,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Deletev1LoginPortalsSlugRequest](../../models/operations/deletev1loginportalsslugrequest.md)                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.DeleteLoginPortalRequest](../../models/operations/deleteloginportalrequest.md)                                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -249,7 +249,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1LoginPortals
+## createLoginPortal
 
 Create a login portal for the current team.
 
@@ -263,7 +263,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.loginPortals.postv1LoginPortals({
+  const result = await scalar.loginPortals.createLoginPortal({
     title: "<value>",
     slug: "<value>",
     email: {},
@@ -282,7 +282,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { loginPortalsPostv1LoginPortals } from "@scalar/sdk/funcs/loginPortalsPostv1LoginPortals.js";
+import { loginPortalsCreateLoginPortal } from "@scalar/sdk/funcs/loginPortalsCreateLoginPortal.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -291,7 +291,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await loginPortalsPostv1LoginPortals(scalar, {
+  const res = await loginPortalsCreateLoginPortal(scalar, {
     title: "<value>",
     slug: "<value>",
     email: {},
@@ -301,7 +301,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("loginPortalsPostv1LoginPortals failed:", res.error);
+    console.log("loginPortalsCreateLoginPortal failed:", res.error);
   }
 }
 
@@ -312,7 +312,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1LoginPortalsRequestBody](../../models/operations/postv1loginportalsrequestbody.md)                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateLoginPortalRequestBody](../../models/operations/createloginportalrequestbody.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -333,7 +333,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## getv1LoginPortals
+## listLoginPortals
 
 List all login portals for the current team.
 
@@ -347,7 +347,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.loginPortals.getv1LoginPortals();
+  const result = await scalar.loginPortals.listLoginPortals();
 
   console.log(result);
 }
@@ -361,7 +361,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { loginPortalsGetv1LoginPortals } from "@scalar/sdk/funcs/loginPortalsGetv1LoginPortals.js";
+import { loginPortalsListLoginPortals } from "@scalar/sdk/funcs/loginPortalsListLoginPortals.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -370,12 +370,12 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await loginPortalsGetv1LoginPortals(scalar);
+  const res = await loginPortalsListLoginPortals(scalar);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("loginPortalsGetv1LoginPortals failed:", res.error);
+    console.log("loginPortalsListLoginPortals failed:", res.error);
   }
 }
 

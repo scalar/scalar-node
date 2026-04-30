@@ -7,14 +7,14 @@ Themes
 
 ### Available Operations
 
-* [getv1Themes](#getv1themes) - List all themes
-* [postv1Themes](#postv1themes) - Create a theme
-* [patchv1ThemesSlug](#patchv1themesslug) - Update theme metadata
-* [putv1ThemesSlug](#putv1themesslug) - Update theme document
-* [deletev1ThemesSlug](#deletev1themesslug) - Delete a theme
-* [getv1ThemesSlug](#getv1themesslug) - Get a theme
+* [listThemes](#listthemes) - List all themes
+* [createTheme](#createtheme) - Create a theme
+* [updateTheme](#updatetheme) - Update theme metadata
+* [replaceThemeDocument](#replacethemedocument) - Update theme document
+* [deleteTheme](#deletetheme) - Delete a theme
+* [getTheme](#gettheme) - Get a theme
 
-## getv1Themes
+## listThemes
 
 List all team themes.
 
@@ -28,7 +28,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.themes.getv1Themes();
+  const result = await scalar.themes.listThemes();
 
   console.log(result);
 }
@@ -42,7 +42,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { themesGetv1Themes } from "@scalar/sdk/funcs/themesGetv1Themes.js";
+import { themesListThemes } from "@scalar/sdk/funcs/themesListThemes.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -51,12 +51,12 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await themesGetv1Themes(scalar);
+  const res = await themesListThemes(scalar);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("themesGetv1Themes failed:", res.error);
+    console.log("themesListThemes failed:", res.error);
   }
 }
 
@@ -87,7 +87,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1Themes
+## createTheme
 
 Create a team theme.
 
@@ -101,7 +101,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.themes.postv1Themes({
+  const result = await scalar.themes.createTheme({
     name: "<value>",
     slug: "<value>",
     document: "<value>",
@@ -119,7 +119,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { themesPostv1Themes } from "@scalar/sdk/funcs/themesPostv1Themes.js";
+import { themesCreateTheme } from "@scalar/sdk/funcs/themesCreateTheme.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -128,7 +128,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await themesPostv1Themes(scalar, {
+  const res = await themesCreateTheme(scalar, {
     name: "<value>",
     slug: "<value>",
     document: "<value>",
@@ -137,7 +137,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("themesPostv1Themes failed:", res.error);
+    console.log("themesCreateTheme failed:", res.error);
   }
 }
 
@@ -148,7 +148,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1ThemesRequestBody](../../models/operations/postv1themesrequestbody.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateThemeRequestBody](../../models/operations/createthemerequestbody.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -169,7 +169,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## patchv1ThemesSlug
+## updateTheme
 
 Update theme metadata.
 
@@ -183,7 +183,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.themes.patchv1ThemesSlug({
+  const result = await scalar.themes.updateTheme({
     slug: "<value>",
     requestBody: {},
   });
@@ -200,7 +200,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { themesPatchv1ThemesSlug } from "@scalar/sdk/funcs/themesPatchv1ThemesSlug.js";
+import { themesUpdateTheme } from "@scalar/sdk/funcs/themesUpdateTheme.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -209,7 +209,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await themesPatchv1ThemesSlug(scalar, {
+  const res = await themesUpdateTheme(scalar, {
     slug: "<value>",
     requestBody: {},
   });
@@ -217,7 +217,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("themesPatchv1ThemesSlug failed:", res.error);
+    console.log("themesUpdateTheme failed:", res.error);
   }
 }
 
@@ -228,7 +228,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Patchv1ThemesSlugRequest](../../models/operations/patchv1themesslugrequest.md)                                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.UpdateThemeRequest](../../models/operations/updatethemerequest.md)                                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -249,7 +249,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## putv1ThemesSlug
+## replaceThemeDocument
 
 Replace the theme document.
 
@@ -263,7 +263,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.themes.putv1ThemesSlug({
+  const result = await scalar.themes.replaceThemeDocument({
     slug: "<value>",
     requestBody: {
       document: "<value>",
@@ -282,7 +282,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { themesPutv1ThemesSlug } from "@scalar/sdk/funcs/themesPutv1ThemesSlug.js";
+import { themesReplaceThemeDocument } from "@scalar/sdk/funcs/themesReplaceThemeDocument.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -291,7 +291,7 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await themesPutv1ThemesSlug(scalar, {
+  const res = await themesReplaceThemeDocument(scalar, {
     slug: "<value>",
     requestBody: {
       document: "<value>",
@@ -301,7 +301,7 @@ async function run() {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("themesPutv1ThemesSlug failed:", res.error);
+    console.log("themesReplaceThemeDocument failed:", res.error);
   }
 }
 
@@ -312,7 +312,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Putv1ThemesSlugRequest](../../models/operations/putv1themesslugrequest.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.ReplaceThemeDocumentRequest](../../models/operations/replacethemedocumentrequest.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -333,7 +333,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## deletev1ThemesSlug
+## deleteTheme
 
 Delete a theme by slug.
 
@@ -347,7 +347,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.themes.deletev1ThemesSlug({
+  const result = await scalar.themes.deleteTheme({
     slug: "<value>",
   });
 
@@ -363,7 +363,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { themesDeletev1ThemesSlug } from "@scalar/sdk/funcs/themesDeletev1ThemesSlug.js";
+import { themesDeleteTheme } from "@scalar/sdk/funcs/themesDeleteTheme.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -372,14 +372,14 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await themesDeletev1ThemesSlug(scalar, {
+  const res = await themesDeleteTheme(scalar, {
     slug: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("themesDeletev1ThemesSlug failed:", res.error);
+    console.log("themesDeleteTheme failed:", res.error);
   }
 }
 
@@ -390,7 +390,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Deletev1ThemesSlugRequest](../../models/operations/deletev1themesslugrequest.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.DeleteThemeRequest](../../models/operations/deletethemerequest.md)                                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -411,7 +411,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## getv1ThemesSlug
+## getTheme
 
 Get the theme document by slug.
 
@@ -425,7 +425,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.themes.getv1ThemesSlug({
+  const result = await scalar.themes.getTheme({
     slug: "<value>",
   });
 
@@ -441,7 +441,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { themesGetv1ThemesSlug } from "@scalar/sdk/funcs/themesGetv1ThemesSlug.js";
+import { themesGetTheme } from "@scalar/sdk/funcs/themesGetTheme.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -450,14 +450,14 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await themesGetv1ThemesSlug(scalar, {
+  const res = await themesGetTheme(scalar, {
     slug: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("themesGetv1ThemesSlug failed:", res.error);
+    console.log("themesGetTheme failed:", res.error);
   }
 }
 
@@ -468,7 +468,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Getv1ThemesSlugRequest](../../models/operations/getv1themesslugrequest.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetThemeRequest](../../models/operations/getthemerequest.md)                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
