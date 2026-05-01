@@ -3,8 +3,10 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type PublishGuideRequest = {
@@ -16,6 +18,14 @@ export type PublishGuideRequest = {
  */
 export type PublishGuideResponseBody = {
   publishUid: string;
+};
+
+export type PublishGuideResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  object?: PublishGuideResponseBody | undefined;
 };
 
 /** @internal */
@@ -123,5 +133,70 @@ export function publishGuideResponseBodyFromJSON(
     jsonString,
     (x) => PublishGuideResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'PublishGuideResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const PublishGuideResponse$inboundSchema: z.ZodType<
+  PublishGuideResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  object: z.lazy(() => PublishGuideResponseBody$inboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type PublishGuideResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  object?: PublishGuideResponseBody$Outbound | undefined;
+};
+
+/** @internal */
+export const PublishGuideResponse$outboundSchema: z.ZodType<
+  PublishGuideResponse$Outbound,
+  z.ZodTypeDef,
+  PublishGuideResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  object: z.lazy(() => PublishGuideResponseBody$outboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace PublishGuideResponse$ {
+  /** @deprecated use `PublishGuideResponse$inboundSchema` instead. */
+  export const inboundSchema = PublishGuideResponse$inboundSchema;
+  /** @deprecated use `PublishGuideResponse$outboundSchema` instead. */
+  export const outboundSchema = PublishGuideResponse$outboundSchema;
+  /** @deprecated use `PublishGuideResponse$Outbound` instead. */
+  export type Outbound = PublishGuideResponse$Outbound;
+}
+
+export function publishGuideResponseToJSON(
+  publishGuideResponse: PublishGuideResponse,
+): string {
+  return JSON.stringify(
+    PublishGuideResponse$outboundSchema.parse(publishGuideResponse),
+  );
+}
+
+export function publishGuideResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<PublishGuideResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => PublishGuideResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'PublishGuideResponse' from JSON`,
   );
 }

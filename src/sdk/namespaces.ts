@@ -4,6 +4,7 @@
 
 import { namespacesListNamespaces } from "../funcs/namespacesListNamespaces.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Namespaces extends ClientSDK {
@@ -15,7 +16,7 @@ export class Namespaces extends ClientSDK {
    */
   async listNamespaces(
     options?: RequestOptions,
-  ): Promise<Array<string>> {
+  ): Promise<operations.ListNamespacesResponse> {
     return unwrapAsync(namespacesListNamespaces(
       this,
       options,

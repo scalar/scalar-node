@@ -3,12 +3,22 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListRulesetsRequest = {
   namespace: string;
+};
+
+export type ListRulesetsResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  rules?: Array<components.Rule> | undefined;
 };
 
 /** @internal */
@@ -62,5 +72,70 @@ export function listRulesetsRequestFromJSON(
     jsonString,
     (x) => ListRulesetsRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListRulesetsRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListRulesetsResponse$inboundSchema: z.ZodType<
+  ListRulesetsResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  rules: z.array(components.Rule$inboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type ListRulesetsResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  rules?: Array<components.Rule$Outbound> | undefined;
+};
+
+/** @internal */
+export const ListRulesetsResponse$outboundSchema: z.ZodType<
+  ListRulesetsResponse$Outbound,
+  z.ZodTypeDef,
+  ListRulesetsResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  rules: z.array(components.Rule$outboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListRulesetsResponse$ {
+  /** @deprecated use `ListRulesetsResponse$inboundSchema` instead. */
+  export const inboundSchema = ListRulesetsResponse$inboundSchema;
+  /** @deprecated use `ListRulesetsResponse$outboundSchema` instead. */
+  export const outboundSchema = ListRulesetsResponse$outboundSchema;
+  /** @deprecated use `ListRulesetsResponse$Outbound` instead. */
+  export type Outbound = ListRulesetsResponse$Outbound;
+}
+
+export function listRulesetsResponseToJSON(
+  listRulesetsResponse: ListRulesetsResponse,
+): string {
+  return JSON.stringify(
+    ListRulesetsResponse$outboundSchema.parse(listRulesetsResponse),
+  );
+}
+
+export function listRulesetsResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListRulesetsResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListRulesetsResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListRulesetsResponse' from JSON`,
   );
 }

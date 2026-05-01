@@ -70,7 +70,7 @@ run();
 
 ### Response
 
-**Promise\<[components.GithubProject[]](../../models/.md)\>**
+**Promise\<[operations.ListGuidesResponse](../../models/operations/listguidesresponse.md)\>**
 
 ### Errors
 
@@ -156,7 +156,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.CreateGuideResponseBody](../../models/operations/createguideresponsebody.md)\>**
+**Promise\<[operations.CreateGuideResponse](../../models/operations/createguideresponse.md)\>**
 
 ### Errors
 
@@ -234,7 +234,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.PublishGuideResponseBody](../../models/operations/publishguideresponsebody.md)\>**
+**Promise\<[operations.PublishGuideResponse](../../models/operations/publishguideresponse.md)\>**
 
 ### Errors
 

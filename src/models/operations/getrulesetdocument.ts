@@ -3,13 +3,23 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type GetRulesetDocumentRequest = {
   namespace: string;
   slug: string;
+};
+
+export type GetRulesetDocumentResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  res?: string | undefined;
 };
 
 /** @internal */
@@ -66,5 +76,70 @@ export function getRulesetDocumentRequestFromJSON(
     jsonString,
     (x) => GetRulesetDocumentRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetRulesetDocumentRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetRulesetDocumentResponse$inboundSchema: z.ZodType<
+  GetRulesetDocumentResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  res: z.string().optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type GetRulesetDocumentResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  res?: string | undefined;
+};
+
+/** @internal */
+export const GetRulesetDocumentResponse$outboundSchema: z.ZodType<
+  GetRulesetDocumentResponse$Outbound,
+  z.ZodTypeDef,
+  GetRulesetDocumentResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  res: z.string().optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetRulesetDocumentResponse$ {
+  /** @deprecated use `GetRulesetDocumentResponse$inboundSchema` instead. */
+  export const inboundSchema = GetRulesetDocumentResponse$inboundSchema;
+  /** @deprecated use `GetRulesetDocumentResponse$outboundSchema` instead. */
+  export const outboundSchema = GetRulesetDocumentResponse$outboundSchema;
+  /** @deprecated use `GetRulesetDocumentResponse$Outbound` instead. */
+  export type Outbound = GetRulesetDocumentResponse$Outbound;
+}
+
+export function getRulesetDocumentResponseToJSON(
+  getRulesetDocumentResponse: GetRulesetDocumentResponse,
+): string {
+  return JSON.stringify(
+    GetRulesetDocumentResponse$outboundSchema.parse(getRulesetDocumentResponse),
+  );
+}
+
+export function getRulesetDocumentResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetRulesetDocumentResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetRulesetDocumentResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetRulesetDocumentResponse' from JSON`,
   );
 }

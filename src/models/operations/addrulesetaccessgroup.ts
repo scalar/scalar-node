@@ -15,6 +15,14 @@ export type AddRulesetAccessGroupRequest = {
   accessGroup: components.AccessGroup;
 };
 
+export type AddRulesetAccessGroupResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
+};
+
 /** @internal */
 export const AddRulesetAccessGroupRequest$inboundSchema: z.ZodType<
   AddRulesetAccessGroupRequest,
@@ -82,5 +90,72 @@ export function addRulesetAccessGroupRequestFromJSON(
     jsonString,
     (x) => AddRulesetAccessGroupRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'AddRulesetAccessGroupRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const AddRulesetAccessGroupResponse$inboundSchema: z.ZodType<
+  AddRulesetAccessGroupResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type AddRulesetAccessGroupResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const AddRulesetAccessGroupResponse$outboundSchema: z.ZodType<
+  AddRulesetAccessGroupResponse$Outbound,
+  z.ZodTypeDef,
+  AddRulesetAccessGroupResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace AddRulesetAccessGroupResponse$ {
+  /** @deprecated use `AddRulesetAccessGroupResponse$inboundSchema` instead. */
+  export const inboundSchema = AddRulesetAccessGroupResponse$inboundSchema;
+  /** @deprecated use `AddRulesetAccessGroupResponse$outboundSchema` instead. */
+  export const outboundSchema = AddRulesetAccessGroupResponse$outboundSchema;
+  /** @deprecated use `AddRulesetAccessGroupResponse$Outbound` instead. */
+  export type Outbound = AddRulesetAccessGroupResponse$Outbound;
+}
+
+export function addRulesetAccessGroupResponseToJSON(
+  addRulesetAccessGroupResponse: AddRulesetAccessGroupResponse,
+): string {
+  return JSON.stringify(
+    AddRulesetAccessGroupResponse$outboundSchema.parse(
+      addRulesetAccessGroupResponse,
+    ),
+  );
+}
+
+export function addRulesetAccessGroupResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<AddRulesetAccessGroupResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AddRulesetAccessGroupResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AddRulesetAccessGroupResponse' from JSON`,
   );
 }

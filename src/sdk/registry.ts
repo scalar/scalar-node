@@ -15,7 +15,6 @@ import { registryRemoveApiDocumentAccessGroup } from "../funcs/registryRemoveApi
 import { registryUpdateApiDocument } from "../funcs/registryUpdateApiDocument.js";
 import { registryUpdateApiDocumentVersion } from "../funcs/registryUpdateApiDocumentVersion.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -28,7 +27,7 @@ export class Registry extends ClientSDK {
    */
   async listAllApiDocuments(
     options?: RequestOptions,
-  ): Promise<Array<components.ApiDocument>> {
+  ): Promise<operations.ListAllApiDocumentsResponse> {
     return unwrapAsync(registryListAllApiDocuments(
       this,
       options,
@@ -44,7 +43,7 @@ export class Registry extends ClientSDK {
   async listApiDocuments(
     request: operations.ListApiDocumentsRequest,
     options?: RequestOptions,
-  ): Promise<Array<components.ApiDocument>> {
+  ): Promise<operations.ListApiDocumentsResponse> {
     return unwrapAsync(registryListApiDocuments(
       this,
       request,
@@ -61,7 +60,7 @@ export class Registry extends ClientSDK {
   async createApiDocument(
     request: operations.CreateApiDocumentRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateApiDocumentResponseBody> {
+  ): Promise<operations.CreateApiDocumentResponse> {
     return unwrapAsync(registryCreateApiDocument(
       this,
       request,
@@ -78,7 +77,7 @@ export class Registry extends ClientSDK {
   async updateApiDocument(
     request: operations.UpdateApiDocumentRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.UpdateApiDocumentResponse> {
     return unwrapAsync(registryUpdateApiDocument(
       this,
       request,
@@ -95,7 +94,7 @@ export class Registry extends ClientSDK {
   async deleteApiDocument(
     request: operations.DeleteApiDocumentRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteApiDocumentResponse> {
     return unwrapAsync(registryDeleteApiDocument(
       this,
       request,
@@ -112,7 +111,7 @@ export class Registry extends ClientSDK {
   async getApiDocumentVersion(
     request: operations.GetApiDocumentVersionRequest,
     options?: RequestOptions,
-  ): Promise<string> {
+  ): Promise<operations.GetApiDocumentVersionResponse> {
     return unwrapAsync(registryGetApiDocumentVersion(
       this,
       request,
@@ -129,7 +128,7 @@ export class Registry extends ClientSDK {
   async updateApiDocumentVersion(
     request: operations.UpdateApiDocumentVersionRequest,
     options?: RequestOptions,
-  ): Promise<operations.UpdateApiDocumentVersionResponseBody> {
+  ): Promise<operations.UpdateApiDocumentVersionResponse> {
     return unwrapAsync(registryUpdateApiDocumentVersion(
       this,
       request,
@@ -146,7 +145,7 @@ export class Registry extends ClientSDK {
   async deleteApiDocumentVersion(
     request: operations.DeleteApiDocumentVersionRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteApiDocumentVersionResponse> {
     return unwrapAsync(registryDeleteApiDocumentVersion(
       this,
       request,
@@ -163,7 +162,7 @@ export class Registry extends ClientSDK {
   async getApiDocumentVersionMetadata(
     request: operations.GetApiDocumentVersionMetadataRequest,
     options?: RequestOptions,
-  ): Promise<components.ManagedDocVersion> {
+  ): Promise<operations.GetApiDocumentVersionMetadataResponse> {
     return unwrapAsync(registryGetApiDocumentVersionMetadata(
       this,
       request,
@@ -180,7 +179,7 @@ export class Registry extends ClientSDK {
   async createApiDocumentVersion(
     request: operations.CreateApiDocumentVersionRequest,
     options?: RequestOptions,
-  ): Promise<components.ManagedDocVersion> {
+  ): Promise<operations.CreateApiDocumentVersionResponse> {
     return unwrapAsync(registryCreateApiDocumentVersion(
       this,
       request,
@@ -197,7 +196,7 @@ export class Registry extends ClientSDK {
   async addApiDocumentAccessGroup(
     request: operations.AddApiDocumentAccessGroupRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.AddApiDocumentAccessGroupResponse> {
     return unwrapAsync(registryAddApiDocumentAccessGroup(
       this,
       request,
@@ -214,7 +213,7 @@ export class Registry extends ClientSDK {
   async removeApiDocumentAccessGroup(
     request: operations.RemoveApiDocumentAccessGroupRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.RemoveApiDocumentAccessGroupResponse> {
     return unwrapAsync(registryRemoveApiDocumentAccessGroup(
       this,
       request,

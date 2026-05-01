@@ -79,7 +79,7 @@ run();
 
 ### Response
 
-**Promise\<[components.ApiDocument[]](../../models/.md)\>**
+**Promise\<[operations.ListAllApiDocumentsResponse](../../models/operations/listallapidocumentsresponse.md)\>**
 
 ### Errors
 
@@ -157,7 +157,7 @@ run();
 
 ### Response
 
-**Promise\<[components.ApiDocument[]](../../models/.md)\>**
+**Promise\<[operations.ListApiDocumentsResponse](../../models/operations/listapidocumentsresponse.md)\>**
 
 ### Errors
 
@@ -247,7 +247,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.CreateApiDocumentResponseBody](../../models/operations/createapidocumentresponsebody.md)\>**
+**Promise\<[operations.CreateApiDocumentResponse](../../models/operations/createapidocumentresponse.md)\>**
 
 ### Errors
 
@@ -329,7 +329,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.UpdateApiDocumentResponse](../../models/operations/updateapidocumentresponse.md)\>**
 
 ### Errors
 
@@ -409,7 +409,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteApiDocumentResponse](../../models/operations/deleteapidocumentresponse.md)\>**
 
 ### Errors
 
@@ -491,7 +491,7 @@ run();
 
 ### Response
 
-**Promise\<[string](../../models/.md)\>**
+**Promise\<[operations.GetApiDocumentVersionResponse](../../models/operations/getapidocumentversionresponse.md)\>**
 
 ### Errors
 
@@ -579,7 +579,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.UpdateApiDocumentVersionResponseBody](../../models/operations/updateapidocumentversionresponsebody.md)\>**
+**Promise\<[operations.UpdateApiDocumentVersionResponse](../../models/operations/updateapidocumentversionresponse.md)\>**
 
 ### Errors
 
@@ -661,7 +661,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteApiDocumentVersionResponse](../../models/operations/deleteapidocumentversionresponse.md)\>**
 
 ### Errors
 
@@ -743,7 +743,7 @@ run();
 
 ### Response
 
-**Promise\<[components.ManagedDocVersion](../../models/components/manageddocversion.md)\>**
+**Promise\<[operations.GetApiDocumentVersionMetadataResponse](../../models/operations/getapidocumentversionmetadataresponse.md)\>**
 
 ### Errors
 
@@ -831,7 +831,7 @@ run();
 
 ### Response
 
-**Promise\<[components.ManagedDocVersion](../../models/components/manageddocversion.md)\>**
+**Promise\<[operations.CreateApiDocumentVersionResponse](../../models/operations/createapidocumentversionresponse.md)\>**
 
 ### Errors
 
@@ -917,7 +917,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.AddApiDocumentAccessGroupResponse](../../models/operations/addapidocumentaccessgroupresponse.md)\>**
 
 ### Errors
 
@@ -1003,7 +1003,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.RemoveApiDocumentAccessGroupResponse](../../models/operations/removeapidocumentaccessgroupresponse.md)\>**
 
 ### Errors
 

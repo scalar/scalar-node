@@ -3,12 +3,22 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListApiDocumentsRequest = {
   namespace: string;
+};
+
+export type ListApiDocumentsResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  apiDocuments?: Array<components.ApiDocument> | undefined;
 };
 
 /** @internal */
@@ -62,5 +72,72 @@ export function listApiDocumentsRequestFromJSON(
     jsonString,
     (x) => ListApiDocumentsRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListApiDocumentsRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListApiDocumentsResponse$inboundSchema: z.ZodType<
+  ListApiDocumentsResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  "api-documents": z.array(components.ApiDocument$inboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+    "api-documents": "apiDocuments",
+  });
+});
+
+/** @internal */
+export type ListApiDocumentsResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  "api-documents"?: Array<components.ApiDocument$Outbound> | undefined;
+};
+
+/** @internal */
+export const ListApiDocumentsResponse$outboundSchema: z.ZodType<
+  ListApiDocumentsResponse$Outbound,
+  z.ZodTypeDef,
+  ListApiDocumentsResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  apiDocuments: z.array(components.ApiDocument$outboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+    apiDocuments: "api-documents",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListApiDocumentsResponse$ {
+  /** @deprecated use `ListApiDocumentsResponse$inboundSchema` instead. */
+  export const inboundSchema = ListApiDocumentsResponse$inboundSchema;
+  /** @deprecated use `ListApiDocumentsResponse$outboundSchema` instead. */
+  export const outboundSchema = ListApiDocumentsResponse$outboundSchema;
+  /** @deprecated use `ListApiDocumentsResponse$Outbound` instead. */
+  export type Outbound = ListApiDocumentsResponse$Outbound;
+}
+
+export function listApiDocumentsResponseToJSON(
+  listApiDocumentsResponse: ListApiDocumentsResponse,
+): string {
+  return JSON.stringify(
+    ListApiDocumentsResponse$outboundSchema.parse(listApiDocumentsResponse),
+  );
+}
+
+export function listApiDocumentsResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListApiDocumentsResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListApiDocumentsResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListApiDocumentsResponse' from JSON`,
   );
 }

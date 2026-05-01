@@ -5,7 +5,6 @@
 import { authenticationExchangePersonalToken } from "../funcs/authenticationExchangePersonalToken.js";
 import { authenticationGetCurrentUser } from "../funcs/authenticationGetCurrentUser.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -19,7 +18,7 @@ export class Authentication extends ClientSDK {
   async exchangePersonalToken(
     request: operations.ExchangePersonalTokenRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.ExchangePersonalTokenResponseBody> {
+  ): Promise<operations.ExchangePersonalTokenResponse> {
     return unwrapAsync(authenticationExchangePersonalToken(
       this,
       request,
@@ -35,7 +34,7 @@ export class Authentication extends ClientSDK {
    */
   async getCurrentUser(
     options?: RequestOptions,
-  ): Promise<components.User> {
+  ): Promise<operations.GetCurrentUserResponse> {
     return unwrapAsync(authenticationGetCurrentUser(
       this,
       options,

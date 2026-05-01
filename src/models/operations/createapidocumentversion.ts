@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateApiDocumentVersionRequestBody = {
@@ -19,6 +20,14 @@ export type CreateApiDocumentVersionRequest = {
   namespace: string;
   slug: string;
   requestBody: CreateApiDocumentVersionRequestBody;
+};
+
+export type CreateApiDocumentVersionResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  managedDocVersion?: components.ManagedDocVersion | undefined;
 };
 
 /** @internal */
@@ -156,5 +165,74 @@ export function createApiDocumentVersionRequestFromJSON(
     jsonString,
     (x) => CreateApiDocumentVersionRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateApiDocumentVersionRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateApiDocumentVersionResponse$inboundSchema: z.ZodType<
+  CreateApiDocumentVersionResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  "managed-doc-version": components.ManagedDocVersion$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+    "managed-doc-version": "managedDocVersion",
+  });
+});
+
+/** @internal */
+export type CreateApiDocumentVersionResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  "managed-doc-version"?: components.ManagedDocVersion$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateApiDocumentVersionResponse$outboundSchema: z.ZodType<
+  CreateApiDocumentVersionResponse$Outbound,
+  z.ZodTypeDef,
+  CreateApiDocumentVersionResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  managedDocVersion: components.ManagedDocVersion$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+    managedDocVersion: "managed-doc-version",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateApiDocumentVersionResponse$ {
+  /** @deprecated use `CreateApiDocumentVersionResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateApiDocumentVersionResponse$inboundSchema;
+  /** @deprecated use `CreateApiDocumentVersionResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateApiDocumentVersionResponse$outboundSchema;
+  /** @deprecated use `CreateApiDocumentVersionResponse$Outbound` instead. */
+  export type Outbound = CreateApiDocumentVersionResponse$Outbound;
+}
+
+export function createApiDocumentVersionResponseToJSON(
+  createApiDocumentVersionResponse: CreateApiDocumentVersionResponse,
+): string {
+  return JSON.stringify(
+    CreateApiDocumentVersionResponse$outboundSchema.parse(
+      createApiDocumentVersionResponse,
+    ),
+  );
+}
+
+export function createApiDocumentVersionResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateApiDocumentVersionResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateApiDocumentVersionResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateApiDocumentVersionResponse' from JSON`,
   );
 }

@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type UpdateApiDocumentRequestBody = {
@@ -19,6 +20,14 @@ export type UpdateApiDocumentRequest = {
   namespace: string;
   slug: string;
   requestBody: UpdateApiDocumentRequestBody;
+};
+
+export type UpdateApiDocumentResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -151,5 +160,70 @@ export function updateApiDocumentRequestFromJSON(
     jsonString,
     (x) => UpdateApiDocumentRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'UpdateApiDocumentRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const UpdateApiDocumentResponse$inboundSchema: z.ZodType<
+  UpdateApiDocumentResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type UpdateApiDocumentResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const UpdateApiDocumentResponse$outboundSchema: z.ZodType<
+  UpdateApiDocumentResponse$Outbound,
+  z.ZodTypeDef,
+  UpdateApiDocumentResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace UpdateApiDocumentResponse$ {
+  /** @deprecated use `UpdateApiDocumentResponse$inboundSchema` instead. */
+  export const inboundSchema = UpdateApiDocumentResponse$inboundSchema;
+  /** @deprecated use `UpdateApiDocumentResponse$outboundSchema` instead. */
+  export const outboundSchema = UpdateApiDocumentResponse$outboundSchema;
+  /** @deprecated use `UpdateApiDocumentResponse$Outbound` instead. */
+  export type Outbound = UpdateApiDocumentResponse$Outbound;
+}
+
+export function updateApiDocumentResponseToJSON(
+  updateApiDocumentResponse: UpdateApiDocumentResponse,
+): string {
+  return JSON.stringify(
+    UpdateApiDocumentResponse$outboundSchema.parse(updateApiDocumentResponse),
+  );
+}
+
+export function updateApiDocumentResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateApiDocumentResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateApiDocumentResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateApiDocumentResponse' from JSON`,
   );
 }

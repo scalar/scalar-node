@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type UpdateLoginPortalRequestBody = {
@@ -15,6 +16,14 @@ export type UpdateLoginPortalRequestBody = {
 export type UpdateLoginPortalRequest = {
   slug: string;
   requestBody: UpdateLoginPortalRequestBody;
+};
+
+export type UpdateLoginPortalResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -135,5 +144,70 @@ export function updateLoginPortalRequestFromJSON(
     jsonString,
     (x) => UpdateLoginPortalRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'UpdateLoginPortalRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const UpdateLoginPortalResponse$inboundSchema: z.ZodType<
+  UpdateLoginPortalResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type UpdateLoginPortalResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const UpdateLoginPortalResponse$outboundSchema: z.ZodType<
+  UpdateLoginPortalResponse$Outbound,
+  z.ZodTypeDef,
+  UpdateLoginPortalResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace UpdateLoginPortalResponse$ {
+  /** @deprecated use `UpdateLoginPortalResponse$inboundSchema` instead. */
+  export const inboundSchema = UpdateLoginPortalResponse$inboundSchema;
+  /** @deprecated use `UpdateLoginPortalResponse$outboundSchema` instead. */
+  export const outboundSchema = UpdateLoginPortalResponse$outboundSchema;
+  /** @deprecated use `UpdateLoginPortalResponse$Outbound` instead. */
+  export type Outbound = UpdateLoginPortalResponse$Outbound;
+}
+
+export function updateLoginPortalResponseToJSON(
+  updateLoginPortalResponse: UpdateLoginPortalResponse,
+): string {
+  return JSON.stringify(
+    UpdateLoginPortalResponse$outboundSchema.parse(updateLoginPortalResponse),
+  );
+}
+
+export function updateLoginPortalResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateLoginPortalResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateLoginPortalResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateLoginPortalResponse' from JSON`,
   );
 }

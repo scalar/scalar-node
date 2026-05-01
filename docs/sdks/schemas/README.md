@@ -81,7 +81,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Schema[]](../../models/.md)\>**
+**Promise\<[operations.ListSchemasResponse](../../models/operations/listschemasresponse.md)\>**
 
 ### Errors
 
@@ -171,7 +171,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Uid](../../models/components/uid.md)\>**
+**Promise\<[operations.CreateSchemaResponse](../../models/operations/createschemaresponse.md)\>**
 
 ### Errors
 
@@ -253,7 +253,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.UpdateSchemaResponse](../../models/operations/updateschemaresponse.md)\>**
 
 ### Errors
 
@@ -333,7 +333,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteSchemaResponse](../../models/operations/deleteschemaresponse.md)\>**
 
 ### Errors
 
@@ -415,7 +415,7 @@ run();
 
 ### Response
 
-**Promise\<[string](../../models/.md)\>**
+**Promise\<[operations.GetSchemaVersionResponse](../../models/operations/getschemaversionresponse.md)\>**
 
 ### Errors
 
@@ -497,7 +497,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteSchemaVersionResponse](../../models/operations/deleteschemaversionresponse.md)\>**
 
 ### Errors
 
@@ -585,7 +585,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Uid](../../models/components/uid.md)\>**
+**Promise\<[operations.CreateSchemaVersionResponse](../../models/operations/createschemaversionresponse.md)\>**
 
 ### Errors
 
@@ -671,7 +671,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.AddSchemaAccessGroupResponse](../../models/operations/addschemaaccessgroupresponse.md)\>**
 
 ### Errors
 
@@ -757,7 +757,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.RemoveSchemaAccessGroupResponse](../../models/operations/removeschemaaccessgroupresponse.md)\>**
 
 ### Errors
 

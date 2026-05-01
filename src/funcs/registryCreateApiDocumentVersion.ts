@@ -10,7 +10,6 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -38,7 +37,7 @@ export function registryCreateApiDocumentVersion(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.ManagedDocVersion,
+    operations.CreateApiDocumentVersionResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -69,7 +68,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      components.ManagedDocVersion,
+      operations.CreateApiDocumentVersionResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -168,7 +167,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.ManagedDocVersion,
+    operations.CreateApiDocumentVersionResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -184,7 +183,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.ManagedDocVersion$inboundSchema),
+    M.json(200, operations.CreateApiDocumentVersionResponse$inboundSchema, {
+      key: "managed-doc-version",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

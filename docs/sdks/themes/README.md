@@ -73,7 +73,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Theme[]](../../models/.md)\>**
+**Promise\<[operations.ListThemesResponse](../../models/operations/listthemesresponse.md)\>**
 
 ### Errors
 
@@ -155,7 +155,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Uid](../../models/components/uid.md)\>**
+**Promise\<[operations.CreateThemeResponse](../../models/operations/createthemeresponse.md)\>**
 
 ### Errors
 
@@ -235,7 +235,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.UpdateThemeResponse](../../models/operations/updatethemeresponse.md)\>**
 
 ### Errors
 
@@ -319,7 +319,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.ReplaceThemeDocumentResponse](../../models/operations/replacethemedocumentresponse.md)\>**
 
 ### Errors
 
@@ -397,7 +397,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteThemeResponse](../../models/operations/deletethemeresponse.md)\>**
 
 ### Errors
 
@@ -475,7 +475,7 @@ run();
 
 ### Response
 
-**Promise\<[string](../../models/.md)\>**
+**Promise\<[operations.GetThemeResponse](../../models/operations/getthemeresponse.md)\>**
 
 ### Errors
 

@@ -37,7 +37,7 @@ export function scalarDocsCreateGuide(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.CreateGuideResponseBody,
+    operations.CreateGuideResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -68,7 +68,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.CreateGuideResponseBody,
+      operations.CreateGuideResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -155,7 +155,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.CreateGuideResponseBody,
+    operations.CreateGuideResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -171,7 +171,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.CreateGuideResponseBody$inboundSchema),
+    M.json(200, operations.CreateGuideResponse$inboundSchema, {
+      key: "object",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

@@ -3,14 +3,24 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type GetApiDocumentVersionRequest = {
   namespace: string;
   slug: string;
   semver: string;
+};
+
+export type GetApiDocumentVersionResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  res?: string | undefined;
 };
 
 /** @internal */
@@ -72,5 +82,72 @@ export function getApiDocumentVersionRequestFromJSON(
     jsonString,
     (x) => GetApiDocumentVersionRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetApiDocumentVersionRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetApiDocumentVersionResponse$inboundSchema: z.ZodType<
+  GetApiDocumentVersionResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  res: z.string().optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type GetApiDocumentVersionResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  res?: string | undefined;
+};
+
+/** @internal */
+export const GetApiDocumentVersionResponse$outboundSchema: z.ZodType<
+  GetApiDocumentVersionResponse$Outbound,
+  z.ZodTypeDef,
+  GetApiDocumentVersionResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  res: z.string().optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetApiDocumentVersionResponse$ {
+  /** @deprecated use `GetApiDocumentVersionResponse$inboundSchema` instead. */
+  export const inboundSchema = GetApiDocumentVersionResponse$inboundSchema;
+  /** @deprecated use `GetApiDocumentVersionResponse$outboundSchema` instead. */
+  export const outboundSchema = GetApiDocumentVersionResponse$outboundSchema;
+  /** @deprecated use `GetApiDocumentVersionResponse$Outbound` instead. */
+  export type Outbound = GetApiDocumentVersionResponse$Outbound;
+}
+
+export function getApiDocumentVersionResponseToJSON(
+  getApiDocumentVersionResponse: GetApiDocumentVersionResponse,
+): string {
+  return JSON.stringify(
+    GetApiDocumentVersionResponse$outboundSchema.parse(
+      getApiDocumentVersionResponse,
+    ),
+  );
+}
+
+export function getApiDocumentVersionResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetApiDocumentVersionResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetApiDocumentVersionResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetApiDocumentVersionResponse' from JSON`,
   );
 }

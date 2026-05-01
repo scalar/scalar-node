@@ -37,7 +37,7 @@ export function registryUpdateApiDocumentVersion(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.UpdateApiDocumentVersionResponseBody,
+    operations.UpdateApiDocumentVersionResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -68,7 +68,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.UpdateApiDocumentVersionResponseBody,
+      operations.UpdateApiDocumentVersionResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -173,7 +173,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.UpdateApiDocumentVersionResponseBody,
+    operations.UpdateApiDocumentVersionResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -189,7 +189,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.UpdateApiDocumentVersionResponseBody$inboundSchema),
+    M.json(200, operations.UpdateApiDocumentVersionResponse$inboundSchema, {
+      key: "object",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

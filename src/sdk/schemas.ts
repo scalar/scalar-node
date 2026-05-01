@@ -12,7 +12,6 @@ import { schemasListSchemas } from "../funcs/schemasListSchemas.js";
 import { schemasRemoveSchemaAccessGroup } from "../funcs/schemasRemoveSchemaAccessGroup.js";
 import { schemasUpdateSchema } from "../funcs/schemasUpdateSchema.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -26,7 +25,7 @@ export class Schemas extends ClientSDK {
   async listSchemas(
     request: operations.ListSchemasRequest,
     options?: RequestOptions,
-  ): Promise<Array<components.Schema>> {
+  ): Promise<operations.ListSchemasResponse> {
     return unwrapAsync(schemasListSchemas(
       this,
       request,
@@ -43,7 +42,7 @@ export class Schemas extends ClientSDK {
   async createSchema(
     request: operations.CreateSchemaRequest,
     options?: RequestOptions,
-  ): Promise<components.Uid> {
+  ): Promise<operations.CreateSchemaResponse> {
     return unwrapAsync(schemasCreateSchema(
       this,
       request,
@@ -60,7 +59,7 @@ export class Schemas extends ClientSDK {
   async updateSchema(
     request: operations.UpdateSchemaRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.UpdateSchemaResponse> {
     return unwrapAsync(schemasUpdateSchema(
       this,
       request,
@@ -77,7 +76,7 @@ export class Schemas extends ClientSDK {
   async deleteSchema(
     request: operations.DeleteSchemaRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteSchemaResponse> {
     return unwrapAsync(schemasDeleteSchema(
       this,
       request,
@@ -94,7 +93,7 @@ export class Schemas extends ClientSDK {
   async getSchemaVersion(
     request: operations.GetSchemaVersionRequest,
     options?: RequestOptions,
-  ): Promise<string> {
+  ): Promise<operations.GetSchemaVersionResponse> {
     return unwrapAsync(schemasGetSchemaVersion(
       this,
       request,
@@ -111,7 +110,7 @@ export class Schemas extends ClientSDK {
   async deleteSchemaVersion(
     request: operations.DeleteSchemaVersionRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteSchemaVersionResponse> {
     return unwrapAsync(schemasDeleteSchemaVersion(
       this,
       request,
@@ -128,7 +127,7 @@ export class Schemas extends ClientSDK {
   async createSchemaVersion(
     request: operations.CreateSchemaVersionRequest,
     options?: RequestOptions,
-  ): Promise<components.Uid> {
+  ): Promise<operations.CreateSchemaVersionResponse> {
     return unwrapAsync(schemasCreateSchemaVersion(
       this,
       request,
@@ -145,7 +144,7 @@ export class Schemas extends ClientSDK {
   async addSchemaAccessGroup(
     request: operations.AddSchemaAccessGroupRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.AddSchemaAccessGroupResponse> {
     return unwrapAsync(schemasAddSchemaAccessGroup(
       this,
       request,
@@ -162,7 +161,7 @@ export class Schemas extends ClientSDK {
   async removeSchemaAccessGroup(
     request: operations.RemoveSchemaAccessGroupRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.RemoveSchemaAccessGroupResponse> {
     return unwrapAsync(schemasRemoveSchemaAccessGroup(
       this,
       request,

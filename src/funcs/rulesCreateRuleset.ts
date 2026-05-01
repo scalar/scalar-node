@@ -10,7 +10,6 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -38,7 +37,7 @@ export function rulesCreateRuleset(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.Uid,
+    operations.CreateRulesetResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -69,7 +68,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      components.Uid,
+      operations.CreateRulesetResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -163,7 +162,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.Uid,
+    operations.CreateRulesetResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -179,7 +178,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.Uid$inboundSchema),
+    M.json(200, operations.CreateRulesetResponse$inboundSchema, { key: "uid" }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

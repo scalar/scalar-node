@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type UpdateRulesetRequestBody = {
@@ -20,6 +21,14 @@ export type UpdateRulesetRequest = {
   namespace: string;
   slug: string;
   requestBody: UpdateRulesetRequestBody;
+};
+
+export type UpdateRulesetResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -153,5 +162,70 @@ export function updateRulesetRequestFromJSON(
     jsonString,
     (x) => UpdateRulesetRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'UpdateRulesetRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const UpdateRulesetResponse$inboundSchema: z.ZodType<
+  UpdateRulesetResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type UpdateRulesetResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const UpdateRulesetResponse$outboundSchema: z.ZodType<
+  UpdateRulesetResponse$Outbound,
+  z.ZodTypeDef,
+  UpdateRulesetResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace UpdateRulesetResponse$ {
+  /** @deprecated use `UpdateRulesetResponse$inboundSchema` instead. */
+  export const inboundSchema = UpdateRulesetResponse$inboundSchema;
+  /** @deprecated use `UpdateRulesetResponse$outboundSchema` instead. */
+  export const outboundSchema = UpdateRulesetResponse$outboundSchema;
+  /** @deprecated use `UpdateRulesetResponse$Outbound` instead. */
+  export type Outbound = UpdateRulesetResponse$Outbound;
+}
+
+export function updateRulesetResponseToJSON(
+  updateRulesetResponse: UpdateRulesetResponse,
+): string {
+  return JSON.stringify(
+    UpdateRulesetResponse$outboundSchema.parse(updateRulesetResponse),
+  );
+}
+
+export function updateRulesetResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateRulesetResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateRulesetResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateRulesetResponse' from JSON`,
   );
 }

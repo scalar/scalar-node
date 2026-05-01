@@ -3,14 +3,24 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type DeleteApiDocumentVersionRequest = {
   namespace: string;
   slug: string;
   semver: string;
+};
+
+export type DeleteApiDocumentVersionResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -72,5 +82,72 @@ export function deleteApiDocumentVersionRequestFromJSON(
     jsonString,
     (x) => DeleteApiDocumentVersionRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'DeleteApiDocumentVersionRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const DeleteApiDocumentVersionResponse$inboundSchema: z.ZodType<
+  DeleteApiDocumentVersionResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type DeleteApiDocumentVersionResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const DeleteApiDocumentVersionResponse$outboundSchema: z.ZodType<
+  DeleteApiDocumentVersionResponse$Outbound,
+  z.ZodTypeDef,
+  DeleteApiDocumentVersionResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteApiDocumentVersionResponse$ {
+  /** @deprecated use `DeleteApiDocumentVersionResponse$inboundSchema` instead. */
+  export const inboundSchema = DeleteApiDocumentVersionResponse$inboundSchema;
+  /** @deprecated use `DeleteApiDocumentVersionResponse$outboundSchema` instead. */
+  export const outboundSchema = DeleteApiDocumentVersionResponse$outboundSchema;
+  /** @deprecated use `DeleteApiDocumentVersionResponse$Outbound` instead. */
+  export type Outbound = DeleteApiDocumentVersionResponse$Outbound;
+}
+
+export function deleteApiDocumentVersionResponseToJSON(
+  deleteApiDocumentVersionResponse: DeleteApiDocumentVersionResponse,
+): string {
+  return JSON.stringify(
+    DeleteApiDocumentVersionResponse$outboundSchema.parse(
+      deleteApiDocumentVersionResponse,
+    ),
+  );
+}
+
+export function deleteApiDocumentVersionResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteApiDocumentVersionResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteApiDocumentVersionResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteApiDocumentVersionResponse' from JSON`,
   );
 }

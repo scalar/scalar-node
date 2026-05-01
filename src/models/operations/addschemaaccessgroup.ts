@@ -15,6 +15,14 @@ export type AddSchemaAccessGroupRequest = {
   accessGroup: components.AccessGroup;
 };
 
+export type AddSchemaAccessGroupResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
+};
+
 /** @internal */
 export const AddSchemaAccessGroupRequest$inboundSchema: z.ZodType<
   AddSchemaAccessGroupRequest,
@@ -82,5 +90,72 @@ export function addSchemaAccessGroupRequestFromJSON(
     jsonString,
     (x) => AddSchemaAccessGroupRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'AddSchemaAccessGroupRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const AddSchemaAccessGroupResponse$inboundSchema: z.ZodType<
+  AddSchemaAccessGroupResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type AddSchemaAccessGroupResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const AddSchemaAccessGroupResponse$outboundSchema: z.ZodType<
+  AddSchemaAccessGroupResponse$Outbound,
+  z.ZodTypeDef,
+  AddSchemaAccessGroupResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace AddSchemaAccessGroupResponse$ {
+  /** @deprecated use `AddSchemaAccessGroupResponse$inboundSchema` instead. */
+  export const inboundSchema = AddSchemaAccessGroupResponse$inboundSchema;
+  /** @deprecated use `AddSchemaAccessGroupResponse$outboundSchema` instead. */
+  export const outboundSchema = AddSchemaAccessGroupResponse$outboundSchema;
+  /** @deprecated use `AddSchemaAccessGroupResponse$Outbound` instead. */
+  export type Outbound = AddSchemaAccessGroupResponse$Outbound;
+}
+
+export function addSchemaAccessGroupResponseToJSON(
+  addSchemaAccessGroupResponse: AddSchemaAccessGroupResponse,
+): string {
+  return JSON.stringify(
+    AddSchemaAccessGroupResponse$outboundSchema.parse(
+      addSchemaAccessGroupResponse,
+    ),
+  );
+}
+
+export function addSchemaAccessGroupResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<AddSchemaAccessGroupResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AddSchemaAccessGroupResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AddSchemaAccessGroupResponse' from JSON`,
   );
 }

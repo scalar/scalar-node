@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateApiDocumentRequestBody = {
@@ -33,6 +34,14 @@ export type CreateApiDocumentResponseBody = {
   jsonSha: string;
   yamlSha: string;
   versionSha: string;
+};
+
+export type CreateApiDocumentResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  object?: CreateApiDocumentResponseBody | undefined;
 };
 
 /** @internal */
@@ -242,5 +251,70 @@ export function createApiDocumentResponseBodyFromJSON(
     jsonString,
     (x) => CreateApiDocumentResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateApiDocumentResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateApiDocumentResponse$inboundSchema: z.ZodType<
+  CreateApiDocumentResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  object: z.lazy(() => CreateApiDocumentResponseBody$inboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateApiDocumentResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  object?: CreateApiDocumentResponseBody$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateApiDocumentResponse$outboundSchema: z.ZodType<
+  CreateApiDocumentResponse$Outbound,
+  z.ZodTypeDef,
+  CreateApiDocumentResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  object: z.lazy(() => CreateApiDocumentResponseBody$outboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateApiDocumentResponse$ {
+  /** @deprecated use `CreateApiDocumentResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateApiDocumentResponse$inboundSchema;
+  /** @deprecated use `CreateApiDocumentResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateApiDocumentResponse$outboundSchema;
+  /** @deprecated use `CreateApiDocumentResponse$Outbound` instead. */
+  export type Outbound = CreateApiDocumentResponse$Outbound;
+}
+
+export function createApiDocumentResponseToJSON(
+  createApiDocumentResponse: CreateApiDocumentResponse,
+): string {
+  return JSON.stringify(
+    CreateApiDocumentResponse$outboundSchema.parse(createApiDocumentResponse),
+  );
+}
+
+export function createApiDocumentResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateApiDocumentResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateApiDocumentResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateApiDocumentResponse' from JSON`,
   );
 }
