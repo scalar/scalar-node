@@ -41,6 +41,7 @@ export type ManagedDocVersion = {
   tools?: Array<Tools> | undefined;
   yamlSha?: string | undefined;
   jsonSha?: string | undefined;
+  versionSha?: string | undefined;
 };
 
 /** @internal */
@@ -149,6 +150,7 @@ export const ManagedDocVersion$inboundSchema: z.ZodType<
   tools: z.array(z.lazy(() => Tools$inboundSchema)).optional(),
   yamlSha: z.string().optional(),
   jsonSha: z.string().optional(),
+  versionSha: z.string().optional(),
 });
 
 /** @internal */
@@ -162,6 +164,7 @@ export type ManagedDocVersion$Outbound = {
   tools?: Array<Tools$Outbound> | undefined;
   yamlSha?: string | undefined;
   jsonSha?: string | undefined;
+  versionSha?: string | undefined;
 };
 
 /** @internal */
@@ -179,6 +182,7 @@ export const ManagedDocVersion$outboundSchema: z.ZodType<
   tools: z.array(z.lazy(() => Tools$outboundSchema)).optional(),
   yamlSha: z.string().optional(),
   jsonSha: z.string().optional(),
+  versionSha: z.string().optional(),
 });
 
 /**

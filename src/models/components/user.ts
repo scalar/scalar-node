@@ -7,11 +7,11 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
-  Team,
-  Team$inboundSchema,
-  Team$Outbound,
-  Team$outboundSchema,
-} from "./team.js";
+  TeamSummary,
+  TeamSummary$inboundSchema,
+  TeamSummary$Outbound,
+  TeamSummary$outboundSchema,
+} from "./teamsummary.js";
 
 export type User = {
   uid: string;
@@ -21,7 +21,7 @@ export type User = {
   theme?: string | undefined;
   activeTeamId: string | null;
   hasGithub?: boolean | undefined;
-  teams: Array<Team>;
+  teams: Array<TeamSummary>;
 };
 
 /** @internal */
@@ -34,7 +34,7 @@ export const User$inboundSchema: z.ZodType<User, z.ZodTypeDef, unknown> = z
     theme: z.string().optional(),
     activeTeamId: z.nullable(z.string()),
     hasGithub: z.boolean().default(false),
-    teams: z.array(Team$inboundSchema),
+    teams: z.array(TeamSummary$inboundSchema),
   });
 
 /** @internal */
@@ -46,7 +46,7 @@ export type User$Outbound = {
   theme?: string | undefined;
   activeTeamId: string | null;
   hasGithub: boolean;
-  teams: Array<Team$Outbound>;
+  teams: Array<TeamSummary$Outbound>;
 };
 
 /** @internal */
@@ -59,7 +59,7 @@ export const User$outboundSchema: z.ZodType<User$Outbound, z.ZodTypeDef, User> =
     theme: z.string().optional(),
     activeTeamId: z.nullable(z.string()),
     hasGithub: z.boolean().default(false),
-    teams: z.array(Team$outboundSchema),
+    teams: z.array(TeamSummary$outboundSchema),
   });
 
 /**
