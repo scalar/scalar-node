@@ -7,9 +7,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.registry.getv1ApisNamespace({
-    namespace: "<value>",
-  });
+  const result = await scalar.registry.listAllApiDocuments();
 
   console.log(result);
 }

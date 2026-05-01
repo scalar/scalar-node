@@ -17,6 +17,7 @@ export * from "./rule.js";
 export * from "./schema.js";
 export * from "./security.js";
 export * from "./team.js";
+export * from "./teamsummary.js";
 export * from "./theme.js";
 export * from "./uid.js";
 export * from "./user.js";

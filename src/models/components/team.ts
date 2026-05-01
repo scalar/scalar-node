@@ -11,6 +11,8 @@ export type Team = {
   uid: string;
   name: string;
   imageUri?: string | undefined;
+  slug: string;
+  theme: string;
 };
 
 /** @internal */
@@ -19,6 +21,8 @@ export const Team$inboundSchema: z.ZodType<Team, z.ZodTypeDef, unknown> = z
     uid: z.string(),
     name: z.string(),
     imageUri: z.string().optional(),
+    slug: z.string(),
+    theme: z.string(),
   });
 
 /** @internal */
@@ -26,6 +30,8 @@ export type Team$Outbound = {
   uid: string;
   name: string;
   imageUri?: string | undefined;
+  slug: string;
+  theme: string;
 };
 
 /** @internal */
@@ -34,6 +40,8 @@ export const Team$outboundSchema: z.ZodType<Team$Outbound, z.ZodTypeDef, Team> =
     uid: z.string(),
     name: z.string(),
     imageUri: z.string().optional(),
+    slug: z.string(),
+    theme: z.string(),
   });
 
 /**

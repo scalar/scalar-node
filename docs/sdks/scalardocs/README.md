@@ -7,11 +7,11 @@ Scalar Docs
 
 ### Available Operations
 
-* [getv1Guides](#getv1guides) - List all projects
-* [postv1Guides](#postv1guides) - Create a project
-* [postv1GuidesSlugPublish](#postv1guidesslugpublish) - Publish a project
+* [listGuides](#listguides) - List all projects
+* [createGuide](#createguide) - Create a project
+* [publishGuide](#publishguide) - Publish a project
 
-## getv1Guides
+## listGuides
 
 List all guide projects.
 
@@ -25,7 +25,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.scalarDocs.getv1Guides();
+  const result = await scalar.scalarDocs.listGuides();
 
   console.log(result);
 }
@@ -39,7 +39,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { scalarDocsGetv1Guides } from "@scalar/sdk/funcs/scalarDocsGetv1Guides.js";
+import { scalarDocsListGuides } from "@scalar/sdk/funcs/scalarDocsListGuides.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -48,12 +48,12 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await scalarDocsGetv1Guides(scalar);
+  const res = await scalarDocsListGuides(scalar);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("scalarDocsGetv1Guides failed:", res.error);
+    console.log("scalarDocsListGuides failed:", res.error);
   }
 }
 
@@ -84,7 +84,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1Guides
+## createGuide
 
 Create a guide project.
 
@@ -98,18 +98,12 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.scalarDocs.postv1Guides({
+  const result = await scalar.scalarDocs.createGuide({
     name: "<value>",
     allowedUsers: [
       "<value 1>",
-      "<value 2>",
-      "<value 3>",
     ],
-    allowedDomains: [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    allowedDomains: [],
   });
 
   console.log(result);
@@ -124,7 +118,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { scalarDocsPostv1Guides } from "@scalar/sdk/funcs/scalarDocsPostv1Guides.js";
+import { scalarDocsCreateGuide } from "@scalar/sdk/funcs/scalarDocsCreateGuide.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -133,24 +127,18 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await scalarDocsPostv1Guides(scalar, {
+  const res = await scalarDocsCreateGuide(scalar, {
     name: "<value>",
     allowedUsers: [
       "<value 1>",
-      "<value 2>",
-      "<value 3>",
     ],
-    allowedDomains: [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    allowedDomains: [],
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("scalarDocsPostv1Guides failed:", res.error);
+    console.log("scalarDocsCreateGuide failed:", res.error);
   }
 }
 
@@ -161,14 +149,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1GuidesRequestBody](../../models/operations/postv1guidesrequestbody.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateGuideRequestBody](../../models/operations/createguiderequestbody.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.Postv1GuidesResponseBody](../../models/operations/postv1guidesresponsebody.md)\>**
+**Promise\<[operations.CreateGuideResponseBody](../../models/operations/createguideresponsebody.md)\>**
 
 ### Errors
 
@@ -182,7 +170,7 @@ run();
 | errors.FiveHundred             | 500                            | application/json               |
 | errors.APIError                | 4XX, 5XX                       | \*/\*                          |
 
-## postv1GuidesSlugPublish
+## publishGuide
 
 Start a new publish process.
 
@@ -196,7 +184,7 @@ const scalar = new Scalar({
 });
 
 async function run() {
-  const result = await scalar.scalarDocs.postv1GuidesSlugPublish({
+  const result = await scalar.scalarDocs.publishGuide({
     slug: "<value>",
   });
 
@@ -212,7 +200,7 @@ The standalone function version of this method:
 
 ```typescript
 import { ScalarCore } from "@scalar/sdk/core.js";
-import { scalarDocsPostv1GuidesSlugPublish } from "@scalar/sdk/funcs/scalarDocsPostv1GuidesSlugPublish.js";
+import { scalarDocsPublishGuide } from "@scalar/sdk/funcs/scalarDocsPublishGuide.js";
 
 // Use `ScalarCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -221,14 +209,14 @@ const scalar = new ScalarCore({
 });
 
 async function run() {
-  const res = await scalarDocsPostv1GuidesSlugPublish(scalar, {
+  const res = await scalarDocsPublishGuide(scalar, {
     slug: "<value>",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("scalarDocsPostv1GuidesSlugPublish failed:", res.error);
+    console.log("scalarDocsPublishGuide failed:", res.error);
   }
 }
 
@@ -239,14 +227,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.Postv1GuidesSlugPublishRequest](../../models/operations/postv1guidesslugpublishrequest.md)                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.PublishGuideRequest](../../models/operations/publishguiderequest.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.Postv1GuidesSlugPublishResponseBody](../../models/operations/postv1guidesslugpublishresponsebody.md)\>**
+**Promise\<[operations.PublishGuideResponseBody](../../models/operations/publishguideresponsebody.md)\>**
 
 ### Errors
 
