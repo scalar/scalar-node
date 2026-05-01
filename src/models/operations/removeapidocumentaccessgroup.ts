@@ -15,6 +15,14 @@ export type RemoveApiDocumentAccessGroupRequest = {
   accessGroup: components.AccessGroup;
 };
 
+export type RemoveApiDocumentAccessGroupResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
+};
+
 /** @internal */
 export const RemoveApiDocumentAccessGroupRequest$inboundSchema: z.ZodType<
   RemoveApiDocumentAccessGroupRequest,
@@ -85,5 +93,75 @@ export function removeApiDocumentAccessGroupRequestFromJSON(
     (x) =>
       RemoveApiDocumentAccessGroupRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'RemoveApiDocumentAccessGroupRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const RemoveApiDocumentAccessGroupResponse$inboundSchema: z.ZodType<
+  RemoveApiDocumentAccessGroupResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type RemoveApiDocumentAccessGroupResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const RemoveApiDocumentAccessGroupResponse$outboundSchema: z.ZodType<
+  RemoveApiDocumentAccessGroupResponse$Outbound,
+  z.ZodTypeDef,
+  RemoveApiDocumentAccessGroupResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace RemoveApiDocumentAccessGroupResponse$ {
+  /** @deprecated use `RemoveApiDocumentAccessGroupResponse$inboundSchema` instead. */
+  export const inboundSchema =
+    RemoveApiDocumentAccessGroupResponse$inboundSchema;
+  /** @deprecated use `RemoveApiDocumentAccessGroupResponse$outboundSchema` instead. */
+  export const outboundSchema =
+    RemoveApiDocumentAccessGroupResponse$outboundSchema;
+  /** @deprecated use `RemoveApiDocumentAccessGroupResponse$Outbound` instead. */
+  export type Outbound = RemoveApiDocumentAccessGroupResponse$Outbound;
+}
+
+export function removeApiDocumentAccessGroupResponseToJSON(
+  removeApiDocumentAccessGroupResponse: RemoveApiDocumentAccessGroupResponse,
+): string {
+  return JSON.stringify(
+    RemoveApiDocumentAccessGroupResponse$outboundSchema.parse(
+      removeApiDocumentAccessGroupResponse,
+    ),
+  );
+}
+
+export function removeApiDocumentAccessGroupResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<RemoveApiDocumentAccessGroupResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      RemoveApiDocumentAccessGroupResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RemoveApiDocumentAccessGroupResponse' from JSON`,
   );
 }

@@ -3,14 +3,24 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type DeleteSchemaVersionRequest = {
   namespace: string;
   slug: string;
   semver: string;
+};
+
+export type DeleteSchemaVersionResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -70,5 +80,72 @@ export function deleteSchemaVersionRequestFromJSON(
     jsonString,
     (x) => DeleteSchemaVersionRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'DeleteSchemaVersionRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const DeleteSchemaVersionResponse$inboundSchema: z.ZodType<
+  DeleteSchemaVersionResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type DeleteSchemaVersionResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const DeleteSchemaVersionResponse$outboundSchema: z.ZodType<
+  DeleteSchemaVersionResponse$Outbound,
+  z.ZodTypeDef,
+  DeleteSchemaVersionResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteSchemaVersionResponse$ {
+  /** @deprecated use `DeleteSchemaVersionResponse$inboundSchema` instead. */
+  export const inboundSchema = DeleteSchemaVersionResponse$inboundSchema;
+  /** @deprecated use `DeleteSchemaVersionResponse$outboundSchema` instead. */
+  export const outboundSchema = DeleteSchemaVersionResponse$outboundSchema;
+  /** @deprecated use `DeleteSchemaVersionResponse$Outbound` instead. */
+  export type Outbound = DeleteSchemaVersionResponse$Outbound;
+}
+
+export function deleteSchemaVersionResponseToJSON(
+  deleteSchemaVersionResponse: DeleteSchemaVersionResponse,
+): string {
+  return JSON.stringify(
+    DeleteSchemaVersionResponse$outboundSchema.parse(
+      deleteSchemaVersionResponse,
+    ),
+  );
+}
+
+export function deleteSchemaVersionResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteSchemaVersionResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteSchemaVersionResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteSchemaVersionResponse' from JSON`,
   );
 }

@@ -77,7 +77,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetLoginPortalResponseBody](../../models/operations/getloginportalresponsebody.md)\>**
+**Promise\<[operations.GetLoginPortalResponse](../../models/operations/getloginportalresponse.md)\>**
 
 ### Errors
 
@@ -157,7 +157,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.UpdateLoginPortalResponse](../../models/operations/updateloginportalresponse.md)\>**
 
 ### Errors
 
@@ -235,7 +235,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteLoginPortalResponse](../../models/operations/deleteloginportalresponse.md)\>**
 
 ### Errors
 
@@ -319,7 +319,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Uid](../../models/components/uid.md)\>**
+**Promise\<[operations.CreateLoginPortalResponse](../../models/operations/createloginportalresponse.md)\>**
 
 ### Errors
 
@@ -392,7 +392,7 @@ run();
 
 ### Response
 
-**Promise\<[components.LoginPortal[]](../../models/.md)\>**
+**Promise\<[operations.ListLoginPortalsResponse](../../models/operations/listloginportalsresponse.md)\>**
 
 ### Errors
 

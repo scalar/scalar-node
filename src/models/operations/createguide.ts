@@ -3,8 +3,10 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateGuideRequestBody = {
@@ -21,6 +23,14 @@ export type CreateGuideRequestBody = {
 export type CreateGuideResponseBody = {
   uid: string;
   slug: string;
+};
+
+export type CreateGuideResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  object?: CreateGuideResponseBody | undefined;
 };
 
 /** @internal */
@@ -143,5 +153,70 @@ export function createGuideResponseBodyFromJSON(
     jsonString,
     (x) => CreateGuideResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateGuideResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateGuideResponse$inboundSchema: z.ZodType<
+  CreateGuideResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  object: z.lazy(() => CreateGuideResponseBody$inboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateGuideResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  object?: CreateGuideResponseBody$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateGuideResponse$outboundSchema: z.ZodType<
+  CreateGuideResponse$Outbound,
+  z.ZodTypeDef,
+  CreateGuideResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  object: z.lazy(() => CreateGuideResponseBody$outboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateGuideResponse$ {
+  /** @deprecated use `CreateGuideResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateGuideResponse$inboundSchema;
+  /** @deprecated use `CreateGuideResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateGuideResponse$outboundSchema;
+  /** @deprecated use `CreateGuideResponse$Outbound` instead. */
+  export type Outbound = CreateGuideResponse$Outbound;
+}
+
+export function createGuideResponseToJSON(
+  createGuideResponse: CreateGuideResponse,
+): string {
+  return JSON.stringify(
+    CreateGuideResponse$outboundSchema.parse(createGuideResponse),
+  );
+}
+
+export function createGuideResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateGuideResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateGuideResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateGuideResponse' from JSON`,
   );
 }

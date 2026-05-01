@@ -68,7 +68,7 @@ run();
 
 ### Response
 
-**Promise\<[string[]](../../models/.md)\>**
+**Promise\<[operations.ListNamespacesResponse](../../models/operations/listnamespacesresponse.md)\>**
 
 ### Errors
 

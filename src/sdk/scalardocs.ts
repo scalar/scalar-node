@@ -6,7 +6,6 @@ import { scalarDocsCreateGuide } from "../funcs/scalarDocsCreateGuide.js";
 import { scalarDocsListGuides } from "../funcs/scalarDocsListGuides.js";
 import { scalarDocsPublishGuide } from "../funcs/scalarDocsPublishGuide.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -19,7 +18,7 @@ export class ScalarDocs extends ClientSDK {
    */
   async listGuides(
     options?: RequestOptions,
-  ): Promise<Array<components.GithubProject>> {
+  ): Promise<operations.ListGuidesResponse> {
     return unwrapAsync(scalarDocsListGuides(
       this,
       options,
@@ -35,7 +34,7 @@ export class ScalarDocs extends ClientSDK {
   async createGuide(
     request: operations.CreateGuideRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.CreateGuideResponseBody> {
+  ): Promise<operations.CreateGuideResponse> {
     return unwrapAsync(scalarDocsCreateGuide(
       this,
       request,
@@ -52,7 +51,7 @@ export class ScalarDocs extends ClientSDK {
   async publishGuide(
     request: operations.PublishGuideRequest,
     options?: RequestOptions,
-  ): Promise<operations.PublishGuideResponseBody> {
+  ): Promise<operations.PublishGuideResponse> {
     return unwrapAsync(scalarDocsPublishGuide(
       this,
       request,

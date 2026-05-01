@@ -79,7 +79,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Rule[]](../../models/.md)\>**
+**Promise\<[operations.ListRulesetsResponse](../../models/operations/listrulesetsresponse.md)\>**
 
 ### Errors
 
@@ -167,7 +167,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Uid](../../models/components/uid.md)\>**
+**Promise\<[operations.CreateRulesetResponse](../../models/operations/createrulesetresponse.md)\>**
 
 ### Errors
 
@@ -249,7 +249,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.UpdateRulesetResponse](../../models/operations/updaterulesetresponse.md)\>**
 
 ### Errors
 
@@ -329,7 +329,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.DeleteRulesetResponse](../../models/operations/deleterulesetresponse.md)\>**
 
 ### Errors
 
@@ -409,7 +409,7 @@ run();
 
 ### Response
 
-**Promise\<[string](../../models/.md)\>**
+**Promise\<[operations.GetRulesetDocumentResponse](../../models/operations/getrulesetdocumentresponse.md)\>**
 
 ### Errors
 
@@ -495,7 +495,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.AddRulesetAccessGroupResponse](../../models/operations/addrulesetaccessgroupresponse.md)\>**
 
 ### Errors
 
@@ -581,7 +581,7 @@ run();
 
 ### Response
 
-**Promise\<[any](../../models/.md)\>**
+**Promise\<[operations.RemoveRulesetAccessGroupResponse](../../models/operations/removerulesetaccessgroupresponse.md)\>**
 
 ### Errors
 

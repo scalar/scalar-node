@@ -36,7 +36,7 @@ export function authenticationExchangePersonalToken(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.ExchangePersonalTokenResponseBody,
+    operations.ExchangePersonalTokenResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -67,7 +67,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.ExchangePersonalTokenResponseBody,
+      operations.ExchangePersonalTokenResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -150,7 +150,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.ExchangePersonalTokenResponseBody,
+    operations.ExchangePersonalTokenResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -166,7 +166,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.ExchangePersonalTokenResponseBody$inboundSchema),
+    M.json(200, operations.ExchangePersonalTokenResponse$inboundSchema, {
+      key: "object",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

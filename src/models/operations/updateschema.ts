@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type UpdateSchemaRequestBody = {
@@ -18,6 +19,14 @@ export type UpdateSchemaRequest = {
   namespace: string;
   slug: string;
   requestBody: UpdateSchemaRequestBody;
+};
+
+export type UpdateSchemaResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -145,5 +154,70 @@ export function updateSchemaRequestFromJSON(
     jsonString,
     (x) => UpdateSchemaRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'UpdateSchemaRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const UpdateSchemaResponse$inboundSchema: z.ZodType<
+  UpdateSchemaResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type UpdateSchemaResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const UpdateSchemaResponse$outboundSchema: z.ZodType<
+  UpdateSchemaResponse$Outbound,
+  z.ZodTypeDef,
+  UpdateSchemaResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace UpdateSchemaResponse$ {
+  /** @deprecated use `UpdateSchemaResponse$inboundSchema` instead. */
+  export const inboundSchema = UpdateSchemaResponse$inboundSchema;
+  /** @deprecated use `UpdateSchemaResponse$outboundSchema` instead. */
+  export const outboundSchema = UpdateSchemaResponse$outboundSchema;
+  /** @deprecated use `UpdateSchemaResponse$Outbound` instead. */
+  export type Outbound = UpdateSchemaResponse$Outbound;
+}
+
+export function updateSchemaResponseToJSON(
+  updateSchemaResponse: UpdateSchemaResponse,
+): string {
+  return JSON.stringify(
+    UpdateSchemaResponse$outboundSchema.parse(updateSchemaResponse),
+  );
+}
+
+export function updateSchemaResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<UpdateSchemaResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UpdateSchemaResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UpdateSchemaResponse' from JSON`,
   );
 }

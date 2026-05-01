@@ -9,7 +9,6 @@ import { themesListThemes } from "../funcs/themesListThemes.js";
 import { themesReplaceThemeDocument } from "../funcs/themesReplaceThemeDocument.js";
 import { themesUpdateTheme } from "../funcs/themesUpdateTheme.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -22,7 +21,7 @@ export class Themes extends ClientSDK {
    */
   async listThemes(
     options?: RequestOptions,
-  ): Promise<Array<components.Theme>> {
+  ): Promise<operations.ListThemesResponse> {
     return unwrapAsync(themesListThemes(
       this,
       options,
@@ -38,7 +37,7 @@ export class Themes extends ClientSDK {
   async createTheme(
     request: operations.CreateThemeRequestBody,
     options?: RequestOptions,
-  ): Promise<components.Uid> {
+  ): Promise<operations.CreateThemeResponse> {
     return unwrapAsync(themesCreateTheme(
       this,
       request,
@@ -55,7 +54,7 @@ export class Themes extends ClientSDK {
   async updateTheme(
     request: operations.UpdateThemeRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.UpdateThemeResponse> {
     return unwrapAsync(themesUpdateTheme(
       this,
       request,
@@ -72,7 +71,7 @@ export class Themes extends ClientSDK {
   async replaceThemeDocument(
     request: operations.ReplaceThemeDocumentRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.ReplaceThemeDocumentResponse> {
     return unwrapAsync(themesReplaceThemeDocument(
       this,
       request,
@@ -89,7 +88,7 @@ export class Themes extends ClientSDK {
   async deleteTheme(
     request: operations.DeleteThemeRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteThemeResponse> {
     return unwrapAsync(themesDeleteTheme(
       this,
       request,
@@ -106,7 +105,7 @@ export class Themes extends ClientSDK {
   async getTheme(
     request: operations.GetThemeRequest,
     options?: RequestOptions,
-  ): Promise<string> {
+  ): Promise<operations.GetThemeResponse> {
     return unwrapAsync(themesGetTheme(
       this,
       request,

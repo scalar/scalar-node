@@ -8,7 +8,6 @@ import { loginPortalsGetLoginPortal } from "../funcs/loginPortalsGetLoginPortal.
 import { loginPortalsListLoginPortals } from "../funcs/loginPortalsListLoginPortals.js";
 import { loginPortalsUpdateLoginPortal } from "../funcs/loginPortalsUpdateLoginPortal.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -22,7 +21,7 @@ export class LoginPortals extends ClientSDK {
   async getLoginPortal(
     request: operations.GetLoginPortalRequest,
     options?: RequestOptions,
-  ): Promise<operations.GetLoginPortalResponseBody> {
+  ): Promise<operations.GetLoginPortalResponse> {
     return unwrapAsync(loginPortalsGetLoginPortal(
       this,
       request,
@@ -39,7 +38,7 @@ export class LoginPortals extends ClientSDK {
   async updateLoginPortal(
     request: operations.UpdateLoginPortalRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.UpdateLoginPortalResponse> {
     return unwrapAsync(loginPortalsUpdateLoginPortal(
       this,
       request,
@@ -56,7 +55,7 @@ export class LoginPortals extends ClientSDK {
   async deleteLoginPortal(
     request: operations.DeleteLoginPortalRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteLoginPortalResponse> {
     return unwrapAsync(loginPortalsDeleteLoginPortal(
       this,
       request,
@@ -73,7 +72,7 @@ export class LoginPortals extends ClientSDK {
   async createLoginPortal(
     request: operations.CreateLoginPortalRequestBody,
     options?: RequestOptions,
-  ): Promise<components.Uid> {
+  ): Promise<operations.CreateLoginPortalResponse> {
     return unwrapAsync(loginPortalsCreateLoginPortal(
       this,
       request,
@@ -89,7 +88,7 @@ export class LoginPortals extends ClientSDK {
    */
   async listLoginPortals(
     options?: RequestOptions,
-  ): Promise<Array<components.LoginPortal>> {
+  ): Promise<operations.ListLoginPortalsResponse> {
     return unwrapAsync(loginPortalsListLoginPortals(
       this,
       options,

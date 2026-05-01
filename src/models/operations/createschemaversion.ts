@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateSchemaVersionRequestBody = {
@@ -17,6 +18,14 @@ export type CreateSchemaVersionRequest = {
   namespace: string;
   slug: string;
   requestBody: CreateSchemaVersionRequestBody;
+};
+
+export type CreateSchemaVersionResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  uid?: components.Uid | undefined;
 };
 
 /** @internal */
@@ -143,5 +152,72 @@ export function createSchemaVersionRequestFromJSON(
     jsonString,
     (x) => CreateSchemaVersionRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateSchemaVersionRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateSchemaVersionResponse$inboundSchema: z.ZodType<
+  CreateSchemaVersionResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  uid: components.Uid$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateSchemaVersionResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  uid?: components.Uid$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateSchemaVersionResponse$outboundSchema: z.ZodType<
+  CreateSchemaVersionResponse$Outbound,
+  z.ZodTypeDef,
+  CreateSchemaVersionResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  uid: components.Uid$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateSchemaVersionResponse$ {
+  /** @deprecated use `CreateSchemaVersionResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateSchemaVersionResponse$inboundSchema;
+  /** @deprecated use `CreateSchemaVersionResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateSchemaVersionResponse$outboundSchema;
+  /** @deprecated use `CreateSchemaVersionResponse$Outbound` instead. */
+  export type Outbound = CreateSchemaVersionResponse$Outbound;
+}
+
+export function createSchemaVersionResponseToJSON(
+  createSchemaVersionResponse: CreateSchemaVersionResponse,
+): string {
+  return JSON.stringify(
+    CreateSchemaVersionResponse$outboundSchema.parse(
+      createSchemaVersionResponse,
+    ),
+  );
+}
+
+export function createSchemaVersionResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateSchemaVersionResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateSchemaVersionResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateSchemaVersionResponse' from JSON`,
   );
 }

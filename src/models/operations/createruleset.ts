@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateRulesetRequestBody = {
@@ -19,6 +20,14 @@ export type CreateRulesetRequestBody = {
 export type CreateRulesetRequest = {
   namespace: string;
   requestBody: CreateRulesetRequestBody;
+};
+
+export type CreateRulesetResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  uid?: components.Uid | undefined;
 };
 
 /** @internal */
@@ -149,5 +158,70 @@ export function createRulesetRequestFromJSON(
     jsonString,
     (x) => CreateRulesetRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateRulesetRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateRulesetResponse$inboundSchema: z.ZodType<
+  CreateRulesetResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  uid: components.Uid$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateRulesetResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  uid?: components.Uid$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateRulesetResponse$outboundSchema: z.ZodType<
+  CreateRulesetResponse$Outbound,
+  z.ZodTypeDef,
+  CreateRulesetResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  uid: components.Uid$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateRulesetResponse$ {
+  /** @deprecated use `CreateRulesetResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateRulesetResponse$inboundSchema;
+  /** @deprecated use `CreateRulesetResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateRulesetResponse$outboundSchema;
+  /** @deprecated use `CreateRulesetResponse$Outbound` instead. */
+  export type Outbound = CreateRulesetResponse$Outbound;
+}
+
+export function createRulesetResponseToJSON(
+  createRulesetResponse: CreateRulesetResponse,
+): string {
+  return JSON.stringify(
+    CreateRulesetResponse$outboundSchema.parse(createRulesetResponse),
+  );
+}
+
+export function createRulesetResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateRulesetResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateRulesetResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateRulesetResponse' from JSON`,
   );
 }

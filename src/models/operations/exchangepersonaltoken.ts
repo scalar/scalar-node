@@ -3,8 +3,10 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ExchangePersonalTokenRequestBody = {
@@ -16,6 +18,14 @@ export type ExchangePersonalTokenRequestBody = {
  */
 export type ExchangePersonalTokenResponseBody = {
   accessToken: string;
+};
+
+export type ExchangePersonalTokenResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  object?: ExchangePersonalTokenResponseBody | undefined;
 };
 
 /** @internal */
@@ -128,5 +138,74 @@ export function exchangePersonalTokenResponseBodyFromJSON(
     jsonString,
     (x) => ExchangePersonalTokenResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ExchangePersonalTokenResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ExchangePersonalTokenResponse$inboundSchema: z.ZodType<
+  ExchangePersonalTokenResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  object: z.lazy(() => ExchangePersonalTokenResponseBody$inboundSchema)
+    .optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type ExchangePersonalTokenResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  object?: ExchangePersonalTokenResponseBody$Outbound | undefined;
+};
+
+/** @internal */
+export const ExchangePersonalTokenResponse$outboundSchema: z.ZodType<
+  ExchangePersonalTokenResponse$Outbound,
+  z.ZodTypeDef,
+  ExchangePersonalTokenResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  object: z.lazy(() => ExchangePersonalTokenResponseBody$outboundSchema)
+    .optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ExchangePersonalTokenResponse$ {
+  /** @deprecated use `ExchangePersonalTokenResponse$inboundSchema` instead. */
+  export const inboundSchema = ExchangePersonalTokenResponse$inboundSchema;
+  /** @deprecated use `ExchangePersonalTokenResponse$outboundSchema` instead. */
+  export const outboundSchema = ExchangePersonalTokenResponse$outboundSchema;
+  /** @deprecated use `ExchangePersonalTokenResponse$Outbound` instead. */
+  export type Outbound = ExchangePersonalTokenResponse$Outbound;
+}
+
+export function exchangePersonalTokenResponseToJSON(
+  exchangePersonalTokenResponse: ExchangePersonalTokenResponse,
+): string {
+  return JSON.stringify(
+    ExchangePersonalTokenResponse$outboundSchema.parse(
+      exchangePersonalTokenResponse,
+    ),
+  );
+}
+
+export function exchangePersonalTokenResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ExchangePersonalTokenResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ExchangePersonalTokenResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ExchangePersonalTokenResponse' from JSON`,
   );
 }

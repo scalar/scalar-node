@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ReplaceThemeDocumentRequestBody = {
@@ -15,6 +16,14 @@ export type ReplaceThemeDocumentRequestBody = {
 export type ReplaceThemeDocumentRequest = {
   slug: string;
   requestBody: ReplaceThemeDocumentRequestBody;
+};
+
+export type ReplaceThemeDocumentResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -137,5 +146,72 @@ export function replaceThemeDocumentRequestFromJSON(
     jsonString,
     (x) => ReplaceThemeDocumentRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ReplaceThemeDocumentRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const ReplaceThemeDocumentResponse$inboundSchema: z.ZodType<
+  ReplaceThemeDocumentResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type ReplaceThemeDocumentResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const ReplaceThemeDocumentResponse$outboundSchema: z.ZodType<
+  ReplaceThemeDocumentResponse$Outbound,
+  z.ZodTypeDef,
+  ReplaceThemeDocumentResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ReplaceThemeDocumentResponse$ {
+  /** @deprecated use `ReplaceThemeDocumentResponse$inboundSchema` instead. */
+  export const inboundSchema = ReplaceThemeDocumentResponse$inboundSchema;
+  /** @deprecated use `ReplaceThemeDocumentResponse$outboundSchema` instead. */
+  export const outboundSchema = ReplaceThemeDocumentResponse$outboundSchema;
+  /** @deprecated use `ReplaceThemeDocumentResponse$Outbound` instead. */
+  export type Outbound = ReplaceThemeDocumentResponse$Outbound;
+}
+
+export function replaceThemeDocumentResponseToJSON(
+  replaceThemeDocumentResponse: ReplaceThemeDocumentResponse,
+): string {
+  return JSON.stringify(
+    ReplaceThemeDocumentResponse$outboundSchema.parse(
+      replaceThemeDocumentResponse,
+    ),
+  );
+}
+
+export function replaceThemeDocumentResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ReplaceThemeDocumentResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ReplaceThemeDocumentResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReplaceThemeDocumentResponse' from JSON`,
   );
 }
