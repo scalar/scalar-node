@@ -7,6 +7,7 @@ export * from "./activedeployment.js";
 export * from "./apidocument.js";
 export * from "./githubproject.js";
 export * from "./githubprojectrepository.js";
+export * from "./httpmetadata.js";
 export * from "./loginportal.js";
 export * from "./loginportalemail.js";
 export * from "./loginportalpage.js";

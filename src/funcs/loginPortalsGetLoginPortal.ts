@@ -37,7 +37,7 @@ export function loginPortalsGetLoginPortal(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetLoginPortalResponseBody,
+    operations.GetLoginPortalResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -68,7 +68,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.GetLoginPortalResponseBody,
+      operations.GetLoginPortalResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -161,7 +161,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetLoginPortalResponseBody,
+    operations.GetLoginPortalResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -177,7 +177,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetLoginPortalResponseBody$inboundSchema),
+    M.json(200, operations.GetLoginPortalResponse$inboundSchema, {
+      key: "object",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

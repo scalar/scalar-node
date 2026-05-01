@@ -3,12 +3,22 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListSchemasRequest = {
   namespace: string;
+};
+
+export type ListSchemasResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  schemata?: Array<components.Schema> | undefined;
 };
 
 /** @internal */
@@ -62,5 +72,70 @@ export function listSchemasRequestFromJSON(
     jsonString,
     (x) => ListSchemasRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListSchemasRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListSchemasResponse$inboundSchema: z.ZodType<
+  ListSchemasResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  schemata: z.array(components.Schema$inboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type ListSchemasResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  schemata?: Array<components.Schema$Outbound> | undefined;
+};
+
+/** @internal */
+export const ListSchemasResponse$outboundSchema: z.ZodType<
+  ListSchemasResponse$Outbound,
+  z.ZodTypeDef,
+  ListSchemasResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  schemata: z.array(components.Schema$outboundSchema).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListSchemasResponse$ {
+  /** @deprecated use `ListSchemasResponse$inboundSchema` instead. */
+  export const inboundSchema = ListSchemasResponse$inboundSchema;
+  /** @deprecated use `ListSchemasResponse$outboundSchema` instead. */
+  export const outboundSchema = ListSchemasResponse$outboundSchema;
+  /** @deprecated use `ListSchemasResponse$Outbound` instead. */
+  export type Outbound = ListSchemasResponse$Outbound;
+}
+
+export function listSchemasResponseToJSON(
+  listSchemasResponse: ListSchemasResponse,
+): string {
+  return JSON.stringify(
+    ListSchemasResponse$outboundSchema.parse(listSchemasResponse),
+  );
+}
+
+export function listSchemasResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListSchemasResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListSchemasResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListSchemasResponse' from JSON`,
   );
 }

@@ -3,12 +3,22 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type DeleteLoginPortalRequest = {
   slug: string;
+};
+
+export type DeleteLoginPortalResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -62,5 +72,70 @@ export function deleteLoginPortalRequestFromJSON(
     jsonString,
     (x) => DeleteLoginPortalRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'DeleteLoginPortalRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const DeleteLoginPortalResponse$inboundSchema: z.ZodType<
+  DeleteLoginPortalResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type DeleteLoginPortalResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const DeleteLoginPortalResponse$outboundSchema: z.ZodType<
+  DeleteLoginPortalResponse$Outbound,
+  z.ZodTypeDef,
+  DeleteLoginPortalResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteLoginPortalResponse$ {
+  /** @deprecated use `DeleteLoginPortalResponse$inboundSchema` instead. */
+  export const inboundSchema = DeleteLoginPortalResponse$inboundSchema;
+  /** @deprecated use `DeleteLoginPortalResponse$outboundSchema` instead. */
+  export const outboundSchema = DeleteLoginPortalResponse$outboundSchema;
+  /** @deprecated use `DeleteLoginPortalResponse$Outbound` instead. */
+  export type Outbound = DeleteLoginPortalResponse$Outbound;
+}
+
+export function deleteLoginPortalResponseToJSON(
+  deleteLoginPortalResponse: DeleteLoginPortalResponse,
+): string {
+  return JSON.stringify(
+    DeleteLoginPortalResponse$outboundSchema.parse(deleteLoginPortalResponse),
+  );
+}
+
+export function deleteLoginPortalResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteLoginPortalResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteLoginPortalResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteLoginPortalResponse' from JSON`,
   );
 }

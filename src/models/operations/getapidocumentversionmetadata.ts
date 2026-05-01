@@ -3,14 +3,24 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type GetApiDocumentVersionMetadataRequest = {
   namespace: string;
   slug: string;
   semver: string;
+};
+
+export type GetApiDocumentVersionMetadataResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  managedDocVersion?: components.ManagedDocVersion | undefined;
 };
 
 /** @internal */
@@ -75,5 +85,77 @@ export function getApiDocumentVersionMetadataRequestFromJSON(
     (x) =>
       GetApiDocumentVersionMetadataRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetApiDocumentVersionMetadataRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetApiDocumentVersionMetadataResponse$inboundSchema: z.ZodType<
+  GetApiDocumentVersionMetadataResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  "managed-doc-version": components.ManagedDocVersion$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+    "managed-doc-version": "managedDocVersion",
+  });
+});
+
+/** @internal */
+export type GetApiDocumentVersionMetadataResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  "managed-doc-version"?: components.ManagedDocVersion$Outbound | undefined;
+};
+
+/** @internal */
+export const GetApiDocumentVersionMetadataResponse$outboundSchema: z.ZodType<
+  GetApiDocumentVersionMetadataResponse$Outbound,
+  z.ZodTypeDef,
+  GetApiDocumentVersionMetadataResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  managedDocVersion: components.ManagedDocVersion$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+    managedDocVersion: "managed-doc-version",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetApiDocumentVersionMetadataResponse$ {
+  /** @deprecated use `GetApiDocumentVersionMetadataResponse$inboundSchema` instead. */
+  export const inboundSchema =
+    GetApiDocumentVersionMetadataResponse$inboundSchema;
+  /** @deprecated use `GetApiDocumentVersionMetadataResponse$outboundSchema` instead. */
+  export const outboundSchema =
+    GetApiDocumentVersionMetadataResponse$outboundSchema;
+  /** @deprecated use `GetApiDocumentVersionMetadataResponse$Outbound` instead. */
+  export type Outbound = GetApiDocumentVersionMetadataResponse$Outbound;
+}
+
+export function getApiDocumentVersionMetadataResponseToJSON(
+  getApiDocumentVersionMetadataResponse: GetApiDocumentVersionMetadataResponse,
+): string {
+  return JSON.stringify(
+    GetApiDocumentVersionMetadataResponse$outboundSchema.parse(
+      getApiDocumentVersionMetadataResponse,
+    ),
+  );
+}
+
+export function getApiDocumentVersionMetadataResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetApiDocumentVersionMetadataResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      GetApiDocumentVersionMetadataResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetApiDocumentVersionMetadataResponse' from JSON`,
   );
 }

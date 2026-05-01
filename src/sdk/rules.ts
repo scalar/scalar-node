@@ -10,7 +10,6 @@ import { rulesListRulesets } from "../funcs/rulesListRulesets.js";
 import { rulesRemoveRulesetAccessGroup } from "../funcs/rulesRemoveRulesetAccessGroup.js";
 import { rulesUpdateRuleset } from "../funcs/rulesUpdateRuleset.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -24,7 +23,7 @@ export class Rules extends ClientSDK {
   async listRulesets(
     request: operations.ListRulesetsRequest,
     options?: RequestOptions,
-  ): Promise<Array<components.Rule>> {
+  ): Promise<operations.ListRulesetsResponse> {
     return unwrapAsync(rulesListRulesets(
       this,
       request,
@@ -41,7 +40,7 @@ export class Rules extends ClientSDK {
   async createRuleset(
     request: operations.CreateRulesetRequest,
     options?: RequestOptions,
-  ): Promise<components.Uid> {
+  ): Promise<operations.CreateRulesetResponse> {
     return unwrapAsync(rulesCreateRuleset(
       this,
       request,
@@ -58,7 +57,7 @@ export class Rules extends ClientSDK {
   async updateRuleset(
     request: operations.UpdateRulesetRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.UpdateRulesetResponse> {
     return unwrapAsync(rulesUpdateRuleset(
       this,
       request,
@@ -75,7 +74,7 @@ export class Rules extends ClientSDK {
   async deleteRuleset(
     request: operations.DeleteRulesetRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.DeleteRulesetResponse> {
     return unwrapAsync(rulesDeleteRuleset(
       this,
       request,
@@ -92,7 +91,7 @@ export class Rules extends ClientSDK {
   async getRulesetDocument(
     request: operations.GetRulesetDocumentRequest,
     options?: RequestOptions,
-  ): Promise<string> {
+  ): Promise<operations.GetRulesetDocumentResponse> {
     return unwrapAsync(rulesGetRulesetDocument(
       this,
       request,
@@ -109,7 +108,7 @@ export class Rules extends ClientSDK {
   async addRulesetAccessGroup(
     request: operations.AddRulesetAccessGroupRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.AddRulesetAccessGroupResponse> {
     return unwrapAsync(rulesAddRulesetAccessGroup(
       this,
       request,
@@ -126,7 +125,7 @@ export class Rules extends ClientSDK {
   async removeRulesetAccessGroup(
     request: operations.RemoveRulesetAccessGroupRequest,
     options?: RequestOptions,
-  ): Promise<any> {
+  ): Promise<operations.RemoveRulesetAccessGroupResponse> {
     return unwrapAsync(rulesRemoveRulesetAccessGroup(
       this,
       request,

@@ -3,13 +3,23 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type DeleteSchemaRequest = {
   namespace: string;
   slug: string;
+};
+
+export type DeleteSchemaResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
 };
 
 /** @internal */
@@ -66,5 +76,70 @@ export function deleteSchemaRequestFromJSON(
     jsonString,
     (x) => DeleteSchemaRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'DeleteSchemaRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const DeleteSchemaResponse$inboundSchema: z.ZodType<
+  DeleteSchemaResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type DeleteSchemaResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const DeleteSchemaResponse$outboundSchema: z.ZodType<
+  DeleteSchemaResponse$Outbound,
+  z.ZodTypeDef,
+  DeleteSchemaResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteSchemaResponse$ {
+  /** @deprecated use `DeleteSchemaResponse$inboundSchema` instead. */
+  export const inboundSchema = DeleteSchemaResponse$inboundSchema;
+  /** @deprecated use `DeleteSchemaResponse$outboundSchema` instead. */
+  export const outboundSchema = DeleteSchemaResponse$outboundSchema;
+  /** @deprecated use `DeleteSchemaResponse$Outbound` instead. */
+  export type Outbound = DeleteSchemaResponse$Outbound;
+}
+
+export function deleteSchemaResponseToJSON(
+  deleteSchemaResponse: DeleteSchemaResponse,
+): string {
+  return JSON.stringify(
+    DeleteSchemaResponse$outboundSchema.parse(deleteSchemaResponse),
+  );
+}
+
+export function deleteSchemaResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteSchemaResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteSchemaResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteSchemaResponse' from JSON`,
   );
 }

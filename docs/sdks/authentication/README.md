@@ -70,7 +70,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.ExchangePersonalTokenResponseBody](../../models/operations/exchangepersonaltokenresponsebody.md)\>**
+**Promise\<[operations.ExchangePersonalTokenResponse](../../models/operations/exchangepersonaltokenresponse.md)\>**
 
 ### Errors
 
@@ -143,7 +143,7 @@ run();
 
 ### Response
 
-**Promise\<[components.User](../../models/components/user.md)\>**
+**Promise\<[operations.GetCurrentUserResponse](../../models/operations/getcurrentuserresponse.md)\>**
 
 ### Errors
 

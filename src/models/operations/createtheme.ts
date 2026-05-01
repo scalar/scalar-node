@@ -3,8 +3,10 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateThemeRequestBody = {
@@ -12,6 +14,14 @@ export type CreateThemeRequestBody = {
   description?: string | undefined;
   slug: string;
   document: string;
+};
+
+export type CreateThemeResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  uid?: components.Uid | undefined;
 };
 
 /** @internal */
@@ -74,5 +84,70 @@ export function createThemeRequestBodyFromJSON(
     jsonString,
     (x) => CreateThemeRequestBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateThemeRequestBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateThemeResponse$inboundSchema: z.ZodType<
+  CreateThemeResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  uid: components.Uid$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateThemeResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  uid?: components.Uid$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateThemeResponse$outboundSchema: z.ZodType<
+  CreateThemeResponse$Outbound,
+  z.ZodTypeDef,
+  CreateThemeResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  uid: components.Uid$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateThemeResponse$ {
+  /** @deprecated use `CreateThemeResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateThemeResponse$inboundSchema;
+  /** @deprecated use `CreateThemeResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateThemeResponse$outboundSchema;
+  /** @deprecated use `CreateThemeResponse$Outbound` instead. */
+  export type Outbound = CreateThemeResponse$Outbound;
+}
+
+export function createThemeResponseToJSON(
+  createThemeResponse: CreateThemeResponse,
+): string {
+  return JSON.stringify(
+    CreateThemeResponse$outboundSchema.parse(createThemeResponse),
+  );
+}
+
+export function createThemeResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateThemeResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateThemeResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateThemeResponse' from JSON`,
   );
 }

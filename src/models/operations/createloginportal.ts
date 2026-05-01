@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
@@ -13,6 +14,14 @@ export type CreateLoginPortalRequestBody = {
   slug: string;
   email: components.LoginPortalEmail;
   page: components.LoginPortalPage;
+};
+
+export type CreateLoginPortalResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  uid?: components.Uid | undefined;
 };
 
 /** @internal */
@@ -77,5 +86,70 @@ export function createLoginPortalRequestBodyFromJSON(
     jsonString,
     (x) => CreateLoginPortalRequestBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateLoginPortalRequestBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateLoginPortalResponse$inboundSchema: z.ZodType<
+  CreateLoginPortalResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  uid: components.Uid$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateLoginPortalResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  uid?: components.Uid$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateLoginPortalResponse$outboundSchema: z.ZodType<
+  CreateLoginPortalResponse$Outbound,
+  z.ZodTypeDef,
+  CreateLoginPortalResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  uid: components.Uid$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateLoginPortalResponse$ {
+  /** @deprecated use `CreateLoginPortalResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateLoginPortalResponse$inboundSchema;
+  /** @deprecated use `CreateLoginPortalResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateLoginPortalResponse$outboundSchema;
+  /** @deprecated use `CreateLoginPortalResponse$Outbound` instead. */
+  export type Outbound = CreateLoginPortalResponse$Outbound;
+}
+
+export function createLoginPortalResponseToJSON(
+  createLoginPortalResponse: CreateLoginPortalResponse,
+): string {
+  return JSON.stringify(
+    CreateLoginPortalResponse$outboundSchema.parse(createLoginPortalResponse),
+  );
+}
+
+export function createLoginPortalResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateLoginPortalResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateLoginPortalResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateLoginPortalResponse' from JSON`,
   );
 }

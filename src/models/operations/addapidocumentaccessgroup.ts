@@ -15,6 +15,14 @@ export type AddApiDocumentAccessGroupRequest = {
   accessGroup: components.AccessGroup;
 };
 
+export type AddApiDocumentAccessGroupResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
+};
+
 /** @internal */
 export const AddApiDocumentAccessGroupRequest$inboundSchema: z.ZodType<
   AddApiDocumentAccessGroupRequest,
@@ -82,5 +90,73 @@ export function addApiDocumentAccessGroupRequestFromJSON(
     jsonString,
     (x) => AddApiDocumentAccessGroupRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'AddApiDocumentAccessGroupRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const AddApiDocumentAccessGroupResponse$inboundSchema: z.ZodType<
+  AddApiDocumentAccessGroupResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type AddApiDocumentAccessGroupResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const AddApiDocumentAccessGroupResponse$outboundSchema: z.ZodType<
+  AddApiDocumentAccessGroupResponse$Outbound,
+  z.ZodTypeDef,
+  AddApiDocumentAccessGroupResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace AddApiDocumentAccessGroupResponse$ {
+  /** @deprecated use `AddApiDocumentAccessGroupResponse$inboundSchema` instead. */
+  export const inboundSchema = AddApiDocumentAccessGroupResponse$inboundSchema;
+  /** @deprecated use `AddApiDocumentAccessGroupResponse$outboundSchema` instead. */
+  export const outboundSchema =
+    AddApiDocumentAccessGroupResponse$outboundSchema;
+  /** @deprecated use `AddApiDocumentAccessGroupResponse$Outbound` instead. */
+  export type Outbound = AddApiDocumentAccessGroupResponse$Outbound;
+}
+
+export function addApiDocumentAccessGroupResponseToJSON(
+  addApiDocumentAccessGroupResponse: AddApiDocumentAccessGroupResponse,
+): string {
+  return JSON.stringify(
+    AddApiDocumentAccessGroupResponse$outboundSchema.parse(
+      addApiDocumentAccessGroupResponse,
+    ),
+  );
+}
+
+export function addApiDocumentAccessGroupResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<AddApiDocumentAccessGroupResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AddApiDocumentAccessGroupResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AddApiDocumentAccessGroupResponse' from JSON`,
   );
 }

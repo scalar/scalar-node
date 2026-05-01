@@ -4,7 +4,7 @@
 
 import { teamsListTeams } from "../funcs/teamsListTeams.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
+import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Teams extends ClientSDK {
@@ -16,7 +16,7 @@ export class Teams extends ClientSDK {
    */
   async listTeams(
     options?: RequestOptions,
-  ): Promise<Array<components.Team>> {
+  ): Promise<operations.ListTeamsResponse> {
     return unwrapAsync(teamsListTeams(
       this,
       options,

@@ -6,6 +6,7 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateSchemaRequestBody = {
@@ -20,6 +21,14 @@ export type CreateSchemaRequestBody = {
 export type CreateSchemaRequest = {
   namespace: string;
   requestBody: CreateSchemaRequestBody;
+};
+
+export type CreateSchemaResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  uid?: components.Uid | undefined;
 };
 
 /** @internal */
@@ -153,5 +162,70 @@ export function createSchemaRequestFromJSON(
     jsonString,
     (x) => CreateSchemaRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateSchemaRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateSchemaResponse$inboundSchema: z.ZodType<
+  CreateSchemaResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  uid: components.Uid$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type CreateSchemaResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  uid?: components.Uid$Outbound | undefined;
+};
+
+/** @internal */
+export const CreateSchemaResponse$outboundSchema: z.ZodType<
+  CreateSchemaResponse$Outbound,
+  z.ZodTypeDef,
+  CreateSchemaResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  uid: components.Uid$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateSchemaResponse$ {
+  /** @deprecated use `CreateSchemaResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateSchemaResponse$inboundSchema;
+  /** @deprecated use `CreateSchemaResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateSchemaResponse$outboundSchema;
+  /** @deprecated use `CreateSchemaResponse$Outbound` instead. */
+  export type Outbound = CreateSchemaResponse$Outbound;
+}
+
+export function createSchemaResponseToJSON(
+  createSchemaResponse: CreateSchemaResponse,
+): string {
+  return JSON.stringify(
+    CreateSchemaResponse$outboundSchema.parse(createSchemaResponse),
+  );
+}
+
+export function createSchemaResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateSchemaResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateSchemaResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateSchemaResponse' from JSON`,
   );
 }

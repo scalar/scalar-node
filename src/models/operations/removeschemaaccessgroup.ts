@@ -15,6 +15,14 @@ export type RemoveSchemaAccessGroupRequest = {
   accessGroup: components.AccessGroup;
 };
 
+export type RemoveSchemaAccessGroupResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
+};
+
 /** @internal */
 export const RemoveSchemaAccessGroupRequest$inboundSchema: z.ZodType<
   RemoveSchemaAccessGroupRequest,
@@ -82,5 +90,72 @@ export function removeSchemaAccessGroupRequestFromJSON(
     jsonString,
     (x) => RemoveSchemaAccessGroupRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'RemoveSchemaAccessGroupRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const RemoveSchemaAccessGroupResponse$inboundSchema: z.ZodType<
+  RemoveSchemaAccessGroupResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type RemoveSchemaAccessGroupResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const RemoveSchemaAccessGroupResponse$outboundSchema: z.ZodType<
+  RemoveSchemaAccessGroupResponse$Outbound,
+  z.ZodTypeDef,
+  RemoveSchemaAccessGroupResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace RemoveSchemaAccessGroupResponse$ {
+  /** @deprecated use `RemoveSchemaAccessGroupResponse$inboundSchema` instead. */
+  export const inboundSchema = RemoveSchemaAccessGroupResponse$inboundSchema;
+  /** @deprecated use `RemoveSchemaAccessGroupResponse$outboundSchema` instead. */
+  export const outboundSchema = RemoveSchemaAccessGroupResponse$outboundSchema;
+  /** @deprecated use `RemoveSchemaAccessGroupResponse$Outbound` instead. */
+  export type Outbound = RemoveSchemaAccessGroupResponse$Outbound;
+}
+
+export function removeSchemaAccessGroupResponseToJSON(
+  removeSchemaAccessGroupResponse: RemoveSchemaAccessGroupResponse,
+): string {
+  return JSON.stringify(
+    RemoveSchemaAccessGroupResponse$outboundSchema.parse(
+      removeSchemaAccessGroupResponse,
+    ),
+  );
+}
+
+export function removeSchemaAccessGroupResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<RemoveSchemaAccessGroupResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => RemoveSchemaAccessGroupResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RemoveSchemaAccessGroupResponse' from JSON`,
   );
 }

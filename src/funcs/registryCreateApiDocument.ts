@@ -37,7 +37,7 @@ export function registryCreateApiDocument(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.CreateApiDocumentResponseBody,
+    operations.CreateApiDocumentResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -68,7 +68,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.CreateApiDocumentResponseBody,
+      operations.CreateApiDocumentResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -162,7 +162,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.CreateApiDocumentResponseBody,
+    operations.CreateApiDocumentResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -178,7 +178,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.CreateApiDocumentResponseBody$inboundSchema),
+    M.json(200, operations.CreateApiDocumentResponse$inboundSchema, {
+      key: "object",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),

@@ -68,7 +68,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Team[]](../../models/.md)\>**
+**Promise\<[operations.ListTeamsResponse](../../models/operations/listteamsresponse.md)\>**
 
 ### Errors
 

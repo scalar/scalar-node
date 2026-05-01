@@ -15,6 +15,14 @@ export type RemoveRulesetAccessGroupRequest = {
   accessGroup: components.AccessGroup;
 };
 
+export type RemoveRulesetAccessGroupResponse = {
+  httpMeta: components.HTTPMetadata;
+  /**
+   * Default Response
+   */
+  any?: any | null | undefined;
+};
+
 /** @internal */
 export const RemoveRulesetAccessGroupRequest$inboundSchema: z.ZodType<
   RemoveRulesetAccessGroupRequest,
@@ -82,5 +90,72 @@ export function removeRulesetAccessGroupRequestFromJSON(
     jsonString,
     (x) => RemoveRulesetAccessGroupRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'RemoveRulesetAccessGroupRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const RemoveRulesetAccessGroupResponse$inboundSchema: z.ZodType<
+  RemoveRulesetAccessGroupResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type RemoveRulesetAccessGroupResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  any?: any | null | undefined;
+};
+
+/** @internal */
+export const RemoveRulesetAccessGroupResponse$outboundSchema: z.ZodType<
+  RemoveRulesetAccessGroupResponse$Outbound,
+  z.ZodTypeDef,
+  RemoveRulesetAccessGroupResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  any: z.nullable(z.any()).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace RemoveRulesetAccessGroupResponse$ {
+  /** @deprecated use `RemoveRulesetAccessGroupResponse$inboundSchema` instead. */
+  export const inboundSchema = RemoveRulesetAccessGroupResponse$inboundSchema;
+  /** @deprecated use `RemoveRulesetAccessGroupResponse$outboundSchema` instead. */
+  export const outboundSchema = RemoveRulesetAccessGroupResponse$outboundSchema;
+  /** @deprecated use `RemoveRulesetAccessGroupResponse$Outbound` instead. */
+  export type Outbound = RemoveRulesetAccessGroupResponse$Outbound;
+}
+
+export function removeRulesetAccessGroupResponseToJSON(
+  removeRulesetAccessGroupResponse: RemoveRulesetAccessGroupResponse,
+): string {
+  return JSON.stringify(
+    RemoveRulesetAccessGroupResponse$outboundSchema.parse(
+      removeRulesetAccessGroupResponse,
+    ),
+  );
+}
+
+export function removeRulesetAccessGroupResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<RemoveRulesetAccessGroupResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => RemoveRulesetAccessGroupResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RemoveRulesetAccessGroupResponse' from JSON`,
   );
 }

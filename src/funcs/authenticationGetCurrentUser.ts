@@ -8,7 +8,6 @@ import { compactMap } from "../lib/primitives.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -20,6 +19,7 @@ import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { ScalarError } from "../models/errors/scalarerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
+import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -34,7 +34,7 @@ export function authenticationGetCurrentUser(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.User,
+    operations.GetCurrentUserResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -63,7 +63,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      components.User,
+      operations.GetCurrentUserResponse,
       | errors.FourHundred
       | errors.FourHundredAndOne
       | errors.FourHundredAndThree
@@ -137,7 +137,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.User,
+    operations.GetCurrentUserResponse,
     | errors.FourHundred
     | errors.FourHundredAndOne
     | errors.FourHundredAndThree
@@ -153,7 +153,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.User$inboundSchema),
+    M.json(200, operations.GetCurrentUserResponse$inboundSchema, {
+      key: "user",
+    }),
     M.jsonErr(400, errors.FourHundred$inboundSchema),
     M.jsonErr(401, errors.FourHundredAndOne$inboundSchema),
     M.jsonErr(403, errors.FourHundredAndThree$inboundSchema),
