@@ -96,20 +96,11 @@ Declared schemes:
 
 ## Resources
 
-Every operation below includes its HTTP route, generated types, documented error statuses, and a code sample when one can be generated.
-
 ### `Registry`
 
 #### List all API Documents
 
 List all API documents across every namespace the caller can access.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/apis` |
-| Response | `APIPromise<Array<ApiDocument>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -132,14 +123,6 @@ main();
 #### List API Documents
 
 List API documents in a namespace.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/apis/{namespace}` |
-| Input | `namespace: string` |
-| Response | `APIPromise<Array<ApiDocument>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -164,14 +147,6 @@ main();
 #### Create API Document
 
 Create an API document.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/apis/{namespace}` |
-| Input | `namespace: string`, `RegistryCreateApiDocumentParams` |
-| Response | `APIPromise<{ uid: string; versionUid: string; title: string; jsonSha: string; yamlSha: string; versionSha: string }>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -203,14 +178,6 @@ main();
 
 Delete an API document and all versions.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/apis/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -235,14 +202,6 @@ main();
 #### Update API Document metadata
 
 Update metadata for an API document.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `PATCH /v1/apis/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string`, `RegistryUpdateApiDocumentParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -270,14 +229,6 @@ main();
 
 Get a specific API document version.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/apis/{namespace}/{slug}/version/{semver}` |
-| Input | `namespace: string`, `slug: string`, `semver: string` |
-| Response | `APIPromise<string>` |
-| Content-Type | `text/plain` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -304,14 +255,6 @@ main();
 
 Delete a specific API document version.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/apis/{namespace}/{slug}/version/{semver}` |
-| Input | `namespace: string`, `slug: string`, `semver: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -337,14 +280,6 @@ main();
 #### Update API Document version
 
 Update the registry file content for an API document version.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `PATCH /v1/apis/{namespace}/{slug}/version/{semver}` |
-| Input | `namespace: string`, `slug: string`, `semver: string`, `RegistryUpdateApiDocumentVersionParams` |
-| Response | `APIPromise<{ jsonSha: string; yamlSha: string; versionSha: string }>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -375,14 +310,6 @@ main();
 
 Get metadata (uid, content shas, version sha, tags) for a specific API document version.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/apis/{namespace}/{slug}/version/{semver}/metadata` |
-| Input | `namespace: string`, `slug: string`, `semver: string` |
-| Response | `APIPromise<ManagedDocVersion>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -408,14 +335,6 @@ main();
 #### Create API Document version
 
 Create a new API document version.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/apis/{namespace}/{slug}/version` |
-| Input | `namespace: string`, `slug: string`, `RegistryCreateApiDocumentVersionParams` |
-| Response | `APIPromise<ManagedDocVersion>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -446,14 +365,6 @@ main();
 
 Add an access group to an API document.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/apis/{namespace}/{slug}/access-group` |
-| Input | `namespace: string`, `slug: string`, `RegistryCreateApiDocumentAccessGroupParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -481,14 +392,6 @@ main();
 #### Remove access group
 
 Remove an access group from an API document.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/apis/{namespace}/{slug}/access-group` |
-| Input | `namespace: string`, `slug: string`, `RegistryDeleteApiDocumentAccessGroupParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -518,14 +421,6 @@ main();
 
 List schemas in a namespace.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/schemas/{namespace}` |
-| Input | `namespace: string` |
-| Response | `APIPromise<Array<Schema>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -549,14 +444,6 @@ main();
 #### Create a shared component
 
 Create a schema in a namespace.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/schemas/{namespace}` |
-| Input | `namespace: string`, `SchemaCreateParams` |
-| Response | `APIPromise<Uid>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -588,14 +475,6 @@ main();
 
 Delete a schema and all related versions.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/schemas/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -620,14 +499,6 @@ main();
 #### Update shared component metadata
 
 Update schema metadata.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `PATCH /v1/schemas/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string`, `SchemaUpdateParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -655,14 +526,6 @@ main();
 
 Get a specific schema version document.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/schemas/{namespace}/{slug}/version/{semver}` |
-| Input | `namespace: string`, `slug: string`, `semver: string` |
-| Response | `APIPromise<string>` |
-| Content-Type | `text/plain` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -689,14 +552,6 @@ main();
 
 Delete a schema version.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/schemas/{namespace}/{slug}/version/{semver}` |
-| Input | `namespace: string`, `slug: string`, `semver: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -722,14 +577,6 @@ main();
 #### Create a shared component version
 
 Create a schema version.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/schemas/{namespace}/{slug}/version` |
-| Input | `namespace: string`, `slug: string`, `SchemaCreateVersionParams` |
-| Response | `APIPromise<Uid>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -760,14 +607,6 @@ main();
 
 Add an access group to a schema.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/schemas/{namespace}/{slug}/access-group` |
-| Input | `namespace: string`, `slug: string`, `SchemaCreateAccessGroupParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -795,14 +634,6 @@ main();
 #### Remove shared component access group
 
 Remove an access group from a schema.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/schemas/{namespace}/{slug}/access-group` |
-| Input | `namespace: string`, `slug: string`, `SchemaDeleteAccessGroupParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -832,14 +663,6 @@ main();
 
 Get a login portal by slug.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/login-portals/{slug}` |
-| Input | `slug: string` |
-| Response | `APIPromise<{ uid: string; title: string; slug: string; email: LoginPortalEmail; page: LoginPortalPage }>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -864,14 +687,6 @@ main();
 
 Delete a login portal.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/login-portals/{slug}` |
-| Input | `slug: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -895,14 +710,6 @@ main();
 #### Update portal metadata
 
 Update metadata for a login portal.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `PATCH /v1/login-portals/{slug}` |
-| Input | `slug: string`, `LoginPortals2Params` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -929,13 +736,6 @@ main();
 
 List all login portals for the current team.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/login-portals` |
-| Response | `APIPromise<Array<LoginPortal>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -957,14 +757,6 @@ main();
 #### Create a portal
 
 Create a login portal for the current team.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/login-portals` |
-| Input | `LoginPortals4Params` |
-| Response | `APIPromise<Uid>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1022,14 +814,6 @@ main();
 
 List all rulesets in a namespace.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/rulesets/{namespace}` |
-| Input | `namespace: string` |
-| Response | `APIPromise<Array<Rule>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1053,14 +837,6 @@ main();
 #### Create a rule
 
 Create a rule in a namespace.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/rulesets/{namespace}` |
-| Input | `namespace: string`, `RuleCreateRulesetParams` |
-| Response | `APIPromise<Uid>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1091,14 +867,6 @@ main();
 
 Get a rule document by slug.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/rulesets/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string` |
-| Response | `APIPromise<string>` |
-| Content-Type | `text/plain` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1123,14 +891,6 @@ main();
 #### Delete a rule
 
 Delete a rule by slug.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/rulesets/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1157,14 +917,6 @@ main();
 
 Update rule metadata by slug.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `PATCH /v1/rulesets/{namespace}/{slug}` |
-| Input | `namespace: string`, `slug: string`, `RuleUpdateRulesetParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1190,14 +942,6 @@ main();
 #### Add rule access group
 
 Grant an access group to a rule.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/rulesets/{namespace}/{slug}/access-group` |
-| Input | `namespace: string`, `slug: string`, `RuleCreateRulesetAccessGroupParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1227,14 +971,6 @@ main();
 
 Remove an access group from a rule.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/rulesets/{namespace}/{slug}/access-group` |
-| Input | `namespace: string`, `slug: string`, `RuleDeleteRulesetAccessGroupParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1263,13 +999,6 @@ main();
 
 List all team themes.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/themes` |
-| Response | `APIPromise<Array<Theme>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1291,14 +1020,6 @@ main();
 #### Create a theme
 
 Create a team theme.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/themes` |
-| Input | `ThemeCreateParams` |
-| Response | `APIPromise<Uid>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1328,14 +1049,6 @@ main();
 
 Get the theme document by slug.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/themes/{slug}` |
-| Input | `slug: string` |
-| Response | `APIPromise<string>` |
-| Content-Type | `text/plain` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1359,14 +1072,6 @@ main();
 #### Update theme document
 
 Replace the theme document.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `PUT /v1/themes/{slug}` |
-| Input | `slug: string`, `ThemeReplaceDocumentParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1395,14 +1100,6 @@ main();
 
 Delete a theme by slug.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `DELETE /v1/themes/{slug}` |
-| Input | `slug: string` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1426,14 +1123,6 @@ main();
 #### Update theme metadata
 
 Update theme metadata.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `PATCH /v1/themes/{slug}` |
-| Input | `slug: string`, `ThemeUpdateParams` |
-| Response | `APIPromise<null>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1460,13 +1149,6 @@ main();
 
 List all available teams
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/teams` |
-| Response | `APIPromise<Array<Team>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1489,13 +1171,6 @@ main();
 
 List all guide projects.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/guides` |
-| Response | `APIPromise<Array<GithubProject>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1517,14 +1192,6 @@ main();
 #### Create a project
 
 Create a guide project.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/guides` |
-| Input | `ScalarDocCreateGuideParams` |
-| Response | `APIPromise<{ uid: string; slug: string }>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1555,14 +1222,6 @@ main();
 
 Start a new publish process.
 
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/guides/{slug}/publish` |
-| Input | `slug: string` |
-| Response | `APIPromise<{ publishUid: string }>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1587,13 +1246,6 @@ main();
 
 Get all namespaces for the current team
 
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/namespaces` |
-| Response | `APIPromise<Array<string>>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
-
 ```ts
 import ScalarApi from "@scalar/sdk";
 
@@ -1615,14 +1267,6 @@ main();
 #### Exchange token
 
 Exchange an API key for an access token.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `POST /v1/auth/exchange` |
-| Input | `AuthenticationExchangePersonalTokenParams` |
-| Response | `APIPromise<{ accessToken: string }>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
@@ -1649,13 +1293,6 @@ main();
 #### Get current user
 
 Get the authenticated user, including their available teams and theme.
-
-| Field | Value |
-| --- | --- |
-| HTTP | `GET /v1/auth/me` |
-| Response | `APIPromise<User>` |
-| Content-Type | `application/json` |
-| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
 ```ts
 import ScalarApi from "@scalar/sdk";
