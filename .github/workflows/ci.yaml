@@ -1,4 +1,5 @@
 name: CI
+
 on:
   push:
     branches:
@@ -6,7 +7,22 @@ on:
   pull_request:
   workflow_dispatch: null
 jobs:
-  build:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+
+  publish:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     concurrency:
       group: npm-publish
@@ -16,14 +32,12 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install
-      - run: npm run prepublishOnly
-      - run: npm publish --access public
-        if: github.event_name != 'pull_request'
+          cache: npm
+      - run: npm ci
+      - run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
