@@ -1,585 +1,1704 @@
-# scalar-typescript-sdk
+# Scalar API
 
-Developer-friendly, idiomatic Typescript SDK for the *scalar-typescript-sdk* API.
-
-<div align="left">
-    <a href="https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=typescript"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20scalar+speakeasy-212015?style=for-the-badge&logo=scalar&labelColor=252525" /></a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-    </a>
-</div>
+Generated TypeScript SDK for the Scalar API API.
+Manage Scalar platform resources programmatically. The Scalar API lets teams create and update API references, schemas, guides, rulesets, themes, login portals, namespaces, and access controls from automated workflows or custom internal tooling. Use it to keep documentation and developer portals in sync with your source of truth, publish new versions safely, and inspect the teams and authenticated user context available to your integration.
 
 <br />
 
-## Summary
+## Contents
 
-Scalar API: API for managing Scalar platform resources.
+- [Installation](#installation)
+- [Quickstart](#quickstart)
+- [Authentication](#authentication)
+- [Client Options](#client-options)
+- [Request Options](#request-options)
+- [Resources](#resources)
+- [Errors](#errors)
+- [Retries and Timeouts](#retries-and-timeouts)
+- [Debugging](#debugging)
+- [Requirements](#requirements)
 
-## TypeScript SDK
+<br />
 
-For TypeScript, we provide a SDK that makes using our API even easier.
+## Installation
 
-### Install
-
-```bash
-npm add @scalar/sdk
+```sh
+npm install @scalar/sdk
 ```
 
-### Get a Scalar API key
+<br />
 
-Create an API key in your Scalar account:
-
-- Dashboard: https://dashboard.scalar.com/account
-- Store it in `.env`, for example:
-
-```bash
-SCALAR_API_KEY=your_personal_token
-```
-
-### Exchange your API key for an access token
-
-The personal token is not an access token. Exchange it first with `postv1AuthExchange`.
-
-If you use the personal token directly for authenticated API calls, the API returns `401 Invalid authentication token`.
+## Quickstart
 
 ```ts
-import { Scalar } from '@scalar/sdk'
+import ScalarApi from "@scalar/sdk";
 
-const scalar = new Scalar()
-
-const exchange = await scalar.auth.postv1AuthExchange({
-  personalToken: process.env.SCALAR_API_KEY!,
-})
-
-const accessToken = exchange.accessToken
-```
-
-### Use the access token
-
-Construct a second client with bearer auth. Use this authenticated client for API calls.
-
-```ts
-import { Scalar } from '@scalar/sdk'
-
-const scalar = new Scalar()
-
-const exchange = await scalar.auth.postv1AuthExchange({
-  personalToken: process.env.SCALAR_API_KEY!,
-})
-
-const authedScalar = new Scalar({
-  bearerAuth: exchange.accessToken,
-})
-```
-
-### Notes
-
-- The exchange request itself can be made from a client constructed with no arguments (`new Scalar()`).
-- The exchanged access token is valid for 12 hours.
-- Timestamps are Unix seconds.
-
-### Read more
-
-- [@scalar/sdk on npm](https://www.npmjs.com/package/@scalar/sdk)
-<!-- End Summary [summary] -->
-
-<!-- Start Table of Contents [toc] -->
-## Table of Contents
-<!-- $toc-max-depth=2 -->
-* [@scalar/sdk](#scalarsdk)
-  * [TypeScript SDK](#typescript-sdk)
-  * [SDK Installation](#sdk-installation)
-  * [Requirements](#requirements)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Standalone functions](#standalone-functions)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Debugging](#debugging)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
-
-<!-- End Table of Contents [toc] -->
-
-<!-- Start SDK Installation [installation] -->
-## SDK Installation
-
-The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
-
-### NPM
-
-```bash
-npm add @scalar/sdk
-```
-
-### PNPM
-
-```bash
-pnpm add @scalar/sdk
-```
-
-### Bun
-
-```bash
-bun add @scalar/sdk
-```
-
-### Yarn
-
-```bash
-yarn add @scalar/sdk zod
-
-# Note that Yarn does not install peer dependencies automatically. You will need
-# to install zod as shown above.
-```
-
-> [!NOTE]
-> This package is published with CommonJS and ES Modules (ESM) support.
-<!-- End SDK Installation [installation] -->
-
-<!-- Start Requirements [requirements] -->
-## Requirements
-
-For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
-<!-- End Requirements [requirements] -->
-
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
-
-### Example
-
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
 });
 
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
+async function main() {
+  const result = await client.registry.listAllApiDocuments();
 
   console.log(result);
 }
 
-run();
-
+main();
 ```
-<!-- End SDK Example Usage [usage] -->
 
-<!-- Start Authentication [security] -->
+<br />
+
 ## Authentication
 
-### Per-Client Security Schemes
+Pass credentials to the generated client constructor. Environment variables are read automatically when supported by the target runtime.
 
-This SDK supports the following security scheme globally:
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bearerAuth` | `string \| provider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
 
-| Name         | Type | Scheme      |
-| ------------ | ---- | ----------- |
-| `bearerAuth` | http | HTTP Bearer |
+Declared schemes:
 
-To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
-
-  console.log(result);
-}
-
-run();
-
-```
-<!-- End Authentication [security] -->
-
-<!-- Start Available Resources and Operations [operations] -->
-## Available Resources and Operations
-
-<details open>
-<summary>Available methods</summary>
-
-### [authentication](docs/sdks/authentication/README.md)
-
-* [exchangePersonalToken](docs/sdks/authentication/README.md#exchangepersonaltoken) - Exchange token
-* [getCurrentUser](docs/sdks/authentication/README.md#getcurrentuser) - Get current user
-
-### [loginPortals](docs/sdks/loginportals/README.md)
-
-* [getLoginPortal](docs/sdks/loginportals/README.md#getloginportal) - Get a login portal
-* [updateLoginPortal](docs/sdks/loginportals/README.md#updateloginportal) - Update portal metadata
-* [deleteLoginPortal](docs/sdks/loginportals/README.md#deleteloginportal) - Delete a login portal
-* [createLoginPortal](docs/sdks/loginportals/README.md#createloginportal) - Create a portal
-* [listLoginPortals](docs/sdks/loginportals/README.md#listloginportals) - List all portals
-
-### [namespaces](docs/sdks/namespaces/README.md)
-
-* [listNamespaces](docs/sdks/namespaces/README.md#listnamespaces) - List namespaces
-
-### [registry](docs/sdks/registry/README.md)
-
-* [listAllApiDocuments](docs/sdks/registry/README.md#listallapidocuments) - List all API Documents
-* [listApiDocuments](docs/sdks/registry/README.md#listapidocuments) - List API Documents in a namespace
-* [createApiDocument](docs/sdks/registry/README.md#createapidocument) - Create API Document
-* [updateApiDocument](docs/sdks/registry/README.md#updateapidocument) - Update API Document metadata
-* [deleteApiDocument](docs/sdks/registry/README.md#deleteapidocument) - Delete API Document
-* [getApiDocumentVersion](docs/sdks/registry/README.md#getapidocumentversion) - Get API Document
-* [updateApiDocumentVersion](docs/sdks/registry/README.md#updateapidocumentversion) - Update API Document version
-* [deleteApiDocumentVersion](docs/sdks/registry/README.md#deleteapidocumentversion) - Delete API Document version
-* [getApiDocumentVersionMetadata](docs/sdks/registry/README.md#getapidocumentversionmetadata) - Get API Document version metadata
-* [createApiDocumentVersion](docs/sdks/registry/README.md#createapidocumentversion) - Create API Document version
-* [addApiDocumentAccessGroup](docs/sdks/registry/README.md#addapidocumentaccessgroup) - Add access group
-* [removeApiDocumentAccessGroup](docs/sdks/registry/README.md#removeapidocumentaccessgroup) - Remove access group
-
-### [rules](docs/sdks/rules/README.md)
-
-* [listRulesets](docs/sdks/rules/README.md#listrulesets) - List all rules
-* [createRuleset](docs/sdks/rules/README.md#createruleset) - Create a rule
-* [updateRuleset](docs/sdks/rules/README.md#updateruleset) - Update rule metadata
-* [deleteRuleset](docs/sdks/rules/README.md#deleteruleset) - Delete a rule
-* [getRulesetDocument](docs/sdks/rules/README.md#getrulesetdocument) - Get a rule
-* [addRulesetAccessGroup](docs/sdks/rules/README.md#addrulesetaccessgroup) - Add rule access group
-* [removeRulesetAccessGroup](docs/sdks/rules/README.md#removerulesetaccessgroup) - Remove rule access group
-
-
-### [scalarDocs](docs/sdks/scalardocs/README.md)
-
-* [listGuides](docs/sdks/scalardocs/README.md#listguides) - List all projects
-* [createGuide](docs/sdks/scalardocs/README.md#createguide) - Create a project
-* [publishGuide](docs/sdks/scalardocs/README.md#publishguide) - Publish a project
-
-### [schemas](docs/sdks/schemas/README.md)
-
-* [listSchemas](docs/sdks/schemas/README.md#listschemas) - List all shared components
-* [createSchema](docs/sdks/schemas/README.md#createschema) - Create a shared component
-* [updateSchema](docs/sdks/schemas/README.md#updateschema) - Update shared component metadata
-* [deleteSchema](docs/sdks/schemas/README.md#deleteschema) - Delete a shared component
-* [getSchemaVersion](docs/sdks/schemas/README.md#getschemaversion) - Get a shared component document
-* [deleteSchemaVersion](docs/sdks/schemas/README.md#deleteschemaversion) - Delete a shared component version
-* [createSchemaVersion](docs/sdks/schemas/README.md#createschemaversion) - Create a shared component version
-* [addSchemaAccessGroup](docs/sdks/schemas/README.md#addschemaaccessgroup) - Add shared component access group
-* [removeSchemaAccessGroup](docs/sdks/schemas/README.md#removeschemaaccessgroup) - Remove shared component access group
-
-### [teams](docs/sdks/teams/README.md)
-
-* [listTeams](docs/sdks/teams/README.md#listteams) - List teams
-
-### [themes](docs/sdks/themes/README.md)
-
-* [listThemes](docs/sdks/themes/README.md#listthemes) - List all themes
-* [createTheme](docs/sdks/themes/README.md#createtheme) - Create a theme
-* [updateTheme](docs/sdks/themes/README.md#updatetheme) - Update theme metadata
-* [replaceThemeDocument](docs/sdks/themes/README.md#replacethemedocument) - Update theme document
-* [deleteTheme](docs/sdks/themes/README.md#deletetheme) - Delete a theme
-* [getTheme](docs/sdks/themes/README.md#gettheme) - Get a theme
-
-</details>
-<!-- End Available Resources and Operations [operations] -->
-
-<!-- Start Standalone functions [standalone-funcs] -->
-## Standalone functions
-
-All the methods listed above are available as standalone functions. These
-functions are ideal for use in applications running in the browser, serverless
-runtimes or other environments where application bundle size is a primary
-concern. When using a bundler to build your application, all unused
-functionality will be either excluded from the final bundle or tree-shaken away.
-
-To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
-
-<details>
-
-<summary>Available standalone functions</summary>
-
-- [`authenticationExchangePersonalToken`](docs/sdks/authentication/README.md#exchangepersonaltoken) - Exchange token
-- [`authenticationGetCurrentUser`](docs/sdks/authentication/README.md#getcurrentuser) - Get current user
-- [`loginPortalsCreateLoginPortal`](docs/sdks/loginportals/README.md#createloginportal) - Create a portal
-- [`loginPortalsDeleteLoginPortal`](docs/sdks/loginportals/README.md#deleteloginportal) - Delete a login portal
-- [`loginPortalsGetLoginPortal`](docs/sdks/loginportals/README.md#getloginportal) - Get a login portal
-- [`loginPortalsListLoginPortals`](docs/sdks/loginportals/README.md#listloginportals) - List all portals
-- [`loginPortalsUpdateLoginPortal`](docs/sdks/loginportals/README.md#updateloginportal) - Update portal metadata
-- [`namespacesListNamespaces`](docs/sdks/namespaces/README.md#listnamespaces) - List namespaces
-- [`registryAddApiDocumentAccessGroup`](docs/sdks/registry/README.md#addapidocumentaccessgroup) - Add access group
-- [`registryCreateApiDocument`](docs/sdks/registry/README.md#createapidocument) - Create API Document
-- [`registryCreateApiDocumentVersion`](docs/sdks/registry/README.md#createapidocumentversion) - Create API Document version
-- [`registryDeleteApiDocument`](docs/sdks/registry/README.md#deleteapidocument) - Delete API Document
-- [`registryDeleteApiDocumentVersion`](docs/sdks/registry/README.md#deleteapidocumentversion) - Delete API Document version
-- [`registryGetApiDocumentVersion`](docs/sdks/registry/README.md#getapidocumentversion) - Get API Document
-- [`registryGetApiDocumentVersionMetadata`](docs/sdks/registry/README.md#getapidocumentversionmetadata) - Get API Document version metadata
-- [`registryListAllApiDocuments`](docs/sdks/registry/README.md#listallapidocuments) - List all API Documents
-- [`registryListApiDocuments`](docs/sdks/registry/README.md#listapidocuments) - List API Documents in a namespace
-- [`registryRemoveApiDocumentAccessGroup`](docs/sdks/registry/README.md#removeapidocumentaccessgroup) - Remove access group
-- [`registryUpdateApiDocument`](docs/sdks/registry/README.md#updateapidocument) - Update API Document metadata
-- [`registryUpdateApiDocumentVersion`](docs/sdks/registry/README.md#updateapidocumentversion) - Update API Document version
-- [`rulesAddRulesetAccessGroup`](docs/sdks/rules/README.md#addrulesetaccessgroup) - Add rule access group
-- [`rulesCreateRuleset`](docs/sdks/rules/README.md#createruleset) - Create a rule
-- [`rulesDeleteRuleset`](docs/sdks/rules/README.md#deleteruleset) - Delete a rule
-- [`rulesGetRulesetDocument`](docs/sdks/rules/README.md#getrulesetdocument) - Get a rule
-- [`rulesListRulesets`](docs/sdks/rules/README.md#listrulesets) - List all rules
-- [`rulesRemoveRulesetAccessGroup`](docs/sdks/rules/README.md#removerulesetaccessgroup) - Remove rule access group
-- [`rulesUpdateRuleset`](docs/sdks/rules/README.md#updateruleset) - Update rule metadata
-- [`scalarDocsCreateGuide`](docs/sdks/scalardocs/README.md#createguide) - Create a project
-- [`scalarDocsListGuides`](docs/sdks/scalardocs/README.md#listguides) - List all projects
-- [`scalarDocsPublishGuide`](docs/sdks/scalardocs/README.md#publishguide) - Publish a project
-- [`schemasAddSchemaAccessGroup`](docs/sdks/schemas/README.md#addschemaaccessgroup) - Add shared component access group
-- [`schemasCreateSchema`](docs/sdks/schemas/README.md#createschema) - Create a shared component
-- [`schemasCreateSchemaVersion`](docs/sdks/schemas/README.md#createschemaversion) - Create a shared component version
-- [`schemasDeleteSchema`](docs/sdks/schemas/README.md#deleteschema) - Delete a shared component
-- [`schemasDeleteSchemaVersion`](docs/sdks/schemas/README.md#deleteschemaversion) - Delete a shared component version
-- [`schemasGetSchemaVersion`](docs/sdks/schemas/README.md#getschemaversion) - Get a shared component document
-- [`schemasListSchemas`](docs/sdks/schemas/README.md#listschemas) - List all shared components
-- [`schemasRemoveSchemaAccessGroup`](docs/sdks/schemas/README.md#removeschemaaccessgroup) - Remove shared component access group
-- [`schemasUpdateSchema`](docs/sdks/schemas/README.md#updateschema) - Update shared component metadata
-- [`teamsListTeams`](docs/sdks/teams/README.md#listteams) - List teams
-- [`themesCreateTheme`](docs/sdks/themes/README.md#createtheme) - Create a theme
-- [`themesDeleteTheme`](docs/sdks/themes/README.md#deletetheme) - Delete a theme
-- [`themesGetTheme`](docs/sdks/themes/README.md#gettheme) - Get a theme
-- [`themesListThemes`](docs/sdks/themes/README.md#listthemes) - List all themes
-- [`themesReplaceThemeDocument`](docs/sdks/themes/README.md#replacethemedocument) - Update theme document
-- [`themesUpdateTheme`](docs/sdks/themes/README.md#updatetheme) - Update theme metadata
-
-</details>
-<!-- End Standalone functions [standalone-funcs] -->
-
-<!-- Start Retries [retries] -->
-## Retries
-
-Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
-
-To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments({
-    retries: {
-      strategy: "backoff",
-      backoff: {
-        initialInterval: 1,
-        maxInterval: 50,
-        exponent: 1.1,
-        maxElapsedTime: 100,
-      },
-      retryConnectionErrors: false,
-    },
-  });
-
-  console.log(result);
-}
-
-run();
-
-```
-
-If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  retryConfig: {
-    strategy: "backoff",
-    backoff: {
-      initialInterval: 1,
-      maxInterval: 50,
-      exponent: 1.1,
-      maxElapsedTime: 100,
-    },
-    retryConnectionErrors: false,
-  },
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
-
-  console.log(result);
-}
-
-run();
-
-```
-<!-- End Retries [retries] -->
-
-<!-- Start Error Handling [errors] -->
-## Error Handling
-
-[`ScalarError`](./src/models/errors/scalarerror.ts) is the base class for all HTTP error responses. It has the following properties:
-
-| Property                  | Type       | Description                                                                             |
-| ------------------------- | ---------- | --------------------------------------------------------------------------------------- |
-| `error.message`           | `string`   | Error message                                                                           |
-| `error.httpMeta.response` | `Response` | HTTP response. Access to headers and more.                                              |
-| `error.httpMeta.request`  | `Request`  | HTTP request. Access to headers and more.                                               |
-| `error.data$`             |            | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
-
-### Example
-```typescript
-import { Scalar } from "@scalar/sdk";
-import * as errors from "@scalar/sdk/models/errors";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  try {
-    const result = await scalar.registry.listAllApiDocuments();
-
-    console.log(result);
-  } catch (error) {
-    // The base class for HTTP error responses
-    if (error instanceof errors.ScalarError) {
-      console.log(error.message);
-      console.log(error.httpMeta.response.status);
-      console.log(error.httpMeta.response.headers);
-      console.log(error.httpMeta.request);
-
-      // Depending on the method different errors may be thrown
-      if (error instanceof errors.FourHundred) {
-        console.log(error.data$.message); // string
-        console.log(error.data$.code); // string
-      }
-    }
-  }
-}
-
-run();
-
-```
-
-### Error Classes
-**Primary errors:**
-* [`ScalarError`](./src/models/errors/scalarerror.ts): The base class for HTTP error responses.
-  * [`FourHundred`](docs/models/errors/fourhundred.md): Bad request. Status code `400`.
-  * [`FourHundredAndOne`](docs/models/errors/fourhundredandone.md): No auth. Status code `401`.
-  * [`FourHundredAndThree`](docs/models/errors/fourhundredandthree.md): Forbidden. Status code `403`.
-  * [`FourHundredAndFour`](docs/models/errors/fourhundredandfour.md): Not found. Status code `404`.
-  * [`FourHundredAndTwentyTwo`](docs/models/errors/fourhundredandtwentytwo.md): Invalid payload. Status code `422`.
-  * [`FiveHundred`](docs/models/errors/fivehundred.md): Uncaught error. Status code `500`.
-
-<details><summary>Less common errors (6)</summary>
+- `BearerAuth` bearer token
 
 <br />
 
-**Network errors:**
-* [`ConnectionError`](./src/models/errors/httpclienterrors.ts): HTTP client was unable to make a request to a server.
-* [`RequestTimeoutError`](./src/models/errors/httpclienterrors.ts): HTTP request timed out due to an AbortSignal signal.
-* [`RequestAbortedError`](./src/models/errors/httpclienterrors.ts): HTTP request was aborted by the client.
-* [`InvalidRequestError`](./src/models/errors/httpclienterrors.ts): Any input used to create a request is invalid.
-* [`UnexpectedClientError`](./src/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
+## Client Options
 
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
+| `baseURL` | `string \| null` | `process.env["SCALARAPI_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
+| `timeout` | `number` | `60000` | Maximum time in milliseconds to wait for a response before aborting a request. |
+| `maxRetries` | `number` | `2` | Number of retries for temporary failures. |
+| `defaultHeaders` | `HeadersInit` | - | Headers sent with every request. |
+| `defaultQuery` | `Record<string, string \| undefined>` | - | Query parameters sent with every request. |
+| `fetchOptions` | `RequestInit` | - | Additional fetch options sent with every request. |
+| `fetch` | `Fetch` | - | Custom fetch implementation. |
+| `logLevel` | `"off" \| "error" \| "warn" \| "info" \| "debug" \| null` | `process.env["SCALARAPI_LOG"]` | Controls request and retry debug logging. |
+| `logger` | `Logger \| null` | `console` | Custom logger implementation. |
 
-**Inherit from [`ScalarError`](./src/models/errors/scalarerror.ts)**:
-* [`ResponseValidationError`](./src/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
+<br />
 
-</details>
-<!-- End Error Handling [errors] -->
+## Request Options
 
-<!-- Start Server Selection [server] -->
-## Server Selection
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `headers` | `HeadersInit` | - | Per-request headers. |
+| `query` | `Record<string, unknown>` | - | Per-request query parameters. |
+| `body` | `unknown` | - | Override the generated request body. |
+| `timeout` | `number` | - | Per-request timeout in milliseconds. |
+| `maxRetries` | `number` | - | Per-request retry count. |
+| `signal` | `AbortSignal` | - | Abort an in-flight request. |
+| `fetchOptions` | `RequestInit` | - | Per-request fetch options. |
+| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. |
 
-### Override Server URL Per-Client
+<br />
 
-The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
-```typescript
-import { Scalar } from "@scalar/sdk";
+## Resources
 
-const scalar = new Scalar({
-  serverURL: "https://access.scalar.com",
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+Every operation below includes its HTTP route, generated types, documented error statuses, and a code sample when one can be generated.
+
+### `Registry`
+
+#### List all API Documents
+
+List all API documents across every namespace the caller can access.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/apis` |
+| Response | `APIPromise<Array<ApiDocument>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
 });
 
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
+async function main() {
+  const result = await client.registry.listAllApiDocuments();
 
   console.log(result);
 }
 
-run();
-
+main();
 ```
-<!-- End Server Selection [server] -->
 
-<!-- Start Custom HTTP Client [http-client] -->
-## Custom HTTP Client
+<br />
 
-The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
-[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). This
-client is a thin wrapper around `fetch` and provides the ability to attach hooks
-around the request lifecycle that can be used to modify the request or handle
-errors and response.
+#### List API Documents
 
-The `HTTPClient` constructor takes an optional `fetcher` argument that can be
-used to integrate a third-party HTTP client or when writing tests to mock out
-the HTTP client and feed in fixtures.
+List API documents in a namespace.
 
-The following example shows how to use the `"beforeRequest"` hook to to add a
-custom header and a timeout to requests and how to use the `"requestError"` hook
-to log errors:
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/apis/{namespace}` |
+| Input | `namespace: string` |
+| Response | `APIPromise<Array<ApiDocument>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
 
-```typescript
-import { Scalar } from "@scalar/sdk";
-import { HTTPClient } from "@scalar/sdk/lib/http";
+```ts
+import ScalarApi from "@scalar/sdk";
 
-const httpClient = new HTTPClient({
-  // fetcher takes a function that has the same signature as native `fetch`.
-  fetcher: (request) => {
-    return fetch(request);
-  }
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
 });
 
-httpClient.addHook("beforeRequest", (request) => {
-  const nextRequest = new Request(request, {
-    signal: request.signal || AbortSignal.timeout(5000)
+async function main() {
+  const result = await client.registry.listApiDocuments({
+    namespace: "namespace",
   });
 
-  nextRequest.headers.set("x-custom-header", "custom value");
+  console.log(result);
+}
 
-  return nextRequest;
-});
-
-httpClient.addHook("requestError", (error, request) => {
-  console.group("Request Error");
-  console.log("Reason:", `${error}`);
-  console.log("Endpoint:", `${request.method} ${request.url}`);
-  console.groupEnd();
-});
-
-const sdk = new Scalar({ httpClient });
+main();
 ```
-<!-- End Custom HTTP Client [http-client] -->
 
-<!-- Start Debugging [debug] -->
+<br />
+
+#### Create API Document
+
+Create an API document.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/apis/{namespace}` |
+| Input | `namespace: string`, `RegistryCreateApiDocumentParams` |
+| Response | `APIPromise<{ uid: string; versionUid: string; title: string; jsonSha: string; yamlSha: string; versionSha: string }>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.createApiDocument({
+    namespace: "namespace",
+    body: {
+      title: "",
+      version: "",
+      slug: "",
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete API Document
+
+Delete an API document and all versions.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/apis/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.deleteApiDocument({
+    namespace: "namespace",
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update API Document metadata
+
+Update metadata for an API document.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PATCH /v1/apis/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string`, `RegistryUpdateApiDocumentParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.updateApiDocument({
+    namespace: "namespace",
+    slug: "slug",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Get API Document
+
+Get a specific API document version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/apis/{namespace}/{slug}/version/{semver}` |
+| Input | `namespace: string`, `slug: string`, `semver: string` |
+| Response | `APIPromise<string>` |
+| Content-Type | `text/plain` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.retrieveApiDocumentVersion({
+    namespace: "namespace",
+    slug: "slug",
+    semver: "semver",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete API Document version
+
+Delete a specific API document version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/apis/{namespace}/{slug}/version/{semver}` |
+| Input | `namespace: string`, `slug: string`, `semver: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.deleteApiDocumentVersion({
+    namespace: "namespace",
+    slug: "slug",
+    semver: "semver",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update API Document version
+
+Update the registry file content for an API document version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PATCH /v1/apis/{namespace}/{slug}/version/{semver}` |
+| Input | `namespace: string`, `slug: string`, `semver: string`, `RegistryUpdateApiDocumentVersionParams` |
+| Response | `APIPromise<{ jsonSha: string; yamlSha: string; versionSha: string }>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.updateApiDocumentVersion({
+    namespace: "namespace",
+    slug: "slug",
+    semver: "semver",
+    body: {
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Get API Document version metadata
+
+Get metadata (uid, content shas, version sha, tags) for a specific API document version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/apis/{namespace}/{slug}/version/{semver}/metadata` |
+| Input | `namespace: string`, `slug: string`, `semver: string` |
+| Response | `APIPromise<ManagedDocVersion>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.listApiDocumentVersionMetadata({
+    namespace: "namespace",
+    slug: "slug",
+    semver: "semver",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create API Document version
+
+Create a new API document version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/apis/{namespace}/{slug}/version` |
+| Input | `namespace: string`, `slug: string`, `RegistryCreateApiDocumentVersionParams` |
+| Response | `APIPromise<ManagedDocVersion>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.createApiDocumentVersion({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      version: "",
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Add access group
+
+Add an access group to an API document.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/apis/{namespace}/{slug}/access-group` |
+| Input | `namespace: string`, `slug: string`, `RegistryCreateApiDocumentAccessGroupParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.createApiDocumentAccessGroup({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      accessGroupSlug: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Remove access group
+
+Remove an access group from an API document.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/apis/{namespace}/{slug}/access-group` |
+| Input | `namespace: string`, `slug: string`, `RegistryDeleteApiDocumentAccessGroupParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.registry.deleteApiDocumentAccessGroup({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      accessGroupSlug: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+### `Schemas`
+
+#### List all shared components
+
+List schemas in a namespace.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/schemas/{namespace}` |
+| Input | `namespace: string` |
+| Response | `APIPromise<Array<Schema>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.list({
+    namespace: "namespace",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create a shared component
+
+Create a schema in a namespace.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/schemas/{namespace}` |
+| Input | `namespace: string`, `SchemaCreateParams` |
+| Response | `APIPromise<Uid>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.create({
+    namespace: "namespace",
+    body: {
+      title: "",
+      version: "",
+      slug: "",
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete a shared component
+
+Delete a schema and all related versions.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/schemas/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.delete({
+    namespace: "namespace",
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update shared component metadata
+
+Update schema metadata.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PATCH /v1/schemas/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string`, `SchemaUpdateParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.update({
+    namespace: "namespace",
+    slug: "slug",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Get a shared component document
+
+Get a specific schema version document.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/schemas/{namespace}/{slug}/version/{semver}` |
+| Input | `namespace: string`, `slug: string`, `semver: string` |
+| Response | `APIPromise<string>` |
+| Content-Type | `text/plain` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.retrieveVersion({
+    namespace: "namespace",
+    slug: "slug",
+    semver: "semver",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete a shared component version
+
+Delete a schema version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/schemas/{namespace}/{slug}/version/{semver}` |
+| Input | `namespace: string`, `slug: string`, `semver: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.deleteVersion({
+    namespace: "namespace",
+    slug: "slug",
+    semver: "semver",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create a shared component version
+
+Create a schema version.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/schemas/{namespace}/{slug}/version` |
+| Input | `namespace: string`, `slug: string`, `SchemaCreateVersionParams` |
+| Response | `APIPromise<Uid>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.createVersion({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      version: "",
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Add shared component access group
+
+Add an access group to a schema.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/schemas/{namespace}/{slug}/access-group` |
+| Input | `namespace: string`, `slug: string`, `SchemaCreateAccessGroupParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.createAccessGroup({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      accessGroupSlug: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Remove shared component access group
+
+Remove an access group from a schema.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/schemas/{namespace}/{slug}/access-group` |
+| Input | `namespace: string`, `slug: string`, `SchemaDeleteAccessGroupParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.schemas.deleteAccessGroup({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      accessGroupSlug: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+### `LoginPortals`
+
+#### Get a login portal
+
+Get a login portal by slug.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/login-portals/{slug}` |
+| Input | `slug: string` |
+| Response | `APIPromise<{ uid: string; title: string; slug: string; email: LoginPortalEmail; page: LoginPortalPage }>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.loginPortals.loginPortals({
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete a login portal
+
+Delete a login portal.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/login-portals/{slug}` |
+| Input | `slug: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.loginPortals.loginPortals3({
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update portal metadata
+
+Update metadata for a login portal.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PATCH /v1/login-portals/{slug}` |
+| Input | `slug: string`, `LoginPortals2Params` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.loginPortals.loginPortals2({
+    slug: "slug",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### List all portals
+
+List all login portals for the current team.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/login-portals` |
+| Response | `APIPromise<Array<LoginPortal>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.loginPortals.loginPortals5();
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create a portal
+
+Create a login portal for the current team.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/login-portals` |
+| Input | `LoginPortals4Params` |
+| Response | `APIPromise<Uid>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.loginPortals.loginPortals4({
+    body: {
+      title: "",
+      slug: "",
+      email: {
+        logo: "",
+        logoSize: "100",
+        buttonText: "Login",
+        message: "Click to access private documentation hosted by scalar.com",
+        title: "Private Docs",
+        mainColor: "#2a2f45",
+        mainBackground: "#f6f6f6",
+        cardColor: "2a2f45",
+        cardBackground: "#fff",
+        buttonColor: "#fff",
+        buttonBackground: "#0f0f0f",
+      },
+      page: {
+        title: "Scalar Private Docs",
+        description: "Login to access your documentation",
+        head: "",
+        script: "",
+        theme: "",
+        companyName: "",
+        logo: "",
+        logoUrl: "",
+        favicon: "",
+        termsLink: "",
+        privacyLink: "",
+        formTitle: "Scalar Private Docs",
+        formDescription: "Login to access your documentation",
+        formImage: "",
+      },
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+### `Rules`
+
+#### List all rules
+
+List all rulesets in a namespace.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/rulesets/{namespace}` |
+| Input | `namespace: string` |
+| Response | `APIPromise<Array<Rule>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.listRulesets({
+    namespace: "namespace",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create a rule
+
+Create a rule in a namespace.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/rulesets/{namespace}` |
+| Input | `namespace: string`, `RuleCreateRulesetParams` |
+| Response | `APIPromise<Uid>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.createRuleset({
+    namespace: "namespace",
+    body: {
+      title: "",
+      slug: "",
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Get a rule
+
+Get a rule document by slug.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/rulesets/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string` |
+| Response | `APIPromise<string>` |
+| Content-Type | `text/plain` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.retrieveRulesetDocument({
+    namespace: "namespace",
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete a rule
+
+Delete a rule by slug.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/rulesets/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.deleteRuleset({
+    namespace: "namespace",
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update rule metadata
+
+Update rule metadata by slug.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PATCH /v1/rulesets/{namespace}/{slug}` |
+| Input | `namespace: string`, `slug: string`, `RuleUpdateRulesetParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.updateRuleset({
+    namespace: "namespace",
+    slug: "slug",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Add rule access group
+
+Grant an access group to a rule.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/rulesets/{namespace}/{slug}/access-group` |
+| Input | `namespace: string`, `slug: string`, `RuleCreateRulesetAccessGroupParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.createRulesetAccessGroup({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      accessGroupSlug: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Remove rule access group
+
+Remove an access group from a rule.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/rulesets/{namespace}/{slug}/access-group` |
+| Input | `namespace: string`, `slug: string`, `RuleDeleteRulesetAccessGroupParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.rules.deleteRulesetAccessGroup({
+    namespace: "namespace",
+    slug: "slug",
+    body: {
+      accessGroupSlug: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+### `Themes`
+
+#### List all themes
+
+List all team themes.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/themes` |
+| Response | `APIPromise<Array<Theme>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.themes.list();
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create a theme
+
+Create a team theme.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/themes` |
+| Input | `ThemeCreateParams` |
+| Response | `APIPromise<Uid>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.themes.create({
+    body: {
+      name: "",
+      slug: "",
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Get a theme
+
+Get the theme document by slug.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/themes/{slug}` |
+| Input | `slug: string` |
+| Response | `APIPromise<string>` |
+| Content-Type | `text/plain` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.themes.retrieve({
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update theme document
+
+Replace the theme document.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PUT /v1/themes/{slug}` |
+| Input | `slug: string`, `ThemeReplaceDocumentParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.themes.replaceDocument({
+    slug: "slug",
+    body: {
+      document: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Delete a theme
+
+Delete a theme by slug.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `DELETE /v1/themes/{slug}` |
+| Input | `slug: string` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.themes.delete({
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Update theme metadata
+
+Update theme metadata.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `PATCH /v1/themes/{slug}` |
+| Input | `slug: string`, `ThemeUpdateParams` |
+| Response | `APIPromise<null>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.themes.update({
+    slug: "slug",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+### `Teams`
+
+#### List teams
+
+List all available teams
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/teams` |
+| Response | `APIPromise<Array<Team>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.teams.list();
+
+  console.log(result);
+}
+
+main();
+```
+
+### `ScalarDocs`
+
+#### List all projects
+
+List all guide projects.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/guides` |
+| Response | `APIPromise<Array<GithubProject>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.scalarDocs.listGuides();
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Create a project
+
+Create a guide project.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/guides` |
+| Input | `ScalarDocCreateGuideParams` |
+| Response | `APIPromise<{ uid: string; slug: string }>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.scalarDocs.createGuide({
+    body: {
+      name: "",
+      isPrivate: false,
+      allowedUsers: [],
+      allowedDomains: [],
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Publish a project
+
+Start a new publish process.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/guides/{slug}/publish` |
+| Input | `slug: string` |
+| Response | `APIPromise<{ publishUid: string }>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.scalarDocs.publishGuide({
+    slug: "slug",
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+### `Namespaces`
+
+#### List namespaces
+
+Get all namespaces for the current team
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/namespaces` |
+| Response | `APIPromise<Array<string>>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.namespaces.list();
+
+  console.log(result);
+}
+
+main();
+```
+
+### `Authentication`
+
+#### Exchange token
+
+Exchange an API key for an access token.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `POST /v1/auth/exchange` |
+| Input | `AuthenticationExchangePersonalTokenParams` |
+| Response | `APIPromise<{ accessToken: string }>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.authentication.exchangePersonalToken({
+    body: {
+      personalToken: "",
+    },
+  });
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+#### Get current user
+
+Get the authenticated user, including their available teams and theme.
+
+| Field | Value |
+| --- | --- |
+| HTTP | `GET /v1/auth/me` |
+| Response | `APIPromise<User>` |
+| Content-Type | `application/json` |
+| Error statuses | `400`, `401`, `403`, `404`, `422`, `500` |
+
+```ts
+import ScalarApi from "@scalar/sdk";
+
+const client = new ScalarApi({
+  bearer_auth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+});
+
+async function main() {
+  const result = await client.authentication.listCurrentUser();
+
+  console.log(result);
+}
+
+main();
+```
+
+<br />
+
+## Errors
+
+Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
+
+Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
+
+<br />
+
+## Retries and Timeouts
+
+Generated clients support request timeouts and retry temporary failures such as network errors, 408, 409, 429, and 5xx responses. Retry delays honor `Retry-After` headers when present.
+
+<br />
+
 ## Debugging
 
-You can setup your SDK to emit debug logs for SDK requests and responses.
+- `logLevel: "debug"` logs request URLs, options, response status, response headers, and retry attempts.
+- Pass a custom `logger` to route logs into your own observability pipeline.
+- Set `logLevel: null` to disable environment-driven logging.
 
-You can pass a logger that matches `console`'s interface as an SDK option.
+<br />
 
-> [!WARNING]
-> Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
+## Requirements
 
-```typescript
-import { Scalar } from "@scalar/sdk";
+- Node.js 20+, a modern browser, or any runtime with `fetch` support
 
-const sdk = new Scalar({ debugLogger: console });
-```
-<!-- End Debugging [debug] -->
-
-## Contributions
-
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.
-
-### SDK Created by [Scalar](https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=typescript)
+Powered by Scalar.

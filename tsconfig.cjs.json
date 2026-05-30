@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "module": "ES2022",
-    "moduleResolution": "Bundler",
+    "module": "CommonJS",
     "lib": [
       "ES2023",
       "DOM"
     ],
     "rootDir": "src",
-    "outDir": "./dist/esm",
+    "outDir": "./dist/cjs",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
