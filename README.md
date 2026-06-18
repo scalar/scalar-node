@@ -1,19 +1,7 @@
-# scalar-typescript-sdk
+# Scalar API
 
-Developer-friendly, idiomatic Typescript SDK for the *scalar-typescript-sdk* API.
-
-<div align="left">
-    <a href="https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=typescript"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20scalar+speakeasy-212015?style=for-the-badge&logo=scalar&labelColor=252525" /></a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-    </a>
-</div>
-
-<br />
-
-## Summary
-
-Scalar API: API for managing Scalar platform resources.
+Generated TypeScript SDK for Scalar API.
+API for managing Scalar platform resources.
 
 ## TypeScript SDK
 
@@ -81,505 +69,164 @@ const authedScalar = new Scalar({
 ### Read more
 
 - [@scalar/sdk on npm](https://www.npmjs.com/package/@scalar/sdk)
-<!-- End Summary [summary] -->
-
-<!-- Start Table of Contents [toc] -->
-## Table of Contents
-<!-- $toc-max-depth=2 -->
-* [@scalar/sdk](#scalarsdk)
-  * [TypeScript SDK](#typescript-sdk)
-  * [SDK Installation](#sdk-installation)
-  * [Requirements](#requirements)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Standalone functions](#standalone-functions)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Debugging](#debugging)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
-
-<!-- End Table of Contents [toc] -->
-
-<!-- Start SDK Installation [installation] -->
-## SDK Installation
-
-The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
-
-### NPM
-
-```bash
-npm add @scalar/sdk
-```
-
-### PNPM
-
-```bash
-pnpm add @scalar/sdk
-```
-
-### Bun
-
-```bash
-bun add @scalar/sdk
-```
-
-### Yarn
-
-```bash
-yarn add @scalar/sdk zod
-
-# Note that Yarn does not install peer dependencies automatically. You will need
-# to install zod as shown above.
-```
-
-> [!NOTE]
-> This package is published with CommonJS and ES Modules (ESM) support.
-<!-- End SDK Installation [installation] -->
-
-<!-- Start Requirements [requirements] -->
-## Requirements
-
-For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
-<!-- End Requirements [requirements] -->
-
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
-
-### Example
-
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
-
-  console.log(result);
-}
-
-run();
-
-```
-<!-- End SDK Example Usage [usage] -->
-
-<!-- Start Authentication [security] -->
-## Authentication
-
-### Per-Client Security Schemes
-
-This SDK supports the following security scheme globally:
-
-| Name         | Type | Scheme      |
-| ------------ | ---- | ----------- |
-| `bearerAuth` | http | HTTP Bearer |
-
-To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
-
-  console.log(result);
-}
-
-run();
-
-```
-<!-- End Authentication [security] -->
-
-<!-- Start Available Resources and Operations [operations] -->
-## Available Resources and Operations
-
-<details open>
-<summary>Available methods</summary>
-
-### [authentication](docs/sdks/authentication/README.md)
-
-* [exchangePersonalToken](docs/sdks/authentication/README.md#exchangepersonaltoken) - Exchange token
-* [getCurrentUser](docs/sdks/authentication/README.md#getcurrentuser) - Get current user
-
-### [loginPortals](docs/sdks/loginportals/README.md)
-
-* [getLoginPortal](docs/sdks/loginportals/README.md#getloginportal) - Get a login portal
-* [updateLoginPortal](docs/sdks/loginportals/README.md#updateloginportal) - Update portal metadata
-* [deleteLoginPortal](docs/sdks/loginportals/README.md#deleteloginportal) - Delete a login portal
-* [createLoginPortal](docs/sdks/loginportals/README.md#createloginportal) - Create a portal
-* [listLoginPortals](docs/sdks/loginportals/README.md#listloginportals) - List all portals
-
-### [namespaces](docs/sdks/namespaces/README.md)
-
-* [listNamespaces](docs/sdks/namespaces/README.md#listnamespaces) - List namespaces
-
-### [registry](docs/sdks/registry/README.md)
-
-* [listAllApiDocuments](docs/sdks/registry/README.md#listallapidocuments) - List all API Documents
-* [listApiDocuments](docs/sdks/registry/README.md#listapidocuments) - List API Documents in a namespace
-* [createApiDocument](docs/sdks/registry/README.md#createapidocument) - Create API Document
-* [updateApiDocument](docs/sdks/registry/README.md#updateapidocument) - Update API Document metadata
-* [deleteApiDocument](docs/sdks/registry/README.md#deleteapidocument) - Delete API Document
-* [getApiDocumentVersion](docs/sdks/registry/README.md#getapidocumentversion) - Get API Document
-* [updateApiDocumentVersion](docs/sdks/registry/README.md#updateapidocumentversion) - Update API Document version
-* [deleteApiDocumentVersion](docs/sdks/registry/README.md#deleteapidocumentversion) - Delete API Document version
-* [getApiDocumentVersionMetadata](docs/sdks/registry/README.md#getapidocumentversionmetadata) - Get API Document version metadata
-* [createApiDocumentVersion](docs/sdks/registry/README.md#createapidocumentversion) - Create API Document version
-* [addApiDocumentAccessGroup](docs/sdks/registry/README.md#addapidocumentaccessgroup) - Add access group
-* [removeApiDocumentAccessGroup](docs/sdks/registry/README.md#removeapidocumentaccessgroup) - Remove access group
-
-### [rules](docs/sdks/rules/README.md)
-
-* [listRulesets](docs/sdks/rules/README.md#listrulesets) - List all rules
-* [createRuleset](docs/sdks/rules/README.md#createruleset) - Create a rule
-* [updateRuleset](docs/sdks/rules/README.md#updateruleset) - Update rule metadata
-* [deleteRuleset](docs/sdks/rules/README.md#deleteruleset) - Delete a rule
-* [getRulesetDocument](docs/sdks/rules/README.md#getrulesetdocument) - Get a rule
-* [addRulesetAccessGroup](docs/sdks/rules/README.md#addrulesetaccessgroup) - Add rule access group
-* [removeRulesetAccessGroup](docs/sdks/rules/README.md#removerulesetaccessgroup) - Remove rule access group
-
-
-### [scalarDocs](docs/sdks/scalardocs/README.md)
-
-* [listGuides](docs/sdks/scalardocs/README.md#listguides) - List all projects
-* [createGuide](docs/sdks/scalardocs/README.md#createguide) - Create a project
-* [publishGuide](docs/sdks/scalardocs/README.md#publishguide) - Publish a project
-
-### [schemas](docs/sdks/schemas/README.md)
-
-* [listSchemas](docs/sdks/schemas/README.md#listschemas) - List all shared components
-* [createSchema](docs/sdks/schemas/README.md#createschema) - Create a shared component
-* [updateSchema](docs/sdks/schemas/README.md#updateschema) - Update shared component metadata
-* [deleteSchema](docs/sdks/schemas/README.md#deleteschema) - Delete a shared component
-* [getSchemaVersion](docs/sdks/schemas/README.md#getschemaversion) - Get a shared component document
-* [deleteSchemaVersion](docs/sdks/schemas/README.md#deleteschemaversion) - Delete a shared component version
-* [createSchemaVersion](docs/sdks/schemas/README.md#createschemaversion) - Create a shared component version
-* [addSchemaAccessGroup](docs/sdks/schemas/README.md#addschemaaccessgroup) - Add shared component access group
-* [removeSchemaAccessGroup](docs/sdks/schemas/README.md#removeschemaaccessgroup) - Remove shared component access group
-
-### [teams](docs/sdks/teams/README.md)
-
-* [listTeams](docs/sdks/teams/README.md#listteams) - List teams
-
-### [themes](docs/sdks/themes/README.md)
-
-* [listThemes](docs/sdks/themes/README.md#listthemes) - List all themes
-* [createTheme](docs/sdks/themes/README.md#createtheme) - Create a theme
-* [updateTheme](docs/sdks/themes/README.md#updatetheme) - Update theme metadata
-* [replaceThemeDocument](docs/sdks/themes/README.md#replacethemedocument) - Update theme document
-* [deleteTheme](docs/sdks/themes/README.md#deletetheme) - Delete a theme
-* [getTheme](docs/sdks/themes/README.md#gettheme) - Get a theme
-
-</details>
-<!-- End Available Resources and Operations [operations] -->
-
-<!-- Start Standalone functions [standalone-funcs] -->
-## Standalone functions
-
-All the methods listed above are available as standalone functions. These
-functions are ideal for use in applications running in the browser, serverless
-runtimes or other environments where application bundle size is a primary
-concern. When using a bundler to build your application, all unused
-functionality will be either excluded from the final bundle or tree-shaken away.
-
-To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
-
-<details>
-
-<summary>Available standalone functions</summary>
-
-- [`authenticationExchangePersonalToken`](docs/sdks/authentication/README.md#exchangepersonaltoken) - Exchange token
-- [`authenticationGetCurrentUser`](docs/sdks/authentication/README.md#getcurrentuser) - Get current user
-- [`loginPortalsCreateLoginPortal`](docs/sdks/loginportals/README.md#createloginportal) - Create a portal
-- [`loginPortalsDeleteLoginPortal`](docs/sdks/loginportals/README.md#deleteloginportal) - Delete a login portal
-- [`loginPortalsGetLoginPortal`](docs/sdks/loginportals/README.md#getloginportal) - Get a login portal
-- [`loginPortalsListLoginPortals`](docs/sdks/loginportals/README.md#listloginportals) - List all portals
-- [`loginPortalsUpdateLoginPortal`](docs/sdks/loginportals/README.md#updateloginportal) - Update portal metadata
-- [`namespacesListNamespaces`](docs/sdks/namespaces/README.md#listnamespaces) - List namespaces
-- [`registryAddApiDocumentAccessGroup`](docs/sdks/registry/README.md#addapidocumentaccessgroup) - Add access group
-- [`registryCreateApiDocument`](docs/sdks/registry/README.md#createapidocument) - Create API Document
-- [`registryCreateApiDocumentVersion`](docs/sdks/registry/README.md#createapidocumentversion) - Create API Document version
-- [`registryDeleteApiDocument`](docs/sdks/registry/README.md#deleteapidocument) - Delete API Document
-- [`registryDeleteApiDocumentVersion`](docs/sdks/registry/README.md#deleteapidocumentversion) - Delete API Document version
-- [`registryGetApiDocumentVersion`](docs/sdks/registry/README.md#getapidocumentversion) - Get API Document
-- [`registryGetApiDocumentVersionMetadata`](docs/sdks/registry/README.md#getapidocumentversionmetadata) - Get API Document version metadata
-- [`registryListAllApiDocuments`](docs/sdks/registry/README.md#listallapidocuments) - List all API Documents
-- [`registryListApiDocuments`](docs/sdks/registry/README.md#listapidocuments) - List API Documents in a namespace
-- [`registryRemoveApiDocumentAccessGroup`](docs/sdks/registry/README.md#removeapidocumentaccessgroup) - Remove access group
-- [`registryUpdateApiDocument`](docs/sdks/registry/README.md#updateapidocument) - Update API Document metadata
-- [`registryUpdateApiDocumentVersion`](docs/sdks/registry/README.md#updateapidocumentversion) - Update API Document version
-- [`rulesAddRulesetAccessGroup`](docs/sdks/rules/README.md#addrulesetaccessgroup) - Add rule access group
-- [`rulesCreateRuleset`](docs/sdks/rules/README.md#createruleset) - Create a rule
-- [`rulesDeleteRuleset`](docs/sdks/rules/README.md#deleteruleset) - Delete a rule
-- [`rulesGetRulesetDocument`](docs/sdks/rules/README.md#getrulesetdocument) - Get a rule
-- [`rulesListRulesets`](docs/sdks/rules/README.md#listrulesets) - List all rules
-- [`rulesRemoveRulesetAccessGroup`](docs/sdks/rules/README.md#removerulesetaccessgroup) - Remove rule access group
-- [`rulesUpdateRuleset`](docs/sdks/rules/README.md#updateruleset) - Update rule metadata
-- [`scalarDocsCreateGuide`](docs/sdks/scalardocs/README.md#createguide) - Create a project
-- [`scalarDocsListGuides`](docs/sdks/scalardocs/README.md#listguides) - List all projects
-- [`scalarDocsPublishGuide`](docs/sdks/scalardocs/README.md#publishguide) - Publish a project
-- [`schemasAddSchemaAccessGroup`](docs/sdks/schemas/README.md#addschemaaccessgroup) - Add shared component access group
-- [`schemasCreateSchema`](docs/sdks/schemas/README.md#createschema) - Create a shared component
-- [`schemasCreateSchemaVersion`](docs/sdks/schemas/README.md#createschemaversion) - Create a shared component version
-- [`schemasDeleteSchema`](docs/sdks/schemas/README.md#deleteschema) - Delete a shared component
-- [`schemasDeleteSchemaVersion`](docs/sdks/schemas/README.md#deleteschemaversion) - Delete a shared component version
-- [`schemasGetSchemaVersion`](docs/sdks/schemas/README.md#getschemaversion) - Get a shared component document
-- [`schemasListSchemas`](docs/sdks/schemas/README.md#listschemas) - List all shared components
-- [`schemasRemoveSchemaAccessGroup`](docs/sdks/schemas/README.md#removeschemaaccessgroup) - Remove shared component access group
-- [`schemasUpdateSchema`](docs/sdks/schemas/README.md#updateschema) - Update shared component metadata
-- [`teamsListTeams`](docs/sdks/teams/README.md#listteams) - List teams
-- [`themesCreateTheme`](docs/sdks/themes/README.md#createtheme) - Create a theme
-- [`themesDeleteTheme`](docs/sdks/themes/README.md#deletetheme) - Delete a theme
-- [`themesGetTheme`](docs/sdks/themes/README.md#gettheme) - Get a theme
-- [`themesListThemes`](docs/sdks/themes/README.md#listthemes) - List all themes
-- [`themesReplaceThemeDocument`](docs/sdks/themes/README.md#replacethemedocument) - Update theme document
-- [`themesUpdateTheme`](docs/sdks/themes/README.md#updatetheme) - Update theme metadata
-
-</details>
-<!-- End Standalone functions [standalone-funcs] -->
-
-<!-- Start Retries [retries] -->
-## Retries
-
-Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
-
-To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments({
-    retries: {
-      strategy: "backoff",
-      backoff: {
-        initialInterval: 1,
-        maxInterval: 50,
-        exponent: 1.1,
-        maxElapsedTime: 100,
-      },
-      retryConnectionErrors: false,
-    },
-  });
-
-  console.log(result);
-}
-
-run();
-
-```
-
-If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
-```typescript
-import { Scalar } from "@scalar/sdk";
-
-const scalar = new Scalar({
-  retryConfig: {
-    strategy: "backoff",
-    backoff: {
-      initialInterval: 1,
-      maxInterval: 50,
-      exponent: 1.1,
-      maxElapsedTime: 100,
-    },
-    retryConnectionErrors: false,
-  },
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
-
-  console.log(result);
-}
-
-run();
-
-```
-<!-- End Retries [retries] -->
-
-<!-- Start Error Handling [errors] -->
-## Error Handling
-
-[`ScalarError`](./src/models/errors/scalarerror.ts) is the base class for all HTTP error responses. It has the following properties:
-
-| Property                  | Type       | Description                                                                             |
-| ------------------------- | ---------- | --------------------------------------------------------------------------------------- |
-| `error.message`           | `string`   | Error message                                                                           |
-| `error.httpMeta.response` | `Response` | HTTP response. Access to headers and more.                                              |
-| `error.httpMeta.request`  | `Request`  | HTTP request. Access to headers and more.                                               |
-| `error.data$`             |            | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
-
-### Example
-```typescript
-import { Scalar } from "@scalar/sdk";
-import * as errors from "@scalar/sdk/models/errors";
-
-const scalar = new Scalar({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  try {
-    const result = await scalar.registry.listAllApiDocuments();
-
-    console.log(result);
-  } catch (error) {
-    // The base class for HTTP error responses
-    if (error instanceof errors.ScalarError) {
-      console.log(error.message);
-      console.log(error.httpMeta.response.status);
-      console.log(error.httpMeta.response.headers);
-      console.log(error.httpMeta.request);
-
-      // Depending on the method different errors may be thrown
-      if (error instanceof errors.FourHundred) {
-        console.log(error.data$.message); // string
-        console.log(error.data$.code); // string
-      }
-    }
-  }
-}
-
-run();
-
-```
-
-### Error Classes
-**Primary errors:**
-* [`ScalarError`](./src/models/errors/scalarerror.ts): The base class for HTTP error responses.
-  * [`FourHundred`](docs/models/errors/fourhundred.md): Bad request. Status code `400`.
-  * [`FourHundredAndOne`](docs/models/errors/fourhundredandone.md): No auth. Status code `401`.
-  * [`FourHundredAndThree`](docs/models/errors/fourhundredandthree.md): Forbidden. Status code `403`.
-  * [`FourHundredAndFour`](docs/models/errors/fourhundredandfour.md): Not found. Status code `404`.
-  * [`FourHundredAndTwentyTwo`](docs/models/errors/fourhundredandtwentytwo.md): Invalid payload. Status code `422`.
-  * [`FiveHundred`](docs/models/errors/fivehundred.md): Uncaught error. Status code `500`.
-
-<details><summary>Less common errors (6)</summary>
 
 <br />
 
-**Network errors:**
-* [`ConnectionError`](./src/models/errors/httpclienterrors.ts): HTTP client was unable to make a request to a server.
-* [`RequestTimeoutError`](./src/models/errors/httpclienterrors.ts): HTTP request timed out due to an AbortSignal signal.
-* [`RequestAbortedError`](./src/models/errors/httpclienterrors.ts): HTTP request was aborted by the client.
-* [`InvalidRequestError`](./src/models/errors/httpclienterrors.ts): Any input used to create a request is invalid.
-* [`UnexpectedClientError`](./src/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
+## Contents
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Reference](./api.md)
+- [Authentication](#authentication)
+- [Errors](#errors)
+- [Client Options](#client-options)
+- [Request Options](#request-options)
+- [Retries and Timeouts](#retries-and-timeouts)
+- [Helpers](#helpers)
+- [Logging](#logging)
+- [Requirements](#requirements)
 
-**Inherit from [`ScalarError`](./src/models/errors/scalarerror.ts)**:
-* [`ResponseValidationError`](./src/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
+<br />
 
-</details>
-<!-- End Error Handling [errors] -->
+## Installation
 
-<!-- Start Server Selection [server] -->
-## Server Selection
+```sh
+npm install @scalar/sdk
+```
 
-### Override Server URL Per-Client
+<br />
 
-The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
-```typescript
-import { Scalar } from "@scalar/sdk";
+## Usage
 
-const scalar = new Scalar({
-  serverURL: "https://access.scalar.com",
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+```ts
+import ScalarAPI from "@scalar/sdk";
+
+const client = new ScalarAPI({
+  BearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+  environment: "production",
 });
 
-async function run() {
-  const result = await scalar.registry.listAllApiDocuments();
-
-  console.log(result);
-}
-
-run();
-
+const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+console.log(listAllAPIDocuments);
 ```
-<!-- End Server Selection [server] -->
 
-<!-- Start Custom HTTP Client [http-client] -->
-## Custom HTTP Client
+The examples in the following sections assume a `client` configured as shown above.
 
-The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
-[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). This
-client is a thin wrapper around `fetch` and provides the ability to attach hooks
-around the request lifecycle that can be used to modify the request or handle
-errors and response.
+See the [API reference](./api.md) for every available operation.
 
-The `HTTPClient` constructor takes an optional `fetcher` argument that can be
-used to integrate a third-party HTTP client or when writing tests to mock out
-the HTTP client and feed in fixtures.
+<br />
 
-The following example shows how to use the `"beforeRequest"` hook to to add a
-custom header and a timeout to requests and how to use the `"requestError"` hook
-to log errors:
+## Authentication
 
-```typescript
-import { Scalar } from "@scalar/sdk";
-import { HTTPClient } from "@scalar/sdk/lib/http";
+Pass credentials to the generated client constructor. Environment variables are read automatically when supported by the target runtime.
 
-const httpClient = new HTTPClient({
-  // fetcher takes a function that has the same signature as native `fetch`.
-  fetcher: (request) => {
-    return fetch(request);
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `BearerAuth` | `string \| provider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
+
+Declared schemes:
+
+- `BearerAuth` bearer token
+
+<br />
+
+## Errors
+
+Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
+
+```ts
+import { APIError } from "@scalar/sdk";
+
+try {
+  const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+} catch (err) {
+  if (err instanceof APIError) {
+    console.log(err.status, err.name, err.headers);
   }
-});
-
-httpClient.addHook("beforeRequest", (request) => {
-  const nextRequest = new Request(request, {
-    signal: request.signal || AbortSignal.timeout(5000)
-  });
-
-  nextRequest.headers.set("x-custom-header", "custom value");
-
-  return nextRequest;
-});
-
-httpClient.addHook("requestError", (error, request) => {
-  console.group("Request Error");
-  console.log("Reason:", `${error}`);
-  console.log("Endpoint:", `${request.method} ${request.url}`);
-  console.groupEnd();
-});
-
-const sdk = new Scalar({ httpClient });
+  throw err;
+}
 ```
-<!-- End Custom HTTP Client [http-client] -->
 
-<!-- Start Debugging [debug] -->
-## Debugging
+Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 
-You can setup your SDK to emit debug logs for SDK requests and responses.
+<br />
 
-You can pass a logger that matches `console`'s interface as an SDK option.
+## Client Options
 
-> [!WARNING]
-> Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
+Configure the generated client by setting any of these options when you create it.
 
-```typescript
-import { Scalar } from "@scalar/sdk";
+```ts
+import ScalarAPI from "@scalar/sdk";
 
-const sdk = new Scalar({ debugLogger: console });
+const client = new ScalarAPI({
+  timeout: 60000,
+  maxRetries: 2,
+  logLevel: "debug",
+});
 ```
-<!-- End Debugging [debug] -->
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `BearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
+| `environment` | `Environment` | - | Select one of the configured API environments. |
+| `baseURL` | `string \| null` | `process.env["SCALAR_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
+| `timeout` | `number` | `60000` | Maximum time in milliseconds to wait for a response before aborting a request. |
+| `maxRetries` | `number` | `2` | Number of retries for temporary failures. |
+| `defaultHeaders` | `HeadersInit` | - | Headers sent with every request. |
+| `defaultQuery` | `Record<string, string \| undefined>` | - | Query parameters sent with every request. |
+| `fetchOptions` | `RequestInit` | - | Additional fetch options sent with every request. |
+| `fetch` | `Fetch` | - | Custom fetch implementation. |
+| `logLevel` | `"off" \| "error" \| "warn" \| "info" \| "debug" \| null` | `process.env["SCALAR_LOG"]` | Controls request and retry debug logging. |
+| `logger` | `Logger \| null` | `console` | Custom logger implementation. |
+
+<br />
+
+## Request Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `headers` | `HeadersInit` | - | Per-request headers. |
+| `query` | `Record<string, unknown>` | - | Per-request query parameters. |
+| `body` | `unknown` | - | Override the generated request body. |
+| `timeout` | `number` | - | Per-request timeout in milliseconds. |
+| `maxRetries` | `number` | - | Per-request retry count. |
+| `signal` | `AbortSignal` | - | Abort an in-flight request. |
+| `fetchOptions` | `RequestInit` | - | Per-request fetch options. |
+| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. |
+
+<br />
+
+## Retries and Timeouts
+
+Generated clients support request timeouts and retry temporary failures such as network errors, 408, 409, 429, and 5xx responses. Retry delays honor `Retry-After` headers when present. Tune the retry and timeout client options shown above, or override them per request.
+
+<br />
+
+## Helpers
+
+- Use `.withResponse()` on any request to inspect both parsed data and the raw `Response` object.
+- Every operation returns an `APIPromise`, so you can `await` it directly or chain `.withResponse()`.
+
+<br />
+
+## Logging
+
+- Set `logLevel: "debug"` to log request URLs, options, response status, response headers, and retry attempts.
+- Pass a custom `logger` to route logs into your own observability pipeline.
+- Set `logLevel: null` to disable environment-driven logging.
+
+<br />
+
+## Requirements
+
+- Node.js 20+, a modern browser, or any runtime with `fetch` support
+
+Powered by Scalar.
+
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.
+This SDK is generated programmatically. Manual edits to generated files will be
+overwritten on the next build.
 
-### SDK Created by [Scalar](https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=typescript)
+### SDK created by [Scalar](https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=sdk)

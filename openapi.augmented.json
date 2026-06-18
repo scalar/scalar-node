@@ -1,0 +1,6223 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Scalar API",
+    "description": "API for managing Scalar platform resources.\n\n## TypeScript SDK\n\nFor TypeScript, we provide a SDK that makes using our API even easier.\n\n### Install\n\n```bash\nnpm add @scalar/sdk\n```\n\n### Get a Scalar API key\n\nCreate an API key in your Scalar account:\n\n- Dashboard: https://dashboard.scalar.com/account\n- Store it in `.env`, for example:\n\n```bash\nSCALAR_API_KEY=your_personal_token\n```\n\n### Exchange your API key for an access token\n\nThe personal token is not an access token. Exchange it first with `postv1AuthExchange`.\n\nIf you use the personal token directly for authenticated API calls, the API returns `401 Invalid authentication token`.\n\n```ts\nimport { Scalar } from '@scalar/sdk'\n\nconst scalar = new Scalar()\n\nconst exchange = await scalar.auth.postv1AuthExchange({\n  personalToken: process.env.SCALAR_API_KEY!,\n})\n\nconst accessToken = exchange.accessToken\n```\n\n### Use the access token\n\nConstruct a second client with bearer auth. Use this authenticated client for API calls.\n\n```ts\nimport { Scalar } from '@scalar/sdk'\n\nconst scalar = new Scalar()\n\nconst exchange = await scalar.auth.postv1AuthExchange({\n  personalToken: process.env.SCALAR_API_KEY!,\n})\n\nconst authedScalar = new Scalar({\n  bearerAuth: exchange.accessToken,\n})\n```\n\n### Notes\n\n- The exchange request itself can be made from a client constructed with no arguments (`new Scalar()`).\n- The exchanged access token is valid for 12 hours.\n- Timestamps are Unix seconds.\n\n### Read more\n\n- [@scalar/sdk on npm](https://www.npmjs.com/package/@scalar/sdk)",
+    "version": "0.1.5",
+    "contact": {
+      "name": "Marc from Scalar",
+      "url": "https://scalar.com",
+      "email": "support@scalar.com"
+    },
+    "x-scalar-sdk-installation": [
+      {
+        "lang": "TypeScript",
+        "description": "```sh\nnpm install @scalar/sdk\n```"
+      }
+    ]
+  },
+  "servers": [
+    {
+      "url": "https://access.scalar.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Registry",
+      "description": "Registry"
+    },
+    {
+      "name": "Schemas",
+      "description": "Schemas"
+    },
+    {
+      "name": "Login Portals",
+      "description": "Login Portals"
+    },
+    {
+      "name": "Rules",
+      "description": "Rules"
+    },
+    {
+      "name": "Themes",
+      "description": "Themes"
+    },
+    {
+      "name": "Teams",
+      "description": "Teams"
+    },
+    {
+      "name": "Scalar Docs",
+      "description": "Scalar Docs"
+    },
+    {
+      "name": "Namespaces",
+      "description": "Namespaces"
+    },
+    {
+      "name": "Authentication",
+      "description": "Authentication"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
+      },
+      "401": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
+      },
+      "403": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
+      },
+      "422": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
+      },
+      "500": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
+      },
+      "api-document": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "default": "nanoid()",
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "version": {
+            "$ref": "#/components/schemas/version"
+          },
+          "title": {
+            "default": "",
+            "type": "string",
+            "maxLength": 100
+          },
+          "slug": {
+            "default": "randomManagedDocSlug()",
+            "$ref": "#/components/schemas/slug"
+          },
+          "description": {
+            "default": "",
+            "type": "string"
+          },
+          "namespace": {
+            "$ref": "#/components/schemas/namespace"
+          },
+          "isPrivate": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tags": {
+            "default": []
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/managed-doc-version"
+            }
+          }
+        },
+        "required": [
+          "uid",
+          "version",
+          "title",
+          "slug",
+          "description",
+          "namespace",
+          "isPrivate",
+          "tags",
+          "versions"
+        ],
+        "additionalProperties": false
+      },
+      "nanoid": {
+        "type": "string",
+        "minLength": 5
+      },
+      "version": {
+        "type": "string",
+        "minLength": 1
+      },
+      "slug": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 60,
+        "pattern": "^[a-z](?:[a-z0-9-]*[a-z0-9])?$"
+      },
+      "namespace": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 50,
+        "pattern": "^[a-zA-Z0-9-_]+$"
+      },
+      "managed-doc-version": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "createdAt": {
+            "type": "number"
+          },
+          "version": {
+            "$ref": "#/components/schemas/version"
+          },
+          "upgraded": {
+            "default": false,
+            "type": "boolean"
+          },
+          "embedStatus": {
+            "default": null,
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "complete",
+                  "failed"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tags": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "method": {
+                  "$ref": "#/components/schemas/method"
+                },
+                "enabledTools": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "execute-request",
+                      "get-mini-openapi-spec"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "path",
+                "method",
+                "enabledTools"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "yamlSha": {
+            "type": "string"
+          },
+          "jsonSha": {
+            "type": "string"
+          },
+          "versionSha": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uid",
+          "createdAt",
+          "version",
+          "upgraded",
+          "embedStatus",
+          "tags"
+        ],
+        "additionalProperties": false
+      },
+      "method": {
+        "type": "string",
+        "enum": [
+          "delete",
+          "get",
+          "head",
+          "options",
+          "patch",
+          "post",
+          "put",
+          "trace"
+        ]
+      },
+      "access-group": {
+        "type": "object",
+        "properties": {
+          "accessGroupSlug": {
+            "$ref": "#/components/schemas/slug"
+          }
+        },
+        "required": [
+          "accessGroupSlug"
+        ],
+        "additionalProperties": false
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "default": "nanoid()",
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "title": {
+            "default": "",
+            "type": "string",
+            "maxLength": 100
+          },
+          "description": {
+            "default": "",
+            "type": "string"
+          },
+          "slug": {
+            "default": "randomManagedDocSlug()",
+            "$ref": "#/components/schemas/slug"
+          },
+          "namespace": {
+            "$ref": "#/components/schemas/namespace"
+          },
+          "isPrivate": {
+            "default": false,
+            "type": "boolean"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/managed-schema-version"
+            }
+          }
+        },
+        "required": [
+          "uid",
+          "title",
+          "description",
+          "slug",
+          "namespace",
+          "isPrivate",
+          "versions"
+        ],
+        "additionalProperties": false
+      },
+      "managed-schema-version": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "default": "nanoid()",
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "createdAt": {
+            "default": "unixTimestamp()",
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "updatedAt": {
+            "default": "unixTimestamp()",
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "version": {
+            "default": "0.0.1",
+            "$ref": "#/components/schemas/version"
+          }
+        },
+        "required": [
+          "uid",
+          "createdAt",
+          "updatedAt",
+          "version"
+        ],
+        "additionalProperties": false
+      },
+      "timestamp": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "uid": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/nanoid"
+          }
+        },
+        "required": [
+          "uid"
+        ],
+        "additionalProperties": false
+      },
+      "login-portal-email": {
+        "type": "object",
+        "properties": {
+          "logo": {
+            "default": "",
+            "type": "string"
+          },
+          "logoSize": {
+            "default": "100",
+            "type": "string"
+          },
+          "buttonText": {
+            "default": "Login",
+            "type": "string",
+            "maxLength": 50
+          },
+          "message": {
+            "default": "Click to access private documentation hosted by scalar.com",
+            "type": "string",
+            "maxLength": 1000
+          },
+          "title": {
+            "default": "Private Docs",
+            "type": "string",
+            "maxLength": 100
+          },
+          "mainColor": {
+            "default": "#2a2f45",
+            "type": "string",
+            "maxLength": 100
+          },
+          "mainBackground": {
+            "default": "#f6f6f6",
+            "type": "string",
+            "maxLength": 100
+          },
+          "cardColor": {
+            "default": "2a2f45",
+            "type": "string",
+            "maxLength": 100
+          },
+          "cardBackground": {
+            "default": "#fff",
+            "type": "string",
+            "maxLength": 100
+          },
+          "buttonColor": {
+            "default": "#fff",
+            "type": "string",
+            "maxLength": 100
+          },
+          "buttonBackground": {
+            "default": "#0f0f0f",
+            "type": "string",
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "logo",
+          "logoSize",
+          "buttonText",
+          "message",
+          "title",
+          "mainColor",
+          "mainBackground",
+          "cardColor",
+          "cardBackground",
+          "buttonColor",
+          "buttonBackground"
+        ],
+        "additionalProperties": false
+      },
+      "login-portal-page": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "default": "Scalar Private Docs",
+            "type": "string",
+            "maxLength": 100
+          },
+          "description": {
+            "default": "Login to access your documentation",
+            "type": "string",
+            "maxLength": 500
+          },
+          "head": {
+            "default": "",
+            "type": "string"
+          },
+          "script": {
+            "default": "",
+            "type": "string"
+          },
+          "theme": {
+            "default": "",
+            "type": "string"
+          },
+          "companyName": {
+            "default": "",
+            "type": "string",
+            "maxLength": 100
+          },
+          "logo": {
+            "default": "",
+            "type": "string"
+          },
+          "logoURL": {
+            "default": "",
+            "type": "string"
+          },
+          "favicon": {
+            "default": "",
+            "type": "string"
+          },
+          "termsLink": {
+            "default": "",
+            "type": "string"
+          },
+          "privacyLink": {
+            "default": "",
+            "type": "string"
+          },
+          "formTitle": {
+            "default": "Scalar Private Docs",
+            "type": "string",
+            "maxLength": 100
+          },
+          "formDescription": {
+            "default": "Login to access your documentation",
+            "type": "string",
+            "maxLength": 500
+          },
+          "formImage": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "head",
+          "script",
+          "theme",
+          "companyName",
+          "logo",
+          "logoURL",
+          "favicon",
+          "termsLink",
+          "privacyLink",
+          "formTitle",
+          "formDescription",
+          "formImage"
+        ],
+        "additionalProperties": false
+      },
+      "login-portal": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "slug": {
+            "$ref": "#/components/schemas/slug"
+          }
+        },
+        "required": [
+          "uid",
+          "title",
+          "slug"
+        ],
+        "additionalProperties": false
+      },
+      "rule": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "default": "nanoid()",
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "title": {
+            "default": "",
+            "type": "string",
+            "maxLength": 100
+          },
+          "description": {
+            "default": "",
+            "type": "string"
+          },
+          "slug": {
+            "default": "randomManagedDocSlug()",
+            "$ref": "#/components/schemas/slug"
+          },
+          "namespace": {
+            "$ref": "#/components/schemas/namespace"
+          },
+          "isPrivate": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "uid",
+          "title",
+          "description",
+          "slug",
+          "namespace",
+          "isPrivate"
+        ],
+        "additionalProperties": false
+      },
+      "theme": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "slug": {
+            "$ref": "#/components/schemas/slug"
+          }
+        },
+        "required": [
+          "uid",
+          "name",
+          "description",
+          "slug"
+        ],
+        "additionalProperties": false
+      },
+      "team": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/team-name"
+          },
+          "imageUri": {
+            "$ref": "#/components/schemas/team-image"
+          },
+          "slug": {
+            "$ref": "#/components/schemas/slug"
+          },
+          "theme": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uid",
+          "name",
+          "slug",
+          "theme"
+        ],
+        "additionalProperties": false
+      },
+      "team-name": {
+        "type": "string"
+      },
+      "team-image": {
+        "type": "string"
+      },
+      "github-project": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "default": "nanoid()",
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "createdAt": {
+            "default": "unixTimestamp()",
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "updatedAt": {
+            "default": "unixTimestamp()",
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "name": {
+            "type": "string"
+          },
+          "activeDeployment": {
+            "default": null,
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/active-deployment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastPublished": {
+            "default": null,
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/timestamp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastPublishedUid": {
+            "default": null,
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "loginPortalUid": {
+            "default": "",
+            "type": "string"
+          },
+          "activeThemeId": {
+            "default": "",
+            "type": "string"
+          },
+          "typesenseId": {
+            "type": "number"
+          },
+          "isPrivate": {
+            "default": false,
+            "type": "boolean"
+          },
+          "agentEnabled": {
+            "default": false,
+            "type": "boolean"
+          },
+          "accessGroups": {
+            "default": []
+          },
+          "slug": {
+            "$ref": "#/components/schemas/slug"
+          },
+          "publishStatus": {
+            "default": "",
+            "type": "string"
+          },
+          "publishMessage": {
+            "default": "",
+            "type": "string"
+          },
+          "repository": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/github-project-repository"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "uid",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "activeDeployment",
+          "lastPublished",
+          "lastPublishedUid",
+          "loginPortalUid",
+          "activeThemeId",
+          "isPrivate",
+          "agentEnabled",
+          "accessGroups",
+          "slug",
+          "publishStatus",
+          "publishMessage"
+        ],
+        "additionalProperties": false
+      },
+      "active-deployment": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "$ref": "#/components/schemas/timestamp"
+          }
+        },
+        "required": [
+          "uid",
+          "domain",
+          "publishedAt"
+        ],
+        "additionalProperties": false
+      },
+      "github-project-repository": {
+        "type": "object",
+        "properties": {
+          "linkedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "configPath": {
+            "default": "",
+            "type": "string"
+          },
+          "branch": {
+            "default": "",
+            "type": "string"
+          },
+          "publishOnMerge": {
+            "default": false,
+            "type": "boolean"
+          },
+          "publishPreviews": {
+            "default": false,
+            "type": "boolean"
+          },
+          "prComments": {
+            "default": false,
+            "type": "boolean"
+          },
+          "expired": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "linkedBy",
+          "id",
+          "name",
+          "configPath",
+          "branch",
+          "publishOnMerge",
+          "publishPreviews",
+          "prComments",
+          "expired"
+        ],
+        "additionalProperties": false
+      },
+      "email": {
+        "type": "string",
+        "format": "email",
+        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+      },
+      "team-summary": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/team-name"
+          },
+          "imageUri": {
+            "$ref": "#/components/schemas/team-image"
+          }
+        },
+        "required": [
+          "uid",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "default": "nanoid()",
+            "$ref": "#/components/schemas/nanoid"
+          },
+          "createdAt": {
+            "default": "unixTimestamp()",
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "updatedAt": {
+            "default": "unixTimestamp()",
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "email": {
+            "$ref": "#/components/schemas/email"
+          },
+          "theme": {
+            "type": "string"
+          },
+          "activeTeamId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hasGithub": {
+            "default": false,
+            "type": "boolean"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/team-summary"
+            }
+          }
+        },
+        "required": [
+          "uid",
+          "createdAt",
+          "updatedAt",
+          "email",
+          "activeTeamId",
+          "hasGithub",
+          "teams"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/apis": {
+      "get": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "List all API documents across every namespace the caller can access.",
+        "summary": "List all API Documents",
+        "operationId": "listAllApiDocuments",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/api-document"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\nconsole.log(listAllAPIDocuments);"
+          }
+        ]
+      }
+    },
+    "/v1/apis/{namespace}": {
+      "get": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "List API documents in a namespace.",
+        "summary": "List API Documents in a namespace",
+        "operationId": "listApiDocuments",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/api-document"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments(\"namespace\");\nconsole.log(listAPIDocuments);"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Create an API document.",
+        "summary": "Create API Document",
+        "operationId": "createApiDocument",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    },
+                    "versionUid": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "jsonSha": {
+                      "type": "string"
+                    },
+                    "yamlSha": {
+                      "type": "string"
+                    },
+                    "versionSha": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "uid",
+                    "versionUid",
+                    "title",
+                    "jsonSha",
+                    "yamlSha",
+                    "versionSha"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "$ref": "#/components/schemas/version"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "ruleset": {
+                    "type": "string"
+                  },
+                  "isPrivate": {
+                    "type": "boolean"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "version",
+                  "slug",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument(\"namespace\", {\n  title: \"\",\n  version: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createAPIDocument);"
+          }
+        ]
+      }
+    },
+    "/v1/apis/{namespace}/{slug}": {
+      "patch": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Update metadata for an API document.",
+        "summary": "Update API Document metadata",
+        "operationId": "updateApiDocument",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "isPrivate": {
+                    "type": "boolean"
+                  },
+                  "ruleset": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.updateAPIDocument(\"namespace\", \"slug\", {});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Delete an API document and all versions.",
+        "summary": "Delete API Document",
+        "operationId": "deleteApiDocument",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocument(\"namespace\", \"slug\");"
+          }
+        ]
+      }
+    },
+    "/v1/apis/{namespace}/{slug}/version/{semver}": {
+      "get": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Get a specific API document version.",
+        "summary": "Get API Document",
+        "operationId": "getApiDocumentVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "semver",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Update the registry file content for an API document version.",
+        "summary": "Update API Document version",
+        "operationId": "updateApiDocumentVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jsonSha": {
+                      "type": "string"
+                    },
+                    "yamlSha": {
+                      "type": "string"
+                    },
+                    "versionSha": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "jsonSha",
+                    "yamlSha",
+                    "versionSha"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string"
+                  },
+                  "lastKnownVersionSha": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "semver",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(\"namespace\", \"slug\", \"semver\", {\n  document: \"\",\n});\nconsole.log(updateAPIDocumentVersion);"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Delete a specific API document version.",
+        "summary": "Delete API Document version",
+        "operationId": "deleteApiDocumentVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "semver",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");"
+          }
+        ]
+      }
+    },
+    "/v1/apis/{namespace}/{slug}/version/{semver}/metadata": {
+      "get": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Get metadata (uid, content shas, version sha, tags) for a specific API document version.",
+        "summary": "Get API Document version metadata",
+        "operationId": "getApiDocumentVersionMetadata",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/managed-doc-version"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "semver",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst managedDocVersion = await client.registry.listAPIDocumentVersionMetadata(\"namespace\", \"slug\", \"semver\");\nconsole.log(managedDocVersion);"
+          }
+        ]
+      }
+    },
+    "/v1/apis/{namespace}/{slug}/version": {
+      "post": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Create a new API document version.",
+        "summary": "Create API Document version",
+        "operationId": "createApiDocumentVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/managed-doc-version"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "$ref": "#/components/schemas/version"
+                  },
+                  "document": {
+                    "type": "string"
+                  },
+                  "force": {
+                    "type": "boolean"
+                  },
+                  "lastKnownVersionSha": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "version",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst managedDocVersion = await client.registry.createAPIDocumentVersion(\"namespace\", \"slug\", {\n  version: \"\",\n  document: \"\",\n});\nconsole.log(managedDocVersion);"
+          }
+        ]
+      }
+    },
+    "/v1/apis/{namespace}/{slug}/access-group": {
+      "post": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Add an access group to an API document.",
+        "summary": "Add access group",
+        "operationId": "addApiDocumentAccessGroup",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/access-group"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.createAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Registry"
+        ],
+        "description": "Remove an access group from an API document.",
+        "summary": "Remove access group",
+        "operationId": "removeApiDocumentAccessGroup",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/access-group"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+          }
+        ]
+      }
+    },
+    "/v1/schemas/{namespace}": {
+      "get": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "List schemas in a namespace.",
+        "summary": "List all shared components",
+        "operationId": "listSchemas",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/schema"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.schemas.list(\"namespace\");\nconsole.log(list);"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Create a schema in a namespace.",
+        "summary": "Create a shared component",
+        "operationId": "createSchema",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/uid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "$ref": "#/components/schemas/version"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "isPrivate": {
+                    "type": "boolean"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "version",
+                  "slug",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.schemas.create(\"namespace\", {\n  title: \"\",\n  version: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          }
+        ]
+      }
+    },
+    "/v1/schemas/{namespace}/{slug}": {
+      "patch": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Update schema metadata.",
+        "summary": "Update shared component metadata",
+        "operationId": "updateSchema",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "isPrivate": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.update(\"namespace\", \"slug\", {});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Delete a schema and all related versions.",
+        "summary": "Delete a shared component",
+        "operationId": "deleteSchema",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.delete(\"namespace\", \"slug\");"
+          }
+        ]
+      }
+    },
+    "/v1/schemas/{namespace}/{slug}/version/{semver}": {
+      "get": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Get a specific schema version document.",
+        "summary": "Get a shared component document",
+        "operationId": "getSchemaVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "semver",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.schemas.version.retrieveSchema(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Delete a schema version.",
+        "summary": "Delete a shared component version",
+        "operationId": "deleteSchemaVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "semver",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.version.deleteSchema(\"namespace\", \"slug\", \"semver\");"
+          }
+        ]
+      }
+    },
+    "/v1/schemas/{namespace}/{slug}/version": {
+      "post": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Create a schema version.",
+        "summary": "Create a shared component version",
+        "operationId": "createSchemaVersion",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/uid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "$ref": "#/components/schemas/version"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "version",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.schemas.version.createSchema(\"namespace\", \"slug\", {\n  version: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          }
+        ]
+      }
+    },
+    "/v1/schemas/{namespace}/{slug}/access-group": {
+      "post": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Add an access group to a schema.",
+        "summary": "Add shared component access group",
+        "operationId": "addSchemaAccessGroup",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/access-group"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.accessGroup.createSchema(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Schemas"
+        ],
+        "description": "Remove an access group from a schema.",
+        "summary": "Remove shared component access group",
+        "operationId": "removeSchemaAccessGroup",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/access-group"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.accessGroup.deleteSchema(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+          }
+        ]
+      }
+    },
+    "/v1/login-portals/{slug}": {
+      "get": {
+        "tags": [
+          "Login Portals"
+        ],
+        "description": "Get a login portal by slug.",
+        "summary": "Get a login portal",
+        "operationId": "getLoginPortal",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "$ref": "#/components/schemas/login-portal-email"
+                    },
+                    "page": {
+                      "$ref": "#/components/schemas/login-portal-page"
+                    }
+                  },
+                  "required": [
+                    "uid",
+                    "title",
+                    "slug",
+                    "email",
+                    "page"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst retrieve = await client.loginPortals.retrieve(\"slug\");\nconsole.log(retrieve);"
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Login Portals"
+        ],
+        "description": "Update metadata for a login portal.",
+        "summary": "Update portal metadata",
+        "operationId": "updateLoginPortal",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.update(\"slug\", {});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Login Portals"
+        ],
+        "description": "Delete a login portal.",
+        "summary": "Delete a login portal",
+        "operationId": "deleteLoginPortal",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.delete(\"slug\");"
+          }
+        ]
+      }
+    },
+    "/v1/login-portals": {
+      "post": {
+        "tags": [
+          "Login Portals"
+        ],
+        "description": "Create a login portal for the current team.",
+        "summary": "Create a portal",
+        "operationId": "createLoginPortal",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/uid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "$ref": "#/components/schemas/login-portal-email"
+                  },
+                  "page": {
+                    "$ref": "#/components/schemas/login-portal-page"
+                  }
+                },
+                "required": [
+                  "title",
+                  "slug",
+                  "email",
+                  "page"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.loginPortals.create({\n  title: \"\",\n  slug: \"\",\n  email: {\n    logo: \"\",\n    logoSize: \"100\",\n    buttonText: \"Login\",\n    message: \"Click to access private documentation hosted by scalar.com\",\n    title: \"Private Docs\",\n    mainColor: \"#2a2f45\",\n    mainBackground: \"#f6f6f6\",\n    cardColor: \"2a2f45\",\n    cardBackground: \"#fff\",\n    buttonColor: \"#fff\",\n    buttonBackground: \"#0f0f0f\",\n  },\n  page: {\n    title: \"Scalar Private Docs\",\n    description: \"Login to access your documentation\",\n    head: \"\",\n    script: \"\",\n    theme: \"\",\n    companyName: \"\",\n    logo: \"\",\n    logoUrl: \"\",\n    favicon: \"\",\n    termsLink: \"\",\n    privacyLink: \"\",\n    formTitle: \"Scalar Private Docs\",\n    formDescription: \"Login to access your documentation\",\n    formImage: \"\",\n  },\n});\nconsole.log(uID);"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Login Portals"
+        ],
+        "description": "List all login portals for the current team.",
+        "summary": "List all portals",
+        "operationId": "listLoginPortals",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/login-portal"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.loginPortals.list();\nconsole.log(list);"
+          }
+        ]
+      }
+    },
+    "/v1/rulesets/{namespace}": {
+      "get": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "List all rulesets in a namespace.",
+        "summary": "List all rules",
+        "operationId": "listRulesets",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/rule"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listRulesets = await client.rules.listRulesets(\"namespace\");\nconsole.log(listRulesets);"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "Create a rule in a namespace.",
+        "summary": "Create a rule",
+        "operationId": "createRuleset",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/uid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "isPrivate": {
+                    "type": "boolean"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "slug",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.rules.createRuleset(\"namespace\", {\n  title: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          }
+        ]
+      }
+    },
+    "/v1/rulesets/{namespace}/{slug}": {
+      "patch": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "Update rule metadata by slug.",
+        "summary": "Update rule metadata",
+        "operationId": "updateRuleset",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "namespace": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "isPrivate": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.updateRuleset(\"namespace\", \"slug\", {});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "Delete a rule by slug.",
+        "summary": "Delete a rule",
+        "operationId": "deleteRuleset",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRuleset(\"namespace\", \"slug\");"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "Get a rule document by slug.",
+        "summary": "Get a rule",
+        "operationId": "getRulesetDocument",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument(\"namespace\", \"slug\");\nconsole.log(string_);"
+          }
+        ]
+      }
+    },
+    "/v1/rulesets/{namespace}/{slug}/access-group": {
+      "post": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "Grant an access group to a rule.",
+        "summary": "Add rule access group",
+        "operationId": "addRulesetAccessGroup",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/access-group"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.createRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Rules"
+        ],
+        "description": "Remove an access group from a rule.",
+        "summary": "Remove rule access group",
+        "operationId": "removeRulesetAccessGroup",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/access-group"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "namespace",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+          }
+        ]
+      }
+    },
+    "/v1/themes": {
+      "get": {
+        "tags": [
+          "Themes"
+        ],
+        "description": "List all team themes.",
+        "summary": "List all themes",
+        "operationId": "listThemes",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/theme"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.themes.list();\nconsole.log(list);"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Themes"
+        ],
+        "description": "Create a team theme.",
+        "summary": "Create a theme",
+        "operationId": "createTheme",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/uid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "slug",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.themes.create({\n  name: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          }
+        ]
+      }
+    },
+    "/v1/themes/{slug}": {
+      "patch": {
+        "tags": [
+          "Themes"
+        ],
+        "description": "Update theme metadata.",
+        "summary": "Update theme metadata",
+        "operationId": "updateTheme",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.update(\"slug\", {});"
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Themes"
+        ],
+        "description": "Replace the theme document.",
+        "summary": "Update theme document",
+        "operationId": "replaceThemeDocument",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.replaceDocument(\"slug\", {\n  document: \"\",\n});"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Themes"
+        ],
+        "description": "Delete a theme by slug.",
+        "summary": "Delete a theme",
+        "operationId": "deleteTheme",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.delete(\"slug\");"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Themes"
+        ],
+        "description": "Get the theme document by slug.",
+        "summary": "Get a theme",
+        "operationId": "getTheme",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.themes.retrieve(\"slug\");\nconsole.log(string_);"
+          }
+        ]
+      }
+    },
+    "/v1/teams": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "description": "List all available teams",
+        "summary": "List teams",
+        "operationId": "listTeams",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/team"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.teams.list();\nconsole.log(list);"
+          }
+        ]
+      }
+    },
+    "/v1/guides": {
+      "get": {
+        "tags": [
+          "Scalar Docs"
+        ],
+        "description": "List all guide projects.",
+        "summary": "List all projects",
+        "operationId": "listGuides",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/github-project"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\nconsole.log(listGuides);"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Scalar Docs"
+        ],
+        "description": "Create a guide project.",
+        "summary": "Create a project",
+        "operationId": "createGuide",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uid": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "uid",
+                    "slug"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "$ref": "#/components/schemas/slug"
+                  },
+                  "isPrivate": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "allowedUsers": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "allowedDomains": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "isPrivate",
+                  "allowedUsers",
+                  "allowedDomains"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: \"\",\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\nconsole.log(createGuide);"
+          }
+        ]
+      }
+    },
+    "/v1/guides/{slug}/publish": {
+      "post": {
+        "tags": [
+          "Scalar Docs"
+        ],
+        "description": "Start a new publish process.",
+        "summary": "Publish a project",
+        "operationId": "publishGuide",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "publishUid": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "publishUid"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "slug",
+            "required": true
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide(\"slug\");\nconsole.log(publishGuide);"
+          }
+        ]
+      }
+    },
+    "/v1/namespaces": {
+      "get": {
+        "tags": [
+          "Namespaces"
+        ],
+        "description": "Get all namespaces for the current team",
+        "summary": "List namespaces",
+        "operationId": "listNamespaces",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.namespaces.list();\nconsole.log(list);"
+          }
+        ]
+      }
+    },
+    "/v1/auth/exchange": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Exchange an API key for an access token.",
+        "summary": "Exchange token",
+        "operationId": "exchangePersonalToken",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accessToken"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "personalToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "personalToken"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: \"\",\n});\nconsole.log(exchangePersonalToken);"
+          }
+        ]
+      }
+    },
+    "/v1/auth/me": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Get the authenticated user, including their available teams and theme.",
+        "summary": "Get current user",
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No auth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Uncaught error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "TypeScript",
+            "label": "TypeScript",
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.listCurrentUser();\nconsole.log(user);"
+          }
+        ]
+      }
+    }
+  }
+}
