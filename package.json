@@ -1,42 +1,54 @@
 {
   "name": "@scalar/sdk",
-  "version": "0.1.5",
-  "author": "Scalar",
+  "version": "0.1.8",
+  "description": "API for managing Scalar platform resources.",
   "type": "module",
-  "tshy": {
-    "sourceDialects": [
-      "@scalar/sdk/source"
-    ],
-    "exports": {
-      ".": "./src/index.ts",
-      "./package.json": "./package.json",
-      "./types": "./src/types/index.ts",
-      "./models/errors": "./src/models/errors/index.ts",
-      "./models/components": "./src/models/components/index.ts",
-      "./models/operations": "./src/models/operations/index.ts",
-      "./*.js": "./src/*.ts",
-      "./*": "./src/*.ts"
-    }
-  },
   "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./resources/*": {
+      "types": "./dist/esm/resources/*.d.ts",
+      "import": "./dist/esm/resources/*.js",
+      "require": "./dist/cjs/resources/*.js",
+      "default": "./dist/esm/resources/*.js"
+    },
+    "./*.mjs": {
+      "types": "./dist/esm/*.d.ts",
+      "import": "./dist/esm/*.js",
+      "default": "./dist/esm/*.js"
+    },
+    "./*.js": {
+      "types": "./dist/esm/*.d.ts",
+      "require": "./dist/cjs/*.js",
+      "default": "./dist/cjs/*.js"
+    },
+    "./*": {
+      "types": "./dist/esm/*.d.ts",
+      "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js",
+      "default": "./dist/esm/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "api.md"
+  ],
   "scripts": {
-    "lint": "eslint --cache --max-warnings=0 src",
-    "build": "tshy",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && node scripts/finalize-build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.cjs.json --noEmit",
     "prepublishOnly": "npm run build"
   },
-  "peerDependencies": {
-    "zod": ">= 3"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@eslint/js": "^9.19.0",
-    "eslint": "^9.19.0",
-    "globals": "^15.14.0",
-    "tshy": "^2.0.0",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^8.22.0",
-    "zod": "^3.25.17"
-  },
-  "dependencies": {
-    
+    "typescript": "^6.0.0"
   }
 }
