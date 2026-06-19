@@ -8,18 +8,51 @@ import { path as __scalarPath } from "../internal/utils/path";
 export class ScalarDocs extends APIResource {
   /**
    * List all guide projects.
+   *
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<ScalarDocListGuidesResponse>} Default Response
+   *
+   * @example
+   * ```ts
+   * const listGuides = await client.scalarDocs.listGuides();
+   * ```
    */
   listGuides(options?: RequestOptions): APIPromise<ScalarDocListGuidesResponse> {
     return this._client.get("/v1/guides", options);
   }
+
   /**
    * Create a guide project.
+   *
+   * @param {ScalarDocCreateGuideParams} body - The request body to send.
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<ScalarDocCreateGuideResponse>} Default Response
+   *
+   * @example
+   * ```ts
+   * const createGuide = await client.scalarDocs.createGuide({
+   *   name: "",
+   *   isPrivate: false,
+   *   allowedUsers: [],
+   *   allowedDomains: [],
+   * });
+   * ```
    */
   createGuide(body: ScalarDocCreateGuideParams, options?: RequestOptions): APIPromise<ScalarDocCreateGuideResponse> {
     return this._client.post("/v1/guides", { body: body, ...options });
   }
+
   /**
    * Start a new publish process.
+   *
+   * @param {string} slug
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<ScalarDocPublishGuideResponse>} Default Response
+   *
+   * @example
+   * ```ts
+   * const publishGuide = await client.scalarDocs.publishGuide("slug");
+   * ```
    */
   publishGuide(slug: string, options?: RequestOptions): APIPromise<ScalarDocPublishGuideResponse> {
     return this._client.post(__scalarPath`/v1/guides/${slug}/publish`, options);
@@ -114,6 +147,12 @@ export type ScalarDocCreateGuideResponse = { uid: string; slug: string };
 
 export type ScalarDocPublishGuideResponse = { publishUid: string };
 export declare namespace ScalarDocs {
-  export { type Slug as Slug, type GithubProject as GithubProject, type Nanoid as Nanoid, type Timestamp as Timestamp, type ActiveDeployment as ActiveDeployment, type GithubProjectRepository as GithubProjectRepository, type Value400 as Value400, type Value401 as Value401, type Value403 as Value403, type Value404 as Value404, type Value422 as Value422, type Value500 as Value500, type ScalarDocListGuidesResponse as ScalarDocListGuidesResponse, type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams, type ScalarDocCreateGuideResponse as ScalarDocCreateGuideResponse, type ScalarDocPublishGuideResponse as ScalarDocPublishGuideResponse };
+  export {
+    type Slug as Slug,
+    type ScalarDocListGuidesResponse as ScalarDocListGuidesResponse,
+    type ScalarDocCreateGuideResponse as ScalarDocCreateGuideResponse,
+    type ScalarDocPublishGuideResponse as ScalarDocPublishGuideResponse,
+    type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams,
+  };
 }
 export { ScalarDocs as ScalarDocResource };

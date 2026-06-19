@@ -1,16 +1,16 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
 export { Registry } from "./registry";
-export type { Version, AccessGroup, APIDocument, Nanoid, Slug, Namespace, ManagedDocVersion, Method, Value400, Value401, Value403, Value404, Value422, Value500, RegistryListAllAPIDocumentsResponse, RegistryListAPIDocumentsResponse, RegistryCreateAPIDocumentParams, RegistryCreateAPIDocumentResponse, RegistryUpdateAPIDocumentParams, RegistryUpdateAPIDocumentVersionParams, RegistryUpdateAPIDocumentVersionResponse, RegistryCreateAPIDocumentVersionParams, RegistryCreateAPIDocumentAccessGroupParams, RegistryDeleteAPIDocumentAccessGroupParams } from "./registry";
+export type { Version, AccessGroup, APIDocument, Nanoid, Slug, Namespace, ManagedDocVersion, Method, Value400, Value401, Value403, Value404, Value422, Value500, RegistryListAllAPIDocumentsResponse, RegistryListAPIDocumentsResponse, RegistryCreateAPIDocumentParams, RegistryCreateAPIDocumentResponse, RegistryUpdateAPIDocumentParams, RegistryDeleteAPIDocumentParams, RegistryRetrieveAPIDocumentVersionParams, RegistryUpdateAPIDocumentVersionParams, RegistryUpdateAPIDocumentVersionResponse, RegistryDeleteAPIDocumentVersionParams, RegistryListAPIDocumentVersionMetadataParams, RegistryCreateAPIDocumentVersionParams, RegistryCreateAPIDocumentAccessGroupParams, RegistryDeleteAPIDocumentAccessGroupParams } from "./registry";
 export { Registry as RegistryResource } from "./registry";
 export { Schemas } from "./schemas/schemas";
-export type { Schema, ManagedSchemaVersion, Timestamp, Version2 as SchemaVersion, UID, SchemaListResponse, SchemaCreateParams, SchemaUpdateParams } from "./schemas/schemas";
+export type { Schema, ManagedSchemaVersion, Timestamp, Version2 as SchemaVersion, UID, SchemaListResponse, SchemaCreateParams, SchemaUpdateParams, SchemaDeleteParams } from "./schemas/schemas";
 export { Schemas as SchemaResource } from "./schemas/schemas";
 export { LoginPortals } from "./login-portals";
 export type { LoginPortalEmail, LoginPortalPage, LoginPortal, LoginPortalRetrieveResponse, LoginPortalUpdateParams, LoginPortalCreateParams, LoginPortalListResponse } from "./login-portals";
 export { LoginPortals as LoginPortalResource } from "./login-portals";
 export { Rules } from "./rules";
-export type { Rule, RuleListRulesetsResponse, RuleCreateRulesetParams, RuleUpdateRulesetParams, RuleCreateRulesetAccessGroupParams, RuleDeleteRulesetAccessGroupParams } from "./rules";
+export type { Rule, RuleListRulesetsResponse, RuleCreateRulesetParams, RuleUpdateRulesetParams, RuleDeleteRulesetParams, RuleRetrieveRulesetDocumentParams, RuleCreateRulesetAccessGroupParams, RuleDeleteRulesetAccessGroupParams } from "./rules";
 export { Rules as RuleResource } from "./rules";
 export { Themes } from "./themes";
 export type { Theme, ThemeListResponse, ThemeCreateParams, ThemeUpdateParams, ThemeReplaceDocumentParams } from "./themes";

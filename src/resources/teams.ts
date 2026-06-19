@@ -7,6 +7,14 @@ import type { RequestOptions } from "../internal/request-options";
 export class Teams extends APIResource {
   /**
    * List all available teams
+   *
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<TeamListResponse>} Default Response
+   *
+   * @example
+   * ```ts
+   * const list = await client.teams.list();
+   * ```
    */
   list(options?: RequestOptions): APIPromise<TeamListResponse> {
     return this._client.get("/v1/teams", options);
@@ -61,6 +69,8 @@ export interface Value500 {
 
 export type TeamListResponse = Array<Team>;
 export declare namespace Teams {
-  export { type Team as Team, type Nanoid as Nanoid, type TeamName as TeamName, type TeamImage as TeamImage, type Slug as Slug, type Value400 as Value400, type Value401 as Value401, type Value403 as Value403, type Value404 as Value404, type Value422 as Value422, type Value500 as Value500, type TeamListResponse as TeamListResponse };
+  export {
+    type TeamListResponse as TeamListResponse,
+  };
 }
 export { Teams as TeamResource };

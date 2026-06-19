@@ -7,12 +7,32 @@ import type { RequestOptions } from "../internal/request-options";
 export class Authentication extends APIResource {
   /**
    * Exchange an API key for an access token.
+   *
+   * @param {AuthenticationExchangePersonalTokenParams} body - The request body to send.
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<AuthenticationExchangePersonalTokenResponse>} Default Response
+   *
+   * @example
+   * ```ts
+   * const exchangePersonalToken = await client.authentication.exchangePersonalToken({
+   *   personalToken: "",
+   * });
+   * ```
    */
   exchangePersonalToken(body: AuthenticationExchangePersonalTokenParams, options?: RequestOptions): APIPromise<AuthenticationExchangePersonalTokenResponse> {
     return this._client.post("/v1/auth/exchange", { body: body, ...options });
   }
+
   /**
    * Get the authenticated user, including their available teams and theme.
+   *
+   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
+   * @returns {APIPromise<User>} Default Response
+   *
+   * @example
+   * ```ts
+   * const user = await client.authentication.listCurrentUser();
+   * ```
    */
   listCurrentUser(options?: RequestOptions): APIPromise<User> {
     return this._client.get("/v1/auth/me", options);
@@ -82,6 +102,10 @@ export interface AuthenticationExchangePersonalTokenParams {
 
 export type AuthenticationExchangePersonalTokenResponse = { accessToken: string };
 export declare namespace Authentication {
-  export { type Value400 as Value400, type Value401 as Value401, type Value403 as Value403, type Value404 as Value404, type Value422 as Value422, type Value500 as Value500, type User as User, type Nanoid as Nanoid, type Timestamp as Timestamp, type Email as Email, type TeamSummary as TeamSummary, type TeamName as TeamName, type TeamImage as TeamImage, type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams, type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse };
+  export {
+    type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse,
+    type User as User,
+    type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
+  };
 }
 export { Authentication as AuthenticationResource };

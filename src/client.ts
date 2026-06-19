@@ -1,42 +1,36 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
 import { APIPromise, type APIResponseProps } from './api-promise';
-import { ScalarAPIError, APIError, APIConnectionError, APIConnectionTimeoutError, APIUserAbortError, NotFoundError, ConflictError, RateLimitError, BadRequestError, AuthenticationError, InternalServerError, PermissionDeniedError, UnprocessableEntityError } from './error';
+import * as Errors from './error';
+import { uuid4 } from './internal/utils/uuid';
+import { validatePositiveInteger, isAbsoluteURL, safeJSON, isEmptyObj } from './internal/utils/values';
+import { sleep } from './internal/utils/sleep';
+import { castToError, isAbortError } from './internal/errors';
+import { getPlatformHeaders } from './internal/detect-platform';
+import * as Shims from './internal/shims';
+import * as Opts from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import type { Fetch, RequestInfo } from './internal/builtin-types';
-import type { HeadersLike } from './internal/headers';
+import { formatRequestDetails, loggerFor, parseLogLevel, type LogLevel, type Logger } from './internal/utils/log';
+export type { Logger, LogLevel } from './internal/utils/log';
+import type { RequestInit, RequestInfo, BodyInit, Fetch } from './internal/builtin-types';
+import { buildHeaders, type HeadersLike } from './internal/headers';
 import type { FinalRequestOptions, RequestOptions } from './internal/request-options';
-import type { FinalizedRequestInit, MergedRequestInit, PromiseOrValue } from './internal/types';
+import type { HTTPMethod, FinalizedRequestInit, MergedRequestInit, PromiseOrValue } from './internal/types';
 import { stringify as stringifyQuery } from './internal/qs/stringify';
 import type { StringifyOptions } from './internal/qs/types';
 import { toFile } from './core/uploads';
-import { Registry } from "./resources/registry";
-import { Schemas } from "./resources/schemas/schemas";
-import { LoginPortals } from "./resources/login-portals";
-import { Rules } from "./resources/rules";
-import { Themes } from "./resources/themes";
-import { Teams } from "./resources/teams";
-import { ScalarDocs } from "./resources/scalar-docs";
-import { Namespaces } from "./resources/namespaces";
-import { Authentication } from "./resources/authentication";
-
-type LogFn = (message: string, ...rest: readonly unknown[]) => void;
-
-export type Logger = {
-  error: LogFn;
-  warn: LogFn;
-  info: LogFn;
-  debug: LogFn;
-};
-
-export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
+import { VERSION } from './version';
+import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentVersionResponse, type ManagedDocVersion, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryDeleteAPIDocumentParams, type RegistryRetrieveAPIDocumentVersionParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryDeleteAPIDocumentVersionParams, type RegistryListAPIDocumentVersionMetadataParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
+import { Schemas, type SchemaListResponse, type UID, type SchemaCreateParams, type SchemaUpdateParams, type SchemaDeleteParams } from "./resources/schemas/schemas";
+import { LoginPortals, type LoginPortalEmail, type LoginPortalPage, type LoginPortalRetrieveResponse, type LoginPortalListResponse, type LoginPortalUpdateParams, type LoginPortalCreateParams } from "./resources/login-portals";
+import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleDeleteRulesetParams, type RuleRetrieveRulesetDocumentParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
+import { Themes, type ThemeListResponse, type ThemeCreateParams, type ThemeUpdateParams, type ThemeReplaceDocumentParams } from "./resources/themes";
+import { Teams, type TeamListResponse } from "./resources/teams";
+import { ScalarDocs, type Slug, type ScalarDocListGuidesResponse, type ScalarDocCreateGuideResponse, type ScalarDocPublishGuideResponse, type ScalarDocCreateGuideParams } from "./resources/scalar-docs";
+import { Namespaces, type NamespaceListResponse } from "./resources/namespaces";
+import { Authentication, type AuthenticationExchangePersonalTokenResponse, type User, type AuthenticationExchangePersonalTokenParams } from "./resources/authentication";
 
 export type AuthTokenProvider = () => string | Promise<string>;
-
-const isLogLevel = (value: string | undefined): value is LogLevel => {
-  if (value === undefined) return false;
-  return ['off', 'error', 'warn', 'info', 'debug'].includes(value);
-};
 
 const queryArrayFormat: NonNullable<StringifyOptions["arrayFormat"]> = "indices";
 const queryAllowDots = false;
@@ -48,10 +42,10 @@ const environments = {
 type Environment = keyof typeof environments;
 
 export interface ClientOptions {
-/**
- * The token used for authentication.
- */
-  BearerAuth?: string | AuthTokenProvider | undefined;
+  /**
+   * The token used for authentication.
+   */
+  bearerAuth?: string | AuthTokenProvider | undefined;
 
   /**
    * Specifies the environment to use for the API.
@@ -63,411 +57,705 @@ export interface ClientOptions {
   environment?: Environment | undefined;
 
   /**
-   * Override the default base URL for the API.
+   * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env["SCALAR_BASE_URL"].
    */
   baseURL?: string | null | undefined;
 
   /**
-   * The maximum amount of time, in milliseconds, to wait for a response before aborting a request.
+   * The maximum amount of time (in milliseconds) that the client should wait for a response
+   * from the server before timing out a single request.
    *
-   * Request timeouts are retried by default, so the total time may be longer when retries are enabled.
+   * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
+   * much longer than this timeout before the promise succeeds or fails.
+   *
+   * @unit milliseconds
    */
   timeout?: number | undefined;
 
   /**
-   * The maximum number of times to retry temporary failures such as network errors, 408, 409, 429, and 5xx responses.
+   * Additional `RequestInit` options to be passed to `fetch` calls.
+   * Properties will be overridden by per-request `fetchOptions`.
+   */
+  fetchOptions?: MergedRequestInit | undefined;
+
+  /**
+   * Specify a custom `fetch` function implementation.
+   *
+   * If not provided, we expect that `fetch` is defined globally.
+   */
+  fetch?: Fetch | undefined;
+
+  /**
+   * The maximum number of times that the client will retry a request in case of a
+   * temporary failure, like a network error or a 5XX error from the server.
    *
    * @default 2
    */
   maxRetries?: number | undefined;
 
   /**
-   * Default headers to include with every request.
+   * Default headers to include with every request to the API.
+   *
+   * These can be removed in individual requests by explicitly setting the
+   * header to `null` in request options.
    */
   defaultHeaders?: HeadersLike | undefined;
 
   /**
-   * Default query parameters to include with every request.
+   * Default query parameters to include with every request to the API.
+   *
+   * These can be removed in individual requests by explicitly setting the
+   * param to `undefined` in request options.
    */
   defaultQuery?: Record<string, string | undefined> | undefined;
 
   /**
-   * Additional `RequestInit` options to pass to `fetch` calls.
-   *
-   * Per-request `fetchOptions` override these values.
-   */
-  fetchOptions?: MergedRequestInit | undefined;
-
-  /**
-   * Specify a custom `fetch` implementation.
-   *
-   * If omitted, the generated client uses global `fetch`.
-   */
-  fetch?: Fetch | undefined;
-
-  /**
    * Set the log level.
    *
-   * Defaults to process.env["SCALAR_LOG"].
+   * Defaults to process.env["SCALAR_LOG"] or 'warn' if it isn't set.
    */
-  logLevel?: LogLevel | undefined | null;
+  logLevel?: LogLevel | undefined;
 
   /**
-   * Set the logger implementation.
+   * Set the logger.
    *
-   * Defaults to `console`.
+   * Defaults to globalThis.console.
    */
-  logger?: Logger | undefined | null;
+  logger?: Logger | undefined;
 }
 
 export type ScalarAPIOptions = ClientOptions;
 
 /**
- * API for managing Scalar platform resources.
- * 
- * ## TypeScript SDK
- * 
- * For TypeScript, we provide a SDK that makes using our API even easier.
- * 
- * ### Install
- * 
- * ```bash
- * npm add @scalar/sdk
- * ```
- * 
- * ### Get a Scalar API key
- * 
- * Create an API key in your Scalar account:
- * 
- * - Dashboard: https://dashboard.scalar.com/account
- * - Store it in `.env`, for example:
- * 
- * ```bash
- * SCALAR_API_KEY=your_personal_token
- * ```
- * 
- * ### Exchange your API key for an access token
- * 
- * The personal token is not an access token. Exchange it first with `postv1AuthExchange`.
- * 
- * If you use the personal token directly for authenticated API calls, the API returns `401 Invalid authentication token`.
- * 
- * ```ts
- * import { Scalar } from '@scalar/sdk'
- * 
- * const scalar = new Scalar()
- * 
- * const exchange = await scalar.auth.postv1AuthExchange({
- *   personalToken: process.env.SCALAR_API_KEY!,
- * })
- * 
- * const accessToken = exchange.accessToken
- * ```
- * 
- * ### Use the access token
- * 
- * Construct a second client with bearer auth. Use this authenticated client for API calls.
- * 
- * ```ts
- * import { Scalar } from '@scalar/sdk'
- * 
- * const scalar = new Scalar()
- * 
- * const exchange = await scalar.auth.postv1AuthExchange({
- *   personalToken: process.env.SCALAR_API_KEY!,
- * })
- * 
- * const authedScalar = new Scalar({
- *   bearerAuth: exchange.accessToken,
- * })
- * ```
- * 
- * ### Notes
- * 
- * - The exchange request itself can be made from a client constructed with no arguments (`new Scalar()`).
- * - The exchanged access token is valid for 12 hours.
- * - Timestamps are Unix seconds.
- * 
- * ### Read more
- * 
- * - [@scalar/sdk on npm](https://www.npmjs.com/package/@scalar/sdk)
- *
- * @param {string | AuthTokenProvider | undefined} [opts.BearerAuth=process.env["BEARER_AUTH"] ?? undefined]
- * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
- * @param {string | null | undefined} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
- * @param {number} [opts.timeout=60000] - The maximum amount of time, in milliseconds, to wait for a response before aborting a request.
- * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to pass to `fetch` calls.
- * @param {Fetch} [opts.fetch] - Specify a custom `fetch` implementation.
- * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
- * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request.
- * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request.
- * @param {LogLevel | undefined | null} opts.logLevel - Set the log level.
- * @param {Logger | undefined | null} opts.logger - Set the logger implementation.
+ * API Client for interfacing with the ScalarApi API.
  */
 export class ScalarAPI {
-  static ScalarAPI = this;
-  static DEFAULT_TIMEOUT = 60000;
-  static ScalarAPIError = ScalarAPIError;
-  static APIError = APIError;
-  static APIConnectionError = APIConnectionError;
-  static APIConnectionTimeoutError = APIConnectionTimeoutError;
-  static APIUserAbortError = APIUserAbortError;
-  static NotFoundError = NotFoundError;
-  static ConflictError = ConflictError;
-  static RateLimitError = RateLimitError;
-  static BadRequestError = BadRequestError;
-  static AuthenticationError = AuthenticationError;
-  static InternalServerError = InternalServerError;
-  static PermissionDeniedError = PermissionDeniedError;
-  static UnprocessableEntityError = UnprocessableEntityError;
-  static toFile = toFile;
-  static Registry = Registry;
-  static Schemas = Schemas;
-  static LoginPortals = LoginPortals;
-  static Rules = Rules;
-  static Themes = Themes;
-  static Teams = Teams;
-  static ScalarDocs = ScalarDocs;
-  static Namespaces = Namespaces;
-  static Authentication = Authentication;
+  bearerAuth: string | AuthTokenProvider | undefined;
 
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
-  private fetchImpl: Fetch;
-  private options: ClientOptions;
+  private fetch: Fetch;
+  #encoder: Opts.RequestEncoder;
   protected idempotencyHeader?: string;
-  BearerAuth: string | AuthTokenProvider | undefined;
+  private _baseURLOverridden: boolean;
+  private _defaultBaseURL: string;
+  private _options: ClientOptions;
 
-  registry: Registry;
-  schemas: Schemas;
-  loginPortals: LoginPortals;
-  rules: Rules;
-  themes: Themes;
-  teams: Teams;
-  scalarDocs: ScalarDocs;
-  namespaces: Namespaces;
-  authentication: Authentication;
-
-  constructor(options: ClientOptions = {}) {
-    const baseURL = options.baseURL === undefined ? readEnv("SCALAR_BASE_URL") : options.baseURL;
+  /**
+   * API Client for interfacing with the ScalarApi API.
+   *
+   * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
+   * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
+   * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
+   * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
+   * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
+   * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
+   * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
+   * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
+   */
+  constructor({
+    baseURL = readEnv("SCALAR_BASE_URL"),
+    bearerAuth = readEnv("BEARER_AUTH"),
+    ...opts
+  }: ClientOptions = {}) {
+    const options: ClientOptions = {
+      bearerAuth,
+      ...opts,
+      baseURL: baseURL || null,
+    };
     const environment = options.environment ?? "production";
-    if (baseURL && options.environment) throw new ScalarAPIError("Ambiguous URL; The `baseURL` option (or SCALAR_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null");
-    this.baseURL = baseURL ?? environments[environment];
-    this.timeout = options.timeout ?? 60000;
-    this.maxRetries = options.maxRetries ?? 2;
-    this.fetchImpl = options.fetch ?? defaultFetch();
-    this.fetchOptions = options.fetchOptions;
+    const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== "";
+    if (baseURLOverridden && options.environment) throw new Errors.ScalarAPIError("Ambiguous URL; The `baseURL` option (or SCALAR_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null");
+    const defaultBaseURL = environments[environment];
+    this.baseURL = options.baseURL || defaultBaseURL;
+    this.timeout = options.timeout ?? ScalarAPI.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
-    const envLogLevel = readEnv("SCALAR_LOG");
-    this.logLevel = options.logLevel === null ? undefined : (options.logLevel ?? (isLogLevel(envLogLevel) ? envLogLevel : 'warn'));
-    this.options = { ...options, baseURL, environment };
-    this.BearerAuth = options.BearerAuth ?? readEnv("BEARER_AUTH");
-    this.registry = new Registry(this);
-    this.schemas = new Schemas(this);
-    this.loginPortals = new LoginPortals(this);
-    this.rules = new Rules(this);
-    this.themes = new Themes(this);
-    this.teams = new Teams(this);
-    this.scalarDocs = new ScalarDocs(this);
-    this.namespaces = new Namespaces(this);
-    this.authentication = new Authentication(this);
+    const defaultLogLevel = 'warn';
+    // Set default logLevel early so that we can log a warning in parseLogLevel.
+    this.logLevel = defaultLogLevel;
+    this.logLevel =
+      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
+      parseLogLevel(readEnv("SCALAR_LOG"), "process.env[\"SCALAR_LOG\"]", this) ??
+      defaultLogLevel;
+    this.fetchOptions = options.fetchOptions;
+    this.maxRetries = options.maxRetries ?? 2;
+    this.fetch = options.fetch ?? Shims.getDefaultFetch();
+    this.#encoder = Opts.FallbackEncoder;
+
+    const customHeadersEnv = readEnv("SCALAR_CUSTOM_HEADERS");
+    if (customHeadersEnv) {
+      const parsed: Record<string, string> = {};
+      for (const line of customHeadersEnv.split('\n')) {
+        const colon = line.indexOf(':');
+        if (colon >= 0) {
+          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
+        }
+      }
+      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+    }
+
+    this._options = { ...options, baseURL: baseURLOverridden ? this.baseURL : undefined, environment };
+    this._baseURLOverridden = baseURLOverridden;
+    this._defaultBaseURL = defaultBaseURL;
+
+    this.bearerAuth = bearerAuth;
   }
 
   withOptions(options: Partial<ClientOptions>): this {
     const client = new (this.constructor as new (props: ClientOptions) => this)({
-      ...this.options,
-      baseURL: this.baseURL,
+      ...this._options,
+      ...(this.#baseURLOverridden() ? { baseURL: this.baseURL } : {}),
       maxRetries: this.maxRetries,
       timeout: this.timeout,
-      fetch: this.fetchImpl,
+      logger: this.logger,
+      logLevel: this.logLevel,
+      fetch: this.fetch,
       fetchOptions: this.fetchOptions,
-      BearerAuth: this.BearerAuth,
+      bearerAuth: this.bearerAuth,
       ...options,
     });
     return client;
   }
 
-  buildURL(path: string, query: object | null | undefined, defaultBaseURL?: string | undefined): string {
-    const url = buildUrl(defaultBaseURL ?? this.baseURL, path);
+  #baseURLOverridden(): boolean {
+    // A named environment selects a default URL; only explicit overrides should bypass per-request defaults.
+    return this._baseURLOverridden || this.baseURL !== this._defaultBaseURL;
+  }
+
+  protected defaultQuery(): Record<string, string | undefined> | undefined {
+    return this._options.defaultQuery;
+  }
+
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query, { arrayFormat: queryArrayFormat, allowDots: queryAllowDots });
+  }
+
+  private getUserAgent(): string {
+    return `${this.constructor.name}/JS ${VERSION}`;
+  }
+
+  protected defaultIdempotencyKey(): string {
+    return `scalar-node-retry-${uuid4()}`;
+  }
+
+  protected makeStatusError(
+    status: number,
+    error: object | undefined,
+    message: string | undefined,
+    headers: Headers,
+  ): Errors.APIError {
+    return Errors.APIError.generate(status, error, message, headers);
+  }
+
+  buildURL(
+    path: string,
+    query: Record<string, unknown> | null | undefined,
+    defaultBaseURL?: string | undefined,
+  ): string {
+    const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
+    // Guarantee exactly one "/" between baseURL and path so that bases without a trailing slash
+    // and paths without a leading slash do not fuse into a malformed URL (e.g. ".../v1" + "widgets").
+    const url =
+      isAbsoluteURL(path) ?
+        new URL(path)
+      : new URL((baseURL.endsWith('/') ? baseURL : baseURL + '/') + (path.startsWith('/') ? path.slice(1) : path));
+
+    const defaultQuery = this.defaultQuery();
     const pathQuery = Object.fromEntries(url.searchParams);
-    const mergedQuery = { ...pathQuery, ...this.options.defaultQuery, ...(query ?? {}) };
-    const serializedQuery = stringifyQuery(mergedQuery, { arrayFormat: queryArrayFormat, allowDots: queryAllowDots });
-    url.search = serializedQuery ? `?${serializedQuery}` : "";
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
+    }
+
+    if (typeof query === "object" && query && !Array.isArray(query)) {
+      url.search = this.stringifyQuery(query);
+    }
+
     return url.toString();
   }
 
-  request<T>(options: PromiseOrValue<FinalRequestOptions>, remainingRetries: number | null = null): APIPromise<T> {
-    return new APIPromise(this, this.makeRequest(options, remainingRetries));
+  /**
+   * Used as a callback for mutating the given `FinalRequestOptions` object.
+   */
+  protected async prepareOptions(options: FinalRequestOptions): Promise<void> {}
+
+  /**
+   * Used as a callback for mutating the given `RequestInit` object.
+   *
+   * This is useful for cases where you want to add certain headers based off of
+   * the request properties, e.g. `method` or `url`.
+   */
+  protected async prepareRequest(
+    request: RequestInit,
+    { url, options }: { url: string; options: FinalRequestOptions },
+  ): Promise<void> {}
+
+  get<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
+    return this.methodRequest('get', path, opts);
   }
 
-  protected async prepareOptions(_options: FinalRequestOptions): Promise<void> {}
+  post<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
+    return this.methodRequest('post', path, opts);
+  }
 
-  protected async prepareRequest(_request: RequestInit, _props: { url: string; options: FinalRequestOptions }): Promise<void> {}
+  patch<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
+    return this.methodRequest('patch', path, opts);
+  }
+
+  put<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
+    return this.methodRequest('put', path, opts);
+  }
+
+  delete<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
+    return this.methodRequest('delete', path, opts);
+  }
+
+  private methodRequest<Rsp>(
+    method: HTTPMethod,
+    path: string,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): APIPromise<Rsp> {
+    return this.request(
+      Promise.resolve(opts).then((opts) => {
+        return { method, path, ...opts } as FinalRequestOptions;
+      }),
+    );
+  }
+
+  request<Rsp>(
+    options: PromiseOrValue<FinalRequestOptions>,
+    remainingRetries: number | null = null,
+  ): APIPromise<Rsp> {
+    return new APIPromise(this, this.makeRequest(options, remainingRetries, undefined));
+  }
+
+  private async makeRequest(
+    optionsInput: PromiseOrValue<FinalRequestOptions>,
+    retriesRemaining: number | null,
+    retryOfRequestLogID: string | undefined,
+  ): Promise<APIResponseProps> {
+    const options = await optionsInput;
+    const maxRetries = options.maxRetries ?? this.maxRetries;
+    if (retriesRemaining == null) {
+      retriesRemaining = maxRetries;
+    }
+
+    await this.prepareOptions(options);
+
+    const { req, url, timeout } = await this.buildRequest(options, {
+      retryCount: maxRetries - retriesRemaining,
+    });
+
+    await this.prepareRequest(req, { url, options });
+
+    /** Not an API request ID, just for correlating local log entries. */
+    const requestLogID = 'log_' + ((Math.random() * (1 << 24)) | 0).toString(16).padStart(6, '0');
+    const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
+    const startTime = Date.now();
+
+    loggerFor(this).debug(
+      `[${requestLogID}] sending request`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        method: options.method,
+        url,
+        options,
+        headers: req.headers,
+      }),
+    );
+
+    if (options.signal?.aborted) {
+      throw new Errors.APIUserAbortError();
+    }
+
+    const controller = new AbortController();
+    const response = await this.fetchWithTimeout(url, req, timeout, controller).catch(castToError);
+    const headersTime = Date.now();
+
+    if (response instanceof globalThis.Error) {
+      const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
+      if (options.signal?.aborted) {
+        throw new Errors.APIUserAbortError();
+      }
+      // detect native connection timeout errors
+      // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
+      // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
+      // others do not provide enough information to distinguish timeouts from other connection errors
+      const isTimeout =
+        isAbortError(response) ||
+        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
+      if (retriesRemaining) {
+        loggerFor(this).info(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
+        );
+        loggerFor(this).debug(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url,
+            durationMs: headersTime - startTime,
+            message: response.message,
+          }),
+        );
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
+      }
+      loggerFor(this).info(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
+      );
+      loggerFor(this).debug(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url,
+          durationMs: headersTime - startTime,
+          message: response.message,
+        }),
+      );
+      if (isTimeout) {
+        throw new Errors.APIConnectionTimeoutError();
+      }
+      throw new Errors.APIConnectionError({ cause: response });
+    }
+
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
+      response.ok ? 'succeeded' : 'failed'
+    } with status ${response.status} in ${headersTime - startTime}ms`;
+
+    if (!response.ok) {
+      const shouldRetry = await this.shouldRetry(response);
+      if (retriesRemaining && shouldRetry) {
+        const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
+
+        // We don't need the body of this response.
+        await Shims.CancelReadableStream(response.body);
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+        loggerFor(this).debug(
+          `[${requestLogID}] response error (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url: response.url,
+            status: response.status,
+            headers: response.headers,
+            durationMs: headersTime - startTime,
+          }),
+        );
+        return this.retryRequest(
+          options,
+          retriesRemaining,
+          retryOfRequestLogID ?? requestLogID,
+          response.headers,
+        );
+      }
+
+      const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
+
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+
+      const errText = await response.text().catch((err: any) => castToError(err).message);
+      const errJSON = safeJSON(errText) as any;
+      const errMessage = errJSON ? undefined : errText;
+
+      loggerFor(this).debug(
+        `[${requestLogID}] response error (${retryMessage})`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url: response.url,
+          status: response.status,
+          headers: response.headers,
+          message: errMessage,
+          durationMs: Date.now() - startTime,
+        }),
+      );
+
+      const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
+      throw err;
+    }
+
+    loggerFor(this).info(responseInfo);
+    loggerFor(this).debug(
+      `[${requestLogID}] response start`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        url: response.url,
+        status: response.status,
+        headers: response.headers,
+        durationMs: headersTime - startTime,
+      }),
+    );
+
+    return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
+  }
+
+  async fetchWithTimeout(url: RequestInfo, init: RequestInit | undefined, ms: number, controller: AbortController): Promise<Response> {
+    const { signal, method, ...options } = init || {};
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
+
+    const timeout = setTimeout(abort, ms);
+
+    const isReadableBody =
+      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
+      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
+
+    const fetchOptions: RequestInit = {
+      signal: controller.signal as any,
+      ...(isReadableBody ? { duplex: 'half' } : {}),
+      method: 'GET',
+      ...options,
+    };
+    if (method) {
+      // Custom methods like 'patch' need to be uppercased
+      // See https://github.com/nodejs/undici/issues/2294
+      fetchOptions.method = method.toUpperCase();
+    }
+
+    try {
+      // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
+      return await this.fetch.call(undefined, url, fetchOptions);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  private async shouldRetry(response: Response): Promise<boolean> {
+    // Note this is not a standard header.
+    const shouldRetryHeader = response.headers.get('x-should-retry');
+
+    // If the server explicitly says whether or not to retry, obey.
+    if (shouldRetryHeader === 'true') return true;
+    if (shouldRetryHeader === 'false') return false;
+
+    // Retry on request timeouts.
+    if (response.status === 408) return true;
+
+    // Retry on lock timeouts.
+    if (response.status === 409) return true;
+
+    // Retry on rate limits.
+    if (response.status === 429) return true;
+
+    // Retry internal errors.
+    if (response.status >= 500) return true;
+
+    return false;
+  }
+
+  private async retryRequest(
+    options: FinalRequestOptions,
+    retriesRemaining: number,
+    requestLogID: string,
+    responseHeaders?: Headers | undefined,
+  ): Promise<APIResponseProps> {
+    let timeoutMillis: number | undefined;
+
+    // Note the `retry-after-ms` header may not be standard, but is a good idea and we'd like proactive support for it.
+    const retryAfterMillisHeader = responseHeaders?.get('retry-after-ms');
+    if (retryAfterMillisHeader) {
+      const timeoutMs = parseFloat(retryAfterMillisHeader);
+      if (!Number.isNaN(timeoutMs)) {
+        timeoutMillis = timeoutMs;
+      }
+    }
+
+    // About the Retry-After header: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
+    const retryAfterHeader = responseHeaders?.get('retry-after');
+    if (retryAfterHeader && !timeoutMillis) {
+      const timeoutSeconds = parseFloat(retryAfterHeader);
+      if (!Number.isNaN(timeoutSeconds)) {
+        timeoutMillis = timeoutSeconds * 1000;
+      } else {
+        timeoutMillis = Date.parse(retryAfterHeader) - Date.now();
+      }
+    }
+
+    // If the API asks us to wait a certain amount of time, just do what it says,
+    // but cap server-provided delays at 60s so an oversized or malformed Retry-After
+    // (e.g. `retry-after-ms: 999999999`, a past HTTP-date, or a value that Date.parse
+    // failed on) cannot block retries for an unbounded amount of time. Otherwise fall
+    // back to the default exponential-backoff calculation.
+    const maxRetryAfterMillis = 60 * 1000;
+    if (
+      timeoutMillis === undefined ||
+      !Number.isFinite(timeoutMillis) ||
+      timeoutMillis <= 0 ||
+      timeoutMillis > maxRetryAfterMillis
+    ) {
+      const maxRetries = options.maxRetries ?? this.maxRetries;
+      timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
+    }
+    await sleep(timeoutMillis);
+
+    return this.makeRequest(options, retriesRemaining - 1, requestLogID);
+  }
+
+  private calculateDefaultRetryTimeoutMillis(retriesRemaining: number, maxRetries: number): number {
+    const initialRetryDelay = 0.5;
+    const maxRetryDelay = 8.0;
+
+    const numRetries = maxRetries - retriesRemaining;
+
+    // Apply exponential backoff, but not more than the max.
+    const sleepSeconds = Math.min(initialRetryDelay * Math.pow(2, numRetries), maxRetryDelay);
+
+    // Apply some jitter, take up to at most 25 percent of the retry time.
+    const jitter = 1 - Math.random() * 0.25;
+
+    return sleepSeconds * jitter * 1000;
+  }
 
   async buildRequest(
     inputOptions: FinalRequestOptions,
     { retryCount = 0 }: { retryCount?: number } = {},
   ): Promise<{ req: FinalizedRequestInit; url: string; timeout: number }> {
     const options = { ...inputOptions };
-    const timeout = options.timeout ?? this.timeout;
-    const url = this.buildURL(options.path, { ...await this.authQueryAsync(), ...(options.query ?? {}) }, options.defaultBaseURL);
-    const headers = normalizeHeaders(await this.authHeadersAsync(), this.options.defaultHeaders, options.headers);
-    appendAuthCookies(headers, await this.authCookiesAsync());
-    headers.set("X-Scalar-Retry-Count", String(retryCount));
-    headers.set("X-Scalar-Timeout", String(timeout));
-    if (this.idempotencyHeader && options.method !== "get" && !headers.has(this.idempotencyHeader)) {
-      const idempotencyKey = inputOptions.idempotencyKey ?? createIdempotencyKey();
-      inputOptions.idempotencyKey = idempotencyKey;
-      headers.set(this.idempotencyHeader, idempotencyKey);
-    }
-    const body = serializeBody(options.body);
-    // A JSON body must declare its Content-Type, or fetch omits it and the server can't tell the
-    // request is JSON. Never override a content-type the caller already set.
-    const contentType = bodyContentType(options.body);
-    if (contentType && !headers.has('content-type')) headers.set('content-type', contentType);
+    const { method, path, query, defaultBaseURL } = options;
+
+    const url = this.buildURL(path!, query as Record<string, unknown>, defaultBaseURL);
+    if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
+    options.timeout = options.timeout ?? this.timeout;
+    const { bodyHeaders, body } = this.buildBody({ options });
+    const reqHeaders = await this.buildHeaders({ options, method, bodyHeaders, retryCount, url });
+
     const req: FinalizedRequestInit = {
-      ...(options.signal ? { signal: options.signal } : {}),
-      ...(body !== undefined ? { body } : {}),
-      ...this.fetchOptions,
-      ...options.fetchOptions,
-      method: options.method,
-      headers,
+      method,
+      headers: reqHeaders,
+      ...(options.signal && { signal: options.signal }),
+      ...((globalThis as any).ReadableStream &&
+        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
+      // `buildBody` already collapses no-body into `undefined`; here we only need to drop that
+      // sentinel. A truthiness spread would also strip an intentional empty-string body.
+      ...(body !== undefined && { body }),
+      ...((this.fetchOptions as any) ?? {}),
+      ...((options.fetchOptions as any) ?? {}),
     };
-    return { req, url, timeout };
+    return { req, url, timeout: options.timeout };
   }
 
-  private async makeRequest(optionsInput: PromiseOrValue<FinalRequestOptions>, retriesRemaining: number | null = null): Promise<APIResponseProps> {
-    const finalOptions: FinalRequestOptions = await optionsInput;
-    const maxRetries = finalOptions.maxRetries ?? this.maxRetries;
-    retriesRemaining ??= maxRetries;
-    await this.prepareOptions(finalOptions);
-    const url = this.buildURL(finalOptions.path, { ...await this.authQueryAsync(), ...(finalOptions.query ?? {}) }, finalOptions.defaultBaseURL);
-    const headers = normalizeHeaders(await this.authHeadersAsync(), this.options.defaultHeaders, finalOptions.headers);
-    appendAuthCookies(headers, await this.authCookiesAsync());
-    this.validateAuth(url, headers, finalOptions);
-    const retryCount = maxRetries - retriesRemaining;
-    headers.set("X-Scalar-Retry-Count", String(retryCount));
-    headers.set("X-Scalar-Timeout", String(finalOptions.timeout ?? this.timeout));
-    if (this.idempotencyHeader && finalOptions.method !== "get" && !headers.has(this.idempotencyHeader)) {
-      const idempotencyKey = finalOptions.idempotencyKey ?? createIdempotencyKey();
-      finalOptions.idempotencyKey = idempotencyKey;
-      headers.set(this.idempotencyHeader, idempotencyKey);
+  private async buildHeaders({
+    options,
+    method,
+    bodyHeaders,
+    retryCount,
+    url,
+  }: {
+    options: FinalRequestOptions;
+    method: HTTPMethod;
+    bodyHeaders: HeadersLike;
+    retryCount: number;
+    url: string;
+  }): Promise<Headers> {
+    let idempotencyHeaders: HeadersLike = {};
+    if (this.idempotencyHeader && method !== 'get') {
+      if (!options.idempotencyKey) options.idempotencyKey = this.defaultIdempotencyKey();
+      idempotencyHeaders[this.idempotencyHeader] = options.idempotencyKey;
     }
-    const body = serializeBody(finalOptions.body);
-    // Match buildRequest: JSON bodies need an explicit Content-Type; don't clobber a caller's.
-    const contentType = bodyContentType(finalOptions.body);
-    if (contentType && !headers.has('content-type')) headers.set('content-type', contentType);
-    const controller = new AbortController();
-    if (finalOptions.signal) finalOptions.signal.addEventListener("abort", () => controller.abort());
-    const init: RequestInit = {
-      method: finalOptions.method.toUpperCase(),
-      headers,
-      signal: controller.signal,
-      ...this.fetchOptions,
-      ...finalOptions.fetchOptions,
-    };
-    if (body !== undefined) init.body = body;
-    await this.prepareRequest(init, { url, options: finalOptions });
-    logDebug(this, "request", String(url), finalOptions, headers);
-    if (finalOptions.signal?.aborted) throw new APIUserAbortError();
-    let response: Response;
-    try {
-      response = await this.fetchWithTimeout(url, init, finalOptions.timeout ?? this.timeout, controller);
-    } catch (error) {
-      const cause = castToError(error);
-      if (finalOptions.signal?.aborted) throw new APIUserAbortError();
-      if (retriesRemaining > 0) return this.retryRequest(finalOptions, retriesRemaining);
-      if (isAbortError(cause)) throw new APIConnectionTimeoutError({ message: cause.message });
-      throw new APIConnectionError({ message: cause.message, cause });
-    }
-    if (!response.ok) {
-      if (retriesRemaining > 0 && this.shouldRetry(response)) {
-        logDebug(this, `response (error; retrying, ${retriesRemaining} attempts remaining)`, response.status, String(url), response.headers);
-        return this.retryRequest(finalOptions, retriesRemaining, response.headers);
-      }
-      const errText = await response.text().catch((err) => castToError(err).message);
-      const errJSON = safeJson(errText) as object | undefined;
-      const errMessage = errJSON ? undefined : errText;
-      logDebug(this, "response (error; (error; not retryable))", response.status, String(url), response.headers, errJSON ?? errMessage);
-      throw APIError.generate(response.status, errJSON, errMessage, response.headers);
-    }
-    return { response, options: finalOptions, controller };
+
+    const headers = buildHeaders([
+      idempotencyHeaders,
+      {
+        Accept: 'application/json',
+        'User-Agent': this.getUserAgent(),
+        'X-Scalar-Retry-Count': String(retryCount),
+        ...(options.timeout ? { 'X-Scalar-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+        ...getPlatformHeaders(),
+      },
+      await this.authHeaders(options),
+      this._options.defaultHeaders,
+      bodyHeaders,
+      options.headers,
+    ]);
+    appendAuthCookies(headers.values, await this.authCookiesAsync());
+
+    this.validateAuth(url, headers.values, options);
+
+    return headers.values;
   }
 
-  async fetchWithTimeout(url: RequestInfo, init: RequestInit | undefined, ms: number, controller: AbortController): Promise<Response> {
-    const timeout = setTimeout(() => controller.abort(), ms);
-    try {
-      return await this.fetchImpl(url, init);
-    } finally {
-      clearTimeout(timeout);
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
+  }
+
+  private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
+    bodyHeaders: HeadersLike;
+    body: BodyInit | undefined;
+  } {
+    // Skip only `null`/`undefined` so an intentional empty-string (or 0/false) payload still
+    // reaches the encoder. A plain `!body` check would silently drop those falsy-but-valid bodies,
+    // and `null` must be excluded here too because the iterator check below uses `in`, which
+    // throws on null.
+    if (body == null) {
+      return { bodyHeaders: undefined, body: undefined };
     }
-  }
-
-  private shouldRetry(response: Response): boolean {
-    const shouldRetryHeader = response.headers.get('x-should-retry');
-    if (shouldRetryHeader === 'true') return true;
-    if (shouldRetryHeader === 'false') return false;
-    if (response.status === 408 || response.status === 409 || response.status === 429) return true;
-    return response.status >= 500;
-  }
-
-  private async retryRequest(options: FinalRequestOptions, retriesRemaining: number, responseHeaders?: Headers): Promise<APIResponseProps> {
-    await sleep(this.retryDelayMillis(options, retriesRemaining, responseHeaders));
-    return this.makeRequest(options, retriesRemaining - 1);
-  }
-
-  private retryDelayMillis(options: FinalRequestOptions, retriesRemaining: number, responseHeaders?: Headers): number {
-    const retryAfterMillisHeader = responseHeaders?.get('retry-after-ms');
-    if (retryAfterMillisHeader) {
-      const millis = Number.parseFloat(retryAfterMillisHeader);
-      if (!Number.isNaN(millis) && millis >= 0 && millis < 60000) return millis;
+    const headers = buildHeaders([rawHeaders]);
+    if (
+      // Pass raw type verbatim
+      ArrayBuffer.isView(body) ||
+      body instanceof ArrayBuffer ||
+      body instanceof DataView ||
+      // Always pass strings through verbatim. The previous guard required a caller-set
+      // `content-type` and otherwise fell through to `FallbackEncoder`, which JSON.stringifies
+      // the value and labels it `application/json` — silently quoting plain-text payloads and
+      // mislabeling them as JSON. fetch defaults a string body to `text/plain;charset=UTF-8`
+      // when no `content-type` is set, which is a safer default than misclaiming JSON.
+      typeof body === 'string' ||
+      // `Blob` is superset of `File`
+      ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
+      // `FormData` -> `multipart/form-data`
+      body instanceof FormData ||
+      // `URLSearchParams` -> `application/x-www-form-urlencoded`
+      body instanceof URLSearchParams ||
+      // Send chunked stream (each chunk has own `length`)
+      ((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream)
+    ) {
+      return { bodyHeaders: undefined, body: body as BodyInit };
+    } else if (
+      typeof body === 'object' &&
+      (Symbol.asyncIterator in body ||
+        (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
+    ) {
+      return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body),
+      };
+    } else {
+      return this.#encoder({ body, headers });
     }
-    const retryAfterHeader = responseHeaders?.get('retry-after');
-    if (retryAfterHeader) {
-      const seconds = Number.parseFloat(retryAfterHeader);
-      const millis = Number.isNaN(seconds) ? Date.parse(retryAfterHeader) - Date.now() : seconds * 1000;
-      if (millis >= 0 && millis < 60000) return millis;
-    }
-    const maxRetries = options.maxRetries ?? this.maxRetries;
-    const retryCount = maxRetries - retriesRemaining;
-    const delay = Math.min(0.5 * 2 ** retryCount, 8);
-    return delay * (1 - Math.random() * 0.25) * 1000;
-  }
-
-  get<T>(path: string, options?: PromiseOrValue<RequestOptions>): APIPromise<T> { return this.methodRequest<T>('get', path, options); }
-  post<T>(path: string, options?: PromiseOrValue<RequestOptions>): APIPromise<T> { return this.methodRequest<T>('post', path, options); }
-  put<T>(path: string, options?: PromiseOrValue<RequestOptions>): APIPromise<T> { return this.methodRequest<T>('put', path, options); }
-  patch<T>(path: string, options?: PromiseOrValue<RequestOptions>): APIPromise<T> { return this.methodRequest<T>('patch', path, options); }
-  delete<T>(path: string, options?: PromiseOrValue<RequestOptions>): APIPromise<T> { return this.methodRequest<T>('delete', path, options); }
-
-  private methodRequest<T>(method: FinalRequestOptions["method"], path: string, options?: PromiseOrValue<RequestOptions>): APIPromise<T> {
-    const requestOptions = Promise.resolve(options).then((opts) => ({ ...opts, method, path }));
-    return this.request<T>(requestOptions);
   }
 
   private validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
     if (headers.has("Authorization")) return;
     if (headerExplicitlyOmitted(options.headers, "Authorization")) return;
-    throw new AuthenticationError(401, {}, "Could not resolve authentication method. Expected Authorization to be set.", headers);
+    throw new Errors.AuthenticationError(401, {}, "Could not resolve authentication method. Expected Authorization to be set.", headers);
   }
 
-  authHeaders(): Record<string, string> {
+  authHeadersSync(): Record<string, string> {
     const headers: Record<string, string> = {};
-    const BearerAuth = this.resolveAuthOptionSync("BearerAuth", this.BearerAuth);
-    if (BearerAuth) headers['Authorization'] = `Bearer ${BearerAuth}`;
+    const bearerAuth = this.resolveAuthOptionSync("bearerAuth", this.bearerAuth);
+    if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
     return headers;
   }
 
   webSocketAuthHeaders(): Record<string, string> {
-    const BearerAuth = this.resolveAuthOptionSync("BearerAuth", this.BearerAuth);
-    if (BearerAuth) return { Authorization: `Bearer ${BearerAuth}` };
+    const bearerAuth = this.resolveAuthOptionSync("bearerAuth", this.bearerAuth);
+    if (bearerAuth) return { Authorization: `Bearer ${bearerAuth}` };
     return {};
+  }
+
+  protected async authHeaders(options: FinalRequestOptions): Promise<HeadersLike | undefined> {
+    return buildHeaders([await this.authHeadersAsync()]);
   }
 
   private async authQueryAsync(): Promise<Record<string, string>> {
@@ -482,138 +770,153 @@ export class ScalarAPI {
 
   private async authHeadersAsync(): Promise<Record<string, string>> {
     const headers: Record<string, string> = {};
-    const BearerAuth = await this.resolveAuthOption("BearerAuth", this.BearerAuth);
-    if (BearerAuth) headers['Authorization'] = `Bearer ${BearerAuth}`;
+    const bearerAuth = await this.resolveAuthOption("bearerAuth", this.bearerAuth);
+    if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
     return headers;
   }
 
   private async resolveAuthOption(optionName: string, value: string | AuthTokenProvider | null | undefined): Promise<string | undefined> {
     if (value == null) return undefined;
     const token = typeof value === "function" ? await value() : value;
-    if (!token) throw new ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (!token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
   private resolveAuthOptionSync(optionName: string, value: string | AuthTokenProvider | null | undefined): string | undefined {
     if (value == null) return undefined;
     const token = typeof value === "function" ? value() : value;
-    if (typeof token !== "string" || !token) throw new ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (typeof token !== "string" || !token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
+
+  static ScalarAPI = this;
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
+
+  static ScalarAPIError = Errors.ScalarAPIError;
+  static APIError = Errors.APIError;
+  static APIConnectionError = Errors.APIConnectionError;
+  static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
+  static APIUserAbortError = Errors.APIUserAbortError;
+  static NotFoundError = Errors.NotFoundError;
+  static ConflictError = Errors.ConflictError;
+  static RateLimitError = Errors.RateLimitError;
+  static BadRequestError = Errors.BadRequestError;
+  static AuthenticationError = Errors.AuthenticationError;
+  static InternalServerError = Errors.InternalServerError;
+  static PermissionDeniedError = Errors.PermissionDeniedError;
+  static UnprocessableEntityError = Errors.UnprocessableEntityError;
+
+  static toFile = toFile;
+
+  registry: Registry = new Registry(this);
+  schemas: Schemas = new Schemas(this);
+  loginPortals: LoginPortals = new LoginPortals(this);
+  rules: Rules = new Rules(this);
+  themes: Themes = new Themes(this);
+  teams: Teams = new Teams(this);
+  scalarDocs: ScalarDocs = new ScalarDocs(this);
+  namespaces: Namespaces = new Namespaces(this);
+  authentication: Authentication = new Authentication(this);
 }
+
+ScalarAPI.Registry = Registry;
+ScalarAPI.Schemas = Schemas;
+ScalarAPI.LoginPortals = LoginPortals;
+ScalarAPI.Rules = Rules;
+ScalarAPI.Themes = Themes;
+ScalarAPI.Teams = Teams;
+ScalarAPI.ScalarDocs = ScalarDocs;
+ScalarAPI.Namespaces = Namespaces;
+ScalarAPI.Authentication = Authentication;
 
 export declare namespace ScalarAPI {
-  export type RequestOptions = import("./internal/request-options").RequestOptions;
-  export type Version = import("./resources/registry").Version;
-  export type AccessGroup = import("./resources/registry").AccessGroup;
-  export type APIDocument = import("./resources/registry").APIDocument;
-  export type Nanoid = import("./resources/registry").Nanoid;
-  export type Slug = import("./resources/registry").Slug;
-  export type Namespace = import("./resources/registry").Namespace;
-  export type ManagedDocVersion = import("./resources/registry").ManagedDocVersion;
-  export type Method = import("./resources/registry").Method;
-  export type Value400 = import("./resources/registry").Value400;
-  export type Value401 = import("./resources/registry").Value401;
-  export type Value403 = import("./resources/registry").Value403;
-  export type Value404 = import("./resources/registry").Value404;
-  export type Value422 = import("./resources/registry").Value422;
-  export type Value500 = import("./resources/registry").Value500;
-  export type RegistryListAllAPIDocumentsResponse = import("./resources/registry").RegistryListAllAPIDocumentsResponse;
-  export type RegistryListAPIDocumentsResponse = import("./resources/registry").RegistryListAPIDocumentsResponse;
-  export type RegistryCreateAPIDocumentParams = import("./resources/registry").RegistryCreateAPIDocumentParams;
-  export type RegistryCreateAPIDocumentResponse = import("./resources/registry").RegistryCreateAPIDocumentResponse;
-  export type RegistryUpdateAPIDocumentParams = import("./resources/registry").RegistryUpdateAPIDocumentParams;
-  export type RegistryUpdateAPIDocumentVersionParams = import("./resources/registry").RegistryUpdateAPIDocumentVersionParams;
-  export type RegistryUpdateAPIDocumentVersionResponse = import("./resources/registry").RegistryUpdateAPIDocumentVersionResponse;
-  export type RegistryCreateAPIDocumentVersionParams = import("./resources/registry").RegistryCreateAPIDocumentVersionParams;
-  export type RegistryCreateAPIDocumentAccessGroupParams = import("./resources/registry").RegistryCreateAPIDocumentAccessGroupParams;
-  export type RegistryDeleteAPIDocumentAccessGroupParams = import("./resources/registry").RegistryDeleteAPIDocumentAccessGroupParams;
-  export type Schema = import("./resources/schemas/schemas").Schema;
-  export type ManagedSchemaVersion = import("./resources/schemas/schemas").ManagedSchemaVersion;
-  export type Timestamp = import("./resources/schemas/schemas").Timestamp;
-  export type SchemaVersion = import("./resources/schemas/schemas").Version2;
-  export type UID = import("./resources/schemas/schemas").UID;
-  export type SchemaListResponse = import("./resources/schemas/schemas").SchemaListResponse;
-  export type SchemaCreateParams = import("./resources/schemas/schemas").SchemaCreateParams;
-  export type SchemaUpdateParams = import("./resources/schemas/schemas").SchemaUpdateParams;
-  export type VersionCreateSchemaParams = import("./resources/schemas/version").VersionCreateSchemaParams;
-  export type AccessGroupAccessGroup = import("./resources/schemas/access-group").AccessGroup2;
-  export type AccessGroupCreateSchemaParams = import("./resources/schemas/access-group").AccessGroupCreateSchemaParams;
-  export type AccessGroupDeleteSchemaParams = import("./resources/schemas/access-group").AccessGroupDeleteSchemaParams;
-  export type LoginPortalEmail = import("./resources/login-portals").LoginPortalEmail;
-  export type LoginPortalPage = import("./resources/login-portals").LoginPortalPage;
-  export type LoginPortal = import("./resources/login-portals").LoginPortal;
-  export type LoginPortalRetrieveResponse = import("./resources/login-portals").LoginPortalRetrieveResponse;
-  export type LoginPortalUpdateParams = import("./resources/login-portals").LoginPortalUpdateParams;
-  export type LoginPortalCreateParams = import("./resources/login-portals").LoginPortalCreateParams;
-  export type LoginPortalListResponse = import("./resources/login-portals").LoginPortalListResponse;
-  export type Rule = import("./resources/rules").Rule;
-  export type RuleListRulesetsResponse = import("./resources/rules").RuleListRulesetsResponse;
-  export type RuleCreateRulesetParams = import("./resources/rules").RuleCreateRulesetParams;
-  export type RuleUpdateRulesetParams = import("./resources/rules").RuleUpdateRulesetParams;
-  export type RuleCreateRulesetAccessGroupParams = import("./resources/rules").RuleCreateRulesetAccessGroupParams;
-  export type RuleDeleteRulesetAccessGroupParams = import("./resources/rules").RuleDeleteRulesetAccessGroupParams;
-  export type Theme = import("./resources/themes").Theme;
-  export type ThemeListResponse = import("./resources/themes").ThemeListResponse;
-  export type ThemeCreateParams = import("./resources/themes").ThemeCreateParams;
-  export type ThemeUpdateParams = import("./resources/themes").ThemeUpdateParams;
-  export type ThemeReplaceDocumentParams = import("./resources/themes").ThemeReplaceDocumentParams;
-  export type Team = import("./resources/teams").Team;
-  export type TeamName = import("./resources/teams").TeamName;
-  export type TeamImage = import("./resources/teams").TeamImage;
-  export type TeamListResponse = import("./resources/teams").TeamListResponse;
-  export type GithubProject = import("./resources/scalar-docs").GithubProject;
-  export type ActiveDeployment = import("./resources/scalar-docs").ActiveDeployment;
-  export type GithubProjectRepository = import("./resources/scalar-docs").GithubProjectRepository;
-  export type ScalarDocListGuidesResponse = import("./resources/scalar-docs").ScalarDocListGuidesResponse;
-  export type ScalarDocCreateGuideParams = import("./resources/scalar-docs").ScalarDocCreateGuideParams;
-  export type ScalarDocCreateGuideResponse = import("./resources/scalar-docs").ScalarDocCreateGuideResponse;
-  export type ScalarDocPublishGuideResponse = import("./resources/scalar-docs").ScalarDocPublishGuideResponse;
-  export type NamespaceListResponse = import("./resources/namespaces").NamespaceListResponse;
-  export type User = import("./resources/authentication").User;
-  export type Email = import("./resources/authentication").Email;
-  export type TeamSummary = import("./resources/authentication").TeamSummary;
-  export type AuthenticationExchangePersonalTokenParams = import("./resources/authentication").AuthenticationExchangePersonalTokenParams;
-  export type AuthenticationExchangePersonalTokenResponse = import("./resources/authentication").AuthenticationExchangePersonalTokenResponse;
+  export type RequestOptions = Opts.RequestOptions;
+  export {
+    Registry as Registry,
+    type Version as Version,
+    type AccessGroup as AccessGroup,
+    type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
+    type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
+    type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,
+    type RegistryUpdateAPIDocumentVersionResponse as RegistryUpdateAPIDocumentVersionResponse,
+    type ManagedDocVersion as ManagedDocVersion,
+    type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
+    type RegistryUpdateAPIDocumentParams as RegistryUpdateAPIDocumentParams,
+    type RegistryDeleteAPIDocumentParams as RegistryDeleteAPIDocumentParams,
+    type RegistryRetrieveAPIDocumentVersionParams as RegistryRetrieveAPIDocumentVersionParams,
+    type RegistryUpdateAPIDocumentVersionParams as RegistryUpdateAPIDocumentVersionParams,
+    type RegistryDeleteAPIDocumentVersionParams as RegistryDeleteAPIDocumentVersionParams,
+    type RegistryListAPIDocumentVersionMetadataParams as RegistryListAPIDocumentVersionMetadataParams,
+    type RegistryCreateAPIDocumentVersionParams as RegistryCreateAPIDocumentVersionParams,
+    type RegistryCreateAPIDocumentAccessGroupParams as RegistryCreateAPIDocumentAccessGroupParams,
+    type RegistryDeleteAPIDocumentAccessGroupParams as RegistryDeleteAPIDocumentAccessGroupParams,
+  };
+
+  export {
+    Schemas as Schemas,
+    type SchemaListResponse as SchemaListResponse,
+    type UID as UID,
+    type SchemaCreateParams as SchemaCreateParams,
+    type SchemaUpdateParams as SchemaUpdateParams,
+    type SchemaDeleteParams as SchemaDeleteParams,
+  };
+
+  export {
+    LoginPortals as LoginPortals,
+    type LoginPortalEmail as LoginPortalEmail,
+    type LoginPortalPage as LoginPortalPage,
+    type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
+    type LoginPortalListResponse as LoginPortalListResponse,
+    type LoginPortalUpdateParams as LoginPortalUpdateParams,
+    type LoginPortalCreateParams as LoginPortalCreateParams,
+  };
+
+  export {
+    Rules as Rules,
+    type RuleListRulesetsResponse as RuleListRulesetsResponse,
+    type RuleCreateRulesetParams as RuleCreateRulesetParams,
+    type RuleUpdateRulesetParams as RuleUpdateRulesetParams,
+    type RuleDeleteRulesetParams as RuleDeleteRulesetParams,
+    type RuleRetrieveRulesetDocumentParams as RuleRetrieveRulesetDocumentParams,
+    type RuleCreateRulesetAccessGroupParams as RuleCreateRulesetAccessGroupParams,
+    type RuleDeleteRulesetAccessGroupParams as RuleDeleteRulesetAccessGroupParams,
+  };
+
+  export {
+    Themes as Themes,
+    type ThemeListResponse as ThemeListResponse,
+    type ThemeCreateParams as ThemeCreateParams,
+    type ThemeUpdateParams as ThemeUpdateParams,
+    type ThemeReplaceDocumentParams as ThemeReplaceDocumentParams,
+  };
+
+  export {
+    Teams as Teams,
+    type TeamListResponse as TeamListResponse,
+  };
+
+  export {
+    ScalarDocs as ScalarDocs,
+    type Slug as Slug,
+    type ScalarDocListGuidesResponse as ScalarDocListGuidesResponse,
+    type ScalarDocCreateGuideResponse as ScalarDocCreateGuideResponse,
+    type ScalarDocPublishGuideResponse as ScalarDocPublishGuideResponse,
+    type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams,
+  };
+
+  export {
+    Namespaces as Namespaces,
+    type NamespaceListResponse as NamespaceListResponse,
+  };
+
+  export {
+    Authentication as Authentication,
+    type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse,
+    type User as User,
+    type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
+  };
 }
 
-
-const serializeBody = (body: unknown): BodyInit | undefined => {
-  if (body === undefined) return undefined;
-  if (typeof body === 'string' || body instanceof Blob || body instanceof FormData || body instanceof URLSearchParams || body instanceof ArrayBuffer || ArrayBuffer.isView(body)) return body as BodyInit;
-  return JSON.stringify(body);
-};
-
-// The Content-Type implied by a serialized body. Mirrors `serializeBody`: only plain values
-// (objects/arrays) are JSON-encoded and need `application/json`; raw BodyInit values
-// (string/Blob/FormData/URLSearchParams/bytes) carry or self-assign their own type
-// (e.g. fetch sets the multipart boundary for FormData), so we leave those alone.
-const bodyContentType = (body: unknown): string | undefined => {
-  if (body === undefined) return undefined;
-  if (typeof body === 'string' || body instanceof Blob || body instanceof FormData || body instanceof URLSearchParams || body instanceof ArrayBuffer || ArrayBuffer.isView(body)) return undefined;
-  return 'application/json';
-};
-
-const buildUrl = (baseURL: string, path: string): URL => {
-  const base = baseURL.endsWith("/") ? baseURL : `${baseURL}/`;
-  return new URL(path.replace(/^\/+/, ""), base);
-};
-
-const normalizeHeaders = (...sources: readonly (HeadersLike | undefined)[]): Headers => {
-  const headers = new Headers();
-  for (const source of sources) {
-    if (!source) continue;
-    if (Array.isArray(source) || source instanceof Headers) {
-      new Headers(source).forEach((value, key) => headers.set(key, value));
-      continue;
-    }
-    for (const [key, value] of Object.entries(source)) {
-      if (value === null) headers.delete(key);
-      else if (value !== undefined) headers.set(key, String(value));
-    }
-  }
-  return headers;
-};
 
 const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string): boolean => {
   if (!source || Array.isArray(source) || source instanceof Headers) return false;
@@ -636,26 +939,3 @@ const cookieHeaderHas = (value: string | null, name: string): boolean => {
   return value.split(";").some((cookie) => cookie.trim().startsWith(target));
 };
 
-const safeJson = (value: string): unknown | undefined => {
-  try { return JSON.parse(value); } catch { return undefined; }
-};
-
-const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
-
-const createIdempotencyKey = (): string => "scalar-sdk-" + Date.now() + "-" + Math.random().toString(16).slice(2);
-
-const castToError = (error: unknown): Error => (error instanceof Error ? error : new Error(String(error)));
-
-const isAbortError = (error: Error): boolean => error.name === "AbortError";
-
-const defaultFetch = (): Fetch => {
-  const fetchImpl = globalThis.fetch;
-  if (typeof fetchImpl !== "function") {
-    throw new ScalarAPIError('No fetch implementation found; pass `fetch` in client options.');
-  }
-  return fetchImpl.bind(globalThis) as Fetch;
-};
-
-const logDebug = (client: { logger: Logger | undefined; logLevel: LogLevel | undefined }, message: string, ...rest: readonly unknown[]): void => {
-  if (client.logLevel === 'debug') client.logger?.debug(message, ...rest);
-};

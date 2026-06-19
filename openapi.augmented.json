@@ -13,6 +13,14 @@
       {
         "lang": "TypeScript",
         "description": "```sh\nnpm install @scalar/sdk\n```"
+      },
+      {
+        "lang": "Python",
+        "description": "```sh\npip install scalarApi\n```"
+      },
+      {
+        "lang": "Go",
+        "description": "```sh\ngo get scalar-api\n```"
       }
     ]
   },
@@ -1062,7 +1070,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\nconsole.log(listAllAPIDocuments);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\nconsole.log(listAllAPIDocuments);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry list-all-api-documents --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.list_all_api_documents()\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.ListAllAPIDocuments(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryListAllApiDocumentsParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval registry = client.registry().listAllApiDocuments(RegistryListAllApiDocumentsParams.none())\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.list_all_api_documents\nputs response.inspect"
           }
         ]
       }
@@ -1164,7 +1197,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments(\"namespace\");\nconsole.log(listAPIDocuments);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments(\"namespace\");\nconsole.log(listAPIDocuments);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry list-api-documents 'namespace' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.list_api_documents(\n    namespace=\"namespace\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.ListAPIDocuments(context.Background(), \"namespace\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryListApiDocumentsParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryListApiDocumentsParams.builder()\n    .namespace(\"namespace\")\n    .build()\nval registry = client.registry().listApiDocuments(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.list_api_documents({ namespace: \"namespace\" })\nputs response.inspect"
           }
         ]
       },
@@ -1330,7 +1388,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument(\"namespace\", {\n  title: \"\",\n  version: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createAPIDocument);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument(\"namespace\", {\n  title: \"\",\n  version: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createAPIDocument);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry create-api-document 'namespace' --bearer-auth \"$BEARER_AUTH\" --title 'title' --version-command 'version' --slug 'slug' --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.create_api_document(\n    namespace=\"namespace\",\n    title=\"\",\n    version=\"\",\n    slug=\"\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.NewAPIDocument(context.Background(), \"namespace\", sdk.RegistryNewAPIDocumentParams{\n\t\tDocument: \"\",\n\t\tSlug: \"\",\n\t\tTitle: \"\",\n\t\tVersion: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryCreateApiDocumentParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryCreateApiDocumentParams.builder()\n    .namespace(\"namespace\")\n    .title(\"title\")\n    .version(\"version\")\n    .slug(\"slug\")\n    .document(\"document\")\n    .build()\nval registry = client.registry().createApiDocument(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.create_api_document({ namespace: \"namespace\", title: \"title\", description: \"description\", version: \"version\", slug: \"slug\", ruleset: \"ruleset\", is_private: \"is_private\", document: \"document\" })\nputs response.inspect"
           }
         ]
       }
@@ -1462,7 +1545,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.updateAPIDocument(\"namespace\", \"slug\", {});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.updateAPIDocument(\"slug\", {\n  namespace: \"namespace\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry update-api-document 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.update_api_document(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.UpdateAPIDocument(context.Background(), \"namespace\", \"slug\", sdk.RegistryUpdateAPIDocumentParams{})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryUpdateApiDocumentParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryUpdateApiDocumentParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval registry = client.registry().updateApiDocument(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.update_api_document({ namespace: \"namespace\", slug: \"slug\", title: \"title\", description: \"description\", is_private: \"is_private\", ruleset: \"ruleset\" })\nputs response.inspect"
           }
         ]
       },
@@ -1567,7 +1675,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocument(\"namespace\", \"slug\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocument(\"slug\", {\n  namespace: \"namespace\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry delete-api-document 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.delete_api_document(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.DeleteAPIDocument(context.Background(), \"namespace\", \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryDeleteApiDocumentParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryDeleteApiDocumentParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval registry = client.registry().deleteApiDocument(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.delete_api_document({ namespace: \"namespace\", slug: \"slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -1682,7 +1815,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});\nconsole.log(string_);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry retrieve-api-document-version 'namespace' 'slug' 'semver' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.retrieve_api_document_version(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    semver=\"semver\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.GetAPIDocumentVersion(context.Background(), \"namespace\", \"slug\", \"semver\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryRetrieveApiDocumentVersionParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryRetrieveApiDocumentVersionParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .semver(\"semver\")\n    .build()\nval registry = client.registry().retrieveApiDocumentVersion(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.retrieve_api_document_version({ namespace: \"namespace\", slug: \"slug\", semver: \"semver\" })\nputs response.inspect"
           }
         ]
       },
@@ -1834,7 +1992,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(\"namespace\", \"slug\", \"semver\", {\n  document: \"\",\n});\nconsole.log(updateAPIDocumentVersion);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n  document: \"\",\n});\nconsole.log(updateAPIDocumentVersion);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry update-api-document-version 'namespace' 'slug' 'semver' --bearer-auth \"$BEARER_AUTH\" --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.update_api_document_version(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    semver=\"semver\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.UpdateAPIDocumentVersion(context.Background(), \"namespace\", \"slug\", \"semver\", sdk.RegistryUpdateAPIDocumentVersionParams{\n\t\tDocument: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryUpdateApiDocumentVersionParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryUpdateApiDocumentVersionParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .semver(\"semver\")\n    .document(\"document\")\n    .build()\nval registry = client.registry().updateApiDocumentVersion(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.update_api_document_version({ namespace: \"namespace\", slug: \"slug\", semver: \"semver\", document: \"document\", last_known_version_sha: \"last_known_version_sha\" })\nputs response.inspect"
           }
         ]
       },
@@ -1947,7 +2130,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentVersion(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry delete-api-document-version 'namespace' 'slug' 'semver' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.delete_api_document_version(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    semver=\"semver\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.DeleteAPIDocumentVersion(context.Background(), \"namespace\", \"slug\", \"semver\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryDeleteApiDocumentVersionParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryDeleteApiDocumentVersionParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .semver(\"semver\")\n    .build()\nval registry = client.registry().deleteApiDocumentVersion(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.delete_api_document_version({ namespace: \"namespace\", slug: \"slug\", semver: \"semver\" })\nputs response.inspect"
           }
         ]
       }
@@ -2062,7 +2270,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst managedDocVersion = await client.registry.listAPIDocumentVersionMetadata(\"namespace\", \"slug\", \"semver\");\nconsole.log(managedDocVersion);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst managedDocVersion = await client.registry.listAPIDocumentVersionMetadata(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});\nconsole.log(managedDocVersion);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry list-api-document-version-metadata 'namespace' 'slug' 'semver' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.list_api_document_version_metadata(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    semver=\"semver\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.ListAPIDocumentVersionMetadata(context.Background(), \"namespace\", \"slug\", \"semver\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryListApiDocumentVersionMetadataParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryListApiDocumentVersionMetadataParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .semver(\"semver\")\n    .build()\nval registry = client.registry().listApiDocumentVersionMetadata(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.list_api_document_version_metadata({ namespace: \"namespace\", slug: \"slug\", semver: \"semver\" })\nputs response.inspect"
           }
         ]
       }
@@ -2198,7 +2431,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst managedDocVersion = await client.registry.createAPIDocumentVersion(\"namespace\", \"slug\", {\n  version: \"\",\n  document: \"\",\n});\nconsole.log(managedDocVersion);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst managedDocVersion = await client.registry.createAPIDocumentVersion(\"slug\", {\n  namespace: \"namespace\",\n  version: \"\",\n  document: \"\",\n});\nconsole.log(managedDocVersion);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry create-api-document-version 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --version-command 'version' --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.create_api_document_version(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    version=\"\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.NewAPIDocumentVersion(context.Background(), \"namespace\", \"slug\", sdk.RegistryNewAPIDocumentVersionParams{\n\t\tDocument: \"\",\n\t\tVersion: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryCreateApiDocumentVersionParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryCreateApiDocumentVersionParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .version(\"version\")\n    .document(\"document\")\n    .build()\nval registry = client.registry().createApiDocumentVersion(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.create_api_document_version({ namespace: \"namespace\", slug: \"slug\", version: \"version\", document: \"document\", force: \"force\", last_known_version_sha: \"last_known_version_sha\" })\nputs response.inspect"
           }
         ]
       }
@@ -2315,7 +2573,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.createAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.createAPIDocumentAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry create-api-document-access-group 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --access-group-slug 'accessGroupSlug'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.create_api_document_access_group(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    access_group_slug=\"\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.NewAPIDocumentAccessGroup(context.Background(), \"namespace\", \"slug\", sdk.RegistryNewAPIDocumentAccessGroupParams{\n\t\tAccessGroup: sdk.AccessGroup{\n\t\tAccessGroupSlug: \"\",\n\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryCreateApiDocumentAccessGroupParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryCreateApiDocumentAccessGroupParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .accessGroupSlug(\"accessGroupSlug\")\n    .build()\nval registry = client.registry().createApiDocumentAccessGroup(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.create_api_document_access_group({ namespace: \"namespace\", slug: \"slug\", access_group_slug: \"access_group_slug\" })\nputs response.inspect"
           }
         ]
       },
@@ -2430,7 +2713,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi registry delete-api-document-access-group 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --access-group-slug 'accessGroupSlug'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nregistry = client.registry.delete_api_document_access_group(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    access_group_slug=\"\",\n    idempotency_key=\"\",\n)\nprint(registry)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tregistry, err := client.Registry.DeleteAPIDocumentAccessGroup(context.Background(), \"namespace\", \"slug\", sdk.RegistryDeleteAPIDocumentAccessGroupParams{\n\t\tAccessGroup: sdk.AccessGroup{\n\t\tAccessGroupSlug: \"\",\n\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(registry)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.registry.RegistryDeleteApiDocumentAccessGroupParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RegistryDeleteApiDocumentAccessGroupParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .accessGroupSlug(\"accessGroupSlug\")\n    .build()\nval registry = client.registry().deleteApiDocumentAccessGroup(params)\nprintln(registry)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.registry.delete_api_document_access_group({ namespace: \"namespace\", slug: \"slug\", access_group_slug: \"access_group_slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -2532,7 +2840,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.schemas.list(\"namespace\");\nconsole.log(list);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.schemas.list(\"namespace\");\nconsole.log(list);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas list 'namespace' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nschema = client.schemas.list(\n    namespace=\"namespace\",\n)\nprint(schema)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tschema, err := client.Schemas.List(context.Background(), \"namespace\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(schema)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.SchemaListParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = SchemaListParams.builder()\n    .namespace(\"namespace\")\n    .build()\nval schema = client.schemas().list(params)\nprintln(schema)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.list({ namespace: \"namespace\" })\nputs response.inspect"
           }
         ]
       },
@@ -2666,7 +2999,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.schemas.create(\"namespace\", {\n  title: \"\",\n  version: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.schemas.create(\"namespace\", {\n  title: \"\",\n  version: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas create 'namespace' --bearer-auth \"$BEARER_AUTH\" --title 'title' --version-command 'version' --slug 'slug' --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nschema = client.schemas.create(\n    namespace=\"namespace\",\n    title=\"\",\n    version=\"\",\n    slug=\"\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(schema)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tschema, err := client.Schemas.New(context.Background(), \"namespace\", sdk.SchemaNewParams{\n\t\tDocument: \"\",\n\t\tSlug: \"\",\n\t\tTitle: \"\",\n\t\tVersion: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(schema)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.SchemaCreateParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = SchemaCreateParams.builder()\n    .namespace(\"namespace\")\n    .title(\"title\")\n    .version(\"version\")\n    .slug(\"slug\")\n    .document(\"document\")\n    .build()\nval schema = client.schemas().create(params)\nprintln(schema)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.create({ namespace: \"namespace\", title: \"title\", description: \"description\", version: \"version\", slug: \"slug\", is_private: \"is_private\", document: \"document\" })\nputs response.inspect"
           }
         ]
       }
@@ -2795,7 +3153,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.update(\"namespace\", \"slug\", {});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.update(\"slug\", {\n  namespace: \"namespace\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas update 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nschema = client.schemas.update(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(schema)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tschema, err := client.Schemas.Update(context.Background(), \"namespace\", \"slug\", sdk.SchemaUpdateParams{})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(schema)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.SchemaUpdateParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = SchemaUpdateParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval schema = client.schemas().update(params)\nprintln(schema)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.update({ namespace: \"namespace\", slug: \"slug\", title: \"title\", description: \"description\", is_private: \"is_private\" })\nputs response.inspect"
           }
         ]
       },
@@ -2900,7 +3283,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.delete(\"namespace\", \"slug\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.delete(\"slug\", {\n  namespace: \"namespace\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas delete 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nschema = client.schemas.delete(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(schema)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tschema, err := client.Schemas.Delete(context.Background(), \"namespace\", \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(schema)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.SchemaDeleteParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = SchemaDeleteParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval schema = client.schemas().delete(params)\nprintln(schema)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.delete({ namespace: \"namespace\", slug: \"slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -3015,7 +3423,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.schemas.version.retrieveSchema(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.schemas.version.retrieveSchema(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});\nconsole.log(string_);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas:version-command retrieve-schema 'namespace' 'slug' 'semver' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nversion = client.schemas.version.retrieve_schema(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    semver=\"semver\",\n)\nprint(version)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tversion, err := client.Schemas.Version.GetSchema(context.Background(), \"namespace\", \"slug\", \"semver\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(version)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.version.VersionRetrieveSchemaParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = VersionRetrieveSchemaParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .semver(\"semver\")\n    .build()\nval version = client.schemas().version().retrieveSchema(params)\nprintln(version)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.version.retrieve_schema({ namespace: \"namespace\", slug: \"slug\", semver: \"semver\" })\nputs response.inspect"
           }
         ]
       },
@@ -3128,7 +3561,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.version.deleteSchema(\"namespace\", \"slug\", \"semver\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.version.deleteSchema(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas:version-command delete-schema 'namespace' 'slug' 'semver' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nversion = client.schemas.version.delete_schema(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    semver=\"semver\",\n    idempotency_key=\"\",\n)\nprint(version)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tversion, err := client.Schemas.Version.DeleteSchema(context.Background(), \"namespace\", \"slug\", \"semver\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(version)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.version.VersionDeleteSchemaParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = VersionDeleteSchemaParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .semver(\"semver\")\n    .build()\nval version = client.schemas().version().deleteSchema(params)\nprintln(version)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.version.delete_schema({ namespace: \"namespace\", slug: \"slug\", semver: \"semver\" })\nputs response.inspect"
           }
         ]
       }
@@ -3258,7 +3716,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.schemas.version.createSchema(\"namespace\", \"slug\", {\n  version: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.schemas.version.createSchema(\"slug\", {\n  namespace: \"namespace\",\n  version: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas:version-command create-schema 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --version-command 'version' --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nversion = client.schemas.version.create_schema(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    version=\"\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(version)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tversion, err := client.Schemas.Version.NewSchema(context.Background(), \"namespace\", \"slug\", sdk.SchemaVersionNewSchemaParams{\n\t\tDocument: \"\",\n\t\tVersion: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(version)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.version.VersionCreateSchemaParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = VersionCreateSchemaParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .version(\"version\")\n    .document(\"document\")\n    .build()\nval version = client.schemas().version().createSchema(params)\nprintln(version)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.version.create_schema({ namespace: \"namespace\", slug: \"slug\", version: \"version\", document: \"document\" })\nputs response.inspect"
           }
         ]
       }
@@ -3375,7 +3858,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.accessGroup.createSchema(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.accessGroup.createSchema(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas:access-group create-schema 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --access-group-slug 'accessGroupSlug'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\naccess_group = client.schemas.access_group.create_schema(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    access_group_slug=\"\",\n    idempotency_key=\"\",\n)\nprint(access_group)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\taccessGroup, err := client.Schemas.AccessGroup.NewSchema(context.Background(), \"namespace\", \"slug\", sdk.SchemaAccessGroupNewSchemaParams{\n\t\tAccessGroup: sdk.AccessGroup{\n\t\tAccessGroupSlug: \"\",\n\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(accessGroup)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.accessgroup.AccessGroupCreateSchemaParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = AccessGroupCreateSchemaParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .accessGroupSlug(\"accessGroupSlug\")\n    .build()\nval accessGroup = client.schemas().accessGroup().createSchema(params)\nprintln(accessGroup)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.accessGroup.create_schema({ namespace: \"namespace\", slug: \"slug\", access_group_slug: \"access_group_slug\" })\nputs response.inspect"
           }
         ]
       },
@@ -3490,7 +3998,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.accessGroup.deleteSchema(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.accessGroup.deleteSchema(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi schemas:access-group delete-schema 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --access-group-slug 'accessGroupSlug'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\naccess_group = client.schemas.access_group.delete_schema(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    access_group_slug=\"\",\n    idempotency_key=\"\",\n)\nprint(access_group)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\taccessGroup, err := client.Schemas.AccessGroup.DeleteSchema(context.Background(), \"namespace\", \"slug\", sdk.SchemaAccessGroupDeleteSchemaParams{\n\t\tAccessGroup: sdk.AccessGroup{\n\t\tAccessGroupSlug: \"\",\n\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(accessGroup)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.schemas.accessgroup.AccessGroupDeleteSchemaParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = AccessGroupDeleteSchemaParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .accessGroupSlug(\"accessGroupSlug\")\n    .build()\nval accessGroup = client.schemas().accessGroup().deleteSchema(params)\nprintln(accessGroup)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.schemas.accessGroup.delete_schema({ namespace: \"namespace\", slug: \"slug\", access_group_slug: \"access_group_slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -3614,7 +4147,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst retrieve = await client.loginPortals.retrieve(\"slug\");\nconsole.log(retrieve);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst retrieve = await client.loginPortals.retrieve(\"slug\");\nconsole.log(retrieve);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi login-portals retrieve 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nlogin_portal = client.login_portals.retrieve(\n    slug=\"slug\",\n)\nprint(login_portal)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tloginPortal, err := client.LoginPortals.Get(context.Background(), \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(loginPortal)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.loginportals.LoginPortalRetrieveParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = LoginPortalRetrieveParams.builder()\n    .slug(\"slug\")\n    .build()\nval loginPortal = client.loginPortals().retrieve(params)\nprintln(loginPortal)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.loginPortals.retrieve({ slug: \"slug\" })\nputs response.inspect"
           }
         ]
       },
@@ -3727,7 +4285,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.update(\"slug\", {});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.update(\"slug\", {});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi login-portals update 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nlogin_portal = client.login_portals.update(\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(login_portal)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tloginPortal, err := client.LoginPortals.Update(context.Background(), \"slug\", sdk.LoginPortalUpdateParams{})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(loginPortal)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.loginportals.LoginPortalUpdateParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = LoginPortalUpdateParams.builder()\n    .slug(\"slug\")\n    .build()\nval loginPortal = client.loginPortals().update(params)\nprintln(loginPortal)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.loginPortals.update({ slug: \"slug\", title: \"title\" })\nputs response.inspect"
           }
         ]
       },
@@ -3824,7 +4407,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.delete(\"slug\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.delete(\"slug\");"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi login-portals delete 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nlogin_portal = client.login_portals.delete(\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(login_portal)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tloginPortal, err := client.LoginPortals.Delete(context.Background(), \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(loginPortal)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.loginportals.LoginPortalDeleteParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = LoginPortalDeleteParams.builder()\n    .slug(\"slug\")\n    .build()\nval loginPortal = client.loginPortals().delete(params)\nprintln(loginPortal)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.loginPortals.delete({ slug: \"slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -3944,7 +4552,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.loginPortals.create({\n  title: \"\",\n  slug: \"\",\n  email: {\n    logo: \"\",\n    logoSize: \"100\",\n    buttonText: \"Login\",\n    message: \"Click to access private documentation hosted by scalar.com\",\n    title: \"Private Docs\",\n    mainColor: \"#2a2f45\",\n    mainBackground: \"#f6f6f6\",\n    cardColor: \"2a2f45\",\n    cardBackground: \"#fff\",\n    buttonColor: \"#fff\",\n    buttonBackground: \"#0f0f0f\",\n  },\n  page: {\n    title: \"Scalar Private Docs\",\n    description: \"Login to access your documentation\",\n    head: \"\",\n    script: \"\",\n    theme: \"\",\n    companyName: \"\",\n    logo: \"\",\n    logoUrl: \"\",\n    favicon: \"\",\n    termsLink: \"\",\n    privacyLink: \"\",\n    formTitle: \"Scalar Private Docs\",\n    formDescription: \"Login to access your documentation\",\n    formImage: \"\",\n  },\n});\nconsole.log(uID);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.loginPortals.create({\n  title: \"\",\n  slug: \"\",\n  email: {\n    logo: \"\",\n    logoSize: \"100\",\n    buttonText: \"Login\",\n    message: \"Click to access private documentation hosted by scalar.com\",\n    title: \"Private Docs\",\n    mainColor: \"#2a2f45\",\n    mainBackground: \"#f6f6f6\",\n    cardColor: \"2a2f45\",\n    cardBackground: \"#fff\",\n    buttonColor: \"#fff\",\n    buttonBackground: \"#0f0f0f\",\n  },\n  page: {\n    title: \"Scalar Private Docs\",\n    description: \"Login to access your documentation\",\n    head: \"\",\n    script: \"\",\n    theme: \"\",\n    companyName: \"\",\n    logo: \"\",\n    logoUrl: \"\",\n    favicon: \"\",\n    termsLink: \"\",\n    privacyLink: \"\",\n    formTitle: \"Scalar Private Docs\",\n    formDescription: \"Login to access your documentation\",\n    formImage: \"\",\n  },\n});\nconsole.log(uID);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi login-portals create --bearer-auth \"$BEARER_AUTH\" --title 'title' --slug 'slug' --email '{\"logo\":\"\",\"logoSize\":\"100\",\"buttonText\":\"Login\",\"message\":\"Click to access private documentation hosted by scalar.com\",\"title\":\"Private Docs\",\"mainColor\":\"#2a2f45\",\"mainBackground\":\"#f6f6f6\",\"cardColor\":\"2a2f45\",\"cardBackground\":\"#fff\",\"buttonColor\":\"#fff\",\"buttonBackground\":\"#0f0f0f\"}' --page '{\"title\":\"Scalar Private Docs\",\"description\":\"Login to access your documentation\",\"head\":\"\",\"script\":\"\",\"theme\":\"\",\"companyName\":\"\",\"logo\":\"\",\"logoURL\":\"\",\"favicon\":\"\",\"termsLink\":\"\",\"privacyLink\":\"\",\"formTitle\":\"Scalar Private Docs\",\"formDescription\":\"Login to access your documentation\",\"formImage\":\"\"}'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nlogin_portal = client.login_portals.create(\n    title=\"\",\n    slug=\"\",\n    email={\"logo\": \"\", \"logo_size\": \"100\", \"button_text\": \"Login\", \"message\": \"Click to access private documentation hosted by scalar.com\", \"title\": \"Private Docs\", \"main_color\": \"#2a2f45\", \"main_background\": \"#f6f6f6\", \"card_color\": \"2a2f45\", \"card_background\": \"#fff\", \"button_color\": \"#fff\", \"button_background\": \"#0f0f0f\"},\n    page={\"title\": \"Scalar Private Docs\", \"description\": \"Login to access your documentation\", \"head\": \"\", \"script\": \"\", \"theme\": \"\", \"company_name\": \"\", \"logo\": \"\", \"logo_url\": \"\", \"favicon\": \"\", \"terms_link\": \"\", \"privacy_link\": \"\", \"form_title\": \"Scalar Private Docs\", \"form_description\": \"Login to access your documentation\", \"form_image\": \"\"},\n    idempotency_key=\"\",\n)\nprint(login_portal)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tloginPortal, err := client.LoginPortals.New(context.Background(), sdk.LoginPortalNewParams{\n\t\tEmail: sdk.LoginPortalEmail{\n\t\t\tLogo: \"\",\n\t\t\tLogoSize: \"100\",\n\t\t\tButtonText: \"Login\",\n\t\t\tMessage: \"Click to access private documentation hosted by scalar.com\",\n\t\t\tTitle: \"Private Docs\",\n\t\t\tMainColor: \"#2a2f45\",\n\t\t\tMainBackground: \"#f6f6f6\",\n\t\t\tCardColor: \"2a2f45\",\n\t\t\tCardBackground: \"#fff\",\n\t\t\tButtonColor: \"#fff\",\n\t\t\tButtonBackground: \"#0f0f0f\",\n\t\t},\n\t\tPage: sdk.LoginPortalPage{\n\t\t\tTitle: \"Scalar Private Docs\",\n\t\t\tDescription: \"Login to access your documentation\",\n\t\t\tHead: \"\",\n\t\t\tScript: \"\",\n\t\t\tTheme: \"\",\n\t\t\tCompanyName: \"\",\n\t\t\tLogo: \"\",\n\t\t\tLogoURL: \"\",\n\t\t\tFavicon: \"\",\n\t\t\tTermsLink: \"\",\n\t\t\tPrivacyLink: \"\",\n\t\t\tFormTitle: \"Scalar Private Docs\",\n\t\t\tFormDescription: \"Login to access your documentation\",\n\t\t\tFormImage: \"\",\n\t\t},\n\t\tSlug: \"\",\n\t\tTitle: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(loginPortal)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.loginportals.LoginPortalCreateParams\nimport com.scalar.api.models.loginportals.LoginPortalEmail\nimport com.scalar.api.models.loginportals.LoginPortalPage\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = LoginPortalCreateParams.builder()\n    .title(\"title\")\n    .slug(\"slug\")\n    .email(LoginPortalEmail.builder()\n    .logo(\"\")\n    .logoSize(\"100\")\n    .buttonText(\"Login\")\n    .message(\"Click to access private documentation hosted by scalar.com\")\n    .title(\"Private Docs\")\n    .mainColor(\"#2a2f45\")\n    .mainBackground(\"#f6f6f6\")\n    .cardColor(\"2a2f45\")\n    .cardBackground(\"#fff\")\n    .buttonColor(\"#fff\")\n    .buttonBackground(\"#0f0f0f\")\n    .build())\n    .page(LoginPortalPage.builder()\n    .title(\"Scalar Private Docs\")\n    .description(\"Login to access your documentation\")\n    .head(\"\")\n    .script(\"\")\n    .theme(\"\")\n    .companyName(\"\")\n    .logo(\"\")\n    .logoUrl(\"\")\n    .favicon(\"\")\n    .termsLink(\"\")\n    .privacyLink(\"\")\n    .formTitle(\"Scalar Private Docs\")\n    .formDescription(\"Login to access your documentation\")\n    .formImage(\"\")\n    .build())\n    .build()\nval loginPortal = client.loginPortals().create(params)\nprintln(loginPortal)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.loginPortals.create({ title: \"title\", slug: \"slug\", email: \"email\", page: \"page\" })\nputs response.inspect"
           }
         ]
       },
@@ -4034,7 +4667,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.loginPortals.list();\nconsole.log(list);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.loginPortals.list();\nconsole.log(list);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi login-portals list --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nlogin_portal = client.login_portals.list()\nprint(login_portal)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tloginPortal, err := client.LoginPortals.List(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(loginPortal)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.loginportals.LoginPortalListParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval loginPortal = client.loginPortals().list(LoginPortalListParams.none())\nprintln(loginPortal)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.loginPortals.list\nputs response.inspect"
           }
         ]
       }
@@ -4136,7 +4794,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listRulesets = await client.rules.listRulesets(\"namespace\");\nconsole.log(listRulesets);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listRulesets = await client.rules.listRulesets(\"namespace\");\nconsole.log(listRulesets);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules list-rulesets 'namespace' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.list_rulesets(\n    namespace=\"namespace\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.ListRulesets(context.Background(), \"namespace\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleListRulesetsParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleListRulesetsParams.builder()\n    .namespace(\"namespace\")\n    .build()\nval rule = client.rules().listRulesets(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.list_rulesets({ namespace: \"namespace\" })\nputs response.inspect"
           }
         ]
       },
@@ -4266,7 +4949,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.rules.createRuleset(\"namespace\", {\n  title: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.rules.createRuleset(\"namespace\", {\n  title: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules create-ruleset 'namespace' --bearer-auth \"$BEARER_AUTH\" --title 'title' --slug 'slug' --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.create_ruleset(\n    namespace=\"namespace\",\n    title=\"\",\n    slug=\"\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.NewRuleset(context.Background(), \"namespace\", sdk.RuleNewRulesetParams{\n\t\tDocument: \"\",\n\t\tSlug: \"\",\n\t\tTitle: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleCreateRulesetParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleCreateRulesetParams.builder()\n    .namespace(\"namespace\")\n    .title(\"title\")\n    .slug(\"slug\")\n    .document(\"document\")\n    .build()\nval rule = client.rules().createRuleset(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.create_ruleset({ namespace: \"namespace\", title: \"title\", description: \"description\", slug: \"slug\", is_private: \"is_private\", document: \"document\" })\nputs response.inspect"
           }
         ]
       }
@@ -4401,7 +5109,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.updateRuleset(\"namespace\", \"slug\", {});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.updateRuleset(\"slug\", {\n  namespace: \"namespace\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules update-ruleset 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.update_ruleset(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.UpdateRuleset(context.Background(), \"namespace\", \"slug\", sdk.RuleUpdateRulesetParams{})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleUpdateRulesetParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleUpdateRulesetParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval rule = client.rules().updateRuleset(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.update_ruleset({ namespace: \"namespace\", slug: \"slug\", namespace_2: \"namespace_2\", slug_2: \"slug_2\", title: \"title\", description: \"description\", is_private: \"is_private\" })\nputs response.inspect"
           }
         ]
       },
@@ -4506,7 +5239,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRuleset(\"namespace\", \"slug\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRuleset(\"slug\", {\n  namespace: \"namespace\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules delete-ruleset 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.delete_ruleset(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.DeleteRuleset(context.Background(), \"namespace\", \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleDeleteRulesetParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleDeleteRulesetParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval rule = client.rules().deleteRuleset(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.delete_ruleset({ namespace: \"namespace\", slug: \"slug\" })\nputs response.inspect"
           }
         ]
       },
@@ -4611,7 +5369,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument(\"namespace\", \"slug\");\nconsole.log(string_);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument(\"slug\", {\n  namespace: \"namespace\",\n});\nconsole.log(string_);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules retrieve-ruleset-document 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.retrieve_ruleset_document(\n    namespace=\"namespace\",\n    slug=\"slug\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.GetRulesetDocument(context.Background(), \"namespace\", \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleRetrieveRulesetDocumentParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleRetrieveRulesetDocumentParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .build()\nval rule = client.rules().retrieveRulesetDocument(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.retrieve_ruleset_document({ namespace: \"namespace\", slug: \"slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -4728,7 +5511,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.createRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.createRulesetAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules create-ruleset-access-group 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --access-group-slug 'accessGroupSlug'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.create_ruleset_access_group(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    access_group_slug=\"\",\n    idempotency_key=\"\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.NewRulesetAccessGroup(context.Background(), \"namespace\", \"slug\", sdk.RuleNewRulesetAccessGroupParams{\n\t\tAccessGroup: sdk.AccessGroup{\n\t\tAccessGroupSlug: \"\",\n\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleCreateRulesetAccessGroupParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleCreateRulesetAccessGroupParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .accessGroupSlug(\"accessGroupSlug\")\n    .build()\nval rule = client.rules().createRulesetAccessGroup(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.create_ruleset_access_group({ namespace: \"namespace\", slug: \"slug\", access_group_slug: \"access_group_slug\" })\nputs response.inspect"
           }
         ]
       },
@@ -4843,7 +5651,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRulesetAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi rules delete-ruleset-access-group 'namespace' 'slug' --bearer-auth \"$BEARER_AUTH\" --access-group-slug 'accessGroupSlug'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nrule = client.rules.delete_ruleset_access_group(\n    namespace=\"namespace\",\n    slug=\"slug\",\n    access_group_slug=\"\",\n    idempotency_key=\"\",\n)\nprint(rule)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\trule, err := client.Rules.DeleteRulesetAccessGroup(context.Background(), \"namespace\", \"slug\", sdk.RuleDeleteRulesetAccessGroupParams{\n\t\tAccessGroup: sdk.AccessGroup{\n\t\tAccessGroupSlug: \"\",\n\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(rule)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.rules.RuleDeleteRulesetAccessGroupParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = RuleDeleteRulesetAccessGroupParams.builder()\n    .namespace(\"namespace\")\n    .slug(\"slug\")\n    .accessGroupSlug(\"accessGroupSlug\")\n    .build()\nval rule = client.rules().deleteRulesetAccessGroup(params)\nprintln(rule)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.rules.delete_ruleset_access_group({ namespace: \"namespace\", slug: \"slug\", access_group_slug: \"access_group_slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -4935,7 +5768,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.themes.list();\nconsole.log(list);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.themes.list();\nconsole.log(list);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi themes list --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ntheme = client.themes.list()\nprint(theme)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\ttheme, err := client.Themes.List(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(theme)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.themes.ThemeListParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval theme = client.themes().list(ThemeListParams.none())\nprintln(theme)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.themes.list\nputs response.inspect"
           }
         ]
       },
@@ -5052,7 +5910,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.themes.create({\n  name: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uID = await client.themes.create({\n  name: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(uID);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi themes create --bearer-auth \"$BEARER_AUTH\" --name 'name' --slug 'slug' --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ntheme = client.themes.create(\n    name=\"\",\n    slug=\"\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(theme)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\ttheme, err := client.Themes.New(context.Background(), sdk.ThemeNewParams{\n\t\tDocument: \"\",\n\t\tName: \"\",\n\t\tSlug: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(theme)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.themes.ThemeCreateParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ThemeCreateParams.builder()\n    .name(\"name\")\n    .slug(\"slug\")\n    .document(\"document\")\n    .build()\nval theme = client.themes().create(params)\nprintln(theme)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.themes.create({ name: \"name\", description: \"description\", slug: \"slug\", document: \"document\" })\nputs response.inspect"
           }
         ]
       }
@@ -5170,7 +6053,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.update(\"slug\", {});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.update(\"slug\", {});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi themes update 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ntheme = client.themes.update(\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(theme)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\ttheme, err := client.Themes.Update(context.Background(), \"slug\", sdk.ThemeUpdateParams{})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(theme)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.themes.ThemeUpdateParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ThemeUpdateParams.builder()\n    .slug(\"slug\")\n    .build()\nval theme = client.themes().update(params)\nprintln(theme)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.themes.update({ slug: \"slug\", name: \"name\", description: \"description\" })\nputs response.inspect"
           }
         ]
       },
@@ -5286,7 +6194,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.replaceDocument(\"slug\", {\n  document: \"\",\n});"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.replaceDocument(\"slug\", {\n  document: \"\",\n});"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi themes replace-document 'slug' --bearer-auth \"$BEARER_AUTH\" --document 'document'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ntheme = client.themes.replace_document(\n    slug=\"slug\",\n    document=\"\",\n    idempotency_key=\"\",\n)\nprint(theme)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\ttheme, err := client.Themes.ReplaceDocument(context.Background(), \"slug\", sdk.ThemeReplaceDocumentParams{\n\t\tDocument: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(theme)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.themes.ThemeReplaceDocumentParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ThemeReplaceDocumentParams.builder()\n    .slug(\"slug\")\n    .document(\"document\")\n    .build()\nval theme = client.themes().replaceDocument(params)\nprintln(theme)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.themes.replace_document({ slug: \"slug\", document: \"document\" })\nputs response.inspect"
           }
         ]
       },
@@ -5383,7 +6316,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.delete(\"slug\");"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.delete(\"slug\");"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi themes delete 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ntheme = client.themes.delete(\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(theme)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\ttheme, err := client.Themes.Delete(context.Background(), \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(theme)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.themes.ThemeDeleteParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ThemeDeleteParams.builder()\n    .slug(\"slug\")\n    .build()\nval theme = client.themes().delete(params)\nprintln(theme)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.themes.delete({ slug: \"slug\" })\nputs response.inspect"
           }
         ]
       },
@@ -5480,7 +6438,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.themes.retrieve(\"slug\");\nconsole.log(string_);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.themes.retrieve(\"slug\");\nconsole.log(string_);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi themes retrieve 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ntheme = client.themes.retrieve(\n    slug=\"slug\",\n)\nprint(theme)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\ttheme, err := client.Themes.Get(context.Background(), \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(theme)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.themes.ThemeRetrieveParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ThemeRetrieveParams.builder()\n    .slug(\"slug\")\n    .build()\nval theme = client.themes().retrieve(params)\nprintln(theme)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.themes.retrieve({ slug: \"slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -5572,7 +6555,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.teams.list();\nconsole.log(list);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.teams.list();\nconsole.log(list);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi teams list --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nteam = client.teams.list()\nprint(team)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tteam, err := client.Teams.List(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(team)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.teams.TeamListParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval team = client.teams().list(TeamListParams.none())\nprintln(team)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.teams.list\nputs response.inspect"
           }
         ]
       }
@@ -5664,7 +6672,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\nconsole.log(listGuides);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\nconsole.log(listGuides);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi scalar-docs list-guides --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nscalar_doc = client.scalar_docs.list_guides()\nprint(scalar_doc)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tscalarDoc, err := client.ScalarDocs.ListGuides(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(scalarDoc)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.scalardocs.ScalarDocListGuidesParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval scalarDoc = client.scalarDocs().listGuides(ScalarDocListGuidesParams.none())\nprintln(scalarDoc)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.scalarDocs.list_guides\nputs response.inspect"
           }
         ]
       },
@@ -5807,7 +6840,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: \"\",\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\nconsole.log(createGuide);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: \"\",\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\nconsole.log(createGuide);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi scalar-docs create-guide --bearer-auth \"$BEARER_AUTH\" --name 'name' --is-private"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nscalar_doc = client.scalar_docs.create_guide(\n    name=\"\",\n    is_private=False,\n    allowed_users=[],\n    allowed_domains=[],\n    idempotency_key=\"\",\n)\nprint(scalar_doc)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tscalarDoc, err := client.ScalarDocs.NewGuide(context.Background(), sdk.ScalarDocNewGuideParams{\n\t\tAllowedDomains: []string{\"\"},\n\t\tAllowedUsers: []string{\"\"},\n\t\tIsPrivate: false,\n\t\tName: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(scalarDoc)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.scalardocs.ScalarDocCreateGuideParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ScalarDocCreateGuideParams.builder()\n    .name(\"name\")\n    .isPrivate(false)\n    .allowedUsers(listOf(\"allowedUser\"))\n    .allowedDomains(listOf(\"allowedDomain\"))\n    .build()\nval scalarDoc = client.scalarDocs().createGuide(params)\nprintln(scalarDoc)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.scalarDocs.create_guide({ name: \"name\", slug: \"slug\", is_private: \"is_private\", allowed_users: \"allowed_users\", allowed_domains: \"allowed_domains\" })\nputs response.inspect"
           }
         ]
       }
@@ -5915,7 +6973,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide(\"slug\");\nconsole.log(publishGuide);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide(\"slug\");\nconsole.log(publishGuide);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi scalar-docs publish-guide 'slug' --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nscalar_doc = client.scalar_docs.publish_guide(\n    slug=\"slug\",\n    idempotency_key=\"\",\n)\nprint(scalar_doc)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tscalarDoc, err := client.ScalarDocs.PublishGuide(context.Background(), \"slug\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(scalarDoc)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.scalardocs.ScalarDocPublishGuideParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = ScalarDocPublishGuideParams.builder()\n    .slug(\"slug\")\n    .build()\nval scalarDoc = client.scalarDocs().publishGuide(params)\nprintln(scalarDoc)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.scalarDocs.publish_guide({ slug: \"slug\" })\nputs response.inspect"
           }
         ]
       }
@@ -6007,7 +7090,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.namespaces.list();\nconsole.log(list);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.namespaces.list();\nconsole.log(list);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi namespaces list --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nnamespace = client.namespaces.list()\nprint(namespace)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tnamespace, err := client.Namespaces.List(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(namespace)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.namespaces.NamespaceListParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval namespace = client.namespaces().list(NamespaceListParams.none())\nprintln(namespace)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.namespace(\"namespace\").list\nputs response.inspect"
           }
         ]
       }
@@ -6125,7 +7233,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: \"\",\n});\nconsole.log(exchangePersonalToken);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: \"\",\n});\nconsole.log(exchangePersonalToken);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi authentication exchange-personal-token --bearer-auth \"$BEARER_AUTH\" --personal-token 'personalToken'"
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.exchange_personal_token(\n    personal_token=\"\",\n    idempotency_key=\"\",\n)\nprint(authentication)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tauthentication, err := client.Authentication.ExchangePersonalToken(context.Background(), sdk.AuthenticationExchangePersonalTokenParams{\n\t\tPersonalToken: \"\",\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(authentication)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.authentication.AuthenticationExchangePersonalTokenParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval params = AuthenticationExchangePersonalTokenParams.builder()\n    .personalToken(\"personalToken\")\n    .build()\nval authentication = client.authentication().exchangePersonalToken(params)\nprintln(authentication)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.authentication.exchange_personal_token({ personal_token: \"personal_token\" })\nputs response.inspect"
           }
         ]
       }
@@ -6214,7 +7347,32 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  BearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.listCurrentUser();\nconsole.log(user);"
+            "source": "import ScalarAPI from \"@scalar/sdk\";\n\nconst client = new ScalarAPI({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.listCurrentUser();\nconsole.log(user);"
+          },
+          {
+            "label": "Shell",
+            "lang": "Shell",
+            "source": "scalarapi authentication list-current-user --bearer-auth \"$BEARER_AUTH\""
+          },
+          {
+            "label": "Python",
+            "lang": "Python",
+            "source": "import os\n\nfrom scalar_api import ScalarApi\n\nclient = ScalarApi(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.list_current_user()\nprint(authentication)"
+          },
+          {
+            "label": "Go",
+            "lang": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"os\"\n\n\tsdk \"scalar-api\"\n\t\"scalar-api/option\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient(\n\t\toption.WithBearerAuth(os.Getenv(\"BEARER_AUTH\")),\n\t)\n\n\tauthentication, err := client.Authentication.ListCurrentUser(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(authentication)\n}"
+          },
+          {
+            "label": "Kotlin",
+            "lang": "Kotlin",
+            "source": "import com.scalar.api.client.ScalarApiClient\nimport com.scalar.api.client.okhttp.ScalarApiOkHttpClient\nimport com.scalar.api.models.authentication.AuthenticationListCurrentUserParams\n\nval client: ScalarApiClient = ScalarApiOkHttpClient.builder()\n    .bearerAuth(System.getenv(\"BEARER_AUTH\"))\n    .build()\n\nval authentication = client.authentication().listCurrentUser(AuthenticationListCurrentUserParams.none())\nprintln(authentication)"
+          },
+          {
+            "label": "Ruby",
+            "lang": "Ruby",
+            "source": "require \"json\"\nrequire \"scalar-api\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.authentication.list_current_user\nputs response.inspect"
           }
         ]
       }

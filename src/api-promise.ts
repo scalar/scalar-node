@@ -7,6 +7,9 @@ export type APIResponseProps = {
   readonly response: Response;
   readonly options: FinalRequestOptions;
   readonly controller: AbortController;
+  readonly requestLogID?: string | undefined;
+  readonly retryOfRequestLogID?: string | undefined;
+  readonly startTime?: number | undefined;
 };
 
 export type ParseResponse<T> = (client: ScalarAPI, props: APIResponseProps) => T | Promise<T>;

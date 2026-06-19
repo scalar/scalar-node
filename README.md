@@ -102,7 +102,7 @@ npm install @scalar/sdk
 import ScalarAPI from "@scalar/sdk";
 
 const client = new ScalarAPI({
-  BearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+  bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
   environment: "production",
 });
 
@@ -122,7 +122,7 @@ Pass credentials to the generated client constructor. Environment variables are 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `BearerAuth` | `string \| provider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
+| `bearerAuth` | `string \| provider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
 
 Declared schemes:
 
@@ -167,7 +167,7 @@ const client = new ScalarAPI({
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `BearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
+| `bearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
 | `environment` | `Environment` | - | Select one of the configured API environments. |
 | `baseURL` | `string \| null` | `process.env["SCALAR_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
 | `timeout` | `number` | `60000` | Maximum time in milliseconds to wait for a response before aborting a request. |
