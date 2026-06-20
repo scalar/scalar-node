@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # environment: production
+    environment: production
     concurrency:
       group: npm-publish
       cancel-in-progress: false
