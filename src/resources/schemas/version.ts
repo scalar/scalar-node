@@ -9,64 +9,57 @@ export class Version extends APIResource {
   /**
    * Get a specific schema version document.
    *
+   * @param {string} namespace
+   * @param {string} slug
    * @param {string} semver
-   * @param {VersionRetrieveSchemaParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<string>} Default Response
    *
    * @example
    * ```ts
-   * const string_ = await client.schemas.version.retrieveSchema("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
-   * });
+   * const string_ = await client.schemas.version.retrieveSchema("namespace", "slug", "semver");
    * ```
    */
-  retrieveSchema(semver: string, params: VersionRetrieveSchemaParams, options?: RequestOptions): APIPromise<string> {
-    const { namespace, slug } = params ?? {};
+  retrieveSchema(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<string> {
     return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, options);
   }
 
   /**
    * Delete a schema version.
    *
+   * @param {string} namespace
+   * @param {string} slug
    * @param {string} semver
-   * @param {VersionDeleteSchemaParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.schemas.version.deleteSchema("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
-   * });
+   * await client.schemas.version.deleteSchema("namespace", "slug", "semver");
    * ```
    */
-  deleteSchema(semver: string, params: VersionDeleteSchemaParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, slug } = params ?? {};
+  deleteSchema(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<null> {
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, options);
   }
 
   /**
    * Create a schema version.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {VersionCreateSchemaParams} params - The parameters to send with the request.
+   * @param {VersionCreateSchemaParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<UID>} Default Response
    *
    * @example
    * ```ts
-   * const uID = await client.schemas.version.createSchema("slug", {
-   *   namespace: "namespace",
+   * const uID = await client.schemas.version.createSchema("namespace", "slug", {
    *   version: "",
    *   document: "",
    * });
    * ```
    */
-  createSchema(slug: string, params: VersionCreateSchemaParams, options?: RequestOptions): APIPromise<UID> {
-    const { namespace, ...body } = params ?? {};
+  createSchema(namespace: string, slug: string, body: VersionCreateSchemaParams, options?: RequestOptions): APIPromise<UID> {
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body: body, ...options });
   }
 }
@@ -109,26 +102,13 @@ export type Nanoid = string;
 
 export type Version2 = string;
 
-export interface VersionRetrieveSchemaParams {
-  namespace: string;
-  slug: string;
-}
-
-export interface VersionDeleteSchemaParams {
-  namespace: string;
-  slug: string;
-}
-
 export interface VersionCreateSchemaParams {
-  namespace: string;
-  version: Version2;
+  version: Version;
   document: string;
 }
 export declare namespace Version {
   export {
     type UID as UID,
-    type VersionRetrieveSchemaParams as VersionRetrieveSchemaParams,
-    type VersionDeleteSchemaParams as VersionDeleteSchemaParams,
     type VersionCreateSchemaParams as VersionCreateSchemaParams,
   };
 }

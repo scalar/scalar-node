@@ -4,7 +4,7 @@ import { APIResource } from "../../resource";
 import { APIPromise } from "../../api-promise";
 import type { RequestOptions } from "../../internal/request-options";
 import { path as __scalarPath } from "../../internal/utils/path";
-import { Version, type VersionRetrieveSchemaParams, type VersionDeleteSchemaParams, type VersionCreateSchemaParams } from "./version";
+import { Version, type VersionCreateSchemaParams } from "./version";
 import { AccessGroup, type AccessGroupCreateSchemaParams, type AccessGroupDeleteSchemaParams } from "./access-group";
 
 export class Schemas extends APIResource {
@@ -52,40 +52,35 @@ export class Schemas extends APIResource {
   /**
    * Update schema metadata.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {SchemaUpdateParams} params - The parameters to send with the request.
+   * @param {SchemaUpdateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.schemas.update("slug", {
-   *   namespace: "namespace",
-   * });
+   * await client.schemas.update("namespace", "slug", {});
    * ```
    */
-  update(slug: string, params: SchemaUpdateParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, ...body } = params ?? {};
+  update(namespace: string, slug: string, body: SchemaUpdateParams, options?: RequestOptions): APIPromise<null> {
     return this._client.patch(__scalarPath`/v1/schemas/${namespace}/${slug}`, { body: body, ...options });
   }
 
   /**
    * Delete a schema and all related versions.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {SchemaDeleteParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.schemas.delete("slug", {
-   *   namespace: "namespace",
-   * });
+   * await client.schemas.delete("namespace", "slug");
    * ```
    */
-  delete(slug: string, params: SchemaDeleteParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace } = params ?? {};
+  delete(namespace: string, slug: string, options?: RequestOptions): APIPromise<null> {
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}`, options);
   }
 }
@@ -163,14 +158,9 @@ export interface SchemaCreateParams {
 }
 
 export interface SchemaUpdateParams {
-  namespace: string;
   title?: string;
   description?: string;
   isPrivate?: boolean;
-}
-
-export interface SchemaDeleteParams {
-  namespace: string;
 }
 Schemas.Version = Version;
 Schemas.AccessGroup = AccessGroup;
@@ -181,13 +171,10 @@ export declare namespace Schemas {
     type UID as UID,
     type SchemaCreateParams as SchemaCreateParams,
     type SchemaUpdateParams as SchemaUpdateParams,
-    type SchemaDeleteParams as SchemaDeleteParams,
   };
 
   export {
     Version as Version,
-    type VersionRetrieveSchemaParams as VersionRetrieveSchemaParams,
-    type VersionDeleteSchemaParams as VersionDeleteSchemaParams,
     type VersionCreateSchemaParams as VersionCreateSchemaParams,
   };
 

@@ -1,7 +1,7 @@
 {
   "name": "ScalarApi",
   "slug": "scalarApi",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -1932,6 +1932,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -2075,6 +2076,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2243,6 +2247,9 @@
         "ruleset",
         "isPrivate",
         "document"
+      ],
+      "publicPositionalParams": [
+        "namespace"
       ],
       "pathParamDetails": [
         {
@@ -2422,6 +2429,10 @@
         "isPrivate",
         "ruleset"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2596,6 +2607,10 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2759,6 +2774,11 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2933,6 +2953,11 @@
       "publicBodyParams": [
         "document",
         "lastKnownVersionSha"
+      ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug",
+        "semver"
       ],
       "pathParamDetails": [
         {
@@ -3116,6 +3141,11 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -3285,6 +3315,11 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -3465,6 +3500,10 @@
         "document",
         "force",
         "lastKnownVersionSha"
+      ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
       ],
       "pathParamDetails": [
         {
@@ -3648,6 +3687,10 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -3826,6 +3869,10 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -3998,6 +4045,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4164,6 +4214,9 @@
         "slug",
         "isPrivate",
         "document"
+      ],
+      "publicPositionalParams": [
+        "namespace"
       ],
       "pathParamDetails": [
         {
@@ -4345,6 +4398,10 @@
         "description",
         "isPrivate"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4519,6 +4576,10 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4682,6 +4743,11 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4851,6 +4917,11 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -5023,6 +5094,10 @@
       "publicBodyParams": [
         "version",
         "document"
+      ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
       ],
       "pathParamDetails": [
         {
@@ -5206,6 +5281,10 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -5384,6 +5463,10 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -5556,6 +5639,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -5712,6 +5798,9 @@
       ],
       "publicBodyParams": [
         "title"
+      ],
+      "publicPositionalParams": [
+        "slug"
       ],
       "pathParamDetails": [
         {
@@ -5879,6 +5968,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -6038,6 +6130,7 @@
         "email",
         "page"
       ],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -6197,6 +6290,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -6340,6 +6434,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -6504,6 +6601,9 @@
         "slug",
         "isPrivate",
         "document"
+      ],
+      "publicPositionalParams": [
+        "namespace"
       ],
       "pathParamDetails": [
         {
@@ -6689,6 +6789,10 @@
         "description",
         "isPrivate"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -6863,6 +6967,10 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -7024,6 +7132,10 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -7188,6 +7300,10 @@
       ],
       "publicBodyParams": [
         "accessGroupSlug"
+      ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
       ],
       "pathParamDetails": [
         {
@@ -7367,6 +7483,10 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
+      "publicPositionalParams": [
+        "namespace",
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -7535,6 +7655,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -7684,6 +7805,7 @@
         "slug",
         "document"
       ],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -7852,6 +7974,9 @@
       "publicBodyParams": [
         "name",
         "description"
+      ],
+      "publicPositionalParams": [
+        "slug"
       ],
       "pathParamDetails": [
         {
@@ -8023,6 +8148,9 @@
       "publicBodyParams": [
         "document"
       ],
+      "publicPositionalParams": [
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -8189,6 +8317,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -8342,6 +8473,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -8491,6 +8625,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -8630,6 +8765,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -8781,6 +8917,7 @@
         "allowedUsers",
         "allowedDomains"
       ],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -8940,6 +9077,9 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [
+        "slug"
+      ],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -9089,6 +9229,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -9232,6 +9373,7 @@
       "publicBodyParams": [
         "personalToken"
       ],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -9387,6 +9529,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
+      "publicPositionalParams": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
