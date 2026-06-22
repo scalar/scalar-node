@@ -99,9 +99,9 @@ npm install @scalar/sdk
 ## Usage
 
 ```ts
-import ScalarAPI from "@scalar/sdk";
+import Scalar from "@scalar/sdk";
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
   environment: "production",
 });
@@ -156,9 +156,9 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ts
-import ScalarAPI from "@scalar/sdk";
+import Scalar from "@scalar/sdk";
 
-const client = new ScalarAPI({
+const client = new Scalar({
   timeout: 60000,
   maxRetries: 2,
   logLevel: "debug",

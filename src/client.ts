@@ -20,10 +20,10 @@ import { stringify as stringifyQuery } from './internal/qs/stringify';
 import type { StringifyOptions } from './internal/qs/types';
 import { toFile } from './core/uploads';
 import { VERSION } from './version';
-import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentVersionResponse, type ManagedDocVersion, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryDeleteAPIDocumentParams, type RegistryRetrieveAPIDocumentVersionParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryDeleteAPIDocumentVersionParams, type RegistryListAPIDocumentVersionMetadataParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
-import { Schemas, type SchemaListResponse, type UID, type SchemaCreateParams, type SchemaUpdateParams, type SchemaDeleteParams } from "./resources/schemas/schemas";
+import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentVersionResponse, type ManagedDocVersion, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
+import { Schemas, type SchemaListResponse, type UID, type SchemaCreateParams, type SchemaUpdateParams } from "./resources/schemas/schemas";
 import { LoginPortals, type LoginPortalEmail, type LoginPortalPage, type LoginPortalRetrieveResponse, type LoginPortalListResponse, type LoginPortalUpdateParams, type LoginPortalCreateParams } from "./resources/login-portals";
-import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleDeleteRulesetParams, type RuleRetrieveRulesetDocumentParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
+import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
 import { Themes, type ThemeListResponse, type ThemeCreateParams, type ThemeUpdateParams, type ThemeReplaceDocumentParams } from "./resources/themes";
 import { Teams, type TeamListResponse } from "./resources/teams";
 import { ScalarDocs, type Slug, type ScalarDocListGuidesResponse, type ScalarDocCreateGuideResponse, type ScalarDocPublishGuideResponse, type ScalarDocCreateGuideParams } from "./resources/scalar-docs";
@@ -126,12 +126,12 @@ export interface ClientOptions {
   logger?: Logger | undefined;
 }
 
-export type ScalarAPIOptions = ClientOptions;
+export type ScalarOptions = ClientOptions;
 
 /**
  * API Client for interfacing with the ScalarApi API.
  */
-export class ScalarAPI {
+export class Scalar {
   bearerAuth: string | AuthTokenProvider | undefined;
 
   baseURL: string;
@@ -172,10 +172,10 @@ export class ScalarAPI {
     };
     const environment = options.environment ?? "production";
     const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== "";
-    if (baseURLOverridden && options.environment) throw new Errors.ScalarAPIError("Ambiguous URL; The `baseURL` option (or SCALAR_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null");
+    if (baseURLOverridden && options.environment) throw new Errors.ScalarError("Ambiguous URL; The `baseURL` option (or SCALAR_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null");
     const defaultBaseURL = environments[environment];
     this.baseURL = options.baseURL || defaultBaseURL;
-    this.timeout = options.timeout ?? ScalarAPI.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -778,21 +778,21 @@ export class ScalarAPI {
   private async resolveAuthOption(optionName: string, value: string | AuthTokenProvider | null | undefined): Promise<string | undefined> {
     if (value == null) return undefined;
     const token = typeof value === "function" ? await value() : value;
-    if (!token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (!token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
   private resolveAuthOptionSync(optionName: string, value: string | AuthTokenProvider | null | undefined): string | undefined {
     if (value == null) return undefined;
     const token = typeof value === "function" ? value() : value;
-    if (typeof token !== "string" || !token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (typeof token !== "string" || !token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
-  static ScalarAPI = this;
+  static Scalar = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static ScalarAPIError = Errors.ScalarAPIError;
+  static ScalarError = Errors.ScalarError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -819,17 +819,17 @@ export class ScalarAPI {
   authentication: Authentication = new Authentication(this);
 }
 
-ScalarAPI.Registry = Registry;
-ScalarAPI.Schemas = Schemas;
-ScalarAPI.LoginPortals = LoginPortals;
-ScalarAPI.Rules = Rules;
-ScalarAPI.Themes = Themes;
-ScalarAPI.Teams = Teams;
-ScalarAPI.ScalarDocs = ScalarDocs;
-ScalarAPI.Namespaces = Namespaces;
-ScalarAPI.Authentication = Authentication;
+Scalar.Registry = Registry;
+Scalar.Schemas = Schemas;
+Scalar.LoginPortals = LoginPortals;
+Scalar.Rules = Rules;
+Scalar.Themes = Themes;
+Scalar.Teams = Teams;
+Scalar.ScalarDocs = ScalarDocs;
+Scalar.Namespaces = Namespaces;
+Scalar.Authentication = Authentication;
 
-export declare namespace ScalarAPI {
+export declare namespace Scalar {
   export type RequestOptions = Opts.RequestOptions;
   export {
     Registry as Registry,
@@ -842,11 +842,7 @@ export declare namespace ScalarAPI {
     type ManagedDocVersion as ManagedDocVersion,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
     type RegistryUpdateAPIDocumentParams as RegistryUpdateAPIDocumentParams,
-    type RegistryDeleteAPIDocumentParams as RegistryDeleteAPIDocumentParams,
-    type RegistryRetrieveAPIDocumentVersionParams as RegistryRetrieveAPIDocumentVersionParams,
     type RegistryUpdateAPIDocumentVersionParams as RegistryUpdateAPIDocumentVersionParams,
-    type RegistryDeleteAPIDocumentVersionParams as RegistryDeleteAPIDocumentVersionParams,
-    type RegistryListAPIDocumentVersionMetadataParams as RegistryListAPIDocumentVersionMetadataParams,
     type RegistryCreateAPIDocumentVersionParams as RegistryCreateAPIDocumentVersionParams,
     type RegistryCreateAPIDocumentAccessGroupParams as RegistryCreateAPIDocumentAccessGroupParams,
     type RegistryDeleteAPIDocumentAccessGroupParams as RegistryDeleteAPIDocumentAccessGroupParams,
@@ -858,7 +854,6 @@ export declare namespace ScalarAPI {
     type UID as UID,
     type SchemaCreateParams as SchemaCreateParams,
     type SchemaUpdateParams as SchemaUpdateParams,
-    type SchemaDeleteParams as SchemaDeleteParams,
   };
 
   export {
@@ -876,8 +871,6 @@ export declare namespace ScalarAPI {
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
     type RuleCreateRulesetParams as RuleCreateRulesetParams,
     type RuleUpdateRulesetParams as RuleUpdateRulesetParams,
-    type RuleDeleteRulesetParams as RuleDeleteRulesetParams,
-    type RuleRetrieveRulesetDocumentParams as RuleRetrieveRulesetDocumentParams,
     type RuleCreateRulesetAccessGroupParams as RuleCreateRulesetAccessGroupParams,
     type RuleDeleteRulesetAccessGroupParams as RuleDeleteRulesetAccessGroupParams,
   };

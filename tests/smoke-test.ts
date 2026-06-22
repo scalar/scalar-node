@@ -13,10 +13,10 @@ import { writeFileSync } from 'node:fs'
 
 // The default export is the client class. The client reads auth and the base URL from the
 // environment, so it needs no constructor options to point at a server.
-import ScalarAPI from "@scalar/sdk"
+import Scalar from "@scalar/sdk"
 
 // One shared client runs every case.
-const client = new ScalarAPI()
+const client = new Scalar()
 
 // The result of running one case, collected for the JSON report or the printed table.
 type SmokeResult = {
@@ -69,9 +69,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "PATCH",
     path: "/v1/apis/{namespace}/{slug}",
     run: async () => {
-      await client.registry.updateAPIDocument("slug", {
-        namespace: "namespace",
-      });
+      await client.registry.updateAPIDocument("namespace", "slug", {});
     },
   },
 
@@ -80,9 +78,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/apis/{namespace}/{slug}",
     run: async () => {
-      await client.registry.deleteAPIDocument("slug", {
-        namespace: "namespace",
-      });
+      await client.registry.deleteAPIDocument("namespace", "slug");
     },
   },
 
@@ -91,10 +87,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "GET",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      const string_ = await client.registry.retrieveAPIDocumentVersion("semver", {
-        namespace: "namespace",
-        slug: "slug",
-      });
+      const string_ = await client.registry.retrieveAPIDocumentVersion("namespace", "slug", "semver");
     },
   },
 
@@ -103,9 +96,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "PATCH",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion("semver", {
-        namespace: "namespace",
-        slug: "slug",
+      const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion("namespace", "slug", "semver", {
         document: "",
       });
     },
@@ -116,10 +107,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      await client.registry.deleteAPIDocumentVersion("semver", {
-        namespace: "namespace",
-        slug: "slug",
-      });
+      await client.registry.deleteAPIDocumentVersion("namespace", "slug", "semver");
     },
   },
 
@@ -128,10 +116,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "GET",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}/metadata",
     run: async () => {
-      const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("semver", {
-        namespace: "namespace",
-        slug: "slug",
-      });
+      const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
     },
   },
 
@@ -140,8 +125,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/apis/{namespace}/{slug}/version",
     run: async () => {
-      const managedDocVersion = await client.registry.createAPIDocumentVersion("slug", {
-        namespace: "namespace",
+      const managedDocVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
         version: "",
         document: "",
       });
@@ -153,8 +137,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/apis/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.registry.createAPIDocumentAccessGroup("slug", {
-        namespace: "namespace",
+      await client.registry.createAPIDocumentAccessGroup("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
@@ -165,8 +148,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/apis/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.registry.deleteAPIDocumentAccessGroup("slug", {
-        namespace: "namespace",
+      await client.registry.deleteAPIDocumentAccessGroup("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
@@ -200,9 +182,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "PATCH",
     path: "/v1/schemas/{namespace}/{slug}",
     run: async () => {
-      await client.schemas.update("slug", {
-        namespace: "namespace",
-      });
+      await client.schemas.update("namespace", "slug", {});
     },
   },
 
@@ -211,9 +191,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}",
     run: async () => {
-      await client.schemas.delete("slug", {
-        namespace: "namespace",
-      });
+      await client.schemas.delete("namespace", "slug");
     },
   },
 
@@ -222,10 +200,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "GET",
     path: "/v1/schemas/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      const string_ = await client.schemas.version.retrieveSchema("semver", {
-        namespace: "namespace",
-        slug: "slug",
-      });
+      const string_ = await client.schemas.version.retrieveSchema("namespace", "slug", "semver");
     },
   },
 
@@ -234,10 +209,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      await client.schemas.version.deleteSchema("semver", {
-        namespace: "namespace",
-        slug: "slug",
-      });
+      await client.schemas.version.deleteSchema("namespace", "slug", "semver");
     },
   },
 
@@ -246,8 +218,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/version",
     run: async () => {
-      const uID = await client.schemas.version.createSchema("slug", {
-        namespace: "namespace",
+      const uID = await client.schemas.version.createSchema("namespace", "slug", {
         version: "",
         document: "",
       });
@@ -259,8 +230,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.schemas.accessGroup.createSchema("slug", {
-        namespace: "namespace",
+      await client.schemas.accessGroup.createSchema("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
@@ -271,8 +241,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.schemas.accessGroup.deleteSchema("slug", {
-        namespace: "namespace",
+      await client.schemas.accessGroup.deleteSchema("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
@@ -382,9 +351,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "PATCH",
     path: "/v1/rulesets/{namespace}/{slug}",
     run: async () => {
-      await client.rules.updateRuleset("slug", {
-        namespace: "namespace",
-      });
+      await client.rules.updateRuleset("namespace", "slug", {});
     },
   },
 
@@ -393,9 +360,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/rulesets/{namespace}/{slug}",
     run: async () => {
-      await client.rules.deleteRuleset("slug", {
-        namespace: "namespace",
-      });
+      await client.rules.deleteRuleset("namespace", "slug");
     },
   },
 
@@ -404,9 +369,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "GET",
     path: "/v1/rulesets/{namespace}/{slug}",
     run: async () => {
-      const string_ = await client.rules.retrieveRulesetDocument("slug", {
-        namespace: "namespace",
-      });
+      const string_ = await client.rules.retrieveRulesetDocument("namespace", "slug");
     },
   },
 
@@ -415,8 +378,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.rules.createRulesetAccessGroup("slug", {
-        namespace: "namespace",
+      await client.rules.createRulesetAccessGroup("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
@@ -427,8 +389,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "DELETE",
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.rules.deleteRulesetAccessGroup("slug", {
-        namespace: "namespace",
+      await client.rules.deleteRulesetAccessGroup("namespace", "slug", {
         accessGroupSlug: "",
       });
     },

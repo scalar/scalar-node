@@ -62,189 +62,171 @@ export class Registry extends APIResource {
   /**
    * Update metadata for an API document.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {RegistryUpdateAPIDocumentParams} params - The parameters to send with the request.
+   * @param {RegistryUpdateAPIDocumentParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.registry.updateAPIDocument("slug", {
-   *   namespace: "namespace",
-   * });
+   * await client.registry.updateAPIDocument("namespace", "slug", {});
    * ```
    */
-  updateAPIDocument(slug: string, params: RegistryUpdateAPIDocumentParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, ...body } = params ?? {};
+  updateAPIDocument(namespace: string, slug: string, body: RegistryUpdateAPIDocumentParams, options?: RequestOptions): APIPromise<null> {
     return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}`, { body: body, ...options });
   }
 
   /**
    * Delete an API document and all versions.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {RegistryDeleteAPIDocumentParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocument("slug", {
-   *   namespace: "namespace",
-   * });
+   * await client.registry.deleteAPIDocument("namespace", "slug");
    * ```
    */
-  deleteAPIDocument(slug: string, params: RegistryDeleteAPIDocumentParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace } = params ?? {};
+  deleteAPIDocument(namespace: string, slug: string, options?: RequestOptions): APIPromise<null> {
     return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}`, options);
   }
 
   /**
    * Get a specific API document version.
    *
+   * @param {string} namespace
+   * @param {string} slug
    * @param {string} semver
-   * @param {RegistryRetrieveAPIDocumentVersionParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<string>} Default Response
    *
    * @example
    * ```ts
-   * const string_ = await client.registry.retrieveAPIDocumentVersion("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
-   * });
+   * const string_ = await client.registry.retrieveAPIDocumentVersion("namespace", "slug", "semver");
    * ```
    */
-  retrieveAPIDocumentVersion(semver: string, params: RegistryRetrieveAPIDocumentVersionParams, options?: RequestOptions): APIPromise<string> {
-    const { namespace, slug } = params ?? {};
+  retrieveAPIDocumentVersion(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<string> {
     return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, options);
   }
 
   /**
    * Update the registry file content for an API document version.
    *
+   * @param {string} namespace
+   * @param {string} slug
    * @param {string} semver
-   * @param {RegistryUpdateAPIDocumentVersionParams} params - The parameters to send with the request.
+   * @param {RegistryUpdateAPIDocumentVersionParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RegistryUpdateAPIDocumentVersionResponse>} Default Response
    *
    * @example
    * ```ts
-   * const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
+   * const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion("namespace", "slug", "semver", {
    *   document: "",
    * });
    * ```
    */
-  updateAPIDocumentVersion(semver: string, params: RegistryUpdateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentVersionResponse> {
-    const { namespace, slug, ...body } = params ?? {};
+  updateAPIDocumentVersion(namespace: string, slug: string, semver: string, body: RegistryUpdateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentVersionResponse> {
     return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, { body: body, ...options });
   }
 
   /**
    * Delete a specific API document version.
    *
+   * @param {string} namespace
+   * @param {string} slug
    * @param {string} semver
-   * @param {RegistryDeleteAPIDocumentVersionParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocumentVersion("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
-   * });
+   * await client.registry.deleteAPIDocumentVersion("namespace", "slug", "semver");
    * ```
    */
-  deleteAPIDocumentVersion(semver: string, params: RegistryDeleteAPIDocumentVersionParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, slug } = params ?? {};
+  deleteAPIDocumentVersion(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<null> {
     return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, options);
   }
 
   /**
    * Get metadata (uid, content shas, version sha, tags) for a specific API document version.
    *
+   * @param {string} namespace
+   * @param {string} slug
    * @param {string} semver
-   * @param {RegistryListAPIDocumentVersionMetadataParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<ManagedDocVersion>} Default Response
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
-   * });
+   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
    * ```
    */
-  listAPIDocumentVersionMetadata(semver: string, params: RegistryListAPIDocumentVersionMetadataParams, options?: RequestOptions): APIPromise<ManagedDocVersion> {
-    const { namespace, slug } = params ?? {};
+  listAPIDocumentVersionMetadata(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<ManagedDocVersion> {
     return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}/metadata`, options);
   }
 
   /**
    * Create a new API document version.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {RegistryCreateAPIDocumentVersionParams} params - The parameters to send with the request.
+   * @param {RegistryCreateAPIDocumentVersionParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<ManagedDocVersion>} Default Response
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.createAPIDocumentVersion("slug", {
-   *   namespace: "namespace",
+   * const managedDocVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
    *   version: "",
    *   document: "",
    * });
    * ```
    */
-  createAPIDocumentVersion(slug: string, params: RegistryCreateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<ManagedDocVersion> {
-    const { namespace, ...body } = params ?? {};
+  createAPIDocumentVersion(namespace: string, slug: string, body: RegistryCreateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<ManagedDocVersion> {
     return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/version`, { body: body, ...options });
   }
 
   /**
    * Add an access group to an API document.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {RegistryCreateAPIDocumentAccessGroupParams} params - The parameters to send with the request.
+   * @param {RegistryCreateAPIDocumentAccessGroupParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.registry.createAPIDocumentAccessGroup("slug", {
-   *   namespace: "namespace",
+   * await client.registry.createAPIDocumentAccessGroup("namespace", "slug", {
    *   accessGroupSlug: "",
    * });
    * ```
    */
-  createAPIDocumentAccessGroup(slug: string, params: RegistryCreateAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, ...body } = params ?? {};
+  createAPIDocumentAccessGroup(namespace: string, slug: string, body: RegistryCreateAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<null> {
     return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body: body, ...options });
   }
 
   /**
    * Remove an access group from an API document.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {RegistryDeleteAPIDocumentAccessGroupParams} params - The parameters to send with the request.
+   * @param {RegistryDeleteAPIDocumentAccessGroupParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocumentAccessGroup("slug", {
-   *   namespace: "namespace",
+   * await client.registry.deleteAPIDocumentAccessGroup("namespace", "slug", {
    *   accessGroupSlug: "",
    * });
    * ```
    */
-  deleteAPIDocumentAccessGroup(slug: string, params: RegistryDeleteAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, ...body } = params ?? {};
+  deleteAPIDocumentAccessGroup(namespace: string, slug: string, body: RegistryDeleteAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<null> {
     return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body: body, ...options });
   }
 }
@@ -335,43 +317,20 @@ export interface RegistryCreateAPIDocumentParams {
 export type RegistryCreateAPIDocumentResponse = { uid: string; versionUid: string; title: string; jsonSha: string; yamlSha: string; versionSha: string };
 
 export interface RegistryUpdateAPIDocumentParams {
-  namespace: string;
   title?: string;
   description?: string;
   isPrivate?: boolean;
   ruleset?: string;
 }
 
-export interface RegistryDeleteAPIDocumentParams {
-  namespace: string;
-}
-
-export interface RegistryRetrieveAPIDocumentVersionParams {
-  namespace: string;
-  slug: string;
-}
-
 export interface RegistryUpdateAPIDocumentVersionParams {
-  namespace: string;
-  slug: string;
   document: string;
   lastKnownVersionSha?: string;
 }
 
 export type RegistryUpdateAPIDocumentVersionResponse = { jsonSha: string; yamlSha: string; versionSha: string };
 
-export interface RegistryDeleteAPIDocumentVersionParams {
-  namespace: string;
-  slug: string;
-}
-
-export interface RegistryListAPIDocumentVersionMetadataParams {
-  namespace: string;
-  slug: string;
-}
-
 export interface RegistryCreateAPIDocumentVersionParams {
-  namespace: string;
   version: Version;
   document: string;
   force?: boolean;
@@ -379,12 +338,10 @@ export interface RegistryCreateAPIDocumentVersionParams {
 }
 
 export interface RegistryCreateAPIDocumentAccessGroupParams {
-  namespace: string;
   accessGroupSlug: Slug;
 }
 
 export interface RegistryDeleteAPIDocumentAccessGroupParams {
-  namespace: string;
   accessGroupSlug: Slug;
 }
 export declare namespace Registry {
@@ -398,11 +355,7 @@ export declare namespace Registry {
     type ManagedDocVersion as ManagedDocVersion,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
     type RegistryUpdateAPIDocumentParams as RegistryUpdateAPIDocumentParams,
-    type RegistryDeleteAPIDocumentParams as RegistryDeleteAPIDocumentParams,
-    type RegistryRetrieveAPIDocumentVersionParams as RegistryRetrieveAPIDocumentVersionParams,
     type RegistryUpdateAPIDocumentVersionParams as RegistryUpdateAPIDocumentVersionParams,
-    type RegistryDeleteAPIDocumentVersionParams as RegistryDeleteAPIDocumentVersionParams,
-    type RegistryListAPIDocumentVersionMetadataParams as RegistryListAPIDocumentVersionMetadataParams,
     type RegistryCreateAPIDocumentVersionParams as RegistryCreateAPIDocumentVersionParams,
     type RegistryCreateAPIDocumentAccessGroupParams as RegistryCreateAPIDocumentAccessGroupParams,
     type RegistryDeleteAPIDocumentAccessGroupParams as RegistryDeleteAPIDocumentAccessGroupParams,

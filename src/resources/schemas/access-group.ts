@@ -9,42 +9,40 @@ export class AccessGroup extends APIResource {
   /**
    * Add an access group to a schema.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {AccessGroupCreateSchemaParams} params - The parameters to send with the request.
+   * @param {AccessGroupCreateSchemaParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.schemas.accessGroup.createSchema("slug", {
-   *   namespace: "namespace",
+   * await client.schemas.accessGroup.createSchema("namespace", "slug", {
    *   accessGroupSlug: "",
    * });
    * ```
    */
-  createSchema(slug: string, params: AccessGroupCreateSchemaParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, ...body } = params ?? {};
+  createSchema(namespace: string, slug: string, body: AccessGroupCreateSchemaParams, options?: RequestOptions): APIPromise<null> {
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body: body, ...options });
   }
 
   /**
    * Remove an access group from a schema.
    *
+   * @param {string} namespace
    * @param {string} slug
-   * @param {AccessGroupDeleteSchemaParams} params - The parameters to send with the request.
+   * @param {AccessGroupDeleteSchemaParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<null>} Default Response
    *
    * @example
    * ```ts
-   * await client.schemas.accessGroup.deleteSchema("slug", {
-   *   namespace: "namespace",
+   * await client.schemas.accessGroup.deleteSchema("namespace", "slug", {
    *   accessGroupSlug: "",
    * });
    * ```
    */
-  deleteSchema(slug: string, params: AccessGroupDeleteSchemaParams, options?: RequestOptions): APIPromise<null> {
-    const { namespace, ...body } = params ?? {};
+  deleteSchema(namespace: string, slug: string, body: AccessGroupDeleteSchemaParams, options?: RequestOptions): APIPromise<null> {
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body: body, ...options });
   }
 }
@@ -86,12 +84,10 @@ export interface Value500 {
 }
 
 export interface AccessGroupCreateSchemaParams {
-  namespace: string;
   accessGroupSlug: Slug;
 }
 
 export interface AccessGroupDeleteSchemaParams {
-  namespace: string;
   accessGroupSlug: Slug;
 }
 export declare namespace AccessGroup {
