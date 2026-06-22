@@ -464,7 +464,7 @@ const uID = await client.loginPortals.create({
     theme: "",
     companyName: "",
     logo: "",
-    logoUrl: "",
+    logoURL: "",
     favicon: "",
     termsLink: "",
     privacyLink: "",
