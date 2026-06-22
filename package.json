@@ -1,7 +1,11 @@
 {
   "name": "@scalar/sdk",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "API for managing Scalar platform resources.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scalar/typescript-sdk.git"
+  },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/cjs/index.js",

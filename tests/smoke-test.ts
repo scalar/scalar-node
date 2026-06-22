@@ -334,7 +334,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
           theme: "",
           companyName: "",
           logo: "",
-          logoUrl: "",
+          logoURL: "",
           favicon: "",
           termsLink: "",
           privacyLink: "",

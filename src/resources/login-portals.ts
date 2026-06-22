@@ -88,7 +88,7 @@ export class LoginPortals extends APIResource {
    *     theme: "",
    *     companyName: "",
    *     logo: "",
-   *     logoUrl: "",
+   *     logoURL: "",
    *     favicon: "",
    *     termsLink: "",
    *     privacyLink: "",
