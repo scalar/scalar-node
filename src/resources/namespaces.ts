@@ -21,40 +21,9 @@ export class Namespaces extends APIResource {
   }
 }
 
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
 export type NamespaceListResponse = Array<string>;
 export declare namespace Namespaces {
   export {
     type NamespaceListResponse as NamespaceListResponse,
   };
 }
-export { Namespaces as NamespaceResource };

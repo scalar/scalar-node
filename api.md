@@ -22,13 +22,11 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Create a shared component](#create-a-shared-component)
   - [Update shared component metadata](#update-shared-component-metadata)
   - [Delete a shared component](#delete-a-shared-component)
-  - [`Schemas Version`](#schemas-version)
-    - [Get a shared component document](#get-a-shared-component-document)
-    - [Delete a shared component version](#delete-a-shared-component-version)
-    - [Create a shared component version](#create-a-shared-component-version)
-  - [`Schemas AccessGroup`](#schemas-accessgroup)
-    - [Add shared component access group](#add-shared-component-access-group)
-    - [Remove shared component access group](#remove-shared-component-access-group)
+  - [Get a shared component document](#get-a-shared-component-document)
+  - [Delete a shared component version](#delete-a-shared-component-version)
+  - [Create a shared component version](#create-a-shared-component-version)
+  - [Add shared component access group](#add-shared-component-access-group)
+  - [Remove shared component access group](#remove-shared-component-access-group)
 - [`LoginPortals`](#loginportals)
   - [Get a login portal](#get-a-login-portal)
   - [Update portal metadata](#update-portal-metadata)
@@ -124,6 +122,7 @@ Update metadata for an API document.
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryUpdateAPIDocumentParams`](./src/resources/registry.ts) |
+| Response | [`RegistryUpdateAPIDocumentResponse`](./src/resources/registry.ts) |
 
 ```ts
 await client.registry.updateAPIDocument("namespace", "slug", {});
@@ -133,6 +132,10 @@ await client.registry.updateAPIDocument("namespace", "slug", {});
 
 Delete an API document and all versions.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`RegistryDeleteAPIDocumentResponse`](./src/resources/registry.ts) |
+
 ```ts
 await client.registry.deleteAPIDocument("namespace", "slug");
 ```
@@ -140,6 +143,10 @@ await client.registry.deleteAPIDocument("namespace", "slug");
 ### Get API Document
 
 Get a specific API document version.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`RegistryRetrieveAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
 const string_ = await client.registry.retrieveAPIDocumentVersion("namespace", "slug", "semver");
@@ -164,6 +171,10 @@ const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(
 
 Delete a specific API document version.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`RegistryDeleteAPIDocumentVersionResponse`](./src/resources/registry.ts) |
+
 ```ts
 await client.registry.deleteAPIDocumentVersion("namespace", "slug", "semver");
 ```
@@ -174,10 +185,10 @@ Get metadata (uid, content shas, version sha, tags) for a specific API document 
 
 | Direction | Type |
 | --- | --- |
-| Response | [`ManagedDocVersion`](./src/resources/registry.ts) |
+| Response | [`RegistryListAPIDocumentVersionMetadataResponse`](./src/resources/registry.ts) |
 
 ```ts
-const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
+const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
 ```
 
 ### Create API Document version
@@ -187,10 +198,10 @@ Create a new API document version.
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryCreateAPIDocumentVersionParams`](./src/resources/registry.ts) |
-| Response | [`ManagedDocVersion`](./src/resources/registry.ts) |
+| Response | [`RegistryCreateAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
-const managedDocVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
+const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
   version: "",
   document: "",
 });
@@ -203,6 +214,7 @@ Add an access group to an API document.
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryCreateAPIDocumentAccessGroupParams`](./src/resources/registry.ts) |
+| Response | [`RegistryCreateAPIDocumentAccessGroupResponse`](./src/resources/registry.ts) |
 
 ```ts
 await client.registry.createAPIDocumentAccessGroup("namespace", "slug", {
@@ -217,6 +229,7 @@ Remove an access group from an API document.
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryDeleteAPIDocumentAccessGroupParams`](./src/resources/registry.ts) |
+| Response | [`RegistryDeleteAPIDocumentAccessGroupResponse`](./src/resources/registry.ts) |
 
 ```ts
 await client.registry.deleteAPIDocumentAccessGroup("namespace", "slug", {
@@ -232,7 +245,7 @@ List schemas in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Response | [`SchemaListResponse`](./src/resources/schemas/schemas.ts) |
+| Response | [`SchemaListResponse`](./src/resources/schemas.ts) |
 
 ```ts
 const list = await client.schemas.list("namespace");
@@ -244,11 +257,11 @@ Create a schema in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`SchemaCreateParams`](./src/resources/schemas/schemas.ts) |
-| Response | [`UID`](./src/resources/schemas/schemas.ts) |
+| Request | [`SchemaCreateParams`](./src/resources/schemas.ts) |
+| Response | [`SchemaCreateResponse`](./src/resources/schemas.ts) |
 
 ```ts
-const uID = await client.schemas.create("namespace", {
+const create = await client.schemas.create("namespace", {
   title: "",
   version: "",
   slug: "",
@@ -262,7 +275,8 @@ Update schema metadata.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`SchemaUpdateParams`](./src/resources/schemas/schemas.ts) |
+| Request | [`SchemaUpdateParams`](./src/resources/schemas.ts) |
+| Response | [`SchemaUpdateResponse`](./src/resources/schemas.ts) |
 
 ```ts
 await client.schemas.update("namespace", "slug", {});
@@ -272,70 +286,80 @@ await client.schemas.update("namespace", "slug", {});
 
 Delete a schema and all related versions.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`SchemaDeleteResponse`](./src/resources/schemas.ts) |
+
 ```ts
 await client.schemas.delete("namespace", "slug");
 ```
 
-### `Schemas Version`
-
-#### Get a shared component document
+### Get a shared component document
 
 Get a specific schema version document.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`SchemaRetrieveVersionResponse`](./src/resources/schemas.ts) |
+
 ```ts
-const string_ = await client.schemas.version.retrieveSchema("namespace", "slug", "semver");
+const string_ = await client.schemas.retrieveVersion("namespace", "slug", "semver");
 ```
 
-#### Delete a shared component version
+### Delete a shared component version
 
 Delete a schema version.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`SchemaDeleteVersionResponse`](./src/resources/schemas.ts) |
+
 ```ts
-await client.schemas.version.deleteSchema("namespace", "slug", "semver");
+await client.schemas.deleteVersion("namespace", "slug", "semver");
 ```
 
-#### Create a shared component version
+### Create a shared component version
 
 Create a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionCreateSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`UID`](./src/resources/schemas/version.ts) |
+| Request | [`SchemaCreateVersionParams`](./src/resources/schemas.ts) |
+| Response | [`SchemaCreateVersionResponse`](./src/resources/schemas.ts) |
 
 ```ts
-const uID = await client.schemas.version.createSchema("namespace", "slug", {
+const createVersion = await client.schemas.createVersion("namespace", "slug", {
   version: "",
   document: "",
 });
 ```
 
-### `Schemas AccessGroup`
-
-#### Add shared component access group
+### Add shared component access group
 
 Add an access group to a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupCreateSchemaParams`](./src/resources/schemas/access-group.ts) |
+| Request | [`SchemaCreateAccessGroupParams`](./src/resources/schemas.ts) |
+| Response | [`SchemaCreateAccessGroupResponse`](./src/resources/schemas.ts) |
 
 ```ts
-await client.schemas.accessGroup.createSchema("namespace", "slug", {
+await client.schemas.createAccessGroup("namespace", "slug", {
   accessGroupSlug: "",
 });
 ```
 
-#### Remove shared component access group
+### Remove shared component access group
 
 Remove an access group from a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupDeleteSchemaParams`](./src/resources/schemas/access-group.ts) |
+| Request | [`SchemaDeleteAccessGroupParams`](./src/resources/schemas.ts) |
+| Response | [`SchemaDeleteAccessGroupResponse`](./src/resources/schemas.ts) |
 
 ```ts
-await client.schemas.accessGroup.deleteSchema("namespace", "slug", {
+await client.schemas.deleteAccessGroup("namespace", "slug", {
   accessGroupSlug: "",
 });
 ```
@@ -361,6 +385,7 @@ Update metadata for a login portal.
 | Direction | Type |
 | --- | --- |
 | Request | [`LoginPortalUpdateParams`](./src/resources/login-portals.ts) |
+| Response | [`LoginPortalUpdateResponse`](./src/resources/login-portals.ts) |
 
 ```ts
 await client.loginPortals.update("slug", {});
@@ -369,6 +394,10 @@ await client.loginPortals.update("slug", {});
 ### Delete a login portal
 
 Delete a login portal.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`LoginPortalDeleteResponse`](./src/resources/login-portals.ts) |
 
 ```ts
 await client.loginPortals.delete("slug");
@@ -381,10 +410,10 @@ Create a login portal for the current team.
 | Direction | Type |
 | --- | --- |
 | Request | [`LoginPortalCreateParams`](./src/resources/login-portals.ts) |
-| Response | [`UID`](./src/resources/login-portals.ts) |
+| Response | [`LoginPortalCreateResponse`](./src/resources/login-portals.ts) |
 
 ```ts
-const uID = await client.loginPortals.create({
+const create = await client.loginPortals.create({
   title: "",
   slug: "",
   email: {
@@ -452,10 +481,10 @@ Create a rule in a namespace.
 | Direction | Type |
 | --- | --- |
 | Request | [`RuleCreateRulesetParams`](./src/resources/rules.ts) |
-| Response | [`UID`](./src/resources/rules.ts) |
+| Response | [`RuleCreateRulesetResponse`](./src/resources/rules.ts) |
 
 ```ts
-const uID = await client.rules.createRuleset("namespace", {
+const createRuleset = await client.rules.createRuleset("namespace", {
   title: "",
   slug: "",
   document: "",
@@ -469,6 +498,7 @@ Update rule metadata by slug.
 | Direction | Type |
 | --- | --- |
 | Request | [`RuleUpdateRulesetParams`](./src/resources/rules.ts) |
+| Response | [`RuleUpdateRulesetResponse`](./src/resources/rules.ts) |
 
 ```ts
 await client.rules.updateRuleset("namespace", "slug", {});
@@ -478,6 +508,10 @@ await client.rules.updateRuleset("namespace", "slug", {});
 
 Delete a rule by slug.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`RuleDeleteRulesetResponse`](./src/resources/rules.ts) |
+
 ```ts
 await client.rules.deleteRuleset("namespace", "slug");
 ```
@@ -485,6 +519,10 @@ await client.rules.deleteRuleset("namespace", "slug");
 ### Get a rule
 
 Get a rule document by slug.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`RuleRetrieveRulesetDocumentResponse`](./src/resources/rules.ts) |
 
 ```ts
 const string_ = await client.rules.retrieveRulesetDocument("namespace", "slug");
@@ -497,6 +535,7 @@ Grant an access group to a rule.
 | Direction | Type |
 | --- | --- |
 | Request | [`RuleCreateRulesetAccessGroupParams`](./src/resources/rules.ts) |
+| Response | [`RuleCreateRulesetAccessGroupResponse`](./src/resources/rules.ts) |
 
 ```ts
 await client.rules.createRulesetAccessGroup("namespace", "slug", {
@@ -511,6 +550,7 @@ Remove an access group from a rule.
 | Direction | Type |
 | --- | --- |
 | Request | [`RuleDeleteRulesetAccessGroupParams`](./src/resources/rules.ts) |
+| Response | [`RuleDeleteRulesetAccessGroupResponse`](./src/resources/rules.ts) |
 
 ```ts
 await client.rules.deleteRulesetAccessGroup("namespace", "slug", {
@@ -539,10 +579,10 @@ Create a team theme.
 | Direction | Type |
 | --- | --- |
 | Request | [`ThemeCreateParams`](./src/resources/themes.ts) |
-| Response | [`UID`](./src/resources/themes.ts) |
+| Response | [`ThemeCreateResponse`](./src/resources/themes.ts) |
 
 ```ts
-const uID = await client.themes.create({
+const create = await client.themes.create({
   name: "",
   slug: "",
   document: "",
@@ -556,6 +596,7 @@ Update theme metadata.
 | Direction | Type |
 | --- | --- |
 | Request | [`ThemeUpdateParams`](./src/resources/themes.ts) |
+| Response | [`ThemeUpdateResponse`](./src/resources/themes.ts) |
 
 ```ts
 await client.themes.update("slug", {});
@@ -568,6 +609,7 @@ Replace the theme document.
 | Direction | Type |
 | --- | --- |
 | Request | [`ThemeReplaceDocumentParams`](./src/resources/themes.ts) |
+| Response | [`ThemeReplaceDocumentResponse`](./src/resources/themes.ts) |
 
 ```ts
 await client.themes.replaceDocument("slug", {
@@ -579,6 +621,10 @@ await client.themes.replaceDocument("slug", {
 
 Delete a theme by slug.
 
+| Direction | Type |
+| --- | --- |
+| Response | [`ThemeDeleteResponse`](./src/resources/themes.ts) |
+
 ```ts
 await client.themes.delete("slug");
 ```
@@ -586,6 +632,10 @@ await client.themes.delete("slug");
 ### Get a theme
 
 Get the theme document by slug.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`ThemeRetrieveResponse`](./src/resources/themes.ts) |
 
 ```ts
 const string_ = await client.themes.retrieve("slug");
@@ -686,8 +736,8 @@ Get the authenticated user, including their available teams and theme.
 
 | Direction | Type |
 | --- | --- |
-| Response | [`User`](./src/resources/authentication.ts) |
+| Response | [`AuthenticationListCurrentUserResponse`](./src/resources/authentication.ts) |
 
 ```ts
-const user = await client.authentication.listCurrentUser();
+const listCurrentUser = await client.authentication.listCurrentUser();
 ```

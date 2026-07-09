@@ -3,13 +3,16 @@
 import { APIResource } from "../resource";
 import { APIPromise } from "../api-promise";
 import type { RequestOptions } from "../internal/request-options";
+import { buildHeaders } from "../internal/headers";
 import { path as __scalarPath } from "../internal/utils/path";
+import type * as ScalarDocsAPI from "./scalar-docs";
+import type * as RegistryAPI from "./registry";
 
 export class Rules extends APIResource {
   /**
    * List all rulesets in a namespace.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleListRulesetsResponse>} Default Response
    *
@@ -18,91 +21,91 @@ export class Rules extends APIResource {
    * const listRulesets = await client.rules.listRulesets("namespace");
    * ```
    */
-  listRulesets(namespace: string, options?: RequestOptions): APIPromise<RuleListRulesetsResponse> {
-    return this._client.get(__scalarPath`/v1/rulesets/${namespace}`, options);
+  listRulesets(namespace_: string, options?: RequestOptions): APIPromise<RuleListRulesetsResponse> {
+    return this._client.get(__scalarPath`/v1/rulesets/${namespace_}`, options);
   }
 
   /**
    * Create a rule in a namespace.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {RuleCreateRulesetParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<UID>} Default Response
+   * @returns {APIPromise<RuleCreateRulesetResponse>} Default Response
    *
    * @example
    * ```ts
-   * const uID = await client.rules.createRuleset("namespace", {
+   * const createRuleset = await client.rules.createRuleset("namespace", {
    *   title: "",
    *   slug: "",
    *   document: "",
    * });
    * ```
    */
-  createRuleset(namespace: string, body: RuleCreateRulesetParams, options?: RequestOptions): APIPromise<UID> {
-    return this._client.post(__scalarPath`/v1/rulesets/${namespace}`, { body: body, ...options });
+  createRuleset(namespace_: string, body: RuleCreateRulesetParams, options?: RequestOptions): APIPromise<RuleCreateRulesetResponse> {
+    return this._client.post(__scalarPath`/v1/rulesets/${namespace_}`, { body: body, ...options });
   }
 
   /**
    * Update rule metadata by slug.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RuleUpdateRulesetParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RuleUpdateRulesetResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.rules.updateRuleset("namespace", "slug", {});
    * ```
    */
-  updateRuleset(namespace: string, slug: string, body: RuleUpdateRulesetParams, options?: RequestOptions): APIPromise<null> {
-    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { body: body, ...options });
+  updateRuleset(namespace_: string, slug: string, body: RuleUpdateRulesetParams, options?: RequestOptions): APIPromise<RuleUpdateRulesetResponse> {
+    return this._client.patch(__scalarPath`/v1/rulesets/${namespace_}/${slug}`, { body: body, ...options });
   }
 
   /**
    * Delete a rule by slug.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RuleDeleteRulesetResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.rules.deleteRuleset("namespace", "slug");
    * ```
    */
-  deleteRuleset(namespace: string, slug: string, options?: RequestOptions): APIPromise<null> {
-    return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}`, options);
+  deleteRuleset(namespace_: string, slug: string, options?: RequestOptions): APIPromise<RuleDeleteRulesetResponse> {
+    return this._client.delete(__scalarPath`/v1/rulesets/${namespace_}/${slug}`, options);
   }
 
   /**
    * Get a rule document by slug.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<string>} Default Response
+   * @returns {APIPromise<RuleRetrieveRulesetDocumentResponse>} Default Response
    *
    * @example
    * ```ts
    * const string_ = await client.rules.retrieveRulesetDocument("namespace", "slug");
    * ```
    */
-  retrieveRulesetDocument(namespace: string, slug: string, options?: RequestOptions): APIPromise<string> {
-    return this._client.get(__scalarPath`/v1/rulesets/${namespace}/${slug}`, options);
+  retrieveRulesetDocument(namespace_: string, slug: string, options?: RequestOptions): APIPromise<RuleRetrieveRulesetDocumentResponse> {
+    return this._client.get(__scalarPath`/v1/rulesets/${namespace_}/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 
   /**
    * Grant an access group to a rule.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RuleCreateRulesetAccessGroupParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RuleCreateRulesetAccessGroupResponse>} Default Response
    *
    * @example
    * ```ts
@@ -111,18 +114,18 @@ export class Rules extends APIResource {
    * });
    * ```
    */
-  createRulesetAccessGroup(namespace: string, slug: string, body: RuleCreateRulesetAccessGroupParams, options?: RequestOptions): APIPromise<null> {
-    return this._client.post(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body: body, ...options });
+  createRulesetAccessGroup(namespace_: string, slug: string, body: RuleCreateRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleCreateRulesetAccessGroupResponse> {
+    return this._client.post(__scalarPath`/v1/rulesets/${namespace_}/${slug}/access-group`, { body: body, ...options });
   }
 
   /**
    * Remove an access group from a rule.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RuleDeleteRulesetAccessGroupParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RuleDeleteRulesetAccessGroupResponse>} Default Response
    *
    * @example
    * ```ts
@@ -131,65 +134,48 @@ export class Rules extends APIResource {
    * });
    * ```
    */
-  deleteRulesetAccessGroup(namespace: string, slug: string, body: RuleDeleteRulesetAccessGroupParams, options?: RequestOptions): APIPromise<null> {
-    return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body: body, ...options });
+  deleteRulesetAccessGroup(namespace_: string, slug: string, body: RuleDeleteRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleDeleteRulesetAccessGroupResponse> {
+    return this._client.delete(__scalarPath`/v1/rulesets/${namespace_}/${slug}/access-group`, { body: body, ...options });
   }
 }
 
-export interface Rule {
-  uid: Nanoid;
-  title: string;
-  description: string;
-  slug: Slug;
-  namespace: Namespace;
-  isPrivate: boolean;
+export type RuleListRulesetsResponse = Array<RuleListRulesetsResponse.RuleListRulesetsResponseItem>;
+
+export namespace RuleListRulesetsResponse {
+  export interface RuleListRulesetsResponseItem {
+    /**
+     * @default nanoid()
+     * @minLength 5
+     */
+    uid: string;
+    /**
+     * @default ""
+     * @maxLength 100
+     */
+    title: string;
+    /**
+     * @default ""
+     */
+    description: string;
+    /**
+     * @default randomManagedDocSlug()
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: ScalarDocsAPI.Slug;
+    /**
+     * @minLength 3
+     * @maxLength 50
+     * @pattern ^[a-zA-Z0-9-_]+$
+     */
+    namespace: string;
+    /**
+     * @default false
+     */
+    isPrivate: boolean;
+  }
 }
-
-export type Nanoid = string;
-
-export type Slug = string;
-
-export type Namespace = string;
-
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export interface UID {
-  uid: Nanoid;
-}
-
-export interface AccessGroup {
-  accessGroupSlug: Slug;
-}
-
-export type RuleListRulesetsResponse = Array<Rule>;
 
 export interface RuleCreateRulesetParams {
   title: string;
@@ -197,6 +183,13 @@ export interface RuleCreateRulesetParams {
   document: string;
   description?: string;
   isPrivate?: boolean;
+}
+
+export interface RuleCreateRulesetResponse {
+  /**
+   * @minLength 5
+   */
+  uid: string;
 }
 
 export interface RuleUpdateRulesetParams {
@@ -207,21 +200,45 @@ export interface RuleUpdateRulesetParams {
   isPrivate?: boolean;
 }
 
+export type RuleUpdateRulesetResponse = null;
+
+export type RuleDeleteRulesetResponse = null;
+
+export type RuleRetrieveRulesetDocumentResponse = string;
+
 export interface RuleCreateRulesetAccessGroupParams {
-  accessGroupSlug: Slug;
+  /**
+   * @minLength 3
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
+export type RuleCreateRulesetAccessGroupResponse = null;
+
 export interface RuleDeleteRulesetAccessGroupParams {
-  accessGroupSlug: Slug;
+  /**
+   * @minLength 3
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  accessGroupSlug: ScalarDocsAPI.Slug;
 }
+
+export type RuleDeleteRulesetAccessGroupResponse = null;
 export declare namespace Rules {
   export {
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
-    type UID as UID,
+    type RuleCreateRulesetResponse as RuleCreateRulesetResponse,
+    type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
+    type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
+    type RuleRetrieveRulesetDocumentResponse as RuleRetrieveRulesetDocumentResponse,
+    type RuleCreateRulesetAccessGroupResponse as RuleCreateRulesetAccessGroupResponse,
+    type RuleDeleteRulesetAccessGroupResponse as RuleDeleteRulesetAccessGroupResponse,
     type RuleCreateRulesetParams as RuleCreateRulesetParams,
     type RuleUpdateRulesetParams as RuleUpdateRulesetParams,
     type RuleCreateRulesetAccessGroupParams as RuleCreateRulesetAccessGroupParams,
     type RuleDeleteRulesetAccessGroupParams as RuleDeleteRulesetAccessGroupParams,
   };
 }
-export { Rules as RuleResource };

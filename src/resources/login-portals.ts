@@ -4,6 +4,7 @@ import { APIResource } from "../resource";
 import { APIPromise } from "../api-promise";
 import type { RequestOptions } from "../internal/request-options";
 import { path as __scalarPath } from "../internal/utils/path";
+import type * as ScalarDocsAPI from "./scalar-docs";
 
 export class LoginPortals extends APIResource {
   /**
@@ -28,14 +29,14 @@ export class LoginPortals extends APIResource {
    * @param {string} slug
    * @param {LoginPortalUpdateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<LoginPortalUpdateResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.loginPortals.update("slug", {});
    * ```
    */
-  update(slug: string, body: LoginPortalUpdateParams, options?: RequestOptions): APIPromise<null> {
+  update(slug: string, body: LoginPortalUpdateParams, options?: RequestOptions): APIPromise<LoginPortalUpdateResponse> {
     return this._client.patch(__scalarPath`/v1/login-portals/${slug}`, { body: body, ...options });
   }
 
@@ -44,14 +45,14 @@ export class LoginPortals extends APIResource {
    *
    * @param {string} slug
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<LoginPortalDeleteResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.loginPortals.delete("slug");
    * ```
    */
-  delete(slug: string, options?: RequestOptions): APIPromise<null> {
+  delete(slug: string, options?: RequestOptions): APIPromise<LoginPortalDeleteResponse> {
     return this._client.delete(__scalarPath`/v1/login-portals/${slug}`, options);
   }
 
@@ -60,11 +61,11 @@ export class LoginPortals extends APIResource {
    *
    * @param {LoginPortalCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<UID>} Default Response
+   * @returns {APIPromise<LoginPortalCreateResponse>} Default Response
    *
    * @example
    * ```ts
-   * const uID = await client.loginPortals.create({
+   * const create = await client.loginPortals.create({
    *   title: "",
    *   slug: "",
    *   email: {
@@ -99,7 +100,7 @@ export class LoginPortals extends APIResource {
    * });
    * ```
    */
-  create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<UID> {
+  create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<LoginPortalCreateResponse> {
     return this._client.post("/v1/login-portals", { body: body, ...options });
   }
 
@@ -120,85 +121,140 @@ export class LoginPortals extends APIResource {
 }
 
 export interface LoginPortalEmail {
+  /**
+   * @default ""
+   */
   logo: string;
+  /**
+   * @default 100
+   */
   logoSize: string;
+  /**
+   * @default Login
+   * @maxLength 50
+   */
   buttonText: string;
+  /**
+   * @default Click to access private documentation hosted by scalar.com
+   * @maxLength 1000
+   */
   message: string;
+  /**
+   * @default Private Docs
+   * @maxLength 100
+   */
   title: string;
+  /**
+   * @default #2a2f45
+   * @maxLength 100
+   */
   mainColor: string;
+  /**
+   * @default #f6f6f6
+   * @maxLength 100
+   */
   mainBackground: string;
+  /**
+   * @default 2a2f45
+   * @maxLength 100
+   */
   cardColor: string;
+  /**
+   * @default #fff
+   * @maxLength 100
+   */
   cardBackground: string;
+  /**
+   * @default #fff
+   * @maxLength 100
+   */
   buttonColor: string;
+  /**
+   * @default #0f0f0f
+   * @maxLength 100
+   */
   buttonBackground: string;
 }
 
 export interface LoginPortalPage {
+  /**
+   * @default Scalar Private Docs
+   * @maxLength 100
+   */
   title: string;
+  /**
+   * @default Login to access your documentation
+   * @maxLength 500
+   */
   description: string;
+  /**
+   * @default ""
+   */
   head: string;
+  /**
+   * @default ""
+   */
   script: string;
+  /**
+   * @default ""
+   */
   theme: string;
+  /**
+   * @default ""
+   * @maxLength 100
+   */
   companyName: string;
+  /**
+   * @default ""
+   */
   logo: string;
+  /**
+   * @default ""
+   */
   logoURL: string;
+  /**
+   * @default ""
+   */
   favicon: string;
+  /**
+   * @default ""
+   */
   termsLink: string;
+  /**
+   * @default ""
+   */
   privacyLink: string;
+  /**
+   * @default Scalar Private Docs
+   * @maxLength 100
+   */
   formTitle: string;
+  /**
+   * @default Login to access your documentation
+   * @maxLength 500
+   */
   formDescription: string;
+  /**
+   * @default ""
+   */
   formImage: string;
 }
 
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export interface UID {
-  uid: Nanoid;
-}
-
-export type Nanoid = string;
-
-export interface LoginPortal {
-  uid: Nanoid;
+export interface LoginPortalRetrieveResponse {
+  uid: string;
   title: string;
-  slug: Slug;
+  slug: string;
+  email: LoginPortalEmail;
+  page: LoginPortalPage;
 }
-
-export type Slug = string;
-
-export type LoginPortalRetrieveResponse = { uid: string; title: string; slug: string; email: LoginPortalEmail; page: LoginPortalPage };
 
 export interface LoginPortalUpdateParams {
   title?: string;
 }
+
+export type LoginPortalUpdateResponse = null;
+
+export type LoginPortalDeleteResponse = null;
 
 export interface LoginPortalCreateParams {
   title: string;
@@ -207,16 +263,43 @@ export interface LoginPortalCreateParams {
   page: LoginPortalPage;
 }
 
-export type LoginPortalListResponse = Array<LoginPortal>;
+export interface LoginPortalCreateResponse {
+  /**
+   * @minLength 5
+   */
+  uid: string;
+}
+
+export type LoginPortalListResponse = Array<LoginPortalListResponse.LoginPortalListResponseItem>;
+
+export namespace LoginPortalListResponse {
+  export interface LoginPortalListResponseItem {
+    /**
+     * @minLength 5
+     */
+    uid: string;
+    /**
+     * @maxLength 200
+     */
+    title: string;
+    /**
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: ScalarDocsAPI.Slug;
+  }
+}
 export declare namespace LoginPortals {
   export {
     type LoginPortalEmail as LoginPortalEmail,
     type LoginPortalPage as LoginPortalPage,
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
-    type UID as UID,
+    type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
+    type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
+    type LoginPortalCreateResponse as LoginPortalCreateResponse,
     type LoginPortalListResponse as LoginPortalListResponse,
     type LoginPortalUpdateParams as LoginPortalUpdateParams,
     type LoginPortalCreateParams as LoginPortalCreateParams,
   };
 }
-export { LoginPortals as LoginPortalResource };

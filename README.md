@@ -169,14 +169,14 @@ const client = new Scalar({
 | --- | --- | --- | --- |
 | `bearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
 | `environment` | `Environment` | - | Select one of the configured API environments. |
-| `baseURL` | `string \| null` | `process.env["SCALAR_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
+| `baseURL` | `string \| null` | `process.env["SCALAR_API_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
 | `timeout` | `number` | `60000` | Maximum time in milliseconds to wait for a response before aborting a request. |
 | `maxRetries` | `number` | `2` | Number of retries for temporary failures. |
 | `defaultHeaders` | `HeadersInit` | - | Headers sent with every request. |
 | `defaultQuery` | `Record<string, string \| undefined>` | - | Query parameters sent with every request. |
 | `fetchOptions` | `RequestInit` | - | Additional fetch options sent with every request. |
 | `fetch` | `Fetch` | - | Custom fetch implementation. |
-| `logLevel` | `"off" \| "error" \| "warn" \| "info" \| "debug" \| null` | `process.env["SCALAR_LOG"]` | Controls request and retry debug logging. |
+| `logLevel` | `"off" \| "error" \| "warn" \| "info" \| "debug" \| null` | `process.env["SCALAR_API_LOG"]` | Controls request and retry debug logging. |
 | `logger` | `Logger \| null` | `console` | Custom logger implementation. |
 
 <br />

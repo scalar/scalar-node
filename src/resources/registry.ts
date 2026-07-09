@@ -3,7 +3,9 @@
 import { APIResource } from "../resource";
 import { APIPromise } from "../api-promise";
 import type { RequestOptions } from "../internal/request-options";
+import { buildHeaders } from "../internal/headers";
 import { path as __scalarPath } from "../internal/utils/path";
+import type * as ScalarDocsAPI from "./scalar-docs";
 
 export class Registry extends APIResource {
   /**
@@ -24,7 +26,7 @@ export class Registry extends APIResource {
   /**
    * List API documents in a namespace.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RegistryListAPIDocumentsResponse>} Default Response
    *
@@ -33,14 +35,14 @@ export class Registry extends APIResource {
    * const listAPIDocuments = await client.registry.listAPIDocuments("namespace");
    * ```
    */
-  listAPIDocuments(namespace: string, options?: RequestOptions): APIPromise<RegistryListAPIDocumentsResponse> {
-    return this._client.get(__scalarPath`/v1/apis/${namespace}`, options);
+  listAPIDocuments(namespace_: string, options?: RequestOptions): APIPromise<RegistryListAPIDocumentsResponse> {
+    return this._client.get(__scalarPath`/v1/apis/${namespace_}`, options);
   }
 
   /**
    * Create an API document.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {RegistryCreateAPIDocumentParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RegistryCreateAPIDocumentResponse>} Default Response
@@ -55,67 +57,67 @@ export class Registry extends APIResource {
    * });
    * ```
    */
-  createAPIDocument(namespace: string, body: RegistryCreateAPIDocumentParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentResponse> {
-    return this._client.post(__scalarPath`/v1/apis/${namespace}`, { body: body, ...options });
+  createAPIDocument(namespace_: string, body: RegistryCreateAPIDocumentParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentResponse> {
+    return this._client.post(__scalarPath`/v1/apis/${namespace_}`, { body: body, ...options });
   }
 
   /**
    * Update metadata for an API document.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RegistryUpdateAPIDocumentParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RegistryUpdateAPIDocumentResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.registry.updateAPIDocument("namespace", "slug", {});
    * ```
    */
-  updateAPIDocument(namespace: string, slug: string, body: RegistryUpdateAPIDocumentParams, options?: RequestOptions): APIPromise<null> {
-    return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}`, { body: body, ...options });
+  updateAPIDocument(namespace_: string, slug: string, body: RegistryUpdateAPIDocumentParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentResponse> {
+    return this._client.patch(__scalarPath`/v1/apis/${namespace_}/${slug}`, { body: body, ...options });
   }
 
   /**
    * Delete an API document and all versions.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RegistryDeleteAPIDocumentResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.registry.deleteAPIDocument("namespace", "slug");
    * ```
    */
-  deleteAPIDocument(namespace: string, slug: string, options?: RequestOptions): APIPromise<null> {
-    return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}`, options);
+  deleteAPIDocument(namespace_: string, slug: string, options?: RequestOptions): APIPromise<RegistryDeleteAPIDocumentResponse> {
+    return this._client.delete(__scalarPath`/v1/apis/${namespace_}/${slug}`, options);
   }
 
   /**
    * Get a specific API document version.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {string} semver
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<string>} Default Response
+   * @returns {APIPromise<RegistryRetrieveAPIDocumentVersionResponse>} Default Response
    *
    * @example
    * ```ts
    * const string_ = await client.registry.retrieveAPIDocumentVersion("namespace", "slug", "semver");
    * ```
    */
-  retrieveAPIDocumentVersion(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<string> {
-    return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, options);
+  retrieveAPIDocumentVersion(namespace_: string, slug: string, semver: string, options?: RequestOptions): APIPromise<RegistryRetrieveAPIDocumentVersionResponse> {
+    return this._client.get(__scalarPath`/v1/apis/${namespace_}/${slug}/version/${semver}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 
   /**
    * Update the registry file content for an API document version.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {string} semver
    * @param {RegistryUpdateAPIDocumentVersionParams} body - The request body to send.
@@ -129,75 +131,75 @@ export class Registry extends APIResource {
    * });
    * ```
    */
-  updateAPIDocumentVersion(namespace: string, slug: string, semver: string, body: RegistryUpdateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentVersionResponse> {
-    return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, { body: body, ...options });
+  updateAPIDocumentVersion(namespace_: string, slug: string, semver: string, body: RegistryUpdateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentVersionResponse> {
+    return this._client.patch(__scalarPath`/v1/apis/${namespace_}/${slug}/version/${semver}`, { body: body, ...options });
   }
 
   /**
    * Delete a specific API document version.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {string} semver
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RegistryDeleteAPIDocumentVersionResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.registry.deleteAPIDocumentVersion("namespace", "slug", "semver");
    * ```
    */
-  deleteAPIDocumentVersion(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<null> {
-    return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, options);
+  deleteAPIDocumentVersion(namespace_: string, slug: string, semver: string, options?: RequestOptions): APIPromise<RegistryDeleteAPIDocumentVersionResponse> {
+    return this._client.delete(__scalarPath`/v1/apis/${namespace_}/${slug}/version/${semver}`, options);
   }
 
   /**
    * Get metadata (uid, content shas, version sha, tags) for a specific API document version.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {string} semver
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<ManagedDocVersion>} Default Response
+   * @returns {APIPromise<RegistryListAPIDocumentVersionMetadataResponse>} Default Response
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
+   * const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
    * ```
    */
-  listAPIDocumentVersionMetadata(namespace: string, slug: string, semver: string, options?: RequestOptions): APIPromise<ManagedDocVersion> {
-    return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}/metadata`, options);
+  listAPIDocumentVersionMetadata(namespace_: string, slug: string, semver: string, options?: RequestOptions): APIPromise<RegistryListAPIDocumentVersionMetadataResponse> {
+    return this._client.get(__scalarPath`/v1/apis/${namespace_}/${slug}/version/${semver}/metadata`, options);
   }
 
   /**
    * Create a new API document version.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RegistryCreateAPIDocumentVersionParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<ManagedDocVersion>} Default Response
+   * @returns {APIPromise<RegistryCreateAPIDocumentVersionResponse>} Default Response
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
+   * const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
    *   version: "",
    *   document: "",
    * });
    * ```
    */
-  createAPIDocumentVersion(namespace: string, slug: string, body: RegistryCreateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<ManagedDocVersion> {
-    return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/version`, { body: body, ...options });
+  createAPIDocumentVersion(namespace_: string, slug: string, body: RegistryCreateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentVersionResponse> {
+    return this._client.post(__scalarPath`/v1/apis/${namespace_}/${slug}/version`, { body: body, ...options });
   }
 
   /**
    * Add an access group to an API document.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RegistryCreateAPIDocumentAccessGroupParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RegistryCreateAPIDocumentAccessGroupResponse>} Default Response
    *
    * @example
    * ```ts
@@ -206,18 +208,18 @@ export class Registry extends APIResource {
    * });
    * ```
    */
-  createAPIDocumentAccessGroup(namespace: string, slug: string, body: RegistryCreateAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<null> {
-    return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body: body, ...options });
+  createAPIDocumentAccessGroup(namespace_: string, slug: string, body: RegistryCreateAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentAccessGroupResponse> {
+    return this._client.post(__scalarPath`/v1/apis/${namespace_}/${slug}/access-group`, { body: body, ...options });
   }
 
   /**
    * Remove an access group from an API document.
    *
-   * @param {string} namespace
+   * @param {string} namespace_
    * @param {string} slug
    * @param {RegistryDeleteAPIDocumentAccessGroupParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<RegistryDeleteAPIDocumentAccessGroupResponse>} Default Response
    *
    * @example
    * ```ts
@@ -226,86 +228,197 @@ export class Registry extends APIResource {
    * });
    * ```
    */
-  deleteAPIDocumentAccessGroup(namespace: string, slug: string, body: RegistryDeleteAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<null> {
-    return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body: body, ...options });
+  deleteAPIDocumentAccessGroup(namespace_: string, slug: string, body: RegistryDeleteAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<RegistryDeleteAPIDocumentAccessGroupResponse> {
+    return this._client.delete(__scalarPath`/v1/apis/${namespace_}/${slug}/access-group`, { body: body, ...options });
   }
 }
 
 export type Version = string;
 
 export interface AccessGroup {
-  accessGroupSlug: Slug;
+  /**
+   * @minLength 3
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
-export interface APIDocument {
-  uid: Nanoid;
-  version: Version;
-  title: string;
-  slug: Slug;
-  description: string;
-  namespace: Namespace;
-  isPrivate: boolean;
-  tags: string;
-  versions: Array<ManagedDocVersion>;
+export type RegistryListAllAPIDocumentsResponse = Array<RegistryListAllAPIDocumentsResponse.RegistryListAllAPIDocumentsResponseItem>;
+
+export namespace RegistryListAllAPIDocumentsResponse {
+  export interface RegistryListAllAPIDocumentsResponseItem {
+    /**
+     * @default nanoid()
+     * @minLength 5
+     */
+    uid: string;
+    /**
+     * @minLength 1
+     */
+    version: Version;
+    /**
+     * @default ""
+     * @maxLength 100
+     */
+    title: string;
+    /**
+     * @default randomManagedDocSlug()
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: ScalarDocsAPI.Slug;
+    /**
+     * @default ""
+     */
+    description: string;
+    /**
+     * @minLength 3
+     * @maxLength 50
+     * @pattern ^[a-zA-Z0-9-_]+$
+     */
+    namespace: string;
+    /**
+     * @default false
+     */
+    isPrivate: boolean;
+    /**
+     * @default []
+     */
+    tags: unknown;
+    versions: Array<RegistryListAllAPIDocumentsResponseItem.Version>;
+  }
+
+  export namespace RegistryListAllAPIDocumentsResponseItem {
+    export interface Version {
+      /**
+       * @minLength 5
+       */
+      uid: string;
+      createdAt: number;
+      /**
+       * @minLength 1
+       */
+      version: Version;
+      /**
+       * @default false
+       */
+      upgraded: boolean;
+      /**
+       * @default null
+       */
+      embedStatus: "complete" | "failed" | null;
+      /**
+       * @default []
+       */
+      tags: Array<string>;
+      tools?: Array<Version.Tool>;
+      yamlSha?: string;
+      jsonSha?: string;
+      versionSha?: string;
+    }
+
+    export namespace Version {
+      export interface Tool {
+        path: string;
+        method: "delete" | "get" | "head" | "options" | "patch" | "post" | "put" | "trace";
+        enabledTools: Array<"execute-request" | "get-mini-openapi-spec">;
+      }
+    }
+  }
 }
 
-export type Nanoid = string;
+export type RegistryListAPIDocumentsResponse = Array<RegistryListAPIDocumentsResponse.RegistryListAPIDocumentsResponseItem>;
 
-export type Slug = string;
+export namespace RegistryListAPIDocumentsResponse {
+  export interface RegistryListAPIDocumentsResponseItem {
+    /**
+     * @default nanoid()
+     * @minLength 5
+     */
+    uid: string;
+    /**
+     * @minLength 1
+     */
+    version: Version;
+    /**
+     * @default ""
+     * @maxLength 100
+     */
+    title: string;
+    /**
+     * @default randomManagedDocSlug()
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: ScalarDocsAPI.Slug;
+    /**
+     * @default ""
+     */
+    description: string;
+    /**
+     * @minLength 3
+     * @maxLength 50
+     * @pattern ^[a-zA-Z0-9-_]+$
+     */
+    namespace: string;
+    /**
+     * @default false
+     */
+    isPrivate: boolean;
+    /**
+     * @default []
+     */
+    tags: unknown;
+    versions: Array<RegistryListAPIDocumentsResponseItem.Version>;
+  }
 
-export type Namespace = string;
+  export namespace RegistryListAPIDocumentsResponseItem {
+    export interface Version {
+      /**
+       * @minLength 5
+       */
+      uid: string;
+      createdAt: number;
+      /**
+       * @minLength 1
+       */
+      version: Version;
+      /**
+       * @default false
+       */
+      upgraded: boolean;
+      /**
+       * @default null
+       */
+      embedStatus: "complete" | "failed" | null;
+      /**
+       * @default []
+       */
+      tags: Array<string>;
+      tools?: Array<Version.Tool>;
+      yamlSha?: string;
+      jsonSha?: string;
+      versionSha?: string;
+    }
 
-export interface ManagedDocVersion {
-  uid: Nanoid;
-  createdAt: number;
-  version: Version;
-  upgraded: boolean;
-  embedStatus: "complete" | "failed" | null;
-  tags: Array<string>;
-  tools?: Array<{ path: string; method: Method; enabledTools: Array<"execute-request" | "get-mini-openapi-spec"> }>;
-  yamlSha?: string;
-  jsonSha?: string;
-  versionSha?: string;
+    export namespace Version {
+      export interface Tool {
+        path: string;
+        method: "delete" | "get" | "head" | "options" | "patch" | "post" | "put" | "trace";
+        enabledTools: Array<"execute-request" | "get-mini-openapi-spec">;
+      }
+    }
+  }
 }
-
-export type Method = "delete" | "get" | "head" | "options" | "patch" | "post" | "put" | "trace";
-
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export type RegistryListAllAPIDocumentsResponse = Array<APIDocument>;
-
-export type RegistryListAPIDocumentsResponse = Array<APIDocument>;
 
 export interface RegistryCreateAPIDocumentParams {
   title: string;
+  /**
+   * @minLength 1
+   */
   version: Version;
   slug: string;
   document: string;
@@ -314,7 +427,14 @@ export interface RegistryCreateAPIDocumentParams {
   isPrivate?: boolean;
 }
 
-export type RegistryCreateAPIDocumentResponse = { uid: string; versionUid: string; title: string; jsonSha: string; yamlSha: string; versionSha: string };
+export interface RegistryCreateAPIDocumentResponse {
+  uid: string;
+  versionUid: string;
+  title: string;
+  jsonSha: string;
+  yamlSha: string;
+  versionSha: string;
+}
 
 export interface RegistryUpdateAPIDocumentParams {
   title?: string;
@@ -323,27 +443,128 @@ export interface RegistryUpdateAPIDocumentParams {
   ruleset?: string;
 }
 
+export type RegistryUpdateAPIDocumentResponse = null;
+
+export type RegistryDeleteAPIDocumentResponse = null;
+
+export type RegistryRetrieveAPIDocumentVersionResponse = string;
+
 export interface RegistryUpdateAPIDocumentVersionParams {
   document: string;
   lastKnownVersionSha?: string;
 }
 
-export type RegistryUpdateAPIDocumentVersionResponse = { jsonSha: string; yamlSha: string; versionSha: string };
+export interface RegistryUpdateAPIDocumentVersionResponse {
+  jsonSha: string;
+  yamlSha: string;
+  versionSha: string;
+}
+
+export type RegistryDeleteAPIDocumentVersionResponse = null;
+
+export interface RegistryListAPIDocumentVersionMetadataResponse {
+  /**
+   * @minLength 5
+   */
+  uid: string;
+  createdAt: number;
+  /**
+   * @minLength 1
+   */
+  version: Version;
+  /**
+   * @default false
+   */
+  upgraded: boolean;
+  /**
+   * @default null
+   */
+  embedStatus: "complete" | "failed" | null;
+  /**
+   * @default []
+   */
+  tags: Array<string>;
+  tools?: Array<RegistryListAPIDocumentVersionMetadataResponse.Tool>;
+  yamlSha?: string;
+  jsonSha?: string;
+  versionSha?: string;
+}
+
+export namespace RegistryListAPIDocumentVersionMetadataResponse {
+  export interface Tool {
+    path: string;
+    method: "delete" | "get" | "head" | "options" | "patch" | "post" | "put" | "trace";
+    enabledTools: Array<"execute-request" | "get-mini-openapi-spec">;
+  }
+}
 
 export interface RegistryCreateAPIDocumentVersionParams {
+  /**
+   * @minLength 1
+   */
   version: Version;
   document: string;
   force?: boolean;
   lastKnownVersionSha?: string;
 }
 
-export interface RegistryCreateAPIDocumentAccessGroupParams {
-  accessGroupSlug: Slug;
+export interface RegistryCreateAPIDocumentVersionResponse {
+  /**
+   * @minLength 5
+   */
+  uid: string;
+  createdAt: number;
+  /**
+   * @minLength 1
+   */
+  version: Version;
+  /**
+   * @default false
+   */
+  upgraded: boolean;
+  /**
+   * @default null
+   */
+  embedStatus: "complete" | "failed" | null;
+  /**
+   * @default []
+   */
+  tags: Array<string>;
+  tools?: Array<RegistryCreateAPIDocumentVersionResponse.Tool>;
+  yamlSha?: string;
+  jsonSha?: string;
+  versionSha?: string;
 }
 
-export interface RegistryDeleteAPIDocumentAccessGroupParams {
-  accessGroupSlug: Slug;
+export namespace RegistryCreateAPIDocumentVersionResponse {
+  export interface Tool {
+    path: string;
+    method: "delete" | "get" | "head" | "options" | "patch" | "post" | "put" | "trace";
+    enabledTools: Array<"execute-request" | "get-mini-openapi-spec">;
+  }
 }
+
+export interface RegistryCreateAPIDocumentAccessGroupParams {
+  /**
+   * @minLength 3
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  accessGroupSlug: ScalarDocsAPI.Slug;
+}
+
+export type RegistryCreateAPIDocumentAccessGroupResponse = null;
+
+export interface RegistryDeleteAPIDocumentAccessGroupParams {
+  /**
+   * @minLength 3
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  accessGroupSlug: ScalarDocsAPI.Slug;
+}
+
+export type RegistryDeleteAPIDocumentAccessGroupResponse = null;
 export declare namespace Registry {
   export {
     type Version as Version,
@@ -351,8 +572,15 @@ export declare namespace Registry {
     type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
     type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
     type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,
+    type RegistryUpdateAPIDocumentResponse as RegistryUpdateAPIDocumentResponse,
+    type RegistryDeleteAPIDocumentResponse as RegistryDeleteAPIDocumentResponse,
+    type RegistryRetrieveAPIDocumentVersionResponse as RegistryRetrieveAPIDocumentVersionResponse,
     type RegistryUpdateAPIDocumentVersionResponse as RegistryUpdateAPIDocumentVersionResponse,
-    type ManagedDocVersion as ManagedDocVersion,
+    type RegistryDeleteAPIDocumentVersionResponse as RegistryDeleteAPIDocumentVersionResponse,
+    type RegistryListAPIDocumentVersionMetadataResponse as RegistryListAPIDocumentVersionMetadataResponse,
+    type RegistryCreateAPIDocumentVersionResponse as RegistryCreateAPIDocumentVersionResponse,
+    type RegistryCreateAPIDocumentAccessGroupResponse as RegistryCreateAPIDocumentAccessGroupResponse,
+    type RegistryDeleteAPIDocumentAccessGroupResponse as RegistryDeleteAPIDocumentAccessGroupResponse,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
     type RegistryUpdateAPIDocumentParams as RegistryUpdateAPIDocumentParams,
     type RegistryUpdateAPIDocumentVersionParams as RegistryUpdateAPIDocumentVersionParams,
@@ -361,4 +589,3 @@ export declare namespace Registry {
     type RegistryDeleteAPIDocumentAccessGroupParams as RegistryDeleteAPIDocumentAccessGroupParams,
   };
 }
-export { Registry as RegistryResource };

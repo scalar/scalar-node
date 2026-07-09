@@ -61,91 +61,156 @@ export class ScalarDocs extends APIResource {
 
 export type Slug = string;
 
-export interface GithubProject {
-  uid: Nanoid;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  name: string;
-  activeDeployment: ActiveDeployment | null;
-  lastPublished: Timestamp | null;
-  lastPublishedUid: string | null;
-  loginPortalUid: string;
-  activeThemeId: string;
-  isPrivate: boolean;
-  agentEnabled: boolean;
-  accessGroups: string;
-  slug: Slug;
-  publishStatus: string;
-  publishMessage: string;
-  typesenseId?: number;
-  repository?: GithubProjectRepository | null;
+export type ScalarDocListGuidesResponse = Array<ScalarDocListGuidesResponse.ScalarDocListGuidesResponseItem>;
+
+export namespace ScalarDocListGuidesResponse {
+  export interface ScalarDocListGuidesResponseItem {
+    /**
+     * @default nanoid()
+     * @minLength 5
+     */
+    uid: string;
+    /**
+     * @default unixTimestamp()
+     * @minimum 0
+     * @maximum 9007199254740991
+     */
+    createdAt: number;
+    /**
+     * @default unixTimestamp()
+     * @minimum 0
+     * @maximum 9007199254740991
+     */
+    updatedAt: number;
+    name: string;
+    /**
+     * @default null
+     */
+    activeDeployment: ScalarDocListGuidesResponseItem.ActiveDeployment | null;
+    /**
+     * @default null
+     * @minimum 0
+     * @maximum 9007199254740991
+     */
+    lastPublished: number | null;
+    /**
+     * @default null
+     */
+    lastPublishedUid: string | null;
+    /**
+     * @default ""
+     */
+    loginPortalUid: string;
+    /**
+     * @default ""
+     */
+    activeThemeId: string;
+    /**
+     * @default false
+     */
+    isPrivate: boolean;
+    /**
+     * @default false
+     */
+    agentEnabled: boolean;
+    /**
+     * @default []
+     */
+    accessGroups: unknown;
+    /**
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: Slug;
+    /**
+     * @default ""
+     */
+    publishStatus: string;
+    /**
+     * @default ""
+     */
+    publishMessage: string;
+    typesenseId?: number;
+    repository?: ScalarDocListGuidesResponseItem.Repository | null;
+  }
+
+  export namespace ScalarDocListGuidesResponseItem {
+    export interface ActiveDeployment {
+      uid: string;
+      domain: string;
+      /**
+       * @minimum 0
+       * @maximum 9007199254740991
+       */
+      publishedAt: number;
+    }
+
+    export interface Repository {
+      linkedBy: string;
+      id: number;
+      /**
+       * @minLength 2
+       */
+      name: string;
+      /**
+       * @default ""
+       */
+      configPath: string;
+      /**
+       * @default ""
+       */
+      branch: string;
+      /**
+       * @default false
+       */
+      publishOnMerge: boolean;
+      /**
+       * @default false
+       */
+      publishPreviews: boolean;
+      /**
+       * @default false
+       */
+      prComments: boolean;
+      /**
+       * @default false
+       */
+      expired: boolean;
+    }
+  }
 }
-
-export type Nanoid = string;
-
-export type Timestamp = number;
-
-export interface ActiveDeployment {
-  uid: string;
-  domain: string;
-  publishedAt: Timestamp;
-}
-
-export interface GithubProjectRepository {
-  linkedBy: string;
-  id: number;
-  name: string;
-  configPath: string;
-  branch: string;
-  publishOnMerge: boolean;
-  publishPreviews: boolean;
-  prComments: boolean;
-  expired: boolean;
-}
-
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export type ScalarDocListGuidesResponse = Array<GithubProject>;
 
 export interface ScalarDocCreateGuideParams {
   name: string;
+  /**
+   * @default false
+   */
   isPrivate: boolean;
+  /**
+   * @default []
+   */
   allowedUsers: Array<string>;
+  /**
+   * @default []
+   */
   allowedDomains: Array<string>;
+  /**
+   * @minLength 3
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
   slug?: Slug;
 }
 
-export type ScalarDocCreateGuideResponse = { uid: string; slug: string };
+export interface ScalarDocCreateGuideResponse {
+  uid: string;
+  slug: string;
+}
 
-export type ScalarDocPublishGuideResponse = { publishUid: string };
+export interface ScalarDocPublishGuideResponse {
+  publishUid: string;
+}
 export declare namespace ScalarDocs {
   export {
     type Slug as Slug,
@@ -155,4 +220,3 @@ export declare namespace ScalarDocs {
     type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams,
   };
 }
-export { ScalarDocs as ScalarDocResource };

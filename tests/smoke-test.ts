@@ -116,7 +116,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "GET",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}/metadata",
     run: async () => {
-      const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
+      const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata("namespace", "slug", "semver");
     },
   },
 
@@ -125,7 +125,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/apis/{namespace}/{slug}/version",
     run: async () => {
-      const managedDocVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
+      const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
         version: "",
         document: "",
       });
@@ -168,7 +168,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/schemas/{namespace}",
     run: async () => {
-      const uID = await client.schemas.create("namespace", {
+      const create = await client.schemas.create("namespace", {
         title: "",
         version: "",
         slug: "",
@@ -196,29 +196,29 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: "retrieveSchema",
+    operation: "retrieveVersion",
     method: "GET",
     path: "/v1/schemas/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      const string_ = await client.schemas.version.retrieveSchema("namespace", "slug", "semver");
+      const string_ = await client.schemas.retrieveVersion("namespace", "slug", "semver");
     },
   },
 
   {
-    operation: "deleteSchema",
+    operation: "deleteVersion",
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/version/{semver}",
     run: async () => {
-      await client.schemas.version.deleteSchema("namespace", "slug", "semver");
+      await client.schemas.deleteVersion("namespace", "slug", "semver");
     },
   },
 
   {
-    operation: "createSchema",
+    operation: "createVersion",
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/version",
     run: async () => {
-      const uID = await client.schemas.version.createSchema("namespace", "slug", {
+      const createVersion = await client.schemas.createVersion("namespace", "slug", {
         version: "",
         document: "",
       });
@@ -226,22 +226,22 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: "createSchema",
+    operation: "createAccessGroup",
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.schemas.accessGroup.createSchema("namespace", "slug", {
+      await client.schemas.createAccessGroup("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
   },
 
   {
-    operation: "deleteSchema",
+    operation: "deleteAccessGroup",
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: async () => {
-      await client.schemas.accessGroup.deleteSchema("namespace", "slug", {
+      await client.schemas.deleteAccessGroup("namespace", "slug", {
         accessGroupSlug: "",
       });
     },
@@ -279,7 +279,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/login-portals",
     run: async () => {
-      const uID = await client.loginPortals.create({
+      const create = await client.loginPortals.create({
         title: "",
         slug: "",
         email: {
@@ -338,7 +338,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/rulesets/{namespace}",
     run: async () => {
-      const uID = await client.rules.createRuleset("namespace", {
+      const createRuleset = await client.rules.createRuleset("namespace", {
         title: "",
         slug: "",
         document: "",
@@ -409,7 +409,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "POST",
     path: "/v1/themes",
     run: async () => {
-      const uID = await client.themes.create({
+      const create = await client.themes.create({
         name: "",
         slug: "",
         document: "",
@@ -521,7 +521,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: "GET",
     path: "/v1/auth/me",
     run: async () => {
-      const user = await client.authentication.listCurrentUser();
+      const listCurrentUser = await client.authentication.listCurrentUser();
     },
   },
 

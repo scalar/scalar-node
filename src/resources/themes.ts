@@ -3,7 +3,9 @@
 import { APIResource } from "../resource";
 import { APIPromise } from "../api-promise";
 import type { RequestOptions } from "../internal/request-options";
+import { buildHeaders } from "../internal/headers";
 import { path as __scalarPath } from "../internal/utils/path";
+import type * as ScalarDocsAPI from "./scalar-docs";
 
 export class Themes extends APIResource {
   /**
@@ -26,18 +28,18 @@ export class Themes extends APIResource {
    *
    * @param {ThemeCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<UID>} Default Response
+   * @returns {APIPromise<ThemeCreateResponse>} Default Response
    *
    * @example
    * ```ts
-   * const uID = await client.themes.create({
+   * const create = await client.themes.create({
    *   name: "",
    *   slug: "",
    *   document: "",
    * });
    * ```
    */
-  create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<UID> {
+  create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<ThemeCreateResponse> {
     return this._client.post("/v1/themes", { body: body, ...options });
   }
 
@@ -47,14 +49,14 @@ export class Themes extends APIResource {
    * @param {string} slug
    * @param {ThemeUpdateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<ThemeUpdateResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.themes.update("slug", {});
    * ```
    */
-  update(slug: string, body: ThemeUpdateParams, options?: RequestOptions): APIPromise<null> {
+  update(slug: string, body: ThemeUpdateParams, options?: RequestOptions): APIPromise<ThemeUpdateResponse> {
     return this._client.patch(__scalarPath`/v1/themes/${slug}`, { body: body, ...options });
   }
 
@@ -64,7 +66,7 @@ export class Themes extends APIResource {
    * @param {string} slug
    * @param {ThemeReplaceDocumentParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<ThemeReplaceDocumentResponse>} Default Response
    *
    * @example
    * ```ts
@@ -73,7 +75,7 @@ export class Themes extends APIResource {
    * });
    * ```
    */
-  replaceDocument(slug: string, body: ThemeReplaceDocumentParams, options?: RequestOptions): APIPromise<null> {
+  replaceDocument(slug: string, body: ThemeReplaceDocumentParams, options?: RequestOptions): APIPromise<ThemeReplaceDocumentResponse> {
     return this._client.put(__scalarPath`/v1/themes/${slug}`, { body: body, ...options });
   }
 
@@ -82,14 +84,14 @@ export class Themes extends APIResource {
    *
    * @param {string} slug
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<null>} Default Response
+   * @returns {APIPromise<ThemeDeleteResponse>} Default Response
    *
    * @example
    * ```ts
    * await client.themes.delete("slug");
    * ```
    */
-  delete(slug: string, options?: RequestOptions): APIPromise<null> {
+  delete(slug: string, options?: RequestOptions): APIPromise<ThemeDeleteResponse> {
     return this._client.delete(__scalarPath`/v1/themes/${slug}`, options);
   }
 
@@ -98,64 +100,36 @@ export class Themes extends APIResource {
    *
    * @param {string} slug
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<string>} Default Response
+   * @returns {APIPromise<ThemeRetrieveResponse>} Default Response
    *
    * @example
    * ```ts
    * const string_ = await client.themes.retrieve("slug");
    * ```
    */
-  retrieve(slug: string, options?: RequestOptions): APIPromise<string> {
-    return this._client.get(__scalarPath`/v1/themes/${slug}`, options);
+  retrieve(slug: string, options?: RequestOptions): APIPromise<ThemeRetrieveResponse> {
+    return this._client.get(__scalarPath`/v1/themes/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 }
 
-export interface Theme {
-  uid: Nanoid;
-  name: string;
-  description: string;
-  slug: Slug;
+export type ThemeListResponse = Array<ThemeListResponse.ThemeListResponseItem>;
+
+export namespace ThemeListResponse {
+  export interface ThemeListResponseItem {
+    /**
+     * @minLength 5
+     */
+    uid: string;
+    name: string;
+    description: string;
+    /**
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: ScalarDocsAPI.Slug;
+  }
 }
-
-export type Nanoid = string;
-
-export type Slug = string;
-
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export interface UID {
-  uid: Nanoid;
-}
-
-export type ThemeListResponse = Array<Theme>;
 
 export interface ThemeCreateParams {
   name: string;
@@ -164,21 +138,39 @@ export interface ThemeCreateParams {
   description?: string;
 }
 
+export interface ThemeCreateResponse {
+  /**
+   * @minLength 5
+   */
+  uid: string;
+}
+
 export interface ThemeUpdateParams {
   name?: string;
   description?: string;
 }
 
+export type ThemeUpdateResponse = null;
+
 export interface ThemeReplaceDocumentParams {
   document: string;
 }
+
+export type ThemeReplaceDocumentResponse = null;
+
+export type ThemeDeleteResponse = null;
+
+export type ThemeRetrieveResponse = string;
 export declare namespace Themes {
   export {
     type ThemeListResponse as ThemeListResponse,
-    type UID as UID,
+    type ThemeCreateResponse as ThemeCreateResponse,
+    type ThemeUpdateResponse as ThemeUpdateResponse,
+    type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
+    type ThemeDeleteResponse as ThemeDeleteResponse,
+    type ThemeRetrieveResponse as ThemeRetrieveResponse,
     type ThemeCreateParams as ThemeCreateParams,
     type ThemeUpdateParams as ThemeUpdateParams,
     type ThemeReplaceDocumentParams as ThemeReplaceDocumentParams,
   };
 }
-export { Themes as ThemeResource };

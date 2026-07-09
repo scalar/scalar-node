@@ -3,6 +3,7 @@
 import { APIResource } from "../resource";
 import { APIPromise } from "../api-promise";
 import type { RequestOptions } from "../internal/request-options";
+import type * as ScalarDocsAPI from "./scalar-docs";
 
 export class Teams extends APIResource {
   /**
@@ -21,56 +22,27 @@ export class Teams extends APIResource {
   }
 }
 
-export interface Team {
-  uid: Nanoid;
-  name: TeamName;
-  slug: Slug;
-  theme: string;
-  imageUri?: TeamImage;
+export type TeamListResponse = Array<TeamListResponse.TeamListResponseItem>;
+
+export namespace TeamListResponse {
+  export interface TeamListResponseItem {
+    /**
+     * @minLength 5
+     */
+    uid: string;
+    name: string;
+    /**
+     * @minLength 3
+     * @maxLength 60
+     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+     */
+    slug: ScalarDocsAPI.Slug;
+    theme: string;
+    imageUri?: string;
+  }
 }
-
-export type Nanoid = string;
-
-export type TeamName = string;
-
-export type TeamImage = string;
-
-export type Slug = string;
-
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export type TeamListResponse = Array<Team>;
 export declare namespace Teams {
   export {
     type TeamListResponse as TeamListResponse,
   };
 }
-export { Teams as TeamResource };
