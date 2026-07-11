@@ -51,7 +51,7 @@ export class Registry extends APIResource {
    * ```ts
    * const createAPIDocument = await client.registry.createAPIDocument("namespace", {
    *   title: "",
-   *   version: "",
+   *   version: "x",
    *   slug: "",
    *   document: "",
    * });
@@ -183,7 +183,7 @@ export class Registry extends APIResource {
    * @example
    * ```ts
    * const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
-   *   version: "",
+   *   version: "x",
    *   document: "",
    * });
    * ```
@@ -204,7 +204,7 @@ export class Registry extends APIResource {
    * @example
    * ```ts
    * await client.registry.createAPIDocumentAccessGroup("namespace", "slug", {
-   *   accessGroupSlug: "",
+   *   accessGroupSlug: "xxx",
    * });
    * ```
    */
@@ -224,7 +224,7 @@ export class Registry extends APIResource {
    * @example
    * ```ts
    * await client.registry.deleteAPIDocumentAccessGroup("namespace", "slug", {
-   *   accessGroupSlug: "",
+   *   accessGroupSlug: "xxx",
    * });
    * ```
    */

@@ -222,11 +222,3 @@ Generated clients support request timeouts and retry temporary failures such as 
 - Node.js 20+, a modern browser, or any runtime with `fetch` support
 
 Powered by Scalar.
-
-
-## Contributions
-
-This SDK is generated programmatically. Manual edits to generated files will be
-overwritten on the next build.
-
-### SDK created by [Scalar](https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=sdk)

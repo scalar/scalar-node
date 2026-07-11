@@ -109,7 +109,7 @@ Create an API document.
 ```ts
 const createAPIDocument = await client.registry.createAPIDocument("namespace", {
   title: "",
-  version: "",
+  version: "x",
   slug: "",
   document: "",
 });
@@ -202,7 +202,7 @@ Create a new API document version.
 
 ```ts
 const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
-  version: "",
+  version: "x",
   document: "",
 });
 ```
@@ -218,7 +218,7 @@ Add an access group to an API document.
 
 ```ts
 await client.registry.createAPIDocumentAccessGroup("namespace", "slug", {
-  accessGroupSlug: "",
+  accessGroupSlug: "xxx",
 });
 ```
 
@@ -233,7 +233,7 @@ Remove an access group from an API document.
 
 ```ts
 await client.registry.deleteAPIDocumentAccessGroup("namespace", "slug", {
-  accessGroupSlug: "",
+  accessGroupSlug: "xxx",
 });
 ```
 
@@ -263,7 +263,7 @@ Create a schema in a namespace.
 ```ts
 const create = await client.schemas.create("namespace", {
   title: "",
-  version: "",
+  version: "x",
   slug: "",
   document: "",
 });
@@ -329,7 +329,7 @@ Create a schema version.
 
 ```ts
 const createVersion = await client.schemas.createVersion("namespace", "slug", {
-  version: "",
+  version: "x",
   document: "",
 });
 ```
@@ -345,7 +345,7 @@ Add an access group to a schema.
 
 ```ts
 await client.schemas.createAccessGroup("namespace", "slug", {
-  accessGroupSlug: "",
+  accessGroupSlug: "xxx",
 });
 ```
 
@@ -360,7 +360,7 @@ Remove an access group from a schema.
 
 ```ts
 await client.schemas.deleteAccessGroup("namespace", "slug", {
-  accessGroupSlug: "",
+  accessGroupSlug: "xxx",
 });
 ```
 
@@ -539,7 +539,7 @@ Grant an access group to a rule.
 
 ```ts
 await client.rules.createRulesetAccessGroup("namespace", "slug", {
-  accessGroupSlug: "",
+  accessGroupSlug: "xxx",
 });
 ```
 
@@ -554,7 +554,7 @@ Remove an access group from a rule.
 
 ```ts
 await client.rules.deleteRulesetAccessGroup("namespace", "slug", {
-  accessGroupSlug: "",
+  accessGroupSlug: "xxx",
 });
 ```
 

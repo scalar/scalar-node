@@ -37,7 +37,7 @@ export class Schemas extends APIResource {
    * ```ts
    * const create = await client.schemas.create("namespace", {
    *   title: "",
-   *   version: "",
+   *   version: "x",
    *   slug: "",
    *   document: "",
    * });
@@ -130,7 +130,7 @@ export class Schemas extends APIResource {
    * @example
    * ```ts
    * const createVersion = await client.schemas.createVersion("namespace", "slug", {
-   *   version: "",
+   *   version: "x",
    *   document: "",
    * });
    * ```
@@ -151,7 +151,7 @@ export class Schemas extends APIResource {
    * @example
    * ```ts
    * await client.schemas.createAccessGroup("namespace", "slug", {
-   *   accessGroupSlug: "",
+   *   accessGroupSlug: "xxx",
    * });
    * ```
    */
@@ -171,7 +171,7 @@ export class Schemas extends APIResource {
    * @example
    * ```ts
    * await client.schemas.deleteAccessGroup("namespace", "slug", {
-   *   accessGroupSlug: "",
+   *   accessGroupSlug: "xxx",
    * });
    * ```
    */

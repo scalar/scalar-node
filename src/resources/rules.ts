@@ -110,7 +110,7 @@ export class Rules extends APIResource {
    * @example
    * ```ts
    * await client.rules.createRulesetAccessGroup("namespace", "slug", {
-   *   accessGroupSlug: "",
+   *   accessGroupSlug: "xxx",
    * });
    * ```
    */
@@ -130,7 +130,7 @@ export class Rules extends APIResource {
    * @example
    * ```ts
    * await client.rules.deleteRulesetAccessGroup("namespace", "slug", {
-   *   accessGroupSlug: "",
+   *   accessGroupSlug: "xxx",
    * });
    * ```
    */

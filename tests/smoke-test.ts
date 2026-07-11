@@ -57,7 +57,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     run: async () => {
       const createAPIDocument = await client.registry.createAPIDocument("namespace", {
         title: "",
-        version: "",
+        version: "x",
         slug: "",
         document: "",
       });
@@ -126,7 +126,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/apis/{namespace}/{slug}/version",
     run: async () => {
       const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion("namespace", "slug", {
-        version: "",
+        version: "x",
         document: "",
       });
     },
@@ -138,7 +138,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/apis/{namespace}/{slug}/access-group",
     run: async () => {
       await client.registry.createAPIDocumentAccessGroup("namespace", "slug", {
-        accessGroupSlug: "",
+        accessGroupSlug: "xxx",
       });
     },
   },
@@ -149,7 +149,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/apis/{namespace}/{slug}/access-group",
     run: async () => {
       await client.registry.deleteAPIDocumentAccessGroup("namespace", "slug", {
-        accessGroupSlug: "",
+        accessGroupSlug: "xxx",
       });
     },
   },
@@ -170,7 +170,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     run: async () => {
       const create = await client.schemas.create("namespace", {
         title: "",
-        version: "",
+        version: "x",
         slug: "",
         document: "",
       });
@@ -219,7 +219,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/schemas/{namespace}/{slug}/version",
     run: async () => {
       const createVersion = await client.schemas.createVersion("namespace", "slug", {
-        version: "",
+        version: "x",
         document: "",
       });
     },
@@ -231,7 +231,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: async () => {
       await client.schemas.createAccessGroup("namespace", "slug", {
-        accessGroupSlug: "",
+        accessGroupSlug: "xxx",
       });
     },
   },
@@ -242,7 +242,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: async () => {
       await client.schemas.deleteAccessGroup("namespace", "slug", {
-        accessGroupSlug: "",
+        accessGroupSlug: "xxx",
       });
     },
   },
@@ -379,7 +379,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: async () => {
       await client.rules.createRulesetAccessGroup("namespace", "slug", {
-        accessGroupSlug: "",
+        accessGroupSlug: "xxx",
       });
     },
   },
@@ -390,7 +390,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: async () => {
       await client.rules.deleteRulesetAccessGroup("namespace", "slug", {
-        accessGroupSlug: "",
+        accessGroupSlug: "xxx",
       });
     },
   },
