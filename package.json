@@ -1,5 +1,5 @@
 {
-  "name": "@scalar/access-service",
+  "name": "@scalar/sdk",
   "version": "0.1.0",
   "description": "API for managing Scalar platform resources.",
   "repository": {
