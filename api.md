@@ -63,7 +63,7 @@ Complete reference of every operation, grouped by resource. See [the README](./R
 ## Setup
 
 ```ts
-import Scalar from "@scalar/access-service";
+import Scalar from "@scalar/sdk";
 
 const client = new Scalar({
   bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
