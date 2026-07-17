@@ -1070,7 +1070,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\nconsole.log(listAllAPIDocuments);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\nconsole.log(listAllAPIDocuments);"
           },
           {
             "label": "Shell",
@@ -1202,7 +1202,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments(\"namespace\");\nconsole.log(listAPIDocuments);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments(\"namespace\");\nconsole.log(listAPIDocuments);"
           },
           {
             "label": "Shell",
@@ -1398,7 +1398,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument(\"namespace\", {\n  title: \"\",\n  version: \"x\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createAPIDocument);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument(\"namespace\", {\n  title: \"\",\n  version: \"x\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createAPIDocument);"
           },
           {
             "label": "Shell",
@@ -1560,7 +1560,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.updateAPIDocument(\"namespace\", \"slug\", {});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.updateAPIDocument(\"namespace\", \"slug\", {});"
           },
           {
             "label": "Shell",
@@ -1695,7 +1695,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocument(\"namespace\", \"slug\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocument(\"namespace\", \"slug\");"
           },
           {
             "label": "Shell",
@@ -1840,7 +1840,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
           },
           {
             "label": "Shell",
@@ -2022,7 +2022,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(\"namespace\", \"slug\", \"semver\", {\n  document: \"\",\n});\nconsole.log(updateAPIDocumentVersion);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(\"namespace\", \"slug\", \"semver\", {\n  document: \"\",\n});\nconsole.log(updateAPIDocumentVersion);"
           },
           {
             "label": "Shell",
@@ -2165,7 +2165,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentVersion(\"namespace\", \"slug\", \"semver\");"
           },
           {
             "label": "Shell",
@@ -2310,7 +2310,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata(\"namespace\", \"slug\", \"semver\");\nconsole.log(listAPIDocumentVersionMetadata);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata(\"namespace\", \"slug\", \"semver\");\nconsole.log(listAPIDocumentVersionMetadata);"
           },
           {
             "label": "Shell",
@@ -2476,7 +2476,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocumentVersion = await client.registry.createAPIDocumentVersion(\"namespace\", \"slug\", {\n  version: \"x\",\n  document: \"\",\n});\nconsole.log(createAPIDocumentVersion);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createAPIDocumentVersion = await client.registry.createAPIDocumentVersion(\"namespace\", \"slug\", {\n  version: \"x\",\n  document: \"\",\n});\nconsole.log(createAPIDocumentVersion);"
           },
           {
             "label": "Shell",
@@ -2623,7 +2623,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.createAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.createAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
           },
           {
             "label": "Shell",
@@ -2768,7 +2768,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
           },
           {
             "label": "Shell",
@@ -2900,7 +2900,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.schemas.list(\"namespace\");\nconsole.log(list);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.schemas.list(\"namespace\");\nconsole.log(list);"
           },
           {
             "label": "Shell",
@@ -3064,7 +3064,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst create = await client.schemas.create(\"namespace\", {\n  title: \"\",\n  version: \"x\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(create);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst create = await client.schemas.create(\"namespace\", {\n  title: \"\",\n  version: \"x\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(create);"
           },
           {
             "label": "Shell",
@@ -3223,7 +3223,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.update(\"namespace\", \"slug\", {});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.update(\"namespace\", \"slug\", {});"
           },
           {
             "label": "Shell",
@@ -3358,7 +3358,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.delete(\"namespace\", \"slug\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.delete(\"namespace\", \"slug\");"
           },
           {
             "label": "Shell",
@@ -3503,7 +3503,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.schemas.retrieveVersion(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.schemas.retrieveVersion(\"namespace\", \"slug\", \"semver\");\nconsole.log(string_);"
           },
           {
             "label": "Shell",
@@ -3646,7 +3646,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.deleteVersion(\"namespace\", \"slug\", \"semver\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.deleteVersion(\"namespace\", \"slug\", \"semver\");"
           },
           {
             "label": "Shell",
@@ -3806,7 +3806,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createVersion = await client.schemas.createVersion(\"namespace\", \"slug\", {\n  version: \"x\",\n  document: \"\",\n});\nconsole.log(createVersion);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createVersion = await client.schemas.createVersion(\"namespace\", \"slug\", {\n  version: \"x\",\n  document: \"\",\n});\nconsole.log(createVersion);"
           },
           {
             "label": "Shell",
@@ -3953,7 +3953,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.createAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.createAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
           },
           {
             "label": "Shell",
@@ -4098,7 +4098,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.deleteAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.schemas.deleteAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
           },
           {
             "label": "Shell",
@@ -4252,7 +4252,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst retrieve = await client.loginPortals.retrieve(\"slug\");\nconsole.log(retrieve);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst retrieve = await client.loginPortals.retrieve(\"slug\");\nconsole.log(retrieve);"
           },
           {
             "label": "Shell",
@@ -4395,7 +4395,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.update(\"slug\", {});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.update(\"slug\", {});"
           },
           {
             "label": "Shell",
@@ -4522,7 +4522,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.delete(\"slug\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.loginPortals.delete(\"slug\");"
           },
           {
             "label": "Shell",
@@ -4672,7 +4672,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst create = await client.loginPortals.create({\n  title: \"\",\n  slug: \"\",\n  email: {\n    logo: \"\",\n    logoSize: \"100\",\n    buttonText: \"Login\",\n    message: \"Click to access private documentation hosted by scalar.com\",\n    title: \"Private Docs\",\n    mainColor: \"#2a2f45\",\n    mainBackground: \"#f6f6f6\",\n    cardColor: \"2a2f45\",\n    cardBackground: \"#fff\",\n    buttonColor: \"#fff\",\n    buttonBackground: \"#0f0f0f\",\n  },\n  page: {\n    title: \"Scalar Private Docs\",\n    description: \"Login to access your documentation\",\n    head: \"\",\n    script: \"\",\n    theme: \"\",\n    companyName: \"\",\n    logo: \"\",\n    logoURL: \"\",\n    favicon: \"\",\n    termsLink: \"\",\n    privacyLink: \"\",\n    formTitle: \"Scalar Private Docs\",\n    formDescription: \"Login to access your documentation\",\n    formImage: \"\",\n  },\n});\nconsole.log(create);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst create = await client.loginPortals.create({\n  title: \"\",\n  slug: \"\",\n  email: {\n    logo: \"\",\n    logoSize: \"100\",\n    buttonText: \"Login\",\n    message: \"Click to access private documentation hosted by scalar.com\",\n    title: \"Private Docs\",\n    mainColor: \"#2a2f45\",\n    mainBackground: \"#f6f6f6\",\n    cardColor: \"2a2f45\",\n    cardBackground: \"#fff\",\n    buttonColor: \"#fff\",\n    buttonBackground: \"#0f0f0f\",\n  },\n  page: {\n    title: \"Scalar Private Docs\",\n    description: \"Login to access your documentation\",\n    head: \"\",\n    script: \"\",\n    theme: \"\",\n    companyName: \"\",\n    logo: \"\",\n    logoURL: \"\",\n    favicon: \"\",\n    termsLink: \"\",\n    privacyLink: \"\",\n    formTitle: \"Scalar Private Docs\",\n    formDescription: \"Login to access your documentation\",\n    formImage: \"\",\n  },\n});\nconsole.log(create);"
           },
           {
             "label": "Shell",
@@ -4792,7 +4792,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.loginPortals.list();\nconsole.log(list);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.loginPortals.list();\nconsole.log(list);"
           },
           {
             "label": "Shell",
@@ -4924,7 +4924,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listRulesets = await client.rules.listRulesets(\"namespace\");\nconsole.log(listRulesets);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listRulesets = await client.rules.listRulesets(\"namespace\");\nconsole.log(listRulesets);"
           },
           {
             "label": "Shell",
@@ -5084,7 +5084,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createRuleset = await client.rules.createRuleset(\"namespace\", {\n  title: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createRuleset);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createRuleset = await client.rules.createRuleset(\"namespace\", {\n  title: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createRuleset);"
           },
           {
             "label": "Shell",
@@ -5249,7 +5249,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.updateRuleset(\"namespace\", \"slug\", {});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.updateRuleset(\"namespace\", \"slug\", {});"
           },
           {
             "label": "Shell",
@@ -5384,7 +5384,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRuleset(\"namespace\", \"slug\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRuleset(\"namespace\", \"slug\");"
           },
           {
             "label": "Shell",
@@ -5519,7 +5519,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument(\"namespace\", \"slug\");\nconsole.log(string_);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument(\"namespace\", \"slug\");\nconsole.log(string_);"
           },
           {
             "label": "Shell",
@@ -5666,7 +5666,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.createRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.createRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
           },
           {
             "label": "Shell",
@@ -5811,7 +5811,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.rules.deleteRulesetAccessGroup(\"namespace\", \"slug\", {\n  accessGroupSlug: \"xxx\",\n});"
           },
           {
             "label": "Shell",
@@ -5933,7 +5933,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.themes.list();\nconsole.log(list);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.themes.list();\nconsole.log(list);"
           },
           {
             "label": "Shell",
@@ -6080,7 +6080,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst create = await client.themes.create({\n  name: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(create);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst create = await client.themes.create({\n  name: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(create);"
           },
           {
             "label": "Shell",
@@ -6228,7 +6228,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.update(\"slug\", {});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.update(\"slug\", {});"
           },
           {
             "label": "Shell",
@@ -6374,7 +6374,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.replaceDocument(\"slug\", {\n  document: \"\",\n});"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.replaceDocument(\"slug\", {\n  document: \"\",\n});"
           },
           {
             "label": "Shell",
@@ -6501,7 +6501,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.delete(\"slug\");"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.themes.delete(\"slug\");"
           },
           {
             "label": "Shell",
@@ -6628,7 +6628,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.themes.retrieve(\"slug\");\nconsole.log(string_);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst string_ = await client.themes.retrieve(\"slug\");\nconsole.log(string_);"
           },
           {
             "label": "Shell",
@@ -6750,7 +6750,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.teams.list();\nconsole.log(list);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.teams.list();\nconsole.log(list);"
           },
           {
             "label": "Shell",
@@ -6872,7 +6872,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\nconsole.log(listGuides);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\nconsole.log(listGuides);"
           },
           {
             "label": "Shell",
@@ -7045,7 +7045,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: \"\",\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\nconsole.log(createGuide);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: \"\",\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\nconsole.log(createGuide);"
           },
           {
             "label": "Shell",
@@ -7183,7 +7183,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide(\"slug\");\nconsole.log(publishGuide);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide(\"slug\");\nconsole.log(publishGuide);"
           },
           {
             "label": "Shell",
@@ -7305,7 +7305,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.namespaces.list();\nconsole.log(list);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst list = await client.namespaces.list();\nconsole.log(list);"
           },
           {
             "label": "Shell",
@@ -7453,7 +7453,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: \"\",\n});\nconsole.log(exchangePersonalToken);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: \"\",\n});\nconsole.log(exchangePersonalToken);"
           },
           {
             "label": "Shell",
@@ -7572,7 +7572,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/access-service\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listCurrentUser = await client.authentication.listCurrentUser();\nconsole.log(listCurrentUser);"
+            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listCurrentUser = await client.authentication.listCurrentUser();\nconsole.log(listCurrentUser);"
           },
           {
             "label": "Shell",
