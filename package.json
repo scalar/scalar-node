@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "name": "@scalar/access-service",
   "version": "0.3.0-next.1",
+=======
+  "name": "@scalar/sdk",
+  "version": "0.1.0",
+>>>>>>> 7dc8e342709c6260403ff096e73782278fd9b483
   "description": "API for managing Scalar platform resources.",
   "repository": {
     "type": "git",
