@@ -1,0 +1,59 @@
+{
+  "name": "@scalar/sdk",
+  "version": "0.1.0",
+  "description": "API for managing Scalar platform resources.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scalar/scalar-node.git"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./resources/*": {
+      "types": "./dist/esm/resources/*.d.ts",
+      "import": "./dist/esm/resources/*.js",
+      "require": "./dist/cjs/resources/*.js",
+      "default": "./dist/esm/resources/*.js"
+    },
+    "./*.mjs": {
+      "types": "./dist/esm/*.d.ts",
+      "import": "./dist/esm/*.js",
+      "default": "./dist/esm/*.js"
+    },
+    "./*.js": {
+      "types": "./dist/esm/*.d.ts",
+      "require": "./dist/cjs/*.js",
+      "default": "./dist/cjs/*.js"
+    },
+    "./*": {
+      "types": "./dist/esm/*.d.ts",
+      "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js",
+      "default": "./dist/esm/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "api.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && node scripts/finalize-build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.cjs.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^6.0.0"
+  },
+  "license": "Apache-2.0"
+}
