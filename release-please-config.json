@@ -4,7 +4,10 @@
       "release-type": "node",
       "extra-files": [
         "src/version.ts"
-      ]
+      ],
+      "versioning": "prerelease",
+      "prerelease-type": "next",
+      "prerelease": true
     }
   },
   "bump-minor-pre-major": true,
