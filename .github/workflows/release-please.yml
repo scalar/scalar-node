@@ -51,12 +51,3 @@ jobs:
           git checkout -B scalar-next origin/scalar-next
           git merge --no-edit -m "Sync release ${{ steps.release.outputs.tag_name }} back to scalar-next" "${{ steps.release.outputs.sha }}"
           git push origin scalar-next
-  publish:
-    needs: release-please
-    if: ${{ !cancelled() && needs.release-please.outputs.release_created == 'true' }}
-    permissions:
-      contents: write
-      id-token: write
-      packages: write
-    uses: ./.github/workflows/sdk-release.yml
-    secrets: inherit
