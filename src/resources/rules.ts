@@ -49,93 +49,103 @@ export class Rules extends APIResource {
   /**
    * Update rule metadata by slug.
    *
-   * @param {string} namespace_
    * @param {string} slug
-   * @param {RuleUpdateRulesetParams} body - The request body to send.
+   * @param {RuleUpdateRulesetParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleUpdateRulesetResponse>} Default Response
    *
    * @example
    * ```ts
-   * await client.rules.updateRuleset("namespace", "slug", {});
+   * await client.rules.updateRuleset("slug", {
+   *   namespace: "namespace",
+   * });
    * ```
    */
-  updateRuleset(namespace_: string, slug: string, body: RuleUpdateRulesetParams, options?: RequestOptions): APIPromise<RuleUpdateRulesetResponse> {
-    return this._client.patch(__scalarPath`/v1/rulesets/${namespace_}/${slug}`, { body: body, ...options });
+  updateRuleset(slug: string, params: RuleUpdateRulesetParams, options?: RequestOptions): APIPromise<RuleUpdateRulesetResponse> {
+    const { namespace, ...body } = params ?? {};
+    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { body: body, ...options });
   }
 
   /**
    * Delete a rule by slug.
    *
-   * @param {string} namespace_
    * @param {string} slug
+   * @param {RuleDeleteRulesetParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleDeleteRulesetResponse>} Default Response
    *
    * @example
    * ```ts
-   * await client.rules.deleteRuleset("namespace", "slug");
+   * await client.rules.deleteRuleset("slug", {
+   *   namespace: "namespace",
+   * });
    * ```
    */
-  deleteRuleset(namespace_: string, slug: string, options?: RequestOptions): APIPromise<RuleDeleteRulesetResponse> {
-    return this._client.delete(__scalarPath`/v1/rulesets/${namespace_}/${slug}`, options);
+  deleteRuleset(slug: string, params: RuleDeleteRulesetParams, options?: RequestOptions): APIPromise<RuleDeleteRulesetResponse> {
+    const { namespace } = params ?? {};
+    return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}`, options);
   }
 
   /**
    * Get a rule document by slug.
    *
-   * @param {string} namespace_
    * @param {string} slug
+   * @param {RuleRetrieveRulesetDocumentParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleRetrieveRulesetDocumentResponse>} Default Response
    *
    * @example
    * ```ts
-   * const string_ = await client.rules.retrieveRulesetDocument("namespace", "slug");
+   * const string_ = await client.rules.retrieveRulesetDocument("slug", {
+   *   namespace: "namespace",
+   * });
    * ```
    */
-  retrieveRulesetDocument(namespace_: string, slug: string, options?: RequestOptions): APIPromise<RuleRetrieveRulesetDocumentResponse> {
-    return this._client.get(__scalarPath`/v1/rulesets/${namespace_}/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
+  retrieveRulesetDocument(slug: string, params: RuleRetrieveRulesetDocumentParams, options?: RequestOptions): APIPromise<RuleRetrieveRulesetDocumentResponse> {
+    const { namespace } = params ?? {};
+    return this._client.get(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 
   /**
    * Grant an access group to a rule.
    *
-   * @param {string} namespace_
    * @param {string} slug
-   * @param {RuleCreateRulesetAccessGroupParams} body - The request body to send.
+   * @param {RuleCreateRulesetAccessGroupParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleCreateRulesetAccessGroupResponse>} Default Response
    *
    * @example
    * ```ts
-   * await client.rules.createRulesetAccessGroup("namespace", "slug", {
+   * await client.rules.createRulesetAccessGroup("slug", {
+   *   namespace: "namespace",
    *   accessGroupSlug: "xxx",
    * });
    * ```
    */
-  createRulesetAccessGroup(namespace_: string, slug: string, body: RuleCreateRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleCreateRulesetAccessGroupResponse> {
-    return this._client.post(__scalarPath`/v1/rulesets/${namespace_}/${slug}/access-group`, { body: body, ...options });
+  createRulesetAccessGroup(slug: string, params: RuleCreateRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleCreateRulesetAccessGroupResponse> {
+    const { namespace, ...body } = params ?? {};
+    return this._client.post(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body: body, ...options });
   }
 
   /**
    * Remove an access group from a rule.
    *
-   * @param {string} namespace_
    * @param {string} slug
-   * @param {RuleDeleteRulesetAccessGroupParams} body - The request body to send.
+   * @param {RuleDeleteRulesetAccessGroupParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleDeleteRulesetAccessGroupResponse>} Default Response
    *
    * @example
    * ```ts
-   * await client.rules.deleteRulesetAccessGroup("namespace", "slug", {
+   * await client.rules.deleteRulesetAccessGroup("slug", {
+   *   namespace: "namespace",
    *   accessGroupSlug: "xxx",
    * });
    * ```
    */
-  deleteRulesetAccessGroup(namespace_: string, slug: string, body: RuleDeleteRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleDeleteRulesetAccessGroupResponse> {
-    return this._client.delete(__scalarPath`/v1/rulesets/${namespace_}/${slug}/access-group`, { body: body, ...options });
+  deleteRulesetAccessGroup(slug: string, params: RuleDeleteRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleDeleteRulesetAccessGroupResponse> {
+    const { namespace, ...body } = params ?? {};
+    return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body: body, ...options });
   }
 }
 
@@ -193,21 +203,49 @@ export interface RuleCreateRulesetResponse {
 }
 
 export interface RuleUpdateRulesetParams {
-  namespace?: string;
+  /**
+   * Path param
+   */
+  namespace: string;
+  /**
+   * Body param
+   */
   slug?: string;
+  /**
+   * Body param
+   */
   title?: string;
+  /**
+   * Body param
+   */
   description?: string;
+  /**
+   * Body param
+   */
   isPrivate?: boolean;
 }
 
 export type RuleUpdateRulesetResponse = null;
 
+export interface RuleDeleteRulesetParams {
+  namespace: string;
+}
+
 export type RuleDeleteRulesetResponse = null;
+
+export interface RuleRetrieveRulesetDocumentParams {
+  namespace: string;
+}
 
 export type RuleRetrieveRulesetDocumentResponse = string;
 
 export interface RuleCreateRulesetAccessGroupParams {
   /**
+   * Path param
+   */
+  namespace: string;
+  /**
+   * Body param
    * @minLength 3
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
@@ -219,6 +257,11 @@ export type RuleCreateRulesetAccessGroupResponse = null;
 
 export interface RuleDeleteRulesetAccessGroupParams {
   /**
+   * Path param
+   */
+  namespace: string;
+  /**
+   * Body param
    * @minLength 3
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
@@ -238,6 +281,8 @@ export declare namespace Rules {
     type RuleDeleteRulesetAccessGroupResponse as RuleDeleteRulesetAccessGroupResponse,
     type RuleCreateRulesetParams as RuleCreateRulesetParams,
     type RuleUpdateRulesetParams as RuleUpdateRulesetParams,
+    type RuleDeleteRulesetParams as RuleDeleteRulesetParams,
+    type RuleRetrieveRulesetDocumentParams as RuleRetrieveRulesetDocumentParams,
     type RuleCreateRulesetAccessGroupParams as RuleCreateRulesetAccessGroupParams,
     type RuleDeleteRulesetAccessGroupParams as RuleDeleteRulesetAccessGroupParams,
   };

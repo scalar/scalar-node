@@ -20,10 +20,10 @@ import { stringify as stringifyQuery } from './internal/qs/stringify';
 import type { StringifyOptions } from './internal/qs/types';
 import { toFile } from './core/uploads';
 import { VERSION } from './version';
-import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentResponse, type RegistryDeleteAPIDocumentResponse, type RegistryRetrieveAPIDocumentVersionResponse, type RegistryUpdateAPIDocumentVersionResponse, type RegistryDeleteAPIDocumentVersionResponse, type RegistryListAPIDocumentVersionMetadataResponse, type RegistryCreateAPIDocumentVersionResponse, type RegistryCreateAPIDocumentAccessGroupResponse, type RegistryDeleteAPIDocumentAccessGroupResponse, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
-import { Schemas, type SchemaListResponse, type SchemaCreateResponse, type SchemaUpdateResponse, type SchemaDeleteResponse, type SchemaRetrieveVersionResponse, type SchemaDeleteVersionResponse, type SchemaCreateVersionResponse, type SchemaCreateAccessGroupResponse, type SchemaDeleteAccessGroupResponse, type SchemaCreateParams, type SchemaUpdateParams, type SchemaCreateVersionParams, type SchemaCreateAccessGroupParams, type SchemaDeleteAccessGroupParams } from "./resources/schemas";
+import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentResponse, type RegistryDeleteAPIDocumentResponse, type RegistryRetrieveAPIDocumentVersionResponse, type RegistryUpdateAPIDocumentVersionResponse, type RegistryDeleteAPIDocumentVersionResponse, type RegistryListAPIDocumentVersionMetadataResponse, type RegistryCreateAPIDocumentVersionResponse, type RegistryCreateAPIDocumentAccessGroupResponse, type RegistryDeleteAPIDocumentAccessGroupResponse, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryDeleteAPIDocumentParams, type RegistryRetrieveAPIDocumentVersionParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryDeleteAPIDocumentVersionParams, type RegistryListAPIDocumentVersionMetadataParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
+import { Schemas, type SchemaListResponse, type SchemaCreateResponse, type SchemaUpdateResponse, type SchemaDeleteResponse, type SchemaCreateParams, type SchemaUpdateParams, type SchemaDeleteParams } from "./resources/schemas/schemas";
 import { LoginPortals, type LoginPortalEmail, type LoginPortalPage, type LoginPortalRetrieveResponse, type LoginPortalUpdateResponse, type LoginPortalDeleteResponse, type LoginPortalCreateResponse, type LoginPortalListResponse, type LoginPortalUpdateParams, type LoginPortalCreateParams } from "./resources/login-portals";
-import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetResponse, type RuleUpdateRulesetResponse, type RuleDeleteRulesetResponse, type RuleRetrieveRulesetDocumentResponse, type RuleCreateRulesetAccessGroupResponse, type RuleDeleteRulesetAccessGroupResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
+import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetResponse, type RuleUpdateRulesetResponse, type RuleDeleteRulesetResponse, type RuleRetrieveRulesetDocumentResponse, type RuleCreateRulesetAccessGroupResponse, type RuleDeleteRulesetAccessGroupResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleDeleteRulesetParams, type RuleRetrieveRulesetDocumentParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
 import { Themes, type ThemeListResponse, type ThemeCreateResponse, type ThemeUpdateResponse, type ThemeReplaceDocumentResponse, type ThemeDeleteResponse, type ThemeRetrieveResponse, type ThemeCreateParams, type ThemeUpdateParams, type ThemeReplaceDocumentParams } from "./resources/themes";
 import { Teams, type TeamListResponse } from "./resources/teams";
 import { ScalarDocs, type Slug, type ScalarDocListGuidesResponse, type ScalarDocCreateGuideResponse, type ScalarDocPublishGuideResponse, type ScalarDocCreateGuideParams } from "./resources/scalar-docs";
@@ -35,12 +35,6 @@ export type AuthTokenProvider = () => string | Promise<string>;
 const queryArrayFormat: NonNullable<StringifyOptions["arrayFormat"]> = "indices";
 const queryAllowDots = false;
 
-const environments = {
-  production: "https://access.scalar.com",
-  local: "http://127.0.0.1:4010",
-};
-type Environment = keyof typeof environments;
-
 export interface ClientOptions {
   /**
    * The token used for authentication.
@@ -48,18 +42,9 @@ export interface ClientOptions {
   bearerAuth?: string | AuthTokenProvider | undefined;
 
   /**
-   * Specifies the environment to use for the API.
-   *
-   * Each environment maps to a different base URL:
-   * - `production` corresponds to `https://access.scalar.com`
-   * - `local` corresponds to `http://127.0.0.1:4010`
-   */
-  environment?: Environment | undefined;
-
-  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env["SCALAR_API_BASE_URL"].
+   * Defaults to process.env["SCALAR_BASE_URL"].
    */
   baseURL?: string | null | undefined;
 
@@ -114,7 +99,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env["SCALAR_API_LOG"] or 'warn' if it isn't set.
+   * Defaults to process.env["SCALAR_LOG"] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -151,8 +136,7 @@ export class Scalar {
    * API Client for interfacing with the ScalarApi API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
-   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
-   * @param {string} [opts.baseURL=process.env["SCALAR_API_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -161,19 +145,17 @@ export class Scalar {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv("SCALAR_API_BASE_URL"),
+    baseURL = readEnv("SCALAR_BASE_URL"),
     bearerAuth = readEnv("BEARER_AUTH"),
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       bearerAuth,
       ...opts,
-      baseURL: baseURL || null,
+      baseURL: baseURL || "https://access.scalar.com",
     };
-    const environment = options.environment ?? "production";
     const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== "";
-    if (baseURLOverridden && options.environment) throw new Errors.ScalarError("Ambiguous URL; The `baseURL` option (or SCALAR_API_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null");
-    const defaultBaseURL = environments[environment];
+    const defaultBaseURL = "https://access.scalar.com";
     this.baseURL = options.baseURL || defaultBaseURL;
     this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
@@ -182,14 +164,14 @@ export class Scalar {
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv("SCALAR_API_LOG"), "process.env[\"SCALAR_API_LOG\"]", this) ??
+      parseLogLevel(readEnv("SCALAR_LOG"), "process.env[\"SCALAR_LOG\"]", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
-    const customHeadersEnv = readEnv("SCALAR_API_CUSTOM_HEADERS");
+    const customHeadersEnv = readEnv("SCALAR_CUSTOM_HEADERS");
     if (customHeadersEnv) {
       const parsed: Record<string, string> = {};
       for (const line of customHeadersEnv.split('\n')) {
@@ -201,7 +183,7 @@ export class Scalar {
       options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
     }
 
-    this._options = { ...options, baseURL: baseURLOverridden ? this.baseURL : undefined, environment };
+    this._options = { ...options, baseURL: baseURLOverridden ? this.baseURL : undefined };
     this._baseURLOverridden = baseURLOverridden;
     this._defaultBaseURL = defaultBaseURL;
 
@@ -849,7 +831,11 @@ export declare namespace Scalar {
     type RegistryDeleteAPIDocumentAccessGroupResponse as RegistryDeleteAPIDocumentAccessGroupResponse,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
     type RegistryUpdateAPIDocumentParams as RegistryUpdateAPIDocumentParams,
+    type RegistryDeleteAPIDocumentParams as RegistryDeleteAPIDocumentParams,
+    type RegistryRetrieveAPIDocumentVersionParams as RegistryRetrieveAPIDocumentVersionParams,
     type RegistryUpdateAPIDocumentVersionParams as RegistryUpdateAPIDocumentVersionParams,
+    type RegistryDeleteAPIDocumentVersionParams as RegistryDeleteAPIDocumentVersionParams,
+    type RegistryListAPIDocumentVersionMetadataParams as RegistryListAPIDocumentVersionMetadataParams,
     type RegistryCreateAPIDocumentVersionParams as RegistryCreateAPIDocumentVersionParams,
     type RegistryCreateAPIDocumentAccessGroupParams as RegistryCreateAPIDocumentAccessGroupParams,
     type RegistryDeleteAPIDocumentAccessGroupParams as RegistryDeleteAPIDocumentAccessGroupParams,
@@ -861,16 +847,9 @@ export declare namespace Scalar {
     type SchemaCreateResponse as SchemaCreateResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
-    type SchemaRetrieveVersionResponse as SchemaRetrieveVersionResponse,
-    type SchemaDeleteVersionResponse as SchemaDeleteVersionResponse,
-    type SchemaCreateVersionResponse as SchemaCreateVersionResponse,
-    type SchemaCreateAccessGroupResponse as SchemaCreateAccessGroupResponse,
-    type SchemaDeleteAccessGroupResponse as SchemaDeleteAccessGroupResponse,
     type SchemaCreateParams as SchemaCreateParams,
     type SchemaUpdateParams as SchemaUpdateParams,
-    type SchemaCreateVersionParams as SchemaCreateVersionParams,
-    type SchemaCreateAccessGroupParams as SchemaCreateAccessGroupParams,
-    type SchemaDeleteAccessGroupParams as SchemaDeleteAccessGroupParams,
+    type SchemaDeleteParams as SchemaDeleteParams,
   };
 
   export {
@@ -897,6 +876,8 @@ export declare namespace Scalar {
     type RuleDeleteRulesetAccessGroupResponse as RuleDeleteRulesetAccessGroupResponse,
     type RuleCreateRulesetParams as RuleCreateRulesetParams,
     type RuleUpdateRulesetParams as RuleUpdateRulesetParams,
+    type RuleDeleteRulesetParams as RuleDeleteRulesetParams,
+    type RuleRetrieveRulesetDocumentParams as RuleRetrieveRulesetDocumentParams,
     type RuleCreateRulesetAccessGroupParams as RuleCreateRulesetAccessGroupParams,
     type RuleDeleteRulesetAccessGroupParams as RuleDeleteRulesetAccessGroupParams,
   };
