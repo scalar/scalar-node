@@ -57,3 +57,10 @@ different fixes:
   released state back from the release workflow.
 - No Actions settings changes are required: the generated workflows declare their own
   permissions and never create pull requests.
+- If this package publishes through OIDC trusted publishing (for example PyPI or npm),
+  register the trusted publisher on the registry against the **`sdk-release.yml`**
+  workflow filename — not `release-please.yml`. Merging a release PR dispatches
+  `sdk-release.yml` at the released tag, so every publish path (automated, manual
+  re-publish, human-created release) runs it as a top-level workflow whose OIDC claims
+  name that file. If the publish job is configured with a deployment environment,
+  include that environment in the registration too.
