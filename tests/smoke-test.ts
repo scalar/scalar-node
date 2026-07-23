@@ -13,10 +13,10 @@ import { writeFileSync } from 'node:fs'
 
 // The default export is the client class. The client reads auth and the base URL from the
 // environment, so it needs no constructor options to point at a server.
-import ScalarAPI from "@scalar/sdk"
+import Scalar from "@scalar/sdk"
 
 // One shared client runs every case.
-const client = new ScalarAPI()
+const client = new Scalar()
 
 // The result of running one case, collected for the JSON report or the printed table.
 type SmokeResult = {

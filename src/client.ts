@@ -111,12 +111,12 @@ export interface ClientOptions {
   logger?: Logger | undefined;
 }
 
-export type ScalarAPIOptions = ClientOptions;
+export type ScalarOptions = ClientOptions;
 
 /**
  * API Client for interfacing with the ScalarApi API.
  */
-export class ScalarAPI {
+export class Scalar {
   bearerAuth: string | AuthTokenProvider | undefined;
 
   baseURL: string;
@@ -157,7 +157,7 @@ export class ScalarAPI {
     const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== "";
     const defaultBaseURL = "https://access.scalar.com";
     this.baseURL = options.baseURL || defaultBaseURL;
-    this.timeout = options.timeout ?? ScalarAPI.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -760,21 +760,21 @@ export class ScalarAPI {
   private async resolveAuthOption(optionName: string, value: string | AuthTokenProvider | null | undefined): Promise<string | undefined> {
     if (value == null) return undefined;
     const token = typeof value === "function" ? await value() : value;
-    if (!token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (!token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
   private resolveAuthOptionSync(optionName: string, value: string | AuthTokenProvider | null | undefined): string | undefined {
     if (value == null) return undefined;
     const token = typeof value === "function" ? value() : value;
-    if (typeof token !== "string" || !token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (typeof token !== "string" || !token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
-  static ScalarAPI = this;
+  static Scalar = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static ScalarAPIError = Errors.ScalarAPIError;
+  static ScalarError = Errors.ScalarError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -801,17 +801,17 @@ export class ScalarAPI {
   authentication: Authentication = new Authentication(this);
 }
 
-ScalarAPI.Registry = Registry;
-ScalarAPI.Schemas = Schemas;
-ScalarAPI.LoginPortals = LoginPortals;
-ScalarAPI.Rules = Rules;
-ScalarAPI.Themes = Themes;
-ScalarAPI.Teams = Teams;
-ScalarAPI.ScalarDocs = ScalarDocs;
-ScalarAPI.Namespaces = Namespaces;
-ScalarAPI.Authentication = Authentication;
+Scalar.Registry = Registry;
+Scalar.Schemas = Schemas;
+Scalar.LoginPortals = LoginPortals;
+Scalar.Rules = Rules;
+Scalar.Themes = Themes;
+Scalar.Teams = Teams;
+Scalar.ScalarDocs = ScalarDocs;
+Scalar.Namespaces = Namespaces;
+Scalar.Authentication = Authentication;
 
-export declare namespace ScalarAPI {
+export declare namespace Scalar {
   export type RequestOptions = Opts.RequestOptions;
   export {
     Registry as Registry,

@@ -16,9 +16,9 @@ npm install @scalar/sdk
 ## Client setup and authentication
 
 ```ts
-import ScalarAPI from "@scalar/sdk";
+import Scalar from "@scalar/sdk";
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
 });
 ```
@@ -30,9 +30,9 @@ Provide credentials using the options below. Environment variables are read auto
 ## Calling operations
 
 ```ts
-import ScalarAPI from "@scalar/sdk";
+import Scalar from "@scalar/sdk";
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
 });
 
