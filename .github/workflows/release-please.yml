@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
-      # Consumed by the publish job's dispatch: without this mapping the dispatch ref would
-      # be empty, and `gh workflow run --ref ""` silently falls back to the default branch
-      # instead of the released tag.
+      # Consumed by the publish job's checkout: without this mapping the checkout ref would be
+      # empty and the publish would build the triggering branch head instead of the released
+      # tag's exact commit.
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
@@ -57,28 +57,39 @@ jobs:
           git push origin scalar-next
   publish:
     needs: release-please
+    # `!cancelled()` keeps publishing even when the back-sync to the integration branch
+    # failed: a raced integration branch must not block the release from reaching its
+    # registry.
     if: ${{ !cancelled() && needs.release-please.outputs.release_created == 'true' }}
     runs-on: ubuntu-latest
+    # Job-level permissions replace the workflow's release-cutting grants with the publish
+    # floor. OIDC trusted publishing verifies this run's claims, which name this workflow
+    # file — register release-please.yml as the trusted publisher on the registry.
     permissions:
-      actions: write
+      contents: read
+      id-token: write
+      packages: write
+    env:
+      VERSIONING_POLICY: manual
     steps:
-      - name: Publish via the release workflow at the released tag
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ needs.release-please.outputs.tag_name }}
-        # Dispatch, then watch the run to completion: the dispatch API does not return the run
-        # it created, so the newest workflow_dispatch run on the tag is polled into view (the
-        # tag is unique per release, so it can only be this dispatch or an identical manual
-        # re-publish) and a failed or missing run fails this job loudly.
-        run: |
-          gh workflow run sdk-release.yml --repo "${GITHUB_REPOSITORY}" --ref "${TAG}"
-          for _ in $(seq 1 12); do
-            sleep 5
-            run_id="$(gh run list --repo "${GITHUB_REPOSITORY}" --workflow sdk-release.yml --event workflow_dispatch --branch "${TAG}" --json databaseId --jq '.[0].databaseId // empty')"
-            [ -n "${run_id}" ] && break
-          done
-          if [ -z "${run_id}" ]; then
-            echo "::error::sdk-release.yml was dispatched for ${TAG} but no run appeared."
-            exit 1
-          fi
-          gh run watch "${run_id}" --repo "${GITHUB_REPOSITORY}" --exit-status
+      # Publishing runs inline — a top-level job of this same run — rather than dispatching
+      # sdk-release.yml: workflow_dispatch resolves the target workflow on the repository's
+      # default branch only, so a dispatch would 404 whenever the release line is any other
+      # branch, while OIDC trusted publishing accepts this job because it stays top-level
+      # (never a reusable-workflow call). The release-please job cut the tag earlier in this
+      # run; checking it out publishes exactly the released commit, not the branch head that
+      # triggered the workflow.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ needs.release-please.outputs.tag_name }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22.14.0"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install
+      - run: npm run build
+      # OIDC trusted publishing needs npm >= 11.5; pinned to the major (not `latest`) so a new
+      # npm major raising its Node engine floor cannot break publishes against the pinned Node.
+      - run: npm install -g npm@11
+      - name: Publish to npm
+        run: node scripts/publish-npm.mjs

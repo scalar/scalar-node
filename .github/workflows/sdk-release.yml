@@ -1,12 +1,14 @@
 name: TypeScript SDK Release
 
 on:
-  release:
-    types: [published]
-  # Dispatched by release-please.yml at the released tag (the trigger a default-GITHUB_TOKEN
-  # release can still reach), and available for manual re-publishes. A dispatched run is
-  # top-level, keeping the OIDC trusted-publisher claims on this file; never add a
-  # workflow_call trigger here — registries reject publishes from called (reusable) workflows.
+  # Manual re-publish only: the automated publish for each release runs as the `publish` job
+  # inside release-please.yml, in the same run that cuts the tag (dispatching a workflow here
+  # instead would resolve it on the repository's default branch only, which breaks releasing
+  # from any other release line). Dispatch this workflow at an existing release tag to re-run
+  # a failed or skipped publish. A dispatched run is top-level, so OIDC trusted-publisher
+  # claims name this file; register it as an additional trusted publisher only when manual
+  # re-publishes are used. Never add a workflow_call trigger here — registries reject
+  # publishes from called (reusable) workflows.
   workflow_dispatch:
 
 permissions:

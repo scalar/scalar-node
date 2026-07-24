@@ -15,7 +15,7 @@
   "include-component-in-tag": false,
   "pull-request-title-pattern": "release: ${version}",
   "pull-request-header": "Automated Release PR",
-  "pull-request-footer": "The semver version number is based on included commit messages. Alternatively, you can\nset the version on the Scalar dashboard.\n\nBrought to you by [Scalar](https://scalar.com)",
+  "pull-request-footer": "The semver version number is based on included commit messages.\n\nBrought to you by [Scalar](https://scalar.com)",
   "changelog-sections": [
     {
       "type": "feat",
