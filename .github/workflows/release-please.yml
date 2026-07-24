@@ -1,12 +1,12 @@
 name: Release Please
 
 on:
-  # Fires when a human merges the platform-managed release PR into next
+  # Fires when a human merges the platform-managed release PR into main
   # (the PR's base, so its diff shows the full pending release). Regenerations and
   # custom-code pushes only touch scalar-next and never run this workflow.
   push:
     branches:
-      - next
+      - main
   # Manual fallback only; nothing in the automated chain depends on dispatch.
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ jobs:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         id: release
         with:
-          target-branch: next
+          target-branch: main
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
           # Release PRs are opened and updated by the Scalar platform with its own
@@ -39,7 +39,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created == 'true' }}
         with:
           fetch-depth: 0
-      # Merging the release PR into next is itself the promotion, but the
+      # Merging the release PR into main is itself the promotion, but the
       # version bump and changelog must also land back on scalar-next, or the next
       # release PR would propose this release again. A real merge (never a plain
       # commit push) so a squash- or rebase-merged release PR syncs just as well; the
