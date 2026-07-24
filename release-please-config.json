@@ -1,0 +1,49 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "extra-files": [
+        "src/version.ts"
+      ],
+      "versioning": "prerelease",
+      "prerelease-type": "next",
+      "prerelease": true
+    }
+  },
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
+  "include-component-in-tag": false,
+  "pull-request-title-pattern": "release: ${version}",
+  "pull-request-header": "Automated Release PR",
+  "pull-request-footer": "The semver version number is based on included commit messages.\n\nBrought to you by [Scalar](https://scalar.com)",
+  "changelog-sections": [
+    {
+      "type": "feat",
+      "section": "Features"
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes"
+    },
+    {
+      "type": "perf",
+      "section": "Performance Improvements"
+    },
+    {
+      "type": "revert",
+      "section": "Reverts"
+    },
+    {
+      "type": "chore",
+      "section": "Chores"
+    },
+    {
+      "type": "docs",
+      "section": "Documentation"
+    },
+    {
+      "type": "refactor",
+      "section": "Refactors"
+    }
+  ]
+}

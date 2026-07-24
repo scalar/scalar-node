@@ -27,85 +27,72 @@ export class Authentication extends APIResource {
    * Get the authenticated user, including their available teams and theme.
    *
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<User>} Default Response
+   * @returns {APIPromise<AuthenticationListCurrentUserResponse>} Default Response
    *
    * @example
    * ```ts
-   * const user = await client.authentication.listCurrentUser();
+   * const listCurrentUser = await client.authentication.listCurrentUser();
    * ```
    */
-  listCurrentUser(options?: RequestOptions): APIPromise<User> {
+  listCurrentUser(options?: RequestOptions): APIPromise<AuthenticationListCurrentUserResponse> {
     return this._client.get("/v1/auth/me", options);
   }
 }
-
-export interface Value400 {
-  message: string;
-  code: string;
-}
-
-export interface Value401 {
-  message: string;
-  code: string;
-}
-
-export interface Value403 {
-  message: string;
-  code: string;
-}
-
-export interface Value404 {
-  message: string;
-  code: string;
-}
-
-export interface Value422 {
-  message: string;
-  code: string;
-}
-
-export interface Value500 {
-  message: string;
-  code: string;
-}
-
-export interface User {
-  uid: Nanoid;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  email: Email;
-  activeTeamId: string | null;
-  hasGithub: boolean;
-  teams: Array<TeamSummary>;
-  theme?: string;
-}
-
-export type Nanoid = string;
-
-export type Timestamp = number;
-
-export type Email = string;
-
-export interface TeamSummary {
-  uid: Nanoid;
-  name: TeamName;
-  imageUri?: TeamImage;
-}
-
-export type TeamName = string;
-
-export type TeamImage = string;
 
 export interface AuthenticationExchangePersonalTokenParams {
   personalToken: string;
 }
 
-export type AuthenticationExchangePersonalTokenResponse = { accessToken: string };
+export interface AuthenticationExchangePersonalTokenResponse {
+  accessToken: string;
+}
+
+export interface AuthenticationListCurrentUserResponse {
+  /**
+   * @default nanoid()
+   * @minLength 5
+   */
+  uid: string;
+  /**
+   * @default unixTimestamp()
+   * @minimum 0
+   * @maximum 9007199254740991
+   */
+  createdAt: number;
+  /**
+   * @default unixTimestamp()
+   * @minimum 0
+   * @maximum 9007199254740991
+   */
+  updatedAt: number;
+  /**
+   * @format email
+   * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+   */
+  email: string;
+  activeTeamId: string | null;
+  /**
+   * @default false
+   */
+  hasGithub: boolean;
+  teams: Array<AuthenticationListCurrentUserResponse.Team>;
+  theme?: string;
+}
+
+export namespace AuthenticationListCurrentUserResponse {
+  export interface Team {
+    /**
+     * @minLength 5
+     */
+    uid: string;
+    name: string;
+    imageUri?: string;
+  }
+}
 export declare namespace Authentication {
   export {
     type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse,
-    type User as User,
+    type AuthenticationListCurrentUserResponse as AuthenticationListCurrentUserResponse,
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
   };
 }
-export { Authentication as AuthenticationResource };

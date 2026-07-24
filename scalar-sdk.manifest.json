@@ -1,17 +1,15 @@
 {
   "name": "ScalarApi",
   "slug": "scalarApi",
-  "version": "0.2.5",
+  "generatorVersion": "0.19.6",
   "servers": [
     "https://access.scalar.com"
   ],
   "environments": {
-    "production": "https://access.scalar.com",
-    "local": "http://127.0.0.1:4010"
+    "production": "https://access.scalar.com"
   },
   "environmentOrder": [
-    "production",
-    "local"
+    "production"
   ],
   "auth": [
     "bearer"
@@ -26,8 +24,8 @@
   "clientHeaderParams": [],
   "schemas": [
     {
-      "name": "_400",
-      "source": "_400",
+      "name": "400",
+      "source": "400",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -58,8 +56,8 @@
       }
     },
     {
-      "name": "_401",
-      "source": "_401",
+      "name": "401",
+      "source": "401",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -90,8 +88,8 @@
       }
     },
     {
-      "name": "_403",
-      "source": "_403",
+      "name": "403",
+      "source": "403",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -122,8 +120,8 @@
       }
     },
     {
-      "name": "_404",
-      "source": "_404",
+      "name": "404",
+      "source": "404",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -154,8 +152,8 @@
       }
     },
     {
-      "name": "_422",
-      "source": "_422",
+      "name": "422",
+      "source": "422",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -186,8 +184,8 @@
       }
     },
     {
-      "name": "_500",
-      "source": "_500",
+      "name": "500",
+      "source": "500",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -218,8 +216,8 @@
       }
     },
     {
-      "name": "ApiDocument",
-      "source": "ApiDocument",
+      "name": "api_document",
+      "source": "api_document",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -232,7 +230,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -242,7 +240,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Version"
+              "name": "version"
             }
           },
           {
@@ -265,7 +263,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           },
           {
@@ -285,7 +283,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Namespace"
+              "name": "namespace"
             }
           },
           {
@@ -304,8 +302,7 @@
             "required": true,
             "deprecated": false,
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -317,7 +314,7 @@
               "kind": "array",
               "items": {
                 "kind": "ref",
-                "name": "ManagedDocVersion"
+                "name": "managed_doc_version"
               }
             }
           }
@@ -326,8 +323,8 @@
       }
     },
     {
-      "name": "Nanoid",
-      "source": "Nanoid",
+      "name": "nanoid",
+      "source": "nanoid",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -339,8 +336,8 @@
       }
     },
     {
-      "name": "Version",
-      "source": "Version",
+      "name": "version",
+      "source": "version",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -352,8 +349,8 @@
       }
     },
     {
-      "name": "Slug",
-      "source": "Slug",
+      "name": "slug",
+      "source": "slug",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -367,8 +364,8 @@
       }
     },
     {
-      "name": "Namespace",
-      "source": "Namespace",
+      "name": "namespace",
+      "source": "namespace",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -382,8 +379,8 @@
       }
     },
     {
-      "name": "ManagedDocVersion",
-      "source": "ManagedDocVersion",
+      "name": "managed_doc_version",
+      "source": "managed_doc_version",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -396,7 +393,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -416,7 +413,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Version"
+              "name": "version"
             }
           },
           {
@@ -498,7 +495,7 @@
                     "deprecated": false,
                     "type": {
                       "kind": "ref",
-                      "name": "Method"
+                      "name": "method"
                     }
                   },
                   {
@@ -565,8 +562,8 @@
       }
     },
     {
-      "name": "Method",
-      "source": "Method",
+      "name": "method",
+      "source": "method",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -604,8 +601,8 @@
       }
     },
     {
-      "name": "AccessGroup",
-      "source": "AccessGroup",
+      "name": "access_group",
+      "source": "access_group",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -618,7 +615,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           }
         ],
@@ -626,8 +623,8 @@
       }
     },
     {
-      "name": "Schema",
-      "source": "Schema",
+      "name": "schema",
+      "source": "schema",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -640,7 +637,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -673,7 +670,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           },
           {
@@ -683,7 +680,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Namespace"
+              "name": "namespace"
             }
           },
           {
@@ -705,7 +702,7 @@
               "kind": "array",
               "items": {
                 "kind": "ref",
-                "name": "ManagedSchemaVersion"
+                "name": "managed_schema_version"
               }
             }
           }
@@ -714,8 +711,8 @@
       }
     },
     {
-      "name": "ManagedSchemaVersion",
-      "source": "ManagedSchemaVersion",
+      "name": "managed_schema_version",
+      "source": "managed_schema_version",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -728,7 +725,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -738,7 +735,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           },
           {
@@ -748,7 +745,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           },
           {
@@ -758,7 +755,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Version"
+              "name": "version"
             }
           }
         ],
@@ -766,8 +763,8 @@
       }
     },
     {
-      "name": "Timestamp",
-      "source": "Timestamp",
+      "name": "timestamp",
+      "source": "timestamp",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -777,8 +774,8 @@
       }
     },
     {
-      "name": "Uid",
-      "source": "Uid",
+      "name": "uid",
+      "source": "uid",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -791,7 +788,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           }
         ],
@@ -799,8 +796,8 @@
       }
     },
     {
-      "name": "LoginPortalEmail",
-      "source": "LoginPortalEmail",
+      "name": "login_portal_email",
+      "source": "login_portal_email",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -948,8 +945,8 @@
       }
     },
     {
-      "name": "LoginPortalPage",
-      "source": "LoginPortalPage",
+      "name": "login_portal_page",
+      "source": "login_portal_page",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1115,8 +1112,8 @@
       }
     },
     {
-      "name": "LoginPortal",
-      "source": "LoginPortal",
+      "name": "login_portal",
+      "source": "login_portal",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1129,7 +1126,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1152,7 +1149,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           }
         ],
@@ -1160,8 +1157,8 @@
       }
     },
     {
-      "name": "Rule",
-      "source": "Rule",
+      "name": "rule",
+      "source": "rule",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1174,7 +1171,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1207,7 +1204,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           },
           {
@@ -1217,7 +1214,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Namespace"
+              "name": "namespace"
             }
           },
           {
@@ -1235,8 +1232,8 @@
       }
     },
     {
-      "name": "Theme",
-      "source": "Theme",
+      "name": "theme",
+      "source": "theme",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1249,7 +1246,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1279,7 +1276,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           }
         ],
@@ -1287,8 +1284,8 @@
       }
     },
     {
-      "name": "Team",
-      "source": "Team",
+      "name": "team",
+      "source": "team",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1301,7 +1298,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1311,7 +1308,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "TeamName"
+              "name": "team_name"
             }
           },
           {
@@ -1321,7 +1318,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "TeamImage"
+              "name": "team_image"
             }
           },
           {
@@ -1331,7 +1328,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           },
           {
@@ -1349,8 +1346,8 @@
       }
     },
     {
-      "name": "TeamName",
-      "source": "TeamName",
+      "name": "team_name",
+      "source": "team_name",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1359,8 +1356,8 @@
       }
     },
     {
-      "name": "TeamImage",
-      "source": "TeamImage",
+      "name": "team_image",
+      "source": "team_image",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1369,8 +1366,8 @@
       }
     },
     {
-      "name": "GithubProject",
-      "source": "GithubProject",
+      "name": "github_project",
+      "source": "github_project",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1383,7 +1380,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1393,7 +1390,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           },
           {
@@ -1403,7 +1400,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           },
           {
@@ -1426,7 +1423,7 @@
               "variants": [
                 {
                   "kind": "ref",
-                  "name": "ActiveDeployment"
+                  "name": "active_deployment"
                 },
                 {
                   "kind": "null"
@@ -1444,7 +1441,7 @@
               "variants": [
                 {
                   "kind": "ref",
-                  "name": "Timestamp"
+                  "name": "timestamp"
                 },
                 {
                   "kind": "null"
@@ -1526,8 +1523,7 @@
             "required": true,
             "deprecated": false,
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -1537,7 +1533,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Slug"
+              "name": "slug"
             }
           },
           {
@@ -1570,7 +1566,7 @@
               "variants": [
                 {
                   "kind": "ref",
-                  "name": "GithubProjectRepository"
+                  "name": "github_project_repository"
                 },
                 {
                   "kind": "null"
@@ -1583,8 +1579,8 @@
       }
     },
     {
-      "name": "ActiveDeployment",
-      "source": "ActiveDeployment",
+      "name": "active_deployment",
+      "source": "active_deployment",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1617,7 +1613,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           }
         ],
@@ -1625,8 +1621,8 @@
       }
     },
     {
-      "name": "GithubProjectRepository",
-      "source": "GithubProjectRepository",
+      "name": "github_project_repository",
+      "source": "github_project_repository",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1730,8 +1726,8 @@
       }
     },
     {
-      "name": "Email",
-      "source": "Email",
+      "name": "email",
+      "source": "email",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1744,8 +1740,8 @@
       }
     },
     {
-      "name": "TeamSummary",
-      "source": "TeamSummary",
+      "name": "team_summary",
+      "source": "team_summary",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1758,7 +1754,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1768,7 +1764,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "TeamName"
+              "name": "team_name"
             }
           },
           {
@@ -1778,7 +1774,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "TeamImage"
+              "name": "team_image"
             }
           }
         ],
@@ -1786,8 +1782,8 @@
       }
     },
     {
-      "name": "User",
-      "source": "User",
+      "name": "user",
+      "source": "user",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -1800,7 +1796,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Nanoid"
+              "name": "nanoid"
             }
           },
           {
@@ -1810,7 +1806,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           },
           {
@@ -1820,7 +1816,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Timestamp"
+              "name": "timestamp"
             }
           },
           {
@@ -1830,7 +1826,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "Email"
+              "name": "email"
             }
           },
           {
@@ -1880,7 +1876,7 @@
               "kind": "array",
               "items": {
                 "kind": "ref",
-                "name": "TeamSummary"
+                "name": "team_summary"
               }
             }
           }
@@ -1932,7 +1928,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -1973,7 +1969,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -1988,7 +1984,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -2003,7 +1999,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -2018,7 +2014,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -2033,7 +2029,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -2048,7 +2044,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -2076,9 +2072,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2129,7 +2123,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -2144,7 +2138,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -2159,7 +2153,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -2174,7 +2168,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -2189,7 +2183,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -2204,7 +2198,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -2248,8 +2242,35 @@
         "isPrivate",
         "document"
       ],
-      "publicPositionalParams": [
-        "namespace"
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": true
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "version",
+          "required": true
+        },
+        {
+          "name": "slug",
+          "required": true
+        },
+        {
+          "name": "ruleset",
+          "required": false
+        },
+        {
+          "name": "isPrivate",
+          "required": false
+        },
+        {
+          "name": "document",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -2314,7 +2335,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -2329,7 +2350,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -2344,7 +2365,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -2359,7 +2380,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -2374,7 +2395,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -2389,7 +2410,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -2429,9 +2450,23 @@
         "isPrivate",
         "ruleset"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": false
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "isPrivate",
+          "required": false
+        },
+        {
+          "name": "ruleset",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -2502,7 +2537,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -2517,7 +2552,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -2532,7 +2567,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -2547,7 +2582,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -2562,7 +2597,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -2577,7 +2612,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -2607,10 +2642,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2667,7 +2699,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -2682,7 +2714,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -2697,7 +2729,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -2712,7 +2744,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -2727,7 +2759,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -2742,7 +2774,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -2774,11 +2806,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug",
-        "semver"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -2841,7 +2869,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -2856,7 +2884,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -2871,7 +2899,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -2886,7 +2914,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -2901,7 +2929,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -2916,7 +2944,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -2954,10 +2982,15 @@
         "document",
         "lastKnownVersionSha"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug",
-        "semver"
+      "bodyParamDetails": [
+        {
+          "name": "document",
+          "required": true
+        },
+        {
+          "name": "lastKnownVersionSha",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -3034,7 +3067,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -3049,7 +3082,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -3064,7 +3097,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -3079,7 +3112,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -3094,7 +3127,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -3109,7 +3142,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -3141,11 +3174,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug",
-        "semver"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -3208,7 +3237,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -3223,7 +3252,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -3238,7 +3267,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -3253,7 +3282,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -3268,7 +3297,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -3283,7 +3312,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -3315,11 +3344,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug",
-        "semver"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -3360,7 +3385,7 @@
         ]
       },
       "responseModel": {
-        "name": "ManagedDocVersion",
+        "name": "managed_doc_version",
         "publicAliases": []
       },
       "result": {
@@ -3386,7 +3411,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -3401,7 +3426,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -3416,7 +3441,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -3431,7 +3456,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -3446,7 +3471,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -3461,7 +3486,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -3501,9 +3526,23 @@
         "force",
         "lastKnownVersionSha"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "version",
+          "required": true
+        },
+        {
+          "name": "document",
+          "required": true
+        },
+        {
+          "name": "force",
+          "required": false
+        },
+        {
+          "name": "lastKnownVersionSha",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -3552,7 +3591,7 @@
         ]
       },
       "responseModel": {
-        "name": "ManagedDocVersion",
+        "name": "managed_doc_version",
         "publicAliases": []
       },
       "result": {
@@ -3578,7 +3617,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -3593,7 +3632,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -3608,7 +3647,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -3623,7 +3662,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -3638,7 +3677,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -3653,7 +3692,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -3687,9 +3726,11 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "accessGroupSlug",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -3760,7 +3801,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -3775,7 +3816,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -3790,7 +3831,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -3805,7 +3846,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -3820,7 +3861,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -3835,7 +3876,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -3869,9 +3910,11 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "accessGroupSlug",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -3942,7 +3985,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -3957,7 +4000,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -3972,7 +4015,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -3987,7 +4030,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -4002,7 +4045,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -4017,7 +4060,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -4045,9 +4088,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4098,7 +4139,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -4113,7 +4154,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -4128,7 +4169,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -4143,7 +4184,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -4158,7 +4199,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -4173,7 +4214,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -4215,8 +4256,31 @@
         "isPrivate",
         "document"
       ],
-      "publicPositionalParams": [
-        "namespace"
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": true
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "version",
+          "required": true
+        },
+        {
+          "name": "slug",
+          "required": true
+        },
+        {
+          "name": "isPrivate",
+          "required": false
+        },
+        {
+          "name": "document",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -4259,7 +4323,7 @@
         ]
       },
       "responseModel": {
-        "name": "Uid",
+        "name": "uid",
         "publicAliases": []
       },
       "result": {
@@ -4285,7 +4349,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -4300,7 +4364,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -4315,7 +4379,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -4330,7 +4394,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -4345,7 +4409,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -4360,7 +4424,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -4398,9 +4462,19 @@
         "description",
         "isPrivate"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": false
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "isPrivate",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -4471,7 +4545,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -4486,7 +4560,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -4501,7 +4575,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -4516,7 +4590,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -4531,7 +4605,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -4546,7 +4620,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -4576,10 +4650,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4636,7 +4707,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -4651,7 +4722,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -4666,7 +4737,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -4681,7 +4752,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -4696,7 +4767,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -4711,7 +4782,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -4743,11 +4814,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug",
-        "semver"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4810,7 +4877,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -4825,7 +4892,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -4840,7 +4907,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -4855,7 +4922,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -4870,7 +4937,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -4885,7 +4952,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -4917,11 +4984,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug",
-        "semver"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -4984,7 +5047,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -4999,7 +5062,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -5014,7 +5077,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -5029,7 +5092,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -5044,7 +5107,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -5059,7 +5122,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -5095,9 +5158,15 @@
         "version",
         "document"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "version",
+          "required": true
+        },
+        {
+          "name": "document",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -5146,7 +5215,7 @@
         ]
       },
       "responseModel": {
-        "name": "Uid",
+        "name": "uid",
         "publicAliases": []
       },
       "result": {
@@ -5172,7 +5241,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -5187,7 +5256,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -5202,7 +5271,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -5217,7 +5286,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -5232,7 +5301,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -5247,7 +5316,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -5281,9 +5350,11 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "accessGroupSlug",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -5354,7 +5425,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -5369,7 +5440,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -5384,7 +5455,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -5399,7 +5470,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -5414,7 +5485,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -5429,7 +5500,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -5463,9 +5534,11 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "accessGroupSlug",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -5536,7 +5609,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -5551,7 +5624,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -5566,7 +5639,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -5581,7 +5654,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -5596,7 +5669,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -5611,7 +5684,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -5639,9 +5712,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -5692,7 +5763,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -5707,7 +5778,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -5722,7 +5793,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -5737,7 +5808,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -5752,7 +5823,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -5767,7 +5838,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -5799,8 +5870,11 @@
       "publicBodyParams": [
         "title"
       ],
-      "publicPositionalParams": [
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -5865,7 +5939,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -5880,7 +5954,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -5895,7 +5969,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -5910,7 +5984,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -5925,7 +5999,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -5940,7 +6014,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -5968,9 +6042,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -6021,7 +6093,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -6036,7 +6108,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -6051,7 +6123,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -6066,7 +6138,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -6081,7 +6153,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -6096,7 +6168,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -6130,7 +6202,24 @@
         "email",
         "page"
       ],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": true
+        },
+        {
+          "name": "slug",
+          "required": true
+        },
+        {
+          "name": "email",
+          "required": true
+        },
+        {
+          "name": "page",
+          "required": true
+        }
+      ],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -6165,7 +6254,7 @@
         ]
       },
       "responseModel": {
-        "name": "Uid",
+        "name": "uid",
         "publicAliases": []
       },
       "result": {
@@ -6191,7 +6280,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -6206,7 +6295,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -6221,7 +6310,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -6236,7 +6325,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -6251,7 +6340,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -6266,7 +6355,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -6290,7 +6379,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -6331,7 +6420,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -6346,7 +6435,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -6361,7 +6450,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -6376,7 +6465,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -6391,7 +6480,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -6406,7 +6495,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -6434,9 +6523,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -6487,7 +6574,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -6502,7 +6589,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -6517,7 +6604,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -6532,7 +6619,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -6547,7 +6634,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -6562,7 +6649,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -6602,8 +6689,27 @@
         "isPrivate",
         "document"
       ],
-      "publicPositionalParams": [
-        "namespace"
+      "bodyParamDetails": [
+        {
+          "name": "title",
+          "required": true
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "slug",
+          "required": true
+        },
+        {
+          "name": "isPrivate",
+          "required": false
+        },
+        {
+          "name": "document",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -6646,7 +6752,7 @@
         ]
       },
       "responseModel": {
-        "name": "Uid",
+        "name": "uid",
         "publicAliases": []
       },
       "result": {
@@ -6672,7 +6778,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -6687,7 +6793,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -6702,7 +6808,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -6717,7 +6823,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -6732,7 +6838,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -6747,7 +6853,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -6789,9 +6895,27 @@
         "description",
         "isPrivate"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "namespace",
+          "required": false
+        },
+        {
+          "name": "slug",
+          "required": false
+        },
+        {
+          "name": "title",
+          "required": false
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "isPrivate",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -6862,7 +6986,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -6877,7 +7001,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -6892,7 +7016,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -6907,7 +7031,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -6922,7 +7046,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -6937,7 +7061,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -6967,10 +7091,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -7027,7 +7148,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -7042,7 +7163,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -7057,7 +7178,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -7072,7 +7193,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -7087,7 +7208,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -7102,7 +7223,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -7132,10 +7253,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "namespace",
@@ -7192,7 +7310,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -7207,7 +7325,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -7222,7 +7340,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -7237,7 +7355,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -7252,7 +7370,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -7267,7 +7385,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -7301,9 +7419,11 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "accessGroupSlug",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -7374,7 +7494,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -7389,7 +7509,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -7404,7 +7524,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -7419,7 +7539,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -7434,7 +7554,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -7449,7 +7569,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -7483,9 +7603,11 @@
       "publicBodyParams": [
         "accessGroupSlug"
       ],
-      "publicPositionalParams": [
-        "namespace",
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "accessGroupSlug",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -7556,7 +7678,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -7571,7 +7693,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -7586,7 +7708,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -7601,7 +7723,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -7616,7 +7738,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -7631,7 +7753,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -7655,7 +7777,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -7696,7 +7818,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -7711,7 +7833,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -7726,7 +7848,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -7741,7 +7863,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -7756,7 +7878,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -7771,7 +7893,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -7805,7 +7927,24 @@
         "slug",
         "document"
       ],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [
+        {
+          "name": "name",
+          "required": true
+        },
+        {
+          "name": "description",
+          "required": false
+        },
+        {
+          "name": "slug",
+          "required": true
+        },
+        {
+          "name": "document",
+          "required": true
+        }
+      ],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -7840,7 +7979,7 @@
         ]
       },
       "responseModel": {
-        "name": "Uid",
+        "name": "uid",
         "publicAliases": []
       },
       "result": {
@@ -7866,7 +8005,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -7881,7 +8020,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -7896,7 +8035,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -7911,7 +8050,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -7926,7 +8065,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -7941,7 +8080,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -7975,8 +8114,15 @@
         "name",
         "description"
       ],
-      "publicPositionalParams": [
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "name",
+          "required": false
+        },
+        {
+          "name": "description",
+          "required": false
+        }
       ],
       "pathParamDetails": [
         {
@@ -8041,7 +8187,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8056,7 +8202,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -8071,7 +8217,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -8086,7 +8232,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -8101,7 +8247,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -8116,7 +8262,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -8148,8 +8294,11 @@
       "publicBodyParams": [
         "document"
       ],
-      "publicPositionalParams": [
-        "slug"
+      "bodyParamDetails": [
+        {
+          "name": "document",
+          "required": true
+        }
       ],
       "pathParamDetails": [
         {
@@ -8214,7 +8363,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8229,7 +8378,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -8244,7 +8393,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -8259,7 +8408,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -8274,7 +8423,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -8289,7 +8438,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -8317,9 +8466,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -8370,7 +8517,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8385,7 +8532,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -8400,7 +8547,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -8415,7 +8562,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -8430,7 +8577,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -8445,7 +8592,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -8473,9 +8620,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -8526,7 +8671,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8541,7 +8686,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -8556,7 +8701,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -8571,7 +8716,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -8586,7 +8731,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -8601,7 +8746,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -8625,7 +8770,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -8666,7 +8811,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8681,7 +8826,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -8696,7 +8841,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -8711,7 +8856,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -8726,7 +8871,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -8741,7 +8886,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -8765,7 +8910,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -8806,7 +8951,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8821,7 +8966,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -8836,7 +8981,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -8851,7 +8996,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -8866,7 +9011,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -8881,7 +9026,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -8917,7 +9062,28 @@
         "allowedUsers",
         "allowedDomains"
       ],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [
+        {
+          "name": "name",
+          "required": true
+        },
+        {
+          "name": "slug",
+          "required": false
+        },
+        {
+          "name": "isPrivate",
+          "required": true
+        },
+        {
+          "name": "allowedUsers",
+          "required": true
+        },
+        {
+          "name": "allowedDomains",
+          "required": true
+        }
+      ],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -8974,7 +9140,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -8989,7 +9155,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -9004,7 +9170,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -9019,7 +9185,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -9034,7 +9200,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -9049,7 +9215,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -9077,9 +9243,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [
-        "slug"
-      ],
+      "bodyParamDetails": [],
       "pathParamDetails": [
         {
           "name": "slug",
@@ -9130,7 +9294,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -9145,7 +9309,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -9160,7 +9324,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -9175,7 +9339,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -9190,7 +9354,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -9205,7 +9369,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -9229,7 +9393,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -9270,7 +9434,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -9285,7 +9449,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -9300,7 +9464,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -9315,7 +9479,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -9330,7 +9494,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -9345,7 +9509,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -9373,7 +9537,12 @@
       "publicBodyParams": [
         "personalToken"
       ],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [
+        {
+          "name": "personalToken",
+          "required": true
+        }
+      ],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -9430,7 +9599,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -9445,7 +9614,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -9460,7 +9629,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -9475,7 +9644,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -9490,7 +9659,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -9505,7 +9674,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }
@@ -9529,7 +9698,7 @@
       "publicHeaderParams": [],
       "bodyParams": [],
       "publicBodyParams": [],
-      "publicPositionalParams": [],
+      "bodyParamDetails": [],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
@@ -9548,7 +9717,7 @@
         ]
       },
       "responseModel": {
-        "name": "User",
+        "name": "user",
         "publicAliases": []
       },
       "result": {
@@ -9574,7 +9743,7 @@
             }
           ],
           "model": {
-            "name": "_400",
+            "name": "400",
             "publicAliases": []
           }
         },
@@ -9589,7 +9758,7 @@
             }
           ],
           "model": {
-            "name": "_401",
+            "name": "401",
             "publicAliases": []
           }
         },
@@ -9604,7 +9773,7 @@
             }
           ],
           "model": {
-            "name": "_403",
+            "name": "403",
             "publicAliases": []
           }
         },
@@ -9619,7 +9788,7 @@
             }
           ],
           "model": {
-            "name": "_404",
+            "name": "404",
             "publicAliases": []
           }
         },
@@ -9634,7 +9803,7 @@
             }
           ],
           "model": {
-            "name": "_422",
+            "name": "422",
             "publicAliases": []
           }
         },
@@ -9649,7 +9818,7 @@
             }
           ],
           "model": {
-            "name": "_500",
+            "name": "500",
             "publicAliases": []
           }
         }

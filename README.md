@@ -1,74 +1,8 @@
 # Scalar API
 
-Generated TypeScript SDK for Scalar API.
-API for managing Scalar platform resources.
+This library provides convenient access to the Scalar API from TypeScript or JavaScript.
 
-## TypeScript SDK
-
-For TypeScript, we provide a SDK that makes using our API even easier.
-
-### Install
-
-```bash
-npm add @scalar/sdk
-```
-
-### Get a Scalar API key
-
-Create an API key in your Scalar account:
-
-- Dashboard: https://dashboard.scalar.com/account
-- Store it in `.env`, for example:
-
-```bash
-SCALAR_API_KEY=your_personal_token
-```
-
-### Exchange your API key for an access token
-
-The personal token is not an access token. Exchange it first with `postv1AuthExchange`.
-
-If you use the personal token directly for authenticated API calls, the API returns `401 Invalid authentication token`.
-
-```ts
-import { Scalar } from '@scalar/sdk'
-
-const scalar = new Scalar()
-
-const exchange = await scalar.auth.postv1AuthExchange({
-  personalToken: process.env.SCALAR_API_KEY!,
-})
-
-const accessToken = exchange.accessToken
-```
-
-### Use the access token
-
-Construct a second client with bearer auth. Use this authenticated client for API calls.
-
-```ts
-import { Scalar } from '@scalar/sdk'
-
-const scalar = new Scalar()
-
-const exchange = await scalar.auth.postv1AuthExchange({
-  personalToken: process.env.SCALAR_API_KEY!,
-})
-
-const authedScalar = new Scalar({
-  bearerAuth: exchange.accessToken,
-})
-```
-
-### Notes
-
-- The exchange request itself can be made from a client constructed with no arguments (`new Scalar()`).
-- The exchanged access token is valid for 12 hours.
-- Timestamps are Unix seconds.
-
-### Read more
-
-- [@scalar/sdk on npm](https://www.npmjs.com/package/@scalar/sdk)
+The full API of this library can be found in [api.md](./api.md).
 
 <br />
 
@@ -103,7 +37,6 @@ import Scalar from "@scalar/sdk";
 
 const client = new Scalar({
   bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
-  environment: "production",
 });
 
 const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
@@ -168,7 +101,6 @@ const client = new Scalar({
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
-| `environment` | `Environment` | - | Select one of the configured API environments. |
 | `baseURL` | `string \| null` | `process.env["SCALAR_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
 | `timeout` | `number` | `60000` | Maximum time in milliseconds to wait for a response before aborting a request. |
 | `maxRetries` | `number` | `2` | Number of retries for temporary failures. |
@@ -222,11 +154,3 @@ Generated clients support request timeouts and retry temporary failures such as 
 - Node.js 20+, a modern browser, or any runtime with `fetch` support
 
 Powered by Scalar.
-
-
-## Contributions
-
-This SDK is generated programmatically. Manual edits to generated files will be
-overwritten on the next build.
-
-### SDK created by [Scalar](https://www.scalar.com/?utm_source=scalar-typescript-sdk&utm_campaign=sdk)

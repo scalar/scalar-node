@@ -1,10 +1,10 @@
 {
   "name": "@scalar/sdk",
-  "version": "0.2.6",
+  "version": "0.2.0-next",
   "description": "API for managing Scalar platform resources.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scalar/typescript-sdk.git"
+    "url": "git+https://github.com/scalar/scalar-node.git"
   },
   "type": "module",
   "sideEffects": false,
@@ -44,7 +44,8 @@
   },
   "files": [
     "dist",
-    "api.md"
+    "api.md",
+    "SKILL.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && node scripts/finalize-build.mjs",
@@ -54,5 +55,6 @@
   "dependencies": {},
   "devDependencies": {
     "typescript": "^6.0.0"
-  }
+  },
+  "license": "Apache-2.0"
 }

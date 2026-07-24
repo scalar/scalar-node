@@ -104,9 +104,13 @@ function supportsFormData(fetchObject: Scalar | Fetch): Promise<boolean> {
   if (cached) return cached;
   const promise = (async () => {
     try {
+      // Prefer a `Response` constructor we can reach without a network round-trip: the one attached to
+      // the fetch function, then the global `Response`. Only fall back to probing `data:,` when neither
+      // exists, so serializing an already-provided File/Blob never triggers an extra fetch (which would
+      // otherwise show up as a spurious request to `data:,` before the real API call).
       const FetchResponse = (
-        'Response' in fetch ?
-          fetch.Response
+        'Response' in fetch ? fetch.Response
+        : typeof Response !== 'undefined' ? Response
         : (await fetch('data:,')).constructor) as typeof Response;
       const data = new FormData();
       if (data.toString() === (await new FetchResponse(data).text())) {

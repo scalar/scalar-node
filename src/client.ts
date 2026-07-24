@@ -20,41 +20,26 @@ import { stringify as stringifyQuery } from './internal/qs/stringify';
 import type { StringifyOptions } from './internal/qs/types';
 import { toFile } from './core/uploads';
 import { VERSION } from './version';
-import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentVersionResponse, type ManagedDocVersion, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
-import { Schemas, type SchemaListResponse, type UID, type SchemaCreateParams, type SchemaUpdateParams } from "./resources/schemas/schemas";
-import { LoginPortals, type LoginPortalEmail, type LoginPortalPage, type LoginPortalRetrieveResponse, type LoginPortalListResponse, type LoginPortalUpdateParams, type LoginPortalCreateParams } from "./resources/login-portals";
-import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
-import { Themes, type ThemeListResponse, type ThemeCreateParams, type ThemeUpdateParams, type ThemeReplaceDocumentParams } from "./resources/themes";
+import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentResponse, type RegistryDeleteAPIDocumentResponse, type RegistryRetrieveAPIDocumentVersionResponse, type RegistryUpdateAPIDocumentVersionResponse, type RegistryDeleteAPIDocumentVersionResponse, type RegistryListAPIDocumentVersionMetadataResponse, type RegistryCreateAPIDocumentVersionResponse, type RegistryCreateAPIDocumentAccessGroupResponse, type RegistryDeleteAPIDocumentAccessGroupResponse, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryDeleteAPIDocumentParams, type RegistryRetrieveAPIDocumentVersionParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryDeleteAPIDocumentVersionParams, type RegistryListAPIDocumentVersionMetadataParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
+import { Schemas, type SchemaListResponse, type SchemaCreateResponse, type SchemaUpdateResponse, type SchemaDeleteResponse, type SchemaCreateParams, type SchemaUpdateParams, type SchemaDeleteParams } from "./resources/schemas/schemas";
+import { LoginPortals, type LoginPortalEmail, type LoginPortalPage, type LoginPortalRetrieveResponse, type LoginPortalUpdateResponse, type LoginPortalDeleteResponse, type LoginPortalCreateResponse, type LoginPortalListResponse, type LoginPortalUpdateParams, type LoginPortalCreateParams } from "./resources/login-portals";
+import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetResponse, type RuleUpdateRulesetResponse, type RuleDeleteRulesetResponse, type RuleRetrieveRulesetDocumentResponse, type RuleCreateRulesetAccessGroupResponse, type RuleDeleteRulesetAccessGroupResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleDeleteRulesetParams, type RuleRetrieveRulesetDocumentParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
+import { Themes, type ThemeListResponse, type ThemeCreateResponse, type ThemeUpdateResponse, type ThemeReplaceDocumentResponse, type ThemeDeleteResponse, type ThemeRetrieveResponse, type ThemeCreateParams, type ThemeUpdateParams, type ThemeReplaceDocumentParams } from "./resources/themes";
 import { Teams, type TeamListResponse } from "./resources/teams";
 import { ScalarDocs, type Slug, type ScalarDocListGuidesResponse, type ScalarDocCreateGuideResponse, type ScalarDocPublishGuideResponse, type ScalarDocCreateGuideParams } from "./resources/scalar-docs";
 import { Namespaces, type NamespaceListResponse } from "./resources/namespaces";
-import { Authentication, type AuthenticationExchangePersonalTokenResponse, type User, type AuthenticationExchangePersonalTokenParams } from "./resources/authentication";
+import { Authentication, type AuthenticationExchangePersonalTokenResponse, type AuthenticationListCurrentUserResponse, type AuthenticationExchangePersonalTokenParams } from "./resources/authentication";
 
 export type AuthTokenProvider = () => string | Promise<string>;
 
 const queryArrayFormat: NonNullable<StringifyOptions["arrayFormat"]> = "indices";
 const queryAllowDots = false;
 
-const environments = {
-  production: "https://access.scalar.com",
-  local: "http://127.0.0.1:4010",
-};
-type Environment = keyof typeof environments;
-
 export interface ClientOptions {
   /**
    * The token used for authentication.
    */
   bearerAuth?: string | AuthTokenProvider | undefined;
-
-  /**
-   * Specifies the environment to use for the API.
-   *
-   * Each environment maps to a different base URL:
-   * - `production` corresponds to `https://access.scalar.com`
-   * - `local` corresponds to `http://127.0.0.1:4010`
-   */
-  environment?: Environment | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -151,7 +136,6 @@ export class Scalar {
    * API Client for interfacing with the ScalarApi API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
-   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -168,12 +152,10 @@ export class Scalar {
     const options: ClientOptions = {
       bearerAuth,
       ...opts,
-      baseURL: baseURL || null,
+      baseURL: baseURL || "https://access.scalar.com",
     };
-    const environment = options.environment ?? "production";
     const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== "";
-    if (baseURLOverridden && options.environment) throw new Errors.ScalarError("Ambiguous URL; The `baseURL` option (or SCALAR_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null");
-    const defaultBaseURL = environments[environment];
+    const defaultBaseURL = "https://access.scalar.com";
     this.baseURL = options.baseURL || defaultBaseURL;
     this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
@@ -201,7 +183,7 @@ export class Scalar {
       options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
     }
 
-    this._options = { ...options, baseURL: baseURLOverridden ? this.baseURL : undefined, environment };
+    this._options = { ...options, baseURL: baseURLOverridden ? this.baseURL : undefined };
     this._baseURLOverridden = baseURLOverridden;
     this._defaultBaseURL = defaultBaseURL;
 
@@ -838,11 +820,22 @@ export declare namespace Scalar {
     type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
     type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
     type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,
+    type RegistryUpdateAPIDocumentResponse as RegistryUpdateAPIDocumentResponse,
+    type RegistryDeleteAPIDocumentResponse as RegistryDeleteAPIDocumentResponse,
+    type RegistryRetrieveAPIDocumentVersionResponse as RegistryRetrieveAPIDocumentVersionResponse,
     type RegistryUpdateAPIDocumentVersionResponse as RegistryUpdateAPIDocumentVersionResponse,
-    type ManagedDocVersion as ManagedDocVersion,
+    type RegistryDeleteAPIDocumentVersionResponse as RegistryDeleteAPIDocumentVersionResponse,
+    type RegistryListAPIDocumentVersionMetadataResponse as RegistryListAPIDocumentVersionMetadataResponse,
+    type RegistryCreateAPIDocumentVersionResponse as RegistryCreateAPIDocumentVersionResponse,
+    type RegistryCreateAPIDocumentAccessGroupResponse as RegistryCreateAPIDocumentAccessGroupResponse,
+    type RegistryDeleteAPIDocumentAccessGroupResponse as RegistryDeleteAPIDocumentAccessGroupResponse,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
     type RegistryUpdateAPIDocumentParams as RegistryUpdateAPIDocumentParams,
+    type RegistryDeleteAPIDocumentParams as RegistryDeleteAPIDocumentParams,
+    type RegistryRetrieveAPIDocumentVersionParams as RegistryRetrieveAPIDocumentVersionParams,
     type RegistryUpdateAPIDocumentVersionParams as RegistryUpdateAPIDocumentVersionParams,
+    type RegistryDeleteAPIDocumentVersionParams as RegistryDeleteAPIDocumentVersionParams,
+    type RegistryListAPIDocumentVersionMetadataParams as RegistryListAPIDocumentVersionMetadataParams,
     type RegistryCreateAPIDocumentVersionParams as RegistryCreateAPIDocumentVersionParams,
     type RegistryCreateAPIDocumentAccessGroupParams as RegistryCreateAPIDocumentAccessGroupParams,
     type RegistryDeleteAPIDocumentAccessGroupParams as RegistryDeleteAPIDocumentAccessGroupParams,
@@ -851,9 +844,12 @@ export declare namespace Scalar {
   export {
     Schemas as Schemas,
     type SchemaListResponse as SchemaListResponse,
-    type UID as UID,
+    type SchemaCreateResponse as SchemaCreateResponse,
+    type SchemaUpdateResponse as SchemaUpdateResponse,
+    type SchemaDeleteResponse as SchemaDeleteResponse,
     type SchemaCreateParams as SchemaCreateParams,
     type SchemaUpdateParams as SchemaUpdateParams,
+    type SchemaDeleteParams as SchemaDeleteParams,
   };
 
   export {
@@ -861,6 +857,9 @@ export declare namespace Scalar {
     type LoginPortalEmail as LoginPortalEmail,
     type LoginPortalPage as LoginPortalPage,
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
+    type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
+    type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
+    type LoginPortalCreateResponse as LoginPortalCreateResponse,
     type LoginPortalListResponse as LoginPortalListResponse,
     type LoginPortalUpdateParams as LoginPortalUpdateParams,
     type LoginPortalCreateParams as LoginPortalCreateParams,
@@ -869,8 +868,16 @@ export declare namespace Scalar {
   export {
     Rules as Rules,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
+    type RuleCreateRulesetResponse as RuleCreateRulesetResponse,
+    type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
+    type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
+    type RuleRetrieveRulesetDocumentResponse as RuleRetrieveRulesetDocumentResponse,
+    type RuleCreateRulesetAccessGroupResponse as RuleCreateRulesetAccessGroupResponse,
+    type RuleDeleteRulesetAccessGroupResponse as RuleDeleteRulesetAccessGroupResponse,
     type RuleCreateRulesetParams as RuleCreateRulesetParams,
     type RuleUpdateRulesetParams as RuleUpdateRulesetParams,
+    type RuleDeleteRulesetParams as RuleDeleteRulesetParams,
+    type RuleRetrieveRulesetDocumentParams as RuleRetrieveRulesetDocumentParams,
     type RuleCreateRulesetAccessGroupParams as RuleCreateRulesetAccessGroupParams,
     type RuleDeleteRulesetAccessGroupParams as RuleDeleteRulesetAccessGroupParams,
   };
@@ -878,6 +885,11 @@ export declare namespace Scalar {
   export {
     Themes as Themes,
     type ThemeListResponse as ThemeListResponse,
+    type ThemeCreateResponse as ThemeCreateResponse,
+    type ThemeUpdateResponse as ThemeUpdateResponse,
+    type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
+    type ThemeDeleteResponse as ThemeDeleteResponse,
+    type ThemeRetrieveResponse as ThemeRetrieveResponse,
     type ThemeCreateParams as ThemeCreateParams,
     type ThemeUpdateParams as ThemeUpdateParams,
     type ThemeReplaceDocumentParams as ThemeReplaceDocumentParams,
@@ -905,7 +917,7 @@ export declare namespace Scalar {
   export {
     Authentication as Authentication,
     type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse,
-    type User as User,
+    type AuthenticationListCurrentUserResponse as AuthenticationListCurrentUserResponse,
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
   };
 }
