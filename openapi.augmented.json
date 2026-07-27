@@ -7335,7 +7335,7 @@
           {
             "label": "Ruby",
             "lang": "Ruby",
-            "source": "require \"json\"\nrequire \"scalar-sdk\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.namespaces.list\nputs response.inspect"
+            "source": "require \"json\"\nrequire \"scalar-sdk\"\n\nclient = ScalarApi::Client.new(\n  bearer_auth: ENV[\"BEARER_AUTH\"],\n)\n\nresponse = client.namespace(\"namespace\").list\nputs response.inspect"
           }
         ]
       }
