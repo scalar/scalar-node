@@ -43,7 +43,7 @@ export class Rules extends APIResource {
    * ```
    */
   createRuleset(namespace_: string, body: RuleCreateRulesetParams, options?: RequestOptions): APIPromise<RuleCreateRulesetResponse> {
-    return this._client.post(__scalarPath`/v1/rulesets/${namespace_}`, { body: body, ...options });
+    return this._client.post(__scalarPath`/v1/rulesets/${namespace_}`, { body, ...options });
   }
 
   /**
@@ -62,8 +62,8 @@ export class Rules extends APIResource {
    * ```
    */
   updateRuleset(slug: string, params: RuleUpdateRulesetParams, options?: RequestOptions): APIPromise<RuleUpdateRulesetResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { body, ...options });
   }
 
   /**
@@ -82,7 +82,7 @@ export class Rules extends APIResource {
    * ```
    */
   deleteRuleset(slug: string, params: RuleDeleteRulesetParams, options?: RequestOptions): APIPromise<RuleDeleteRulesetResponse> {
-    const { namespace } = params ?? {};
+    const { namespace } = params;
     return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}`, options);
   }
 
@@ -102,7 +102,7 @@ export class Rules extends APIResource {
    * ```
    */
   retrieveRulesetDocument(slug: string, params: RuleRetrieveRulesetDocumentParams, options?: RequestOptions): APIPromise<RuleRetrieveRulesetDocumentResponse> {
-    const { namespace } = params ?? {};
+    const { namespace } = params;
     return this._client.get(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 
@@ -123,8 +123,8 @@ export class Rules extends APIResource {
    * ```
    */
   createRulesetAccessGroup(slug: string, params: RuleCreateRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleCreateRulesetAccessGroupResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.post(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.post(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body, ...options });
   }
 
   /**
@@ -144,8 +144,8 @@ export class Rules extends APIResource {
    * ```
    */
   deleteRulesetAccessGroup(slug: string, params: RuleDeleteRulesetAccessGroupParams, options?: RequestOptions): APIPromise<RuleDeleteRulesetAccessGroupResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.delete(__scalarPath`/v1/rulesets/${namespace}/${slug}/access-group`, { body, ...options });
   }
 }
 
