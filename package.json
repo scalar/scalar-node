@@ -1,7 +1,12 @@
 {
   "name": "@scalar/sdk",
+<<<<<<< HEAD
   "version": "0.3.0",
   "description": "API for managing Scalar platform resources.",
+=======
+  "version": "0.1.0",
+  "description": "Manage Scalar platform resources programmatically. The Scalar API lets teams create and update API references, schemas, guides, rulesets, themes, login portals, namespaces, and access controls from automated workflows or custom internal tooling. Use it to keep documentation and developer portals in sync with your source of truth, publish new versions safely, and inspect the teams and authenticated user context available to your integration.",
+>>>>>>> d72489585d53fcdc3387c28f7b6bc528b289e627
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scalar/scalar-node.git"
