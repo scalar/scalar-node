@@ -39,7 +39,7 @@ export class ScalarDocs extends APIResource {
    * ```
    */
   createGuide(body: ScalarDocCreateGuideParams, options?: RequestOptions): APIPromise<ScalarDocCreateGuideResponse> {
-    return this._client.post("/v1/guides", { body: body, ...options });
+    return this._client.post("/v1/guides", { body, ...options });
   }
 
   /**

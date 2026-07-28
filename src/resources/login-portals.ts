@@ -37,7 +37,7 @@ export class LoginPortals extends APIResource {
    * ```
    */
   update(slug: string, body: LoginPortalUpdateParams, options?: RequestOptions): APIPromise<LoginPortalUpdateResponse> {
-    return this._client.patch(__scalarPath`/v1/login-portals/${slug}`, { body: body, ...options });
+    return this._client.patch(__scalarPath`/v1/login-portals/${slug}`, { body, ...options });
   }
 
   /**
@@ -101,7 +101,7 @@ export class LoginPortals extends APIResource {
    * ```
    */
   create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<LoginPortalCreateResponse> {
-    return this._client.post("/v1/login-portals", { body: body, ...options });
+    return this._client.post("/v1/login-portals", { body, ...options });
   }
 
   /**

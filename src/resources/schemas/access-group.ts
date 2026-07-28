@@ -25,8 +25,8 @@ export class AccessGroup extends APIResource {
    * ```
    */
   createSchema(slug: string, params: AccessGroupCreateSchemaParams, options?: RequestOptions): APIPromise<AccessGroupCreateSchemaResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body, ...options });
   }
 
   /**
@@ -46,8 +46,8 @@ export class AccessGroup extends APIResource {
    * ```
    */
   deleteSchema(slug: string, params: AccessGroupDeleteSchemaParams, options?: RequestOptions): APIPromise<AccessGroupDeleteSchemaResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body, ...options });
   }
 }
 

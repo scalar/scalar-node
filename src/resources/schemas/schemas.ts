@@ -50,7 +50,7 @@ export class Schemas extends APIResource {
    * ```
    */
   create(namespace_: string, body: SchemaCreateParams, options?: RequestOptions): APIPromise<SchemaCreateResponse> {
-    return this._client.post(__scalarPath`/v1/schemas/${namespace_}`, { body: body, ...options });
+    return this._client.post(__scalarPath`/v1/schemas/${namespace_}`, { body, ...options });
   }
 
   /**
@@ -69,8 +69,8 @@ export class Schemas extends APIResource {
    * ```
    */
   update(slug: string, params: SchemaUpdateParams, options?: RequestOptions): APIPromise<SchemaUpdateResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.patch(__scalarPath`/v1/schemas/${namespace}/${slug}`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.patch(__scalarPath`/v1/schemas/${namespace}/${slug}`, { body, ...options });
   }
 
   /**
@@ -89,7 +89,7 @@ export class Schemas extends APIResource {
    * ```
    */
   delete(slug: string, params: SchemaDeleteParams, options?: RequestOptions): APIPromise<SchemaDeleteResponse> {
-    const { namespace } = params ?? {};
+    const { namespace } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}`, options);
   }
 }
