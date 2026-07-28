@@ -25,7 +25,7 @@ export class Version extends APIResource {
    * ```
    */
   retrieveSchema(semver: string, params: VersionRetrieveSchemaParams, options?: RequestOptions): APIPromise<VersionRetrieveSchemaResponse> {
-    const { namespace, slug } = params ?? {};
+    const { namespace, slug } = params;
     return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 
@@ -46,7 +46,7 @@ export class Version extends APIResource {
    * ```
    */
   deleteSchema(semver: string, params: VersionDeleteSchemaParams, options?: RequestOptions): APIPromise<VersionDeleteSchemaResponse> {
-    const { namespace, slug } = params ?? {};
+    const { namespace, slug } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, options);
   }
 
@@ -68,8 +68,8 @@ export class Version extends APIResource {
    * ```
    */
   createSchema(slug: string, params: VersionCreateSchemaParams, options?: RequestOptions): APIPromise<VersionCreateSchemaResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body, ...options });
   }
 }
 

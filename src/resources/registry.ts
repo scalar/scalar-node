@@ -58,7 +58,7 @@ export class Registry extends APIResource {
    * ```
    */
   createAPIDocument(namespace_: string, body: RegistryCreateAPIDocumentParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentResponse> {
-    return this._client.post(__scalarPath`/v1/apis/${namespace_}`, { body: body, ...options });
+    return this._client.post(__scalarPath`/v1/apis/${namespace_}`, { body, ...options });
   }
 
   /**
@@ -77,8 +77,8 @@ export class Registry extends APIResource {
    * ```
    */
   updateAPIDocument(slug: string, params: RegistryUpdateAPIDocumentParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}`, { body, ...options });
   }
 
   /**
@@ -97,7 +97,7 @@ export class Registry extends APIResource {
    * ```
    */
   deleteAPIDocument(slug: string, params: RegistryDeleteAPIDocumentParams, options?: RequestOptions): APIPromise<RegistryDeleteAPIDocumentResponse> {
-    const { namespace } = params ?? {};
+    const { namespace } = params;
     return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}`, options);
   }
 
@@ -118,7 +118,7 @@ export class Registry extends APIResource {
    * ```
    */
   retrieveAPIDocumentVersion(semver: string, params: RegistryRetrieveAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryRetrieveAPIDocumentVersionResponse> {
-    const { namespace, slug } = params ?? {};
+    const { namespace, slug } = params;
     return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
   }
 
@@ -140,8 +140,8 @@ export class Registry extends APIResource {
    * ```
    */
   updateAPIDocumentVersion(semver: string, params: RegistryUpdateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryUpdateAPIDocumentVersionResponse> {
-    const { namespace, slug, ...body } = params ?? {};
-    return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, { body: body, ...options });
+    const { namespace, slug, ...body } = params;
+    return this._client.patch(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, { body, ...options });
   }
 
   /**
@@ -161,7 +161,7 @@ export class Registry extends APIResource {
    * ```
    */
   deleteAPIDocumentVersion(semver: string, params: RegistryDeleteAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryDeleteAPIDocumentVersionResponse> {
-    const { namespace, slug } = params ?? {};
+    const { namespace, slug } = params;
     return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}`, options);
   }
 
@@ -182,7 +182,7 @@ export class Registry extends APIResource {
    * ```
    */
   listAPIDocumentVersionMetadata(semver: string, params: RegistryListAPIDocumentVersionMetadataParams, options?: RequestOptions): APIPromise<RegistryListAPIDocumentVersionMetadataResponse> {
-    const { namespace, slug } = params ?? {};
+    const { namespace, slug } = params;
     return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}/metadata`, options);
   }
 
@@ -204,8 +204,8 @@ export class Registry extends APIResource {
    * ```
    */
   createAPIDocumentVersion(slug: string, params: RegistryCreateAPIDocumentVersionParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentVersionResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/version`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/version`, { body, ...options });
   }
 
   /**
@@ -225,8 +225,8 @@ export class Registry extends APIResource {
    * ```
    */
   createAPIDocumentAccessGroup(slug: string, params: RegistryCreateAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<RegistryCreateAPIDocumentAccessGroupResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body, ...options });
   }
 
   /**
@@ -246,8 +246,8 @@ export class Registry extends APIResource {
    * ```
    */
   deleteAPIDocumentAccessGroup(slug: string, params: RegistryDeleteAPIDocumentAccessGroupParams, options?: RequestOptions): APIPromise<RegistryDeleteAPIDocumentAccessGroupResponse> {
-    const { namespace, ...body } = params ?? {};
-    return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body: body, ...options });
+    const { namespace, ...body } = params;
+    return this._client.delete(__scalarPath`/v1/apis/${namespace}/${slug}/access-group`, { body, ...options });
   }
 }
 
