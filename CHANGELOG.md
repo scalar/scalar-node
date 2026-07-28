@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/scalar/scalar-node/compare/v0.3.0...v0.3.1) (2026-07-28)
+
+
+### Chores
+
+* **api:** update generated SDK content ([c26b7b5](https://github.com/scalar/scalar-node/commit/c26b7b5c8e5b63d3a184637992ffd890498a09a8))
+* **api:** update generated SDK content ([d724895](https://github.com/scalar/scalar-node/commit/d72489585d53fcdc3387c28f7b6bc528b289e627))
+
 ## [0.3.0](https://github.com/scalar/scalar-node/compare/v0.2.0...v0.3.0) (2026-07-28)
 
 
