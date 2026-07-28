@@ -20,7 +20,7 @@ export class Authentication extends APIResource {
    * ```
    */
   exchangePersonalToken(body: AuthenticationExchangePersonalTokenParams, options?: RequestOptions): APIPromise<AuthenticationExchangePersonalTokenResponse> {
-    return this._client.post("/v1/auth/exchange", { body: body, ...options });
+    return this._client.post("/v1/auth/exchange", { body, ...options });
   }
 
   /**

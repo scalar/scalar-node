@@ -40,7 +40,7 @@ export class Themes extends APIResource {
    * ```
    */
   create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<ThemeCreateResponse> {
-    return this._client.post("/v1/themes", { body: body, ...options });
+    return this._client.post("/v1/themes", { body, ...options });
   }
 
   /**
@@ -57,7 +57,7 @@ export class Themes extends APIResource {
    * ```
    */
   update(slug: string, body: ThemeUpdateParams, options?: RequestOptions): APIPromise<ThemeUpdateResponse> {
-    return this._client.patch(__scalarPath`/v1/themes/${slug}`, { body: body, ...options });
+    return this._client.patch(__scalarPath`/v1/themes/${slug}`, { body, ...options });
   }
 
   /**
@@ -76,7 +76,7 @@ export class Themes extends APIResource {
    * ```
    */
   replaceDocument(slug: string, body: ThemeReplaceDocumentParams, options?: RequestOptions): APIPromise<ThemeReplaceDocumentResponse> {
-    return this._client.put(__scalarPath`/v1/themes/${slug}`, { body: body, ...options });
+    return this._client.put(__scalarPath`/v1/themes/${slug}`, { body, ...options });
   }
 
   /**
