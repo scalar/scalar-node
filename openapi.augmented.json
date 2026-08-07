@@ -78,10 +78,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ]
+        "required": ["message", "code"]
       },
       "401": {
         "type": "object",
@@ -93,10 +90,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ]
+        "required": ["message", "code"]
       },
       "403": {
         "type": "object",
@@ -108,10 +102,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ]
+        "required": ["message", "code"]
       },
       "404": {
         "type": "object",
@@ -123,10 +114,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ]
+        "required": ["message", "code"]
       },
       "422": {
         "type": "object",
@@ -138,10 +126,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ]
+        "required": ["message", "code"]
       },
       "500": {
         "type": "object",
@@ -153,10 +138,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message",
-          "code"
-        ]
+        "required": ["message", "code"]
       },
       "api-document": {
         "type": "object",
@@ -252,10 +234,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": [
-                  "complete",
-                  "failed"
-                ]
+                "enum": ["complete", "failed"]
               },
               {
                 "type": "null"
@@ -284,18 +263,11 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "execute-request",
-                      "get-mini-openapi-spec"
-                    ]
+                    "enum": ["execute-request", "get-mini-openapi-spec"]
                   }
                 }
               },
-              "required": [
-                "path",
-                "method",
-                "enabledTools"
-              ],
+              "required": ["path", "method", "enabledTools"],
               "additionalProperties": false
             }
           },
@@ -309,28 +281,12 @@
             "type": "string"
           }
         },
-        "required": [
-          "uid",
-          "createdAt",
-          "version",
-          "upgraded",
-          "embedStatus",
-          "tags"
-        ],
+        "required": ["uid", "createdAt", "version", "upgraded", "embedStatus", "tags"],
         "additionalProperties": false
       },
       "method": {
         "type": "string",
-        "enum": [
-          "delete",
-          "get",
-          "head",
-          "options",
-          "patch",
-          "post",
-          "put",
-          "trace"
-        ]
+        "enum": ["delete", "get", "head", "options", "patch", "post", "put", "trace"]
       },
       "access-group": {
         "type": "object",
@@ -339,9 +295,7 @@
             "$ref": "#/components/schemas/slug"
           }
         },
-        "required": [
-          "accessGroupSlug"
-        ],
+        "required": ["accessGroupSlug"],
         "additionalProperties": false
       },
       "schema": {
@@ -378,15 +332,7 @@
             }
           }
         },
-        "required": [
-          "uid",
-          "title",
-          "description",
-          "slug",
-          "namespace",
-          "isPrivate",
-          "versions"
-        ],
+        "required": ["uid", "title", "description", "slug", "namespace", "isPrivate", "versions"],
         "additionalProperties": false
       },
       "managed-schema-version": {
@@ -409,12 +355,7 @@
             "$ref": "#/components/schemas/version"
           }
         },
-        "required": [
-          "uid",
-          "createdAt",
-          "updatedAt",
-          "version"
-        ],
+        "required": ["uid", "createdAt", "updatedAt", "version"],
         "additionalProperties": false
       },
       "timestamp": {
@@ -429,9 +370,7 @@
             "$ref": "#/components/schemas/nanoid"
           }
         },
-        "required": [
-          "uid"
-        ],
+        "required": ["uid"],
         "additionalProperties": false
       },
       "login-portal-email": {
@@ -603,11 +542,7 @@
             "$ref": "#/components/schemas/slug"
           }
         },
-        "required": [
-          "uid",
-          "title",
-          "slug"
-        ],
+        "required": ["uid", "title", "slug"],
         "additionalProperties": false
       },
       "rule": {
@@ -638,14 +573,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "uid",
-          "title",
-          "description",
-          "slug",
-          "namespace",
-          "isPrivate"
-        ],
+        "required": ["uid", "title", "description", "slug", "namespace", "isPrivate"],
         "additionalProperties": false
       },
       "theme": {
@@ -664,12 +592,7 @@
             "$ref": "#/components/schemas/slug"
           }
         },
-        "required": [
-          "uid",
-          "name",
-          "description",
-          "slug"
-        ],
+        "required": ["uid", "name", "description", "slug"],
         "additionalProperties": false
       },
       "team": {
@@ -691,12 +614,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "uid",
-          "name",
-          "slug",
-          "theme"
-        ],
+        "required": ["uid", "name", "slug", "theme"],
         "additionalProperties": false
       },
       "team-name": {
@@ -832,11 +750,7 @@
             "$ref": "#/components/schemas/timestamp"
           }
         },
-        "required": [
-          "uid",
-          "domain",
-          "publishedAt"
-        ],
+        "required": ["uid", "domain", "publishedAt"],
         "additionalProperties": false
       },
       "github-project-repository": {
@@ -908,10 +822,7 @@
             "$ref": "#/components/schemas/team-image"
           }
         },
-        "required": [
-          "uid",
-          "name"
-        ],
+        "required": ["uid", "name"],
         "additionalProperties": false
       },
       "user": {
@@ -956,15 +867,7 @@
             }
           }
         },
-        "required": [
-          "uid",
-          "createdAt",
-          "updatedAt",
-          "email",
-          "activeTeamId",
-          "hasGithub",
-          "teams"
-        ],
+        "required": ["uid", "createdAt", "updatedAt", "email", "activeTeamId", "hasGithub", "teams"],
         "additionalProperties": false
       }
     }
@@ -977,9 +880,7 @@
   "paths": {
     "/v1/apis": {
       "get": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "List all API documents across every namespace the caller can access.",
         "summary": "List all API Documents",
         "operationId": "listAllApiDocuments",
@@ -1062,16 +963,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\nconsole.log(listAllAPIDocuments);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst listAllAPIDocuments = await client.registry.listAllAPIDocuments();\n\nconsole.log(listAllAPIDocuments);"
           }
         ]
       }
     },
     "/v1/apis/{namespace}": {
       "get": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "List API documents in a namespace.",
         "summary": "List API Documents in a namespace",
         "operationId": "listApiDocuments",
@@ -1164,14 +1063,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments(\"namespace\");\nconsole.log(listAPIDocuments);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst listAPIDocuments = await client.registry.listAPIDocuments('namespace');\n\nconsole.log(listAPIDocuments);"
           }
         ]
       },
       "post": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Create an API document.",
         "summary": "Create API Document",
         "operationId": "createApiDocument",
@@ -1202,14 +1099,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "uid",
-                    "versionUid",
-                    "title",
-                    "jsonSha",
-                    "yamlSha",
-                    "versionSha"
-                  ],
+                  "required": ["uid", "versionUid", "title", "jsonSha", "yamlSha", "versionSha"],
                   "additionalProperties": false
                 }
               }
@@ -1304,12 +1194,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "title",
-                  "version",
-                  "slug",
-                  "document"
-                ],
+                "required": ["title", "version", "slug", "document"],
                 "additionalProperties": false
               }
             }
@@ -1330,16 +1215,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument(\"namespace\", {\n  title: \"\",\n  version: \"x\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createAPIDocument);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst createAPIDocument = await client.registry.createAPIDocument('namespace', {\n  title: '',\n  version: 'x',\n  slug: '',\n  document: '',\n});\n\nconsole.log(createAPIDocument);"
           }
         ]
       }
     },
     "/v1/apis/{namespace}/{slug}": {
       "patch": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Update metadata for an API document.",
         "summary": "Update API Document metadata",
         "operationId": "updateApiDocument",
@@ -1462,14 +1345,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.updateAPIDocument(\"slug\", {\n  namespace: \"namespace\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.updateAPIDocument('slug', {\n  namespace: 'namespace',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Delete an API document and all versions.",
         "summary": "Delete API Document",
         "operationId": "deleteApiDocument",
@@ -1567,16 +1448,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.deleteAPIDocument(\"slug\", {\n  namespace: \"namespace\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.deleteAPIDocument('slug', {\n  namespace: 'namespace',\n});"
           }
         ]
       }
     },
     "/v1/apis/{namespace}/{slug}/version/{semver}": {
       "get": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Get a specific API document version.",
         "summary": "Get API Document",
         "operationId": "getApiDocumentVersion",
@@ -1682,14 +1561,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});\nconsole.log(string_);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.registry.retrieveAPIDocumentVersion('semver', {\n  namespace: 'namespace',\n  slug: 'slug',\n});\n\nconsole.log(string_);"
           }
         ]
       },
       "patch": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Update the registry file content for an API document version.",
         "summary": "Update API Document version",
         "operationId": "updateApiDocumentVersion",
@@ -1711,11 +1588,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "jsonSha",
-                    "yamlSha",
-                    "versionSha"
-                  ],
+                  "required": ["jsonSha", "yamlSha", "versionSha"],
                   "additionalProperties": false
                 }
               }
@@ -1795,9 +1668,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "document"
-                ],
+                "required": ["document"],
                 "additionalProperties": false
               }
             }
@@ -1834,14 +1705,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n  document: \"\",\n});\nconsole.log(updateAPIDocumentVersion);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion('semver', {\n  namespace: 'namespace',\n  slug: 'slug',\n  document: '',\n});\n\nconsole.log(updateAPIDocumentVersion);"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Delete a specific API document version.",
         "summary": "Delete API Document version",
         "operationId": "deleteApiDocumentVersion",
@@ -1947,16 +1816,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.deleteAPIDocumentVersion(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.deleteAPIDocumentVersion('semver', {\n  namespace: 'namespace',\n  slug: 'slug',\n});"
           }
         ]
       }
     },
     "/v1/apis/{namespace}/{slug}/version/{semver}/metadata": {
       "get": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Get metadata (uid, content shas, version sha, tags) for a specific API document version.",
         "summary": "Get API Document version metadata",
         "operationId": "getApiDocumentVersionMetadata",
@@ -2062,16 +1929,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});\nconsole.log(listAPIDocumentVersionMetadata);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {\n  namespace: 'namespace',\n  slug: 'slug',\n});\n\nconsole.log(listAPIDocumentVersionMetadata);"
           }
         ]
       }
     },
     "/v1/apis/{namespace}/{slug}/version": {
       "post": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Create a new API document version.",
         "summary": "Create API Document version",
         "operationId": "createApiDocumentVersion",
@@ -2166,10 +2031,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "version",
-                  "document"
-                ],
+                "required": ["version", "document"],
                 "additionalProperties": false
               }
             }
@@ -2198,16 +2060,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst createAPIDocumentVersion = await client.registry.createAPIDocumentVersion(\"slug\", {\n  namespace: \"namespace\",\n  version: \"x\",\n  document: \"\",\n});\nconsole.log(createAPIDocumentVersion);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {\n  namespace: 'namespace',\n  version: 'x',\n  document: '',\n});\n\nconsole.log(createAPIDocumentVersion);"
           }
         ]
       }
     },
     "/v1/apis/{namespace}/{slug}/access-group": {
       "post": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Add an access group to an API document.",
         "summary": "Add access group",
         "operationId": "addApiDocumentAccessGroup",
@@ -2315,14 +2175,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.createAPIDocumentAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.createAPIDocumentAccessGroup('slug', {\n  namespace: 'namespace',\n  accessGroupSlug: 'xxx',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Registry"
-        ],
+        "tags": ["Registry"],
         "description": "Remove an access group from an API document.",
         "summary": "Remove access group",
         "operationId": "removeApiDocumentAccessGroup",
@@ -2430,16 +2288,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.registry.deleteAPIDocumentAccessGroup('slug', {\n  namespace: 'namespace',\n  accessGroupSlug: 'xxx',\n});"
           }
         ]
       }
     },
     "/v1/schemas/{namespace}": {
       "get": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "List schemas in a namespace.",
         "summary": "List all shared components",
         "operationId": "listSchemas",
@@ -2532,14 +2388,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.schemas.list(\"namespace\");\nconsole.log(list);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.schemas.list('namespace');\n\nconsole.log(list);"
           }
         ]
       },
       "post": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Create a schema in a namespace.",
         "summary": "Create a shared component",
         "operationId": "createSchema",
@@ -2640,12 +2494,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "title",
-                  "version",
-                  "slug",
-                  "document"
-                ],
+                "required": ["title", "version", "slug", "document"],
                 "additionalProperties": false
               }
             }
@@ -2666,16 +2515,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst create = await client.schemas.create(\"namespace\", {\n  title: \"\",\n  version: \"x\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(create);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst create = await client.schemas.create('namespace', {\n  title: '',\n  version: 'x',\n  slug: '',\n  document: '',\n});\n\nconsole.log(create);"
           }
         ]
       }
     },
     "/v1/schemas/{namespace}/{slug}": {
       "patch": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Update schema metadata.",
         "summary": "Update shared component metadata",
         "operationId": "updateSchema",
@@ -2795,14 +2642,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.update(\"slug\", {\n  namespace: \"namespace\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.update('slug', {\n  namespace: 'namespace',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Delete a schema and all related versions.",
         "summary": "Delete a shared component",
         "operationId": "deleteSchema",
@@ -2900,16 +2745,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.delete(\"slug\", {\n  namespace: \"namespace\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.delete('slug', {\n  namespace: 'namespace',\n});"
           }
         ]
       }
     },
     "/v1/schemas/{namespace}/{slug}/version/{semver}": {
       "get": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Get a specific schema version document.",
         "summary": "Get a shared component document",
         "operationId": "getSchemaVersion",
@@ -3015,14 +2858,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.schemas.version.retrieveSchema(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});\nconsole.log(string_);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.schemas.version.retrieveSchema('semver', {\n  namespace: 'namespace',\n  slug: 'slug',\n});\n\nconsole.log(string_);"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Delete a schema version.",
         "summary": "Delete a shared component version",
         "operationId": "deleteSchemaVersion",
@@ -3128,16 +2969,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.version.deleteSchema(\"semver\", {\n  namespace: \"namespace\",\n  slug: \"slug\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.version.deleteSchema('semver', {\n  namespace: 'namespace',\n  slug: 'slug',\n});"
           }
         ]
       }
     },
     "/v1/schemas/{namespace}/{slug}/version": {
       "post": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Create a schema version.",
         "summary": "Create a shared component version",
         "operationId": "createSchemaVersion",
@@ -3226,10 +3065,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "version",
-                  "document"
-                ],
+                "required": ["version", "document"],
                 "additionalProperties": false
               }
             }
@@ -3258,16 +3094,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst createSchema = await client.schemas.version.createSchema(\"slug\", {\n  namespace: \"namespace\",\n  version: \"x\",\n  document: \"\",\n});\nconsole.log(createSchema);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst createSchema = await client.schemas.version.createSchema('slug', {\n  namespace: 'namespace',\n  version: 'x',\n  document: '',\n});\n\nconsole.log(createSchema);"
           }
         ]
       }
     },
     "/v1/schemas/{namespace}/{slug}/access-group": {
       "post": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Add an access group to a schema.",
         "summary": "Add shared component access group",
         "operationId": "addSchemaAccessGroup",
@@ -3375,14 +3209,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.accessGroup.createSchema(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.accessGroup.createSchema('slug', {\n  namespace: 'namespace',\n  accessGroupSlug: 'xxx',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Schemas"
-        ],
+        "tags": ["Schemas"],
         "description": "Remove an access group from a schema.",
         "summary": "Remove shared component access group",
         "operationId": "removeSchemaAccessGroup",
@@ -3490,16 +3322,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.accessGroup.deleteSchema(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.schemas.accessGroup.deleteSchema('slug', {\n  namespace: 'namespace',\n  accessGroupSlug: 'xxx',\n});"
           }
         ]
       }
     },
     "/v1/login-portals/{slug}": {
       "get": {
-        "tags": [
-          "Login Portals"
-        ],
+        "tags": ["Login Portals"],
         "description": "Get a login portal by slug.",
         "summary": "Get a login portal",
         "operationId": "getLoginPortal",
@@ -3527,13 +3357,7 @@
                       "$ref": "#/components/schemas/login-portal-page"
                     }
                   },
-                  "required": [
-                    "uid",
-                    "title",
-                    "slug",
-                    "email",
-                    "page"
-                  ],
+                  "required": ["uid", "title", "slug", "email", "page"],
                   "additionalProperties": false
                 }
               }
@@ -3614,14 +3438,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst retrieve = await client.loginPortals.retrieve(\"slug\");\nconsole.log(retrieve);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst retrieve = await client.loginPortals.retrieve('slug');\n\nconsole.log(retrieve);"
           }
         ]
       },
       "patch": {
-        "tags": [
-          "Login Portals"
-        ],
+        "tags": ["Login Portals"],
         "description": "Update metadata for a login portal.",
         "summary": "Update portal metadata",
         "operationId": "updateLoginPortal",
@@ -3727,14 +3549,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.loginPortals.update(\"slug\", {});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.loginPortals.update('slug', {});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Login Portals"
-        ],
+        "tags": ["Login Portals"],
         "description": "Delete a login portal.",
         "summary": "Delete a login portal",
         "operationId": "deleteLoginPortal",
@@ -3824,16 +3644,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.loginPortals.delete(\"slug\");"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.loginPortals.delete('slug');"
           }
         ]
       }
     },
     "/v1/login-portals": {
       "post": {
-        "tags": [
-          "Login Portals"
-        ],
+        "tags": ["Login Portals"],
         "description": "Create a login portal for the current team.",
         "summary": "Create a portal",
         "operationId": "createLoginPortal",
@@ -3928,12 +3746,7 @@
                     "$ref": "#/components/schemas/login-portal-page"
                   }
                 },
-                "required": [
-                  "title",
-                  "slug",
-                  "email",
-                  "page"
-                ],
+                "required": ["title", "slug", "email", "page"],
                 "additionalProperties": false
               }
             }
@@ -3944,14 +3757,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst create = await client.loginPortals.create({\n  title: \"\",\n  slug: \"\",\n  email: {\n    logo: \"\",\n    logoSize: \"100\",\n    buttonText: \"Login\",\n    message: \"Click to access private documentation hosted by scalar.com\",\n    title: \"Private Docs\",\n    mainColor: \"#2a2f45\",\n    mainBackground: \"#f6f6f6\",\n    cardColor: \"2a2f45\",\n    cardBackground: \"#fff\",\n    buttonColor: \"#fff\",\n    buttonBackground: \"#0f0f0f\",\n  },\n  page: {\n    title: \"Scalar Private Docs\",\n    description: \"Login to access your documentation\",\n    head: \"\",\n    script: \"\",\n    theme: \"\",\n    companyName: \"\",\n    logo: \"\",\n    logoURL: \"\",\n    favicon: \"\",\n    termsLink: \"\",\n    privacyLink: \"\",\n    formTitle: \"Scalar Private Docs\",\n    formDescription: \"Login to access your documentation\",\n    formImage: \"\",\n  },\n});\nconsole.log(create);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst create = await client.loginPortals.create({\n  title: '',\n  slug: '',\n  email: {\n    logo: '',\n    logoSize: '100',\n    buttonText: 'Login',\n    message: 'Click to access private documentation hosted by scalar.com',\n    title: 'Private Docs',\n    mainColor: '#2a2f45',\n    mainBackground: '#f6f6f6',\n    cardColor: '2a2f45',\n    cardBackground: '#fff',\n    buttonColor: '#fff',\n    buttonBackground: '#0f0f0f',\n  },\n  page: {\n    title: 'Scalar Private Docs',\n    description: 'Login to access your documentation',\n    head: '',\n    script: '',\n    theme: '',\n    companyName: '',\n    logo: '',\n    logoURL: '',\n    favicon: '',\n    termsLink: '',\n    privacyLink: '',\n    formTitle: 'Scalar Private Docs',\n    formDescription: 'Login to access your documentation',\n    formImage: '',\n  },\n});\n\nconsole.log(create);"
           }
         ]
       },
       "get": {
-        "tags": [
-          "Login Portals"
-        ],
+        "tags": ["Login Portals"],
         "description": "List all login portals for the current team.",
         "summary": "List all portals",
         "operationId": "listLoginPortals",
@@ -4034,16 +3845,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.loginPortals.list();\nconsole.log(list);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.loginPortals.list();\n\nconsole.log(list);"
           }
         ]
       }
     },
     "/v1/rulesets/{namespace}": {
       "get": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "List all rulesets in a namespace.",
         "summary": "List all rules",
         "operationId": "listRulesets",
@@ -4136,14 +3945,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst listRulesets = await client.rules.listRulesets(\"namespace\");\nconsole.log(listRulesets);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst listRulesets = await client.rules.listRulesets('namespace');\n\nconsole.log(listRulesets);"
           }
         ]
       },
       "post": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "Create a rule in a namespace.",
         "summary": "Create a rule",
         "operationId": "createRuleset",
@@ -4241,11 +4048,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "title",
-                  "slug",
-                  "document"
-                ],
+                "required": ["title", "slug", "document"],
                 "additionalProperties": false
               }
             }
@@ -4266,16 +4069,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst createRuleset = await client.rules.createRuleset(\"namespace\", {\n  title: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(createRuleset);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst createRuleset = await client.rules.createRuleset('namespace', {\n  title: '',\n  slug: '',\n  document: '',\n});\n\nconsole.log(createRuleset);"
           }
         ]
       }
     },
     "/v1/rulesets/{namespace}/{slug}": {
       "patch": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "Update rule metadata by slug.",
         "summary": "Update rule metadata",
         "operationId": "updateRuleset",
@@ -4401,14 +4202,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.updateRuleset(\"slug\", {\n  namespace: \"namespace\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.updateRuleset('slug', {\n  namespace: 'namespace',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "Delete a rule by slug.",
         "summary": "Delete a rule",
         "operationId": "deleteRuleset",
@@ -4506,14 +4305,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.deleteRuleset(\"slug\", {\n  namespace: \"namespace\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.deleteRuleset('slug', {\n  namespace: 'namespace',\n});"
           }
         ]
       },
       "get": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "Get a rule document by slug.",
         "summary": "Get a rule",
         "operationId": "getRulesetDocument",
@@ -4611,16 +4408,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument(\"slug\", {\n  namespace: \"namespace\",\n});\nconsole.log(string_);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.rules.retrieveRulesetDocument('slug', {\n  namespace: 'namespace',\n});\n\nconsole.log(string_);"
           }
         ]
       }
     },
     "/v1/rulesets/{namespace}/{slug}/access-group": {
       "post": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "Grant an access group to a rule.",
         "summary": "Add rule access group",
         "operationId": "addRulesetAccessGroup",
@@ -4728,14 +4523,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.createRulesetAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.createRulesetAccessGroup('slug', {\n  namespace: 'namespace',\n  accessGroupSlug: 'xxx',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Rules"
-        ],
+        "tags": ["Rules"],
         "description": "Remove an access group from a rule.",
         "summary": "Remove rule access group",
         "operationId": "removeRulesetAccessGroup",
@@ -4843,16 +4636,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.deleteRulesetAccessGroup(\"slug\", {\n  namespace: \"namespace\",\n  accessGroupSlug: \"xxx\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.rules.deleteRulesetAccessGroup('slug', {\n  namespace: 'namespace',\n  accessGroupSlug: 'xxx',\n});"
           }
         ]
       }
     },
     "/v1/themes": {
       "get": {
-        "tags": [
-          "Themes"
-        ],
+        "tags": ["Themes"],
         "description": "List all team themes.",
         "summary": "List all themes",
         "operationId": "listThemes",
@@ -4935,14 +4726,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.themes.list();\nconsole.log(list);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.themes.list();\n\nconsole.log(list);"
           }
         ]
       },
       "post": {
-        "tags": [
-          "Themes"
-        ],
+        "tags": ["Themes"],
         "description": "Create a team theme.",
         "summary": "Create a theme",
         "operationId": "createTheme",
@@ -5037,11 +4826,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "name",
-                  "slug",
-                  "document"
-                ],
+                "required": ["name", "slug", "document"],
                 "additionalProperties": false
               }
             }
@@ -5052,16 +4837,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst create = await client.themes.create({\n  name: \"\",\n  slug: \"\",\n  document: \"\",\n});\nconsole.log(create);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst create = await client.themes.create({\n  name: '',\n  slug: '',\n  document: '',\n});\n\nconsole.log(create);"
           }
         ]
       }
     },
     "/v1/themes/{slug}": {
       "patch": {
-        "tags": [
-          "Themes"
-        ],
+        "tags": ["Themes"],
         "description": "Update theme metadata.",
         "summary": "Update theme metadata",
         "operationId": "updateTheme",
@@ -5170,14 +4953,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.themes.update(\"slug\", {});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.themes.update('slug', {});"
           }
         ]
       },
       "put": {
-        "tags": [
-          "Themes"
-        ],
+        "tags": ["Themes"],
         "description": "Replace the theme document.",
         "summary": "Update theme document",
         "operationId": "replaceThemeDocument",
@@ -5263,9 +5044,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "document"
-                ],
+                "required": ["document"],
                 "additionalProperties": false
               }
             }
@@ -5286,14 +5065,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.themes.replaceDocument(\"slug\", {\n  document: \"\",\n});"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.themes.replaceDocument('slug', {\n  document: '',\n});"
           }
         ]
       },
       "delete": {
-        "tags": [
-          "Themes"
-        ],
+        "tags": ["Themes"],
         "description": "Delete a theme by slug.",
         "summary": "Delete a theme",
         "operationId": "deleteTheme",
@@ -5383,14 +5160,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nawait client.themes.delete(\"slug\");"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nawait client.themes.delete('slug');"
           }
         ]
       },
       "get": {
-        "tags": [
-          "Themes"
-        ],
+        "tags": ["Themes"],
         "description": "Get the theme document by slug.",
         "summary": "Get a theme",
         "operationId": "getTheme",
@@ -5480,16 +5255,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.themes.retrieve(\"slug\");\nconsole.log(string_);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst string_ = await client.themes.retrieve('slug');\n\nconsole.log(string_);"
           }
         ]
       }
     },
     "/v1/teams": {
       "get": {
-        "tags": [
-          "Teams"
-        ],
+        "tags": ["Teams"],
         "description": "List all available teams",
         "summary": "List teams",
         "operationId": "listTeams",
@@ -5572,16 +5345,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.teams.list();\nconsole.log(list);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.teams.list();\n\nconsole.log(list);"
           }
         ]
       }
     },
     "/v1/guides": {
       "get": {
-        "tags": [
-          "Scalar Docs"
-        ],
+        "tags": ["Scalar Docs"],
         "description": "List all guide projects.",
         "summary": "List all projects",
         "operationId": "listGuides",
@@ -5664,14 +5435,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\nconsole.log(listGuides);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst listGuides = await client.scalarDocs.listGuides();\n\nconsole.log(listGuides);"
           }
         ]
       },
       "post": {
-        "tags": [
-          "Scalar Docs"
-        ],
+        "tags": ["Scalar Docs"],
         "description": "Create a guide project.",
         "summary": "Create a project",
         "operationId": "createGuide",
@@ -5690,10 +5459,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "uid",
-                    "slug"
-                  ],
+                  "required": ["uid", "slug"],
                   "additionalProperties": false
                 }
               }
@@ -5791,12 +5557,7 @@
                     }
                   }
                 },
-                "required": [
-                  "name",
-                  "isPrivate",
-                  "allowedUsers",
-                  "allowedDomains"
-                ],
+                "required": ["name", "isPrivate", "allowedUsers", "allowedDomains"],
                 "additionalProperties": false
               }
             }
@@ -5807,16 +5568,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: \"\",\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\nconsole.log(createGuide);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst createGuide = await client.scalarDocs.createGuide({\n  name: '',\n  isPrivate: false,\n  allowedUsers: [],\n  allowedDomains: [],\n});\n\nconsole.log(createGuide);"
           }
         ]
       }
     },
     "/v1/guides/{slug}/publish": {
       "post": {
-        "tags": [
-          "Scalar Docs"
-        ],
+        "tags": ["Scalar Docs"],
         "description": "Start a new publish process.",
         "summary": "Publish a project",
         "operationId": "publishGuide",
@@ -5832,9 +5591,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "publishUid"
-                  ],
+                  "required": ["publishUid"],
                   "additionalProperties": false
                 }
               }
@@ -5915,16 +5672,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide(\"slug\");\nconsole.log(publishGuide);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst publishGuide = await client.scalarDocs.publishGuide('slug');\n\nconsole.log(publishGuide);"
           }
         ]
       }
     },
     "/v1/namespaces": {
       "get": {
-        "tags": [
-          "Namespaces"
-        ],
+        "tags": ["Namespaces"],
         "description": "Get all namespaces for the current team",
         "summary": "List namespaces",
         "operationId": "listNamespaces",
@@ -6007,16 +5762,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.namespaces.list();\nconsole.log(list);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst list = await client.namespaces.list();\n\nconsole.log(list);"
           }
         ]
       }
     },
     "/v1/auth/exchange": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "description": "Exchange an API key for an access token.",
         "summary": "Exchange token",
         "operationId": "exchangePersonalToken",
@@ -6032,9 +5785,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "accessToken"
-                  ],
+                  "required": ["accessToken"],
                   "additionalProperties": false
                 }
               }
@@ -6112,9 +5863,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "personalToken"
-                ],
+                "required": ["personalToken"],
                 "additionalProperties": false
               }
             }
@@ -6125,16 +5874,14 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: \"\",\n});\nconsole.log(exchangePersonalToken);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst exchangePersonalToken = await client.authentication.exchangePersonalToken({\n  personalToken: '',\n});\n\nconsole.log(exchangePersonalToken);"
           }
         ]
       }
     },
     "/v1/auth/me": {
       "get": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "description": "Get the authenticated user, including their available teams and theme.",
         "summary": "Get current user",
         "operationId": "getCurrentUser",
@@ -6214,7 +5961,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Scalar from \"@scalar/sdk\";\n\nconst client = new Scalar({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n});\n\nconst listCurrentUser = await client.authentication.listCurrentUser();\nconsole.log(listCurrentUser);"
+            "source": "import Scalar from '@scalar/sdk';\n\nconst client = new Scalar({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n});\n\nconst listCurrentUser = await client.authentication.listCurrentUser();\n\nconsole.log(listCurrentUser);"
           }
         ]
       }

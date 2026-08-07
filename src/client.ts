@@ -10,30 +10,116 @@ import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import { formatRequestDetails, loggerFor, parseLogLevel, type LogLevel, type Logger } from './internal/utils/log';
+import {
+  formatRequestDetails,
+  loggerFor,
+  parseLogLevel,
+  type LogLevel,
+  type Logger,
+} from './internal/utils/log';
 export type { Logger, LogLevel } from './internal/utils/log';
 import type { RequestInit, RequestInfo, BodyInit, Fetch } from './internal/builtin-types';
 import { buildHeaders, type HeadersLike } from './internal/headers';
 import type { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import type { HTTPMethod, FinalizedRequestInit, MergedRequestInit, PromiseOrValue } from './internal/types';
-import { stringify as stringifyQuery } from './internal/qs/stringify';
-import type { StringifyOptions } from './internal/qs/types';
+import { stringifyQuery } from './internal/utils/query';
 import { toFile } from './core/uploads';
 import { VERSION } from './version';
-import { Registry, type Version, type AccessGroup, type RegistryListAllAPIDocumentsResponse, type RegistryListAPIDocumentsResponse, type RegistryCreateAPIDocumentResponse, type RegistryUpdateAPIDocumentResponse, type RegistryDeleteAPIDocumentResponse, type RegistryRetrieveAPIDocumentVersionResponse, type RegistryUpdateAPIDocumentVersionResponse, type RegistryDeleteAPIDocumentVersionResponse, type RegistryListAPIDocumentVersionMetadataResponse, type RegistryCreateAPIDocumentVersionResponse, type RegistryCreateAPIDocumentAccessGroupResponse, type RegistryDeleteAPIDocumentAccessGroupResponse, type RegistryCreateAPIDocumentParams, type RegistryUpdateAPIDocumentParams, type RegistryDeleteAPIDocumentParams, type RegistryRetrieveAPIDocumentVersionParams, type RegistryUpdateAPIDocumentVersionParams, type RegistryDeleteAPIDocumentVersionParams, type RegistryListAPIDocumentVersionMetadataParams, type RegistryCreateAPIDocumentVersionParams, type RegistryCreateAPIDocumentAccessGroupParams, type RegistryDeleteAPIDocumentAccessGroupParams } from "./resources/registry";
-import { Schemas, type SchemaListResponse, type SchemaCreateResponse, type SchemaUpdateResponse, type SchemaDeleteResponse, type SchemaCreateParams, type SchemaUpdateParams, type SchemaDeleteParams } from "./resources/schemas/schemas";
-import { LoginPortals, type LoginPortalEmail, type LoginPortalPage, type LoginPortalRetrieveResponse, type LoginPortalUpdateResponse, type LoginPortalDeleteResponse, type LoginPortalCreateResponse, type LoginPortalListResponse, type LoginPortalUpdateParams, type LoginPortalCreateParams } from "./resources/login-portals";
-import { Rules, type RuleListRulesetsResponse, type RuleCreateRulesetResponse, type RuleUpdateRulesetResponse, type RuleDeleteRulesetResponse, type RuleRetrieveRulesetDocumentResponse, type RuleCreateRulesetAccessGroupResponse, type RuleDeleteRulesetAccessGroupResponse, type RuleCreateRulesetParams, type RuleUpdateRulesetParams, type RuleDeleteRulesetParams, type RuleRetrieveRulesetDocumentParams, type RuleCreateRulesetAccessGroupParams, type RuleDeleteRulesetAccessGroupParams } from "./resources/rules";
-import { Themes, type ThemeListResponse, type ThemeCreateResponse, type ThemeUpdateResponse, type ThemeReplaceDocumentResponse, type ThemeDeleteResponse, type ThemeRetrieveResponse, type ThemeCreateParams, type ThemeUpdateParams, type ThemeReplaceDocumentParams } from "./resources/themes";
-import { Teams, type TeamListResponse } from "./resources/teams";
-import { ScalarDocs, type Slug, type ScalarDocListGuidesResponse, type ScalarDocCreateGuideResponse, type ScalarDocPublishGuideResponse, type ScalarDocCreateGuideParams } from "./resources/scalar-docs";
-import { Namespaces, type NamespaceListResponse } from "./resources/namespaces";
-import { Authentication, type AuthenticationExchangePersonalTokenResponse, type AuthenticationListCurrentUserResponse, type AuthenticationExchangePersonalTokenParams } from "./resources/authentication";
+import {
+  Registry,
+  type Version,
+  type AccessGroup,
+  type RegistryListAllAPIDocumentsResponse,
+  type RegistryListAPIDocumentsResponse,
+  type RegistryCreateAPIDocumentResponse,
+  type RegistryUpdateAPIDocumentResponse,
+  type RegistryDeleteAPIDocumentResponse,
+  type RegistryRetrieveAPIDocumentVersionResponse,
+  type RegistryUpdateAPIDocumentVersionResponse,
+  type RegistryDeleteAPIDocumentVersionResponse,
+  type RegistryListAPIDocumentVersionMetadataResponse,
+  type RegistryCreateAPIDocumentVersionResponse,
+  type RegistryCreateAPIDocumentAccessGroupResponse,
+  type RegistryDeleteAPIDocumentAccessGroupResponse,
+  type RegistryCreateAPIDocumentParams,
+  type RegistryUpdateAPIDocumentParams,
+  type RegistryDeleteAPIDocumentParams,
+  type RegistryRetrieveAPIDocumentVersionParams,
+  type RegistryUpdateAPIDocumentVersionParams,
+  type RegistryDeleteAPIDocumentVersionParams,
+  type RegistryListAPIDocumentVersionMetadataParams,
+  type RegistryCreateAPIDocumentVersionParams,
+  type RegistryCreateAPIDocumentAccessGroupParams,
+  type RegistryDeleteAPIDocumentAccessGroupParams,
+} from './resources/registry';
+import {
+  Schemas,
+  type SchemaListResponse,
+  type SchemaCreateResponse,
+  type SchemaUpdateResponse,
+  type SchemaDeleteResponse,
+  type SchemaCreateParams,
+  type SchemaUpdateParams,
+  type SchemaDeleteParams,
+} from './resources/schemas/schemas';
+import {
+  LoginPortals,
+  type LoginPortalEmail,
+  type LoginPortalPage,
+  type LoginPortalRetrieveResponse,
+  type LoginPortalUpdateResponse,
+  type LoginPortalDeleteResponse,
+  type LoginPortalCreateResponse,
+  type LoginPortalListResponse,
+  type LoginPortalUpdateParams,
+  type LoginPortalCreateParams,
+} from './resources/login-portals';
+import {
+  Rules,
+  type RuleListRulesetsResponse,
+  type RuleCreateRulesetResponse,
+  type RuleUpdateRulesetResponse,
+  type RuleDeleteRulesetResponse,
+  type RuleRetrieveRulesetDocumentResponse,
+  type RuleCreateRulesetAccessGroupResponse,
+  type RuleDeleteRulesetAccessGroupResponse,
+  type RuleCreateRulesetParams,
+  type RuleUpdateRulesetParams,
+  type RuleDeleteRulesetParams,
+  type RuleRetrieveRulesetDocumentParams,
+  type RuleCreateRulesetAccessGroupParams,
+  type RuleDeleteRulesetAccessGroupParams,
+} from './resources/rules';
+import {
+  Themes,
+  type ThemeListResponse,
+  type ThemeCreateResponse,
+  type ThemeUpdateResponse,
+  type ThemeReplaceDocumentResponse,
+  type ThemeDeleteResponse,
+  type ThemeRetrieveResponse,
+  type ThemeCreateParams,
+  type ThemeUpdateParams,
+  type ThemeReplaceDocumentParams,
+} from './resources/themes';
+import { Teams, type TeamListResponse } from './resources/teams';
+import {
+  ScalarDocs,
+  type Slug,
+  type ScalarDocListGuidesResponse,
+  type ScalarDocCreateGuideResponse,
+  type ScalarDocPublishGuideResponse,
+  type ScalarDocCreateGuideParams,
+} from './resources/scalar-docs';
+import { Namespaces, type NamespaceListResponse } from './resources/namespaces';
+import {
+  Authentication,
+  type AuthenticationExchangePersonalTokenResponse,
+  type AuthenticationListCurrentUserResponse,
+  type AuthenticationExchangePersonalTokenParams,
+} from './resources/authentication';
 
 export type AuthTokenProvider = () => string | Promise<string>;
-
-const queryArrayFormat: NonNullable<StringifyOptions["arrayFormat"]> = "indices";
-const queryAllowDots = false;
 
 export interface ClientOptions {
   /**
@@ -145,17 +231,17 @@ export class Scalar {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv("SCALAR_BASE_URL"),
-    bearerAuth = readEnv("BEARER_AUTH"),
+    baseURL = readEnv('SCALAR_BASE_URL'),
+    bearerAuth = readEnv('BEARER_AUTH'),
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       bearerAuth,
       ...opts,
-      baseURL: baseURL || "https://access.scalar.com",
+      baseURL: baseURL || 'https://access.scalar.com',
     };
-    const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== "";
-    const defaultBaseURL = "https://access.scalar.com";
+    const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== '';
+    const defaultBaseURL = 'https://access.scalar.com';
     this.baseURL = options.baseURL || defaultBaseURL;
     this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
@@ -164,14 +250,14 @@ export class Scalar {
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv("SCALAR_LOG"), "process.env[\"SCALAR_LOG\"]", this) ??
+      parseLogLevel(readEnv('SCALAR_LOG'), 'process.env["SCALAR_LOG"]', this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
-    const customHeadersEnv = readEnv("SCALAR_CUSTOM_HEADERS");
+    const customHeadersEnv = readEnv('SCALAR_CUSTOM_HEADERS');
     if (customHeadersEnv) {
       const parsed: Record<string, string> = {};
       for (const line of customHeadersEnv.split('\n')) {
@@ -216,7 +302,7 @@ export class Scalar {
   }
 
   protected stringifyQuery(query: object | Record<string, unknown>): string {
-    return stringifyQuery(query, { arrayFormat: queryArrayFormat, allowDots: queryAllowDots });
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -244,10 +330,11 @@ export class Scalar {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     // Guarantee exactly one "/" between baseURL and path so that bases without a trailing slash
     // and paths without a leading slash do not fuse into a malformed URL (e.g. ".../v1" + "widgets").
-    const url =
-      isAbsoluteURL(path) ?
-        new URL(path)
-      : new URL((baseURL.endsWith('/') ? baseURL : baseURL + '/') + (path.startsWith('/') ? path.slice(1) : path));
+    const url = isAbsoluteURL(path)
+      ? new URL(path)
+      : new URL(
+          (baseURL.endsWith('/') ? baseURL : baseURL + '/') + (path.startsWith('/') ? path.slice(1) : path),
+        );
 
     const defaultQuery = this.defaultQuery();
     const pathQuery = Object.fromEntries(url.searchParams);
@@ -255,7 +342,7 @@ export class Scalar {
       query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
-    if (typeof query === "object" && query && !Array.isArray(query)) {
+    if (typeof query === 'object' && query && !Array.isArray(query)) {
       url.search = this.stringifyQuery(query);
     }
 
@@ -474,7 +561,12 @@ export class Scalar {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
-  async fetchWithTimeout(url: RequestInfo, init: RequestInit | undefined, ms: number, controller: AbortController): Promise<Response> {
+  async fetchWithTimeout(
+    url: RequestInfo,
+    init: RequestInit | undefined,
+    ms: number,
+    controller: AbortController,
+  ): Promise<Response> {
     const { signal, method, ...options } = init || {};
     const abort = this._makeAbort(controller);
     if (signal) signal.addEventListener('abort', abort, { once: true });
@@ -718,20 +810,25 @@ export class Scalar {
   }
 
   private validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
-    if (headers.has("Authorization")) return;
-    if (headerExplicitlyOmitted(options.headers, "Authorization")) return;
-    throw new Errors.AuthenticationError(401, {}, "Could not resolve authentication method. Expected Authorization to be set.", headers);
+    if (headers.has('Authorization')) return;
+    if (headerExplicitlyOmitted(options.headers, 'Authorization')) return;
+    throw new Errors.AuthenticationError(
+      401,
+      {},
+      'Could not resolve authentication method. Expected Authorization to be set.',
+      headers,
+    );
   }
 
   authHeadersSync(): Record<string, string> {
     const headers: Record<string, string> = {};
-    const bearerAuth = this.resolveAuthOptionSync("bearerAuth", this.bearerAuth);
+    const bearerAuth = this.resolveAuthOptionSync('bearerAuth', this.bearerAuth);
     if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
     return headers;
   }
 
   webSocketAuthHeaders(): Record<string, string> {
-    const bearerAuth = this.resolveAuthOptionSync("bearerAuth", this.bearerAuth);
+    const bearerAuth = this.resolveAuthOptionSync('bearerAuth', this.bearerAuth);
     if (bearerAuth) return { Authorization: `Bearer ${bearerAuth}` };
     return {};
   }
@@ -752,22 +849,29 @@ export class Scalar {
 
   private async authHeadersAsync(): Promise<Record<string, string>> {
     const headers: Record<string, string> = {};
-    const bearerAuth = await this.resolveAuthOption("bearerAuth", this.bearerAuth);
+    const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
     if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
     return headers;
   }
 
-  private async resolveAuthOption(optionName: string, value: string | AuthTokenProvider | null | undefined): Promise<string | undefined> {
+  private async resolveAuthOption(
+    optionName: string,
+    value: string | AuthTokenProvider | null | undefined,
+  ): Promise<string | undefined> {
     if (value == null) return undefined;
-    const token = typeof value === "function" ? await value() : value;
+    const token = typeof value === 'function' ? await value() : value;
     if (!token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
-  private resolveAuthOptionSync(optionName: string, value: string | AuthTokenProvider | null | undefined): string | undefined {
+  private resolveAuthOptionSync(
+    optionName: string,
+    value: string | AuthTokenProvider | null | undefined,
+  ): string | undefined {
     if (value == null) return undefined;
-    const token = typeof value === "function" ? value() : value;
-    if (typeof token !== "string" || !token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    const token = typeof value === 'function' ? value() : value;
+    if (typeof token !== 'string' || !token)
+      throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
@@ -895,10 +999,7 @@ export declare namespace Scalar {
     type ThemeReplaceDocumentParams as ThemeReplaceDocumentParams,
   };
 
-  export {
-    Teams as Teams,
-    type TeamListResponse as TeamListResponse,
-  };
+  export { Teams as Teams, type TeamListResponse as TeamListResponse };
 
   export {
     ScalarDocs as ScalarDocs,
@@ -909,10 +1010,7 @@ export declare namespace Scalar {
     type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams,
   };
 
-  export {
-    Namespaces as Namespaces,
-    type NamespaceListResponse as NamespaceListResponse,
-  };
+  export { Namespaces as Namespaces, type NamespaceListResponse as NamespaceListResponse };
 
   export {
     Authentication as Authentication,
@@ -922,7 +1020,6 @@ export declare namespace Scalar {
   };
 }
 
-
 const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string): boolean => {
   if (!source || Array.isArray(source) || source instanceof Headers) return false;
   const target = name.toLowerCase();
@@ -931,16 +1028,15 @@ const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string):
 
 const appendAuthCookies = (headers: Headers, cookies: Record<string, string>): void => {
   for (const [name, value] of Object.entries(cookies)) {
-    if (cookieHeaderHas(headers.get("Cookie"), name)) continue;
-    const cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-    const existing = headers.get("Cookie");
-    headers.set("Cookie", existing ? existing + "; " + cookie : cookie);
+    if (cookieHeaderHas(headers.get('Cookie'), name)) continue;
+    const cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+    const existing = headers.get('Cookie');
+    headers.set('Cookie', existing ? existing + '; ' + cookie : cookie);
   }
 };
 
 const cookieHeaderHas = (value: string | null, name: string): boolean => {
   if (!value) return false;
-  const target = encodeURIComponent(name) + "=";
-  return value.split(";").some((cookie) => cookie.trim().startsWith(target));
+  const target = encodeURIComponent(name) + '=';
+  return value.split(';').some((cookie) => cookie.trim().startsWith(target));
 };
-

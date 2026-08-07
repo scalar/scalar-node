@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
-import { path as __scalarPath } from "../internal/utils/path";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
+import { path as __scalarPath } from '../internal/utils/path';
 
 export class ScalarDocs extends APIResource {
   /**
@@ -18,7 +18,7 @@ export class ScalarDocs extends APIResource {
    * ```
    */
   listGuides(options?: RequestOptions): APIPromise<ScalarDocListGuidesResponse> {
-    return this._client.get("/v1/guides", options);
+    return this._client.get('/v1/guides', options);
   }
 
   /**
@@ -31,15 +31,18 @@ export class ScalarDocs extends APIResource {
    * @example
    * ```ts
    * const createGuide = await client.scalarDocs.createGuide({
-   *   name: "",
+   *   name: '',
    *   isPrivate: false,
    *   allowedUsers: [],
    *   allowedDomains: [],
    * });
    * ```
    */
-  createGuide(body: ScalarDocCreateGuideParams, options?: RequestOptions): APIPromise<ScalarDocCreateGuideResponse> {
-    return this._client.post("/v1/guides", { body, ...options });
+  createGuide(
+    body: ScalarDocCreateGuideParams,
+    options?: RequestOptions,
+  ): APIPromise<ScalarDocCreateGuideResponse> {
+    return this._client.post('/v1/guides', { body, ...options });
   }
 
   /**
@@ -51,7 +54,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const publishGuide = await client.scalarDocs.publishGuide("slug");
+   * const publishGuide = await client.scalarDocs.publishGuide('slug');
    * ```
    */
   publishGuide(slug: string, options?: RequestOptions): APIPromise<ScalarDocPublishGuideResponse> {
@@ -66,56 +69,31 @@ export type ScalarDocListGuidesResponse = Array<ScalarDocListGuidesResponse.Scal
 export namespace ScalarDocListGuidesResponse {
   export interface ScalarDocListGuidesResponseItem {
     /**
-     * @default nanoid()
      * @minLength 5
      */
     uid: string;
     /**
-     * @default unixTimestamp()
      * @minimum 0
      * @maximum 9007199254740991
      */
     createdAt: number;
     /**
-     * @default unixTimestamp()
      * @minimum 0
      * @maximum 9007199254740991
      */
     updatedAt: number;
     name: string;
-    /**
-     * @default null
-     */
     activeDeployment: ScalarDocListGuidesResponseItem.ActiveDeployment | null;
     /**
-     * @default null
      * @minimum 0
      * @maximum 9007199254740991
      */
     lastPublished: number | null;
-    /**
-     * @default null
-     */
     lastPublishedUid: string | null;
-    /**
-     * @default ""
-     */
     loginPortalUid: string;
-    /**
-     * @default ""
-     */
     activeThemeId: string;
-    /**
-     * @default false
-     */
     isPrivate: boolean;
-    /**
-     * @default false
-     */
     agentEnabled: boolean;
-    /**
-     * @default []
-     */
     accessGroups: unknown;
     /**
      * @minLength 3
@@ -123,13 +101,7 @@ export namespace ScalarDocListGuidesResponse {
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
     slug: Slug;
-    /**
-     * @default ""
-     */
     publishStatus: string;
-    /**
-     * @default ""
-     */
     publishMessage: string;
     typesenseId?: number;
     repository?: ScalarDocListGuidesResponseItem.Repository | null;
@@ -153,29 +125,11 @@ export namespace ScalarDocListGuidesResponse {
        * @minLength 2
        */
       name: string;
-      /**
-       * @default ""
-       */
       configPath: string;
-      /**
-       * @default ""
-       */
       branch: string;
-      /**
-       * @default false
-       */
       publishOnMerge: boolean;
-      /**
-       * @default false
-       */
       publishPreviews: boolean;
-      /**
-       * @default false
-       */
       prComments: boolean;
-      /**
-       * @default false
-       */
       expired: boolean;
     }
   }
@@ -183,17 +137,8 @@ export namespace ScalarDocListGuidesResponse {
 
 export interface ScalarDocCreateGuideParams {
   name: string;
-  /**
-   * @default false
-   */
   isPrivate: boolean;
-  /**
-   * @default []
-   */
   allowedUsers: Array<string>;
-  /**
-   * @default []
-   */
   allowedDomains: Array<string>;
   /**
    * @minLength 3

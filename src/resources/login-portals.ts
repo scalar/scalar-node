@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
-import { path as __scalarPath } from "../internal/utils/path";
-import type * as ScalarDocsAPI from "./scalar-docs";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
+import { path as __scalarPath } from '../internal/utils/path';
+import type * as ScalarDocsAPI from './scalar-docs';
 
 export class LoginPortals extends APIResource {
   /**
@@ -16,7 +16,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * const retrieve = await client.loginPortals.retrieve("slug");
+   * const retrieve = await client.loginPortals.retrieve('slug');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<LoginPortalRetrieveResponse> {
@@ -33,10 +33,14 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * await client.loginPortals.update("slug", {});
+   * await client.loginPortals.update('slug', {});
    * ```
    */
-  update(slug: string, body: LoginPortalUpdateParams, options?: RequestOptions): APIPromise<LoginPortalUpdateResponse> {
+  update(
+    slug: string,
+    body: LoginPortalUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<LoginPortalUpdateResponse> {
     return this._client.patch(__scalarPath`/v1/login-portals/${slug}`, { body, ...options });
   }
 
@@ -49,7 +53,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * await client.loginPortals.delete("slug");
+   * await client.loginPortals.delete('slug');
    * ```
    */
   delete(slug: string, options?: RequestOptions): APIPromise<LoginPortalDeleteResponse> {
@@ -66,42 +70,42 @@ export class LoginPortals extends APIResource {
    * @example
    * ```ts
    * const create = await client.loginPortals.create({
-   *   title: "",
-   *   slug: "",
+   *   title: '',
+   *   slug: '',
    *   email: {
-   *     logo: "",
-   *     logoSize: "100",
-   *     buttonText: "Login",
-   *     message: "Click to access private documentation hosted by scalar.com",
-   *     title: "Private Docs",
-   *     mainColor: "#2a2f45",
-   *     mainBackground: "#f6f6f6",
-   *     cardColor: "2a2f45",
-   *     cardBackground: "#fff",
-   *     buttonColor: "#fff",
-   *     buttonBackground: "#0f0f0f",
+   *     logo: '',
+   *     logoSize: '100',
+   *     buttonText: 'Login',
+   *     message: 'Click to access private documentation hosted by scalar.com',
+   *     title: 'Private Docs',
+   *     mainColor: '#2a2f45',
+   *     mainBackground: '#f6f6f6',
+   *     cardColor: '2a2f45',
+   *     cardBackground: '#fff',
+   *     buttonColor: '#fff',
+   *     buttonBackground: '#0f0f0f',
    *   },
    *   page: {
-   *     title: "Scalar Private Docs",
-   *     description: "Login to access your documentation",
-   *     head: "",
-   *     script: "",
-   *     theme: "",
-   *     companyName: "",
-   *     logo: "",
-   *     logoURL: "",
-   *     favicon: "",
-   *     termsLink: "",
-   *     privacyLink: "",
-   *     formTitle: "Scalar Private Docs",
-   *     formDescription: "Login to access your documentation",
-   *     formImage: "",
+   *     title: 'Scalar Private Docs',
+   *     description: 'Login to access your documentation',
+   *     head: '',
+   *     script: '',
+   *     theme: '',
+   *     companyName: '',
+   *     logo: '',
+   *     logoURL: '',
+   *     favicon: '',
+   *     termsLink: '',
+   *     privacyLink: '',
+   *     formTitle: 'Scalar Private Docs',
+   *     formDescription: 'Login to access your documentation',
+   *     formImage: '',
    *   },
    * });
    * ```
    */
   create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<LoginPortalCreateResponse> {
-    return this._client.post("/v1/login-portals", { body, ...options });
+    return this._client.post('/v1/login-portals', { body, ...options });
   }
 
   /**
@@ -116,61 +120,46 @@ export class LoginPortals extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<LoginPortalListResponse> {
-    return this._client.get("/v1/login-portals", options);
+    return this._client.get('/v1/login-portals', options);
   }
 }
 
 export interface LoginPortalEmail {
-  /**
-   * @default ""
-   */
   logo: string;
-  /**
-   * @default 100
-   */
   logoSize: string;
   /**
-   * @default Login
    * @maxLength 50
    */
   buttonText: string;
   /**
-   * @default Click to access private documentation hosted by scalar.com
    * @maxLength 1000
    */
   message: string;
   /**
-   * @default Private Docs
    * @maxLength 100
    */
   title: string;
   /**
-   * @default #2a2f45
    * @maxLength 100
    */
   mainColor: string;
   /**
-   * @default #f6f6f6
    * @maxLength 100
    */
   mainBackground: string;
   /**
-   * @default 2a2f45
    * @maxLength 100
    */
   cardColor: string;
   /**
-   * @default #fff
    * @maxLength 100
    */
   cardBackground: string;
   /**
-   * @default #fff
    * @maxLength 100
    */
   buttonColor: string;
   /**
-   * @default #0f0f0f
    * @maxLength 100
    */
   buttonBackground: string;
@@ -178,65 +167,33 @@ export interface LoginPortalEmail {
 
 export interface LoginPortalPage {
   /**
-   * @default Scalar Private Docs
    * @maxLength 100
    */
   title: string;
   /**
-   * @default Login to access your documentation
    * @maxLength 500
    */
   description: string;
-  /**
-   * @default ""
-   */
   head: string;
-  /**
-   * @default ""
-   */
   script: string;
-  /**
-   * @default ""
-   */
   theme: string;
   /**
-   * @default ""
    * @maxLength 100
    */
   companyName: string;
-  /**
-   * @default ""
-   */
   logo: string;
-  /**
-   * @default ""
-   */
   logoURL: string;
-  /**
-   * @default ""
-   */
   favicon: string;
-  /**
-   * @default ""
-   */
   termsLink: string;
-  /**
-   * @default ""
-   */
   privacyLink: string;
   /**
-   * @default Scalar Private Docs
    * @maxLength 100
    */
   formTitle: string;
   /**
-   * @default Login to access your documentation
    * @maxLength 500
    */
   formDescription: string;
-  /**
-   * @default ""
-   */
   formImage: string;
 }
 

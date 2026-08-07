@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
 
 export class Authentication extends APIResource {
   /**
@@ -15,12 +15,15 @@ export class Authentication extends APIResource {
    * @example
    * ```ts
    * const exchangePersonalToken = await client.authentication.exchangePersonalToken({
-   *   personalToken: "",
+   *   personalToken: '',
    * });
    * ```
    */
-  exchangePersonalToken(body: AuthenticationExchangePersonalTokenParams, options?: RequestOptions): APIPromise<AuthenticationExchangePersonalTokenResponse> {
-    return this._client.post("/v1/auth/exchange", { body, ...options });
+  exchangePersonalToken(
+    body: AuthenticationExchangePersonalTokenParams,
+    options?: RequestOptions,
+  ): APIPromise<AuthenticationExchangePersonalTokenResponse> {
+    return this._client.post('/v1/auth/exchange', { body, ...options });
   }
 
   /**
@@ -35,7 +38,7 @@ export class Authentication extends APIResource {
    * ```
    */
   listCurrentUser(options?: RequestOptions): APIPromise<AuthenticationListCurrentUserResponse> {
-    return this._client.get("/v1/auth/me", options);
+    return this._client.get('/v1/auth/me', options);
   }
 }
 
@@ -49,18 +52,15 @@ export interface AuthenticationExchangePersonalTokenResponse {
 
 export interface AuthenticationListCurrentUserResponse {
   /**
-   * @default nanoid()
    * @minLength 5
    */
   uid: string;
   /**
-   * @default unixTimestamp()
    * @minimum 0
    * @maximum 9007199254740991
    */
   createdAt: number;
   /**
-   * @default unixTimestamp()
    * @minimum 0
    * @maximum 9007199254740991
    */
@@ -71,9 +71,6 @@ export interface AuthenticationListCurrentUserResponse {
    */
   email: string;
   activeTeamId: string | null;
-  /**
-   * @default false
-   */
   hasGithub: boolean;
   teams: Array<AuthenticationListCurrentUserResponse.Team>;
   theme?: string;
