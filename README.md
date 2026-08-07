@@ -33,13 +33,14 @@ npm install @scalar/sdk
 ## Usage
 
 ```ts
-import Scalar from "@scalar/sdk";
+import Scalar from '@scalar/sdk';
 
 const client = new Scalar({
-  bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
 const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+
 console.log(listAllAPIDocuments);
 ```
 
@@ -68,7 +69,7 @@ Declared schemes:
 Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```ts
-import { APIError } from "@scalar/sdk";
+import { APIError } from '@scalar/sdk';
 
 try {
   const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
@@ -89,12 +90,12 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ts
-import Scalar from "@scalar/sdk";
+import Scalar from '@scalar/sdk';
 
 const client = new Scalar({
   timeout: 60000,
   maxRetries: 2,
-  logLevel: "debug",
+  logLevel: 'debug',
 });
 ```
 

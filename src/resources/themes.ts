@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
-import { buildHeaders } from "../internal/headers";
-import { path as __scalarPath } from "../internal/utils/path";
-import type * as ScalarDocsAPI from "./scalar-docs";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
+import { buildHeaders } from '../internal/headers';
+import { path as __scalarPath } from '../internal/utils/path';
+import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Themes extends APIResource {
   /**
@@ -20,7 +20,7 @@ export class Themes extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<ThemeListResponse> {
-    return this._client.get("/v1/themes", options);
+    return this._client.get('/v1/themes', options);
   }
 
   /**
@@ -33,14 +33,14 @@ export class Themes extends APIResource {
    * @example
    * ```ts
    * const create = await client.themes.create({
-   *   name: "",
-   *   slug: "",
-   *   document: "",
+   *   name: '',
+   *   slug: '',
+   *   document: '',
    * });
    * ```
    */
   create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<ThemeCreateResponse> {
-    return this._client.post("/v1/themes", { body, ...options });
+    return this._client.post('/v1/themes', { body, ...options });
   }
 
   /**
@@ -53,7 +53,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.update("slug", {});
+   * await client.themes.update('slug', {});
    * ```
    */
   update(slug: string, body: ThemeUpdateParams, options?: RequestOptions): APIPromise<ThemeUpdateResponse> {
@@ -70,12 +70,16 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.replaceDocument("slug", {
-   *   document: "",
+   * await client.themes.replaceDocument('slug', {
+   *   document: '',
    * });
    * ```
    */
-  replaceDocument(slug: string, body: ThemeReplaceDocumentParams, options?: RequestOptions): APIPromise<ThemeReplaceDocumentResponse> {
+  replaceDocument(
+    slug: string,
+    body: ThemeReplaceDocumentParams,
+    options?: RequestOptions,
+  ): APIPromise<ThemeReplaceDocumentResponse> {
     return this._client.put(__scalarPath`/v1/themes/${slug}`, { body, ...options });
   }
 
@@ -88,7 +92,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.delete("slug");
+   * await client.themes.delete('slug');
    * ```
    */
   delete(slug: string, options?: RequestOptions): APIPromise<ThemeDeleteResponse> {
@@ -104,11 +108,14 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.themes.retrieve("slug");
+   * const string_ = await client.themes.retrieve('slug');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<ThemeRetrieveResponse> {
-    return this._client.get(__scalarPath`/v1/themes/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
+    return this._client.get(__scalarPath`/v1/themes/${slug}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
 }
 

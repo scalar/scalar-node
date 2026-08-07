@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
 
 export class Namespaces extends APIResource {
   /**
@@ -17,13 +17,11 @@ export class Namespaces extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<NamespaceListResponse> {
-    return this._client.get("/v1/namespaces", options);
+    return this._client.get('/v1/namespaces', options);
   }
 }
 
 export type NamespaceListResponse = Array<string>;
 export declare namespace Namespaces {
-  export {
-    type NamespaceListResponse as NamespaceListResponse,
-  };
+  export { type NamespaceListResponse as NamespaceListResponse };
 }

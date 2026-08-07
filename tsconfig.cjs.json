@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "ES2023",
     "module": "CommonJS",
-    "lib": [
-      "ES2023",
-      "DOM"
-    ],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "rootDir": "src",
     "outDir": "./dist/cjs",
     "declaration": true,
@@ -17,7 +14,5 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }
