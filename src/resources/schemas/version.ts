@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../../resource";
-import { APIPromise } from "../../api-promise";
-import type { RequestOptions } from "../../internal/request-options";
-import { buildHeaders } from "../../internal/headers";
-import { path as __scalarPath } from "../../internal/utils/path";
-import type * as RegistryAPI from "../registry";
+import { APIResource } from '../../resource';
+import { APIPromise } from '../../api-promise';
+import type { RequestOptions } from '../../internal/request-options';
+import { buildHeaders } from '../../internal/headers';
+import { path as __scalarPath } from '../../internal/utils/path';
+import type * as RegistryAPI from '../registry';
 
 export class Version extends APIResource {
   /**
@@ -18,15 +18,22 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.schemas.version.retrieveSchema("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
+   * const string_ = await client.schemas.version.retrieveSchema('semver', {
+   *   namespace: 'namespace',
+   *   slug: 'slug',
    * });
    * ```
    */
-  retrieveSchema(semver: string, params: VersionRetrieveSchemaParams, options?: RequestOptions): APIPromise<VersionRetrieveSchemaResponse> {
+  retrieveSchema(
+    semver: string,
+    params: VersionRetrieveSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionRetrieveSchemaResponse> {
     const { namespace, slug } = params;
-    return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
+    return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
 
   /**
@@ -39,13 +46,17 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.version.deleteSchema("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
+   * await client.schemas.version.deleteSchema('semver', {
+   *   namespace: 'namespace',
+   *   slug: 'slug',
    * });
    * ```
    */
-  deleteSchema(semver: string, params: VersionDeleteSchemaParams, options?: RequestOptions): APIPromise<VersionDeleteSchemaResponse> {
+  deleteSchema(
+    semver: string,
+    params: VersionDeleteSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionDeleteSchemaResponse> {
     const { namespace, slug } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, options);
   }
@@ -60,14 +71,18 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const createSchema = await client.schemas.version.createSchema("slug", {
-   *   namespace: "namespace",
-   *   version: "x",
-   *   document: "",
+   * const createSchema = await client.schemas.version.createSchema('slug', {
+   *   namespace: 'namespace',
+   *   version: 'x',
+   *   document: '',
    * });
    * ```
    */
-  createSchema(slug: string, params: VersionCreateSchemaParams, options?: RequestOptions): APIPromise<VersionCreateSchemaResponse> {
+  createSchema(
+    slug: string,
+    params: VersionCreateSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionCreateSchemaResponse> {
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body, ...options });
   }

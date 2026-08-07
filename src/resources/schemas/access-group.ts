@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../../resource";
-import { APIPromise } from "../../api-promise";
-import type { RequestOptions } from "../../internal/request-options";
-import { path as __scalarPath } from "../../internal/utils/path";
-import type * as RegistryAPI from "../registry";
-import type * as ScalarDocsAPI from "../scalar-docs";
+import { APIResource } from '../../resource';
+import { APIPromise } from '../../api-promise';
+import type { RequestOptions } from '../../internal/request-options';
+import { path as __scalarPath } from '../../internal/utils/path';
+import type * as RegistryAPI from '../registry';
+import type * as ScalarDocsAPI from '../scalar-docs';
 
 export class AccessGroup extends APIResource {
   /**
@@ -18,15 +18,22 @@ export class AccessGroup extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.accessGroup.createSchema("slug", {
-   *   namespace: "namespace",
-   *   accessGroupSlug: "xxx",
+   * await client.schemas.accessGroup.createSchema('slug', {
+   *   namespace: 'namespace',
+   *   accessGroupSlug: 'xxx',
    * });
    * ```
    */
-  createSchema(slug: string, params: AccessGroupCreateSchemaParams, options?: RequestOptions): APIPromise<AccessGroupCreateSchemaResponse> {
+  createSchema(
+    slug: string,
+    params: AccessGroupCreateSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<AccessGroupCreateSchemaResponse> {
     const { namespace, ...body } = params;
-    return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body, ...options });
+    return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, {
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -39,15 +46,22 @@ export class AccessGroup extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.accessGroup.deleteSchema("slug", {
-   *   namespace: "namespace",
-   *   accessGroupSlug: "xxx",
+   * await client.schemas.accessGroup.deleteSchema('slug', {
+   *   namespace: 'namespace',
+   *   accessGroupSlug: 'xxx',
    * });
    * ```
    */
-  deleteSchema(slug: string, params: AccessGroupDeleteSchemaParams, options?: RequestOptions): APIPromise<AccessGroupDeleteSchemaResponse> {
+  deleteSchema(
+    slug: string,
+    params: AccessGroupDeleteSchemaParams,
+    options?: RequestOptions,
+  ): APIPromise<AccessGroupDeleteSchemaResponse> {
     const { namespace, ...body } = params;
-    return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, { body, ...options });
+    return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, {
+      body,
+      ...options,
+    });
   }
 }
 

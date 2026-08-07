@@ -18,12 +18,6 @@
       "require": "./dist/cjs/index.js",
       "default": "./dist/esm/index.js"
     },
-    "./resources/*": {
-      "types": "./dist/esm/resources/*.d.ts",
-      "import": "./dist/esm/resources/*.js",
-      "require": "./dist/cjs/resources/*.js",
-      "default": "./dist/esm/resources/*.js"
-    },
     "./*.mjs": {
       "types": "./dist/esm/*.d.ts",
       "import": "./dist/esm/*.js",
