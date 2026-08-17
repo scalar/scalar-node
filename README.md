@@ -25,7 +25,7 @@ The full API of this library can be found in [api.md](./api.md).
 ## Installation
 
 ```sh
-npm install @scalar/sdk
+npm install @scalar/scalar
 ```
 
 <br />
@@ -33,9 +33,9 @@ npm install @scalar/sdk
 ## Usage
 
 ```ts
-import Scalar from '@scalar/sdk';
+import ScalarAPI from '@scalar/scalar';
 
-const client = new Scalar({
+const client = new ScalarAPI({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
@@ -69,7 +69,7 @@ Declared schemes:
 Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```ts
-import { APIError } from '@scalar/sdk';
+import { APIError } from '@scalar/scalar';
 
 try {
   const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
@@ -90,9 +90,9 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ts
-import Scalar from '@scalar/sdk';
+import ScalarAPI from '@scalar/scalar';
 
-const client = new Scalar({
+const client = new ScalarAPI({
   timeout: 60000,
   maxRetries: 2,
   logLevel: 'debug',
@@ -125,7 +125,7 @@ const client = new Scalar({
 | `maxRetries` | `number` | - | Per-request retry count. |
 | `signal` | `AbortSignal` | - | Abort an in-flight request. |
 | `fetchOptions` | `RequestInit` | - | Per-request fetch options. |
-| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. |
+| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. Applies to this request and its retries. |
 
 <br />
 

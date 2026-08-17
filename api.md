@@ -65,9 +65,9 @@ Complete reference of every operation, grouped by resource. See [the README](./R
 ## Setup
 
 ```ts
-import Scalar from '@scalar/sdk';
+import ScalarAPI from '@scalar/scalar';
 
-const client = new Scalar({
+const client = new ScalarAPI({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 ```
@@ -330,11 +330,11 @@ Get a specific schema version document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionRetrieveSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionRetrieveSchemaResponse`](./src/resources/schemas/version.ts) |
+| Request | [`VersionRetrieveParams`](./src/resources/schemas/version.ts) |
+| Response | [`VersionRetrieveResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-const string_ = await client.schemas.version.retrieveSchema('semver', {
+const string_ = await client.schemas.version.retrieve('semver', {
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -346,11 +346,11 @@ Delete a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionDeleteSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionDeleteSchemaResponse`](./src/resources/schemas/version.ts) |
+| Request | [`VersionDeleteParams`](./src/resources/schemas/version.ts) |
+| Response | [`VersionDeleteResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-await client.schemas.version.deleteSchema('semver', {
+await client.schemas.version.delete('semver', {
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -362,11 +362,11 @@ Create a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionCreateSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionCreateSchemaResponse`](./src/resources/schemas/version.ts) |
+| Request | [`VersionCreateParams`](./src/resources/schemas/version.ts) |
+| Response | [`VersionCreateResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-const createSchema = await client.schemas.version.createSchema('slug', {
+const create = await client.schemas.version.create('slug', {
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -381,11 +381,11 @@ Add an access group to a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupCreateSchemaParams`](./src/resources/schemas/access-group.ts) |
-| Response | [`AccessGroupCreateSchemaResponse`](./src/resources/schemas/access-group.ts) |
+| Request | [`AccessGroupCreateParams`](./src/resources/schemas/access-group.ts) |
+| Response | [`AccessGroupCreateResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
-await client.schemas.accessGroup.createSchema('slug', {
+await client.schemas.accessGroup.create('slug', {
   namespace: 'namespace',
   accessGroupSlug: 'xxx',
 });
@@ -397,11 +397,11 @@ Remove an access group from a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupDeleteSchemaParams`](./src/resources/schemas/access-group.ts) |
-| Response | [`AccessGroupDeleteSchemaResponse`](./src/resources/schemas/access-group.ts) |
+| Request | [`AccessGroupDeleteParams`](./src/resources/schemas/access-group.ts) |
+| Response | [`AccessGroupDeleteResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
-await client.schemas.accessGroup.deleteSchema('slug', {
+await client.schemas.accessGroup.delete('slug', {
   namespace: 'namespace',
   accessGroupSlug: 'xxx',
 });

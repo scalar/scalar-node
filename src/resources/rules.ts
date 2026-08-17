@@ -53,7 +53,7 @@ export class Rules extends APIResource {
   /**
    * Update rule metadata by slug.
    *
-   * @param {string} slug
+   * @param {string} slug2
    * @param {RuleUpdateRulesetParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleUpdateRulesetResponse>} Default Response
@@ -66,12 +66,12 @@ export class Rules extends APIResource {
    * ```
    */
   updateRuleset(
-    slug: string,
+    slug2: string,
     params: RuleUpdateRulesetParams,
     options?: RequestOptions,
   ): APIPromise<RuleUpdateRulesetResponse> {
     const { namespace, ...body } = params;
-    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { body, ...options });
+    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug2}`, { body, ...options });
   }
 
   /**

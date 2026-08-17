@@ -9,20 +9,20 @@ import type * as RegistryAPI from '../registry';
 import * as VersionAPI from './version';
 import {
   Version,
-  type VersionRetrieveSchemaResponse,
-  type VersionDeleteSchemaResponse,
-  type VersionCreateSchemaResponse,
-  type VersionRetrieveSchemaParams,
-  type VersionDeleteSchemaParams,
-  type VersionCreateSchemaParams,
+  type VersionRetrieveResponse,
+  type VersionDeleteResponse,
+  type VersionCreateResponse,
+  type VersionRetrieveParams,
+  type VersionDeleteParams,
+  type VersionCreateParams,
 } from './version';
 import * as AccessGroupAPI from './access-group';
 import {
   AccessGroup,
-  type AccessGroupCreateSchemaResponse,
-  type AccessGroupDeleteSchemaResponse,
-  type AccessGroupCreateSchemaParams,
-  type AccessGroupDeleteSchemaParams,
+  type AccessGroupCreateResponse,
+  type AccessGroupDeleteResponse,
+  type AccessGroupCreateParams,
+  type AccessGroupDeleteParams,
 } from './access-group';
 
 export class Schemas extends APIResource {
@@ -234,19 +234,19 @@ export declare namespace Schemas {
 
   export {
     Version as Version,
-    type VersionRetrieveSchemaResponse as VersionRetrieveSchemaResponse,
-    type VersionDeleteSchemaResponse as VersionDeleteSchemaResponse,
-    type VersionCreateSchemaResponse as VersionCreateSchemaResponse,
-    type VersionRetrieveSchemaParams as VersionRetrieveSchemaParams,
-    type VersionDeleteSchemaParams as VersionDeleteSchemaParams,
-    type VersionCreateSchemaParams as VersionCreateSchemaParams,
+    type VersionRetrieveResponse as VersionRetrieveResponse,
+    type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionCreateResponse as VersionCreateResponse,
+    type VersionRetrieveParams as VersionRetrieveParams,
+    type VersionDeleteParams as VersionDeleteParams,
+    type VersionCreateParams as VersionCreateParams,
   };
 
   export {
     AccessGroup as AccessGroup,
-    type AccessGroupCreateSchemaResponse as AccessGroupCreateSchemaResponse,
-    type AccessGroupDeleteSchemaResponse as AccessGroupDeleteSchemaResponse,
-    type AccessGroupCreateSchemaParams as AccessGroupCreateSchemaParams,
-    type AccessGroupDeleteSchemaParams as AccessGroupDeleteSchemaParams,
+    type AccessGroupCreateResponse as AccessGroupCreateResponse,
+    type AccessGroupDeleteResponse as AccessGroupDeleteResponse,
+    type AccessGroupCreateParams as AccessGroupCreateParams,
+    type AccessGroupDeleteParams as AccessGroupDeleteParams,
   };
 }

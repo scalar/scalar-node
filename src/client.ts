@@ -19,7 +19,7 @@ import {
 } from './internal/utils/log';
 export type { Logger, LogLevel } from './internal/utils/log';
 import type { RequestInit, RequestInfo, BodyInit, Fetch } from './internal/builtin-types';
-import { buildHeaders, type HeadersLike } from './internal/headers';
+import { buildHeaders, type HeadersLike, type NullableHeaders } from './internal/headers';
 import type { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import type { HTTPMethod, FinalizedRequestInit, MergedRequestInit, PromiseOrValue } from './internal/types';
 import { stringifyQuery } from './internal/utils/query';
@@ -197,13 +197,13 @@ export interface ClientOptions {
   logger?: Logger | undefined;
 }
 
-export type ScalarOptions = ClientOptions;
+export type ScalarAPIOptions = ClientOptions;
 
 /**
  * API Client for interfacing with the ScalarApi API.
  */
-export class Scalar {
-  bearerAuth: string | AuthTokenProvider | undefined;
+export class ScalarAPI {
+  bearerAuth: string | AuthTokenProvider;
 
   baseURL: string;
   maxRetries: number;
@@ -235,6 +235,12 @@ export class Scalar {
     bearerAuth = readEnv('BEARER_AUTH'),
     ...opts
   }: ClientOptions = {}) {
+    if (bearerAuth === undefined) {
+      throw new Errors.ScalarAPIError(
+        "The BEARER_AUTH environment variable is missing or empty; either provide it, or instantiate the ScalarAPI client with an bearerAuth option, like new ScalarAPI({ bearerAuth: 'My Bearer Auth' }).",
+      );
+    }
+
     const options: ClientOptions = {
       bearerAuth,
       ...opts,
@@ -243,7 +249,7 @@ export class Scalar {
     const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== '';
     const defaultBaseURL = 'https://access.scalar.com';
     this.baseURL = options.baseURL || defaultBaseURL;
-    this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? ScalarAPI.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -694,7 +700,16 @@ export class Scalar {
     if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
     options.timeout = options.timeout ?? this.timeout;
     const { bodyHeaders, body } = this.buildBody({ options });
-    const reqHeaders = await this.buildHeaders({ options, method, bodyHeaders, retryCount, url });
+    // Headers read the caller's own options, not the copy defaulted above: `X-Scalar-Timeout`
+    // reports an explicit per-request timeout, and the idempotency key written back here has to
+    // land where the retry can see it.
+    const reqHeaders = await this.buildHeaders({
+      options: inputOptions,
+      method,
+      bodyHeaders,
+      retryCount,
+      url,
+    });
 
     const req: FinalizedRequestInit = {
       method,
@@ -809,13 +824,13 @@ export class Scalar {
     }
   }
 
-  private validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
+  protected validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
     if (headers.has('Authorization')) return;
     if (headerExplicitlyOmitted(options.headers, 'Authorization')) return;
     throw new Errors.AuthenticationError(
       401,
-      {},
-      'Could not resolve authentication method. Expected Authorization to be set.',
+      undefined,
+      'Could not resolve authentication method. Expected the bearerAuth to be set. Or for the "Authorization" headers to be explicitly omitted',
       headers,
     );
   }
@@ -833,8 +848,12 @@ export class Scalar {
     return {};
   }
 
-  protected async authHeaders(options: FinalRequestOptions): Promise<HeadersLike | undefined> {
-    return buildHeaders([await this.authHeadersAsync()]);
+  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
+    if (bearerAuth == null) {
+      return undefined;
+    }
+    return buildHeaders([{ Authorization: `Bearer ${bearerAuth}` }]);
   }
 
   private async authQueryAsync(): Promise<Record<string, string>> {
@@ -847,20 +866,13 @@ export class Scalar {
     return cookies;
   }
 
-  private async authHeadersAsync(): Promise<Record<string, string>> {
-    const headers: Record<string, string> = {};
-    const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
-    if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
-    return headers;
-  }
-
   private async resolveAuthOption(
     optionName: string,
     value: string | AuthTokenProvider | null | undefined,
   ): Promise<string | undefined> {
     if (value == null) return undefined;
     const token = typeof value === 'function' ? await value() : value;
-    if (!token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (!token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
@@ -871,14 +883,14 @@ export class Scalar {
     if (value == null) return undefined;
     const token = typeof value === 'function' ? value() : value;
     if (typeof token !== 'string' || !token)
-      throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
+      throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
-  static Scalar = this;
+  static ScalarAPI = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static ScalarError = Errors.ScalarError;
+  static ScalarAPIError = Errors.ScalarAPIError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -905,17 +917,17 @@ export class Scalar {
   authentication: Authentication = new Authentication(this);
 }
 
-Scalar.Registry = Registry;
-Scalar.Schemas = Schemas;
-Scalar.LoginPortals = LoginPortals;
-Scalar.Rules = Rules;
-Scalar.Themes = Themes;
-Scalar.Teams = Teams;
-Scalar.ScalarDocs = ScalarDocs;
-Scalar.Namespaces = Namespaces;
-Scalar.Authentication = Authentication;
+ScalarAPI.Registry = Registry;
+ScalarAPI.Schemas = Schemas;
+ScalarAPI.LoginPortals = LoginPortals;
+ScalarAPI.Rules = Rules;
+ScalarAPI.Themes = Themes;
+ScalarAPI.Teams = Teams;
+ScalarAPI.ScalarDocs = ScalarDocs;
+ScalarAPI.Namespaces = Namespaces;
+ScalarAPI.Authentication = Authentication;
 
-export declare namespace Scalar {
+export declare namespace ScalarAPI {
   export type RequestOptions = Opts.RequestOptions;
   export {
     Registry as Registry,

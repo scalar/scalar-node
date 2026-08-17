@@ -11,12 +11,12 @@
 //     printing a table. The generator uses this to collect per-operation results.
 import { writeFileSync } from 'node:fs';
 
-// The default export is the client class. The client reads auth and the base URL from the
+// The package exports the client class. The client reads auth and the base URL from the
 // environment, so it needs no constructor options to point at a server.
-import Scalar from '@scalar/sdk';
+import ScalarAPI from '@scalar/scalar';
 
 // One shared client runs every case.
-const client = new Scalar();
+const client = new ScalarAPI();
 
 // The result of running one case, collected for the JSON report or the printed table.
 type SmokeResult = {
@@ -218,11 +218,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: 'retrieveSchema',
+    operation: 'retrieve',
     method: 'GET',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      const string_ = await client.schemas.version.retrieveSchema('semver', {
+      const string_ = await client.schemas.version.retrieve('semver', {
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -230,11 +230,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: 'deleteSchema',
+    operation: 'delete',
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      await client.schemas.version.deleteSchema('semver', {
+      await client.schemas.version.delete('semver', {
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -242,11 +242,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: 'createSchema',
+    operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/version',
     run: async () => {
-      const createSchema = await client.schemas.version.createSchema('slug', {
+      const create = await client.schemas.version.create('slug', {
         namespace: 'namespace',
         version: 'x',
         document: '',
@@ -255,11 +255,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: 'createSchema',
+    operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.schemas.accessGroup.createSchema('slug', {
+      await client.schemas.accessGroup.create('slug', {
         namespace: 'namespace',
         accessGroupSlug: 'xxx',
       });
@@ -267,11 +267,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-    operation: 'deleteSchema',
+    operation: 'delete',
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.schemas.accessGroup.deleteSchema('slug', {
+      await client.schemas.accessGroup.delete('slug', {
         namespace: 'namespace',
         accessGroupSlug: 'xxx',
       });

@@ -12,17 +12,17 @@ export type {
 } from './schemas';
 export { Version } from './version';
 export type {
-  VersionRetrieveSchemaParams,
-  VersionRetrieveSchemaResponse,
-  VersionDeleteSchemaParams,
-  VersionDeleteSchemaResponse,
-  VersionCreateSchemaParams,
-  VersionCreateSchemaResponse,
+  VersionRetrieveParams,
+  VersionRetrieveResponse,
+  VersionDeleteParams,
+  VersionDeleteResponse,
+  VersionCreateParams,
+  VersionCreateResponse,
 } from './version';
 export { AccessGroup } from './access-group';
 export type {
-  AccessGroupCreateSchemaParams,
-  AccessGroupCreateSchemaResponse,
-  AccessGroupDeleteSchemaParams,
-  AccessGroupDeleteSchemaResponse,
+  AccessGroupCreateParams,
+  AccessGroupCreateResponse,
+  AccessGroupDeleteParams,
+  AccessGroupDeleteResponse,
 } from './access-group';
