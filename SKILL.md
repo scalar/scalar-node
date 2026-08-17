@@ -1,22 +1,22 @@
 ---
 name: scalar-api-typescript-sdk
-description: "TypeScript SDK for Scalar API. Use when writing TypeScript code that calls Scalar API with the @scalar/scalar package: installing it, constructing and authenticating the client, and calling API operations."
+description: "TypeScript SDK for Scalar API. Use when writing TypeScript code that calls Scalar API with the @scalar/sdk package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
 # Scalar API TypeScript SDK
 
-Generated TypeScript client for Scalar API, published as `@scalar/scalar`. Use the generated client instead of hand-writing HTTP requests.
+Generated TypeScript client for Scalar API, published as `@scalar/sdk`. Use the generated client instead of hand-writing HTTP requests.
 
 ## Install
 
 ```sh
-npm install @scalar/scalar
+npm install @scalar/sdk
 ```
 
 ## Client setup and authentication
 
 ```ts
-import ScalarAPI from '@scalar/scalar';
+import ScalarAPI from '@scalar/sdk';
 
 const client = new ScalarAPI({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
@@ -30,7 +30,7 @@ Provide credentials using the options below. Environment variables are read auto
 ## Calling operations
 
 ```ts
-import ScalarAPI from '@scalar/scalar';
+import ScalarAPI from '@scalar/sdk';
 
 const client = new ScalarAPI({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
@@ -48,7 +48,7 @@ Method names, parameter shapes, and response types are generated from the API de
 Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```ts
-import { APIError } from '@scalar/scalar';
+import { APIError } from '@scalar/sdk';
 
 try {
   const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
