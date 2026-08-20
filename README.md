@@ -1,6 +1,6 @@
-# Scalar API
+# Scalar
 
-This library provides convenient access to the Scalar API from TypeScript or JavaScript.
+This library provides convenient access to the Scalar REST API from TypeScript or JavaScript.
 
 The full API of this library can be found in [api.md](./api.md).
 
@@ -125,7 +125,7 @@ const client = new Scalar({
 | `maxRetries` | `number` | - | Per-request retry count. |
 | `signal` | `AbortSignal` | - | Abort an in-flight request. |
 | `fetchOptions` | `RequestInit` | - | Per-request fetch options. |
-| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. |
+| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. Applies to this request and its retries. |
 
 <br />
 

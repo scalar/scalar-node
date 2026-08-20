@@ -74,6 +74,8 @@ const client = new Scalar({
 
 ## `Registry`
 
+Registry
+
 ### List all API Documents
 
 List all API documents across every namespace the caller can access.
@@ -202,10 +204,14 @@ Get metadata (uid, content shas, version sha, tags) for a specific API document 
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryListAPIDocumentVersionMetadataParams`](./src/resources/registry.ts) |
-| Response | [`RegistryListAPIDocumentVersionMetadataResponse`](./src/resources/registry.ts) |
+| Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
+=======
+const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -218,10 +224,14 @@ Create a new API document version.
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryCreateAPIDocumentVersionParams`](./src/resources/registry.ts) |
-| Response | [`RegistryCreateAPIDocumentVersionResponse`](./src/resources/registry.ts) |
+| Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
+=======
+const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -262,6 +272,8 @@ await client.registry.deleteAPIDocumentAccessGroup('slug', {
 
 ## `Schemas`
 
+Schemas
+
 ### List all shared components
 
 List schemas in a namespace.
@@ -281,10 +293,14 @@ Create a schema in a namespace.
 | Direction | Type |
 | --- | --- |
 | Request | [`SchemaCreateParams`](./src/resources/schemas/schemas.ts) |
-| Response | [`SchemaCreateResponse`](./src/resources/schemas/schemas.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const create = await client.schemas.create('namespace', {
+=======
+const uID = await client.schemas.create('namespace', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   title: '',
   version: 'x',
   slug: '',
@@ -324,17 +340,23 @@ await client.schemas.delete('slug', {
 
 ### `Schemas Version`
 
+Schemas
+
 #### Get a shared component document
 
 Get a specific schema version document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionRetrieveSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionRetrieveSchemaResponse`](./src/resources/schemas/version.ts) |
+| Request | [`VersionRetrieveParams`](./src/resources/schemas/version.ts) |
+| Response | [`VersionRetrieveResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
+<<<<<<< HEAD
 const string_ = await client.schemas.version.retrieveSchema('semver', {
+=======
+const string_ = await client.schemas.version.retrieve('semver', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -346,11 +368,15 @@ Delete a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionDeleteSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionDeleteSchemaResponse`](./src/resources/schemas/version.ts) |
+| Request | [`VersionDeleteParams`](./src/resources/schemas/version.ts) |
+| Response | [`VersionDeleteResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
+<<<<<<< HEAD
 await client.schemas.version.deleteSchema('semver', {
+=======
+await client.schemas.version.delete('semver', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -362,11 +388,15 @@ Create a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionCreateSchemaParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionCreateSchemaResponse`](./src/resources/schemas/version.ts) |
+| Request | [`VersionCreateParams`](./src/resources/schemas/version.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const createSchema = await client.schemas.version.createSchema('slug', {
+=======
+const uID = await client.schemas.version.create('slug', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -375,17 +405,23 @@ const createSchema = await client.schemas.version.createSchema('slug', {
 
 ### `Schemas AccessGroup`
 
+Schemas
+
 #### Add shared component access group
 
 Add an access group to a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupCreateSchemaParams`](./src/resources/schemas/access-group.ts) |
-| Response | [`AccessGroupCreateSchemaResponse`](./src/resources/schemas/access-group.ts) |
+| Request | [`AccessGroupCreateParams`](./src/resources/schemas/access-group.ts) |
+| Response | [`AccessGroupCreateResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
+<<<<<<< HEAD
 await client.schemas.accessGroup.createSchema('slug', {
+=======
+await client.schemas.accessGroup.create('slug', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   accessGroupSlug: 'xxx',
 });
@@ -397,17 +433,23 @@ Remove an access group from a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupDeleteSchemaParams`](./src/resources/schemas/access-group.ts) |
-| Response | [`AccessGroupDeleteSchemaResponse`](./src/resources/schemas/access-group.ts) |
+| Request | [`AccessGroupDeleteParams`](./src/resources/schemas/access-group.ts) |
+| Response | [`AccessGroupDeleteResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
+<<<<<<< HEAD
 await client.schemas.accessGroup.deleteSchema('slug', {
+=======
+await client.schemas.accessGroup.delete('slug', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   namespace: 'namespace',
   accessGroupSlug: 'xxx',
 });
 ```
 
 ## `LoginPortals`
+
+Login Portals
 
 ### Get a login portal
 
@@ -453,10 +495,14 @@ Create a login portal for the current team.
 | Direction | Type |
 | --- | --- |
 | Request | [`LoginPortalCreateParams`](./src/resources/login-portals.ts) |
-| Response | [`LoginPortalCreateResponse`](./src/resources/login-portals.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const create = await client.loginPortals.create({
+=======
+const uID = await client.loginPortals.create({
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   title: '',
   slug: '',
   email: {
@@ -505,6 +551,8 @@ const list = await client.loginPortals.list();
 
 ## `Rules`
 
+Rules
+
 ### List all rules
 
 List all rulesets in a namespace.
@@ -524,10 +572,14 @@ Create a rule in a namespace.
 | Direction | Type |
 | --- | --- |
 | Request | [`RuleCreateRulesetParams`](./src/resources/rules.ts) |
-| Response | [`RuleCreateRulesetResponse`](./src/resources/rules.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const createRuleset = await client.rules.createRuleset('namespace', {
+=======
+const uID = await client.rules.createRuleset('namespace', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   title: '',
   slug: '',
   document: '',
@@ -613,6 +665,8 @@ await client.rules.deleteRulesetAccessGroup('slug', {
 
 ## `Themes`
 
+Themes
+
 ### List all themes
 
 List all team themes.
@@ -632,10 +686,14 @@ Create a team theme.
 | Direction | Type |
 | --- | --- |
 | Request | [`ThemeCreateParams`](./src/resources/themes.ts) |
-| Response | [`ThemeCreateResponse`](./src/resources/themes.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
+<<<<<<< HEAD
 const create = await client.themes.create({
+=======
+const uID = await client.themes.create({
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
   name: '',
   slug: '',
   document: '',
@@ -696,6 +754,8 @@ const string_ = await client.themes.retrieve('slug');
 
 ## `Teams`
 
+Teams
+
 ### List teams
 
 List all available teams
@@ -709,6 +769,8 @@ const list = await client.teams.list();
 ```
 
 ## `ScalarDocs`
+
+Scalar Docs
 
 ### List all projects
 
@@ -754,6 +816,8 @@ const publishGuide = await client.scalarDocs.publishGuide('slug');
 
 ## `Namespaces`
 
+Namespaces
+
 ### List namespaces
 
 Get all namespaces for the current team
@@ -767,6 +831,8 @@ const list = await client.namespaces.list();
 ```
 
 ## `Authentication`
+
+Authentication
 
 ### Exchange token
 

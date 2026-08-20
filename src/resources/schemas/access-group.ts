@@ -6,29 +6,45 @@ import type { RequestOptions } from '../../internal/request-options';
 import { path as __scalarPath } from '../../internal/utils/path';
 import type * as RegistryAPI from '../registry';
 import type * as ScalarDocsAPI from '../scalar-docs';
+<<<<<<< HEAD
+=======
+import type * as Shared from '../shared';
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
 
 export class AccessGroup extends APIResource {
   /**
    * Add an access group to a schema.
    *
    * @param {string} slug
-   * @param {AccessGroupCreateSchemaParams} params - The parameters to send with the request.
+   * @param {AccessGroupCreateParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<AccessGroupCreateSchemaResponse>} Default Response
+   * @returns {APIPromise<AccessGroupCreateResponse>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * await client.schemas.accessGroup.createSchema('slug', {
+=======
+   * await client.schemas.accessGroup.create('slug', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
    *   namespace: 'namespace',
    *   accessGroupSlug: 'xxx',
    * });
    * ```
    */
+<<<<<<< HEAD
   createSchema(
     slug: string,
     params: AccessGroupCreateSchemaParams,
     options?: RequestOptions,
   ): APIPromise<AccessGroupCreateSchemaResponse> {
+=======
+  create(
+    slug: string,
+    params: AccessGroupCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<AccessGroupCreateResponse> {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, {
       body,
@@ -40,23 +56,35 @@ export class AccessGroup extends APIResource {
    * Remove an access group from a schema.
    *
    * @param {string} slug
-   * @param {AccessGroupDeleteSchemaParams} params - The parameters to send with the request.
+   * @param {AccessGroupDeleteParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<AccessGroupDeleteSchemaResponse>} Default Response
+   * @returns {APIPromise<AccessGroupDeleteResponse>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * await client.schemas.accessGroup.deleteSchema('slug', {
+=======
+   * await client.schemas.accessGroup.delete('slug', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
    *   namespace: 'namespace',
    *   accessGroupSlug: 'xxx',
    * });
    * ```
    */
+<<<<<<< HEAD
   deleteSchema(
     slug: string,
     params: AccessGroupDeleteSchemaParams,
     options?: RequestOptions,
   ): APIPromise<AccessGroupDeleteSchemaResponse> {
+=======
+  delete(
+    slug: string,
+    params: AccessGroupDeleteParams,
+    options?: RequestOptions,
+  ): APIPromise<AccessGroupDeleteResponse> {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     const { namespace, ...body } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, {
       body,
@@ -65,7 +93,7 @@ export class AccessGroup extends APIResource {
   }
 }
 
-export interface AccessGroupCreateSchemaParams {
+export interface AccessGroupCreateParams {
   /**
    * Path param
    */
@@ -79,9 +107,9 @@ export interface AccessGroupCreateSchemaParams {
   accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
-export type AccessGroupCreateSchemaResponse = null;
+export type AccessGroupCreateResponse = null;
 
-export interface AccessGroupDeleteSchemaParams {
+export interface AccessGroupDeleteParams {
   /**
    * Path param
    */
@@ -95,12 +123,12 @@ export interface AccessGroupDeleteSchemaParams {
   accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
-export type AccessGroupDeleteSchemaResponse = null;
+export type AccessGroupDeleteResponse = null;
 export declare namespace AccessGroup {
   export {
-    type AccessGroupCreateSchemaResponse as AccessGroupCreateSchemaResponse,
-    type AccessGroupDeleteSchemaResponse as AccessGroupDeleteSchemaResponse,
-    type AccessGroupCreateSchemaParams as AccessGroupCreateSchemaParams,
-    type AccessGroupDeleteSchemaParams as AccessGroupDeleteSchemaParams,
+    type AccessGroupCreateResponse as AccessGroupCreateResponse,
+    type AccessGroupDeleteResponse as AccessGroupDeleteResponse,
+    type AccessGroupCreateParams as AccessGroupCreateParams,
+    type AccessGroupDeleteParams as AccessGroupDeleteParams,
   };
 }

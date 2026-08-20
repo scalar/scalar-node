@@ -4,6 +4,10 @@ import { APIResource } from '../resource';
 import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { path as __scalarPath } from '../internal/utils/path';
+<<<<<<< HEAD
+=======
+import type * as Shared from './shared';
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
 
 export class ScalarDocs extends APIResource {
   /**
@@ -71,24 +75,28 @@ export namespace ScalarDocListGuidesResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @minimum 0
      * @maximum 9007199254740991
      */
-    createdAt: number;
+    createdAt: Shared.Timestamp;
     /**
      * @minimum 0
      * @maximum 9007199254740991
      */
-    updatedAt: number;
+    updatedAt: Shared.Timestamp;
     name: string;
     activeDeployment: ScalarDocListGuidesResponseItem.ActiveDeployment | null;
     /**
      * @minimum 0
      * @maximum 9007199254740991
      */
+<<<<<<< HEAD
     lastPublished: number | null;
+=======
+    lastPublished: Shared.Timestamp | null;
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     lastPublishedUid: string | null;
     loginPortalUid: string;
     activeThemeId: string;
@@ -115,7 +123,7 @@ export namespace ScalarDocListGuidesResponse {
        * @minimum 0
        * @maximum 9007199254740991
        */
-      publishedAt: number;
+      publishedAt: Shared.Timestamp;
     }
 
     export interface Repository {

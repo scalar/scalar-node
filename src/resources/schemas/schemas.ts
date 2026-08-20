@@ -4,25 +4,44 @@ import { APIResource } from '../../resource';
 import { APIPromise } from '../../api-promise';
 import type { RequestOptions } from '../../internal/request-options';
 import { path as __scalarPath } from '../../internal/utils/path';
+<<<<<<< HEAD
+=======
+import type * as Shared from '../shared';
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
 import type * as ScalarDocsAPI from '../scalar-docs';
 import type * as RegistryAPI from '../registry';
 import * as VersionAPI from './version';
 import {
   Version,
+<<<<<<< HEAD
   type VersionRetrieveSchemaResponse,
   type VersionDeleteSchemaResponse,
   type VersionCreateSchemaResponse,
   type VersionRetrieveSchemaParams,
   type VersionDeleteSchemaParams,
   type VersionCreateSchemaParams,
+=======
+  type VersionRetrieveResponse,
+  type VersionDeleteResponse,
+  type VersionRetrieveParams,
+  type VersionDeleteParams,
+  type VersionCreateParams,
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
 } from './version';
 import * as AccessGroupAPI from './access-group';
 import {
   AccessGroup,
+<<<<<<< HEAD
   type AccessGroupCreateSchemaResponse,
   type AccessGroupDeleteSchemaResponse,
   type AccessGroupCreateSchemaParams,
   type AccessGroupDeleteSchemaParams,
+=======
+  type AccessGroupCreateResponse,
+  type AccessGroupDeleteResponse,
+  type AccessGroupCreateParams,
+  type AccessGroupDeleteParams,
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
 } from './access-group';
 
 export class Schemas extends APIResource {
@@ -51,11 +70,15 @@ export class Schemas extends APIResource {
    * @param {string} namespace_
    * @param {SchemaCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<SchemaCreateResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * const create = await client.schemas.create('namespace', {
+=======
+   * const uID = await client.schemas.create('namespace', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
    *   title: '',
    *   version: 'x',
    *   slug: '',
@@ -63,11 +86,15 @@ export class Schemas extends APIResource {
    * });
    * ```
    */
+<<<<<<< HEAD
   create(
     namespace_: string,
     body: SchemaCreateParams,
     options?: RequestOptions,
   ): APIPromise<SchemaCreateResponse> {
+=======
+  create(namespace_: string, body: SchemaCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     return this._client.post(__scalarPath`/v1/schemas/${namespace_}`, { body, ...options });
   }
 
@@ -127,7 +154,7 @@ export namespace SchemaListResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @maxLength 100
      */
@@ -144,7 +171,11 @@ export namespace SchemaListResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
+<<<<<<< HEAD
     namespace: string;
+=======
+    namespace: Shared.Namespace;
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     isPrivate: boolean;
     versions: Array<SchemaListResponseItem.Version>;
   }
@@ -154,17 +185,17 @@ export namespace SchemaListResponse {
       /**
        * @minLength 5
        */
-      uid: string;
+      uid: Shared.Nanoid;
       /**
        * @minimum 0
        * @maximum 9007199254740991
        */
-      createdAt: number;
+      createdAt: Shared.Timestamp;
       /**
        * @minimum 0
        * @maximum 9007199254740991
        */
-      updatedAt: number;
+      updatedAt: Shared.Timestamp;
       /**
        * @minLength 1
        */
@@ -183,13 +214,6 @@ export interface SchemaCreateParams {
   document: string;
   description?: string;
   isPrivate?: boolean;
-}
-
-export interface SchemaCreateResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
 }
 
 export interface SchemaUpdateParams {
@@ -224,7 +248,6 @@ Schemas.AccessGroup = AccessGroup;
 export declare namespace Schemas {
   export {
     type SchemaListResponse as SchemaListResponse,
-    type SchemaCreateResponse as SchemaCreateResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
     type SchemaCreateParams as SchemaCreateParams,
@@ -234,19 +257,18 @@ export declare namespace Schemas {
 
   export {
     Version as Version,
-    type VersionRetrieveSchemaResponse as VersionRetrieveSchemaResponse,
-    type VersionDeleteSchemaResponse as VersionDeleteSchemaResponse,
-    type VersionCreateSchemaResponse as VersionCreateSchemaResponse,
-    type VersionRetrieveSchemaParams as VersionRetrieveSchemaParams,
-    type VersionDeleteSchemaParams as VersionDeleteSchemaParams,
-    type VersionCreateSchemaParams as VersionCreateSchemaParams,
+    type VersionRetrieveResponse as VersionRetrieveResponse,
+    type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionRetrieveParams as VersionRetrieveParams,
+    type VersionDeleteParams as VersionDeleteParams,
+    type VersionCreateParams as VersionCreateParams,
   };
 
   export {
     AccessGroup as AccessGroup,
-    type AccessGroupCreateSchemaResponse as AccessGroupCreateSchemaResponse,
-    type AccessGroupDeleteSchemaResponse as AccessGroupDeleteSchemaResponse,
-    type AccessGroupCreateSchemaParams as AccessGroupCreateSchemaParams,
-    type AccessGroupDeleteSchemaParams as AccessGroupDeleteSchemaParams,
+    type AccessGroupCreateResponse as AccessGroupCreateResponse,
+    type AccessGroupDeleteResponse as AccessGroupDeleteResponse,
+    type AccessGroupCreateParams as AccessGroupCreateParams,
+    type AccessGroupDeleteParams as AccessGroupDeleteParams,
   };
 }

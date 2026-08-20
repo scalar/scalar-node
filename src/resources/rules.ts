@@ -5,6 +5,10 @@ import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { buildHeaders } from '../internal/headers';
 import { path as __scalarPath } from '../internal/utils/path';
+<<<<<<< HEAD
+=======
+import type * as Shared from './shared';
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
 import type * as ScalarDocsAPI from './scalar-docs';
 import type * as RegistryAPI from './registry';
 
@@ -31,11 +35,15 @@ export class Rules extends APIResource {
    * @param {string} namespace_
    * @param {RuleCreateRulesetParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<RuleCreateRulesetResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * const createRuleset = await client.rules.createRuleset('namespace', {
+=======
+   * const uID = await client.rules.createRuleset('namespace', {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
    *   title: '',
    *   slug: '',
    *   document: '',
@@ -46,14 +54,18 @@ export class Rules extends APIResource {
     namespace_: string,
     body: RuleCreateRulesetParams,
     options?: RequestOptions,
+<<<<<<< HEAD
   ): APIPromise<RuleCreateRulesetResponse> {
+=======
+  ): APIPromise<Shared.UID> {
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     return this._client.post(__scalarPath`/v1/rulesets/${namespace_}`, { body, ...options });
   }
 
   /**
    * Update rule metadata by slug.
    *
-   * @param {string} slug
+   * @param {string} slug2
    * @param {RuleUpdateRulesetParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
    * @returns {APIPromise<RuleUpdateRulesetResponse>} Default Response
@@ -66,12 +78,16 @@ export class Rules extends APIResource {
    * ```
    */
   updateRuleset(
+<<<<<<< HEAD
     slug: string,
+=======
+    slug2: string,
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     params: RuleUpdateRulesetParams,
     options?: RequestOptions,
   ): APIPromise<RuleUpdateRulesetResponse> {
     const { namespace, ...body } = params;
-    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug}`, { body, ...options });
+    return this._client.patch(__scalarPath`/v1/rulesets/${namespace}/${slug2}`, { body, ...options });
   }
 
   /**
@@ -189,7 +205,7 @@ export namespace RuleListRulesetsResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @maxLength 100
      */
@@ -206,7 +222,11 @@ export namespace RuleListRulesetsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
+<<<<<<< HEAD
     namespace: string;
+=======
+    namespace: Shared.Namespace;
+>>>>>>> 72f78c0dd0a354e81ee3618b21191349d0e6fe85
     isPrivate: boolean;
   }
 }
@@ -217,13 +237,6 @@ export interface RuleCreateRulesetParams {
   document: string;
   description?: string;
   isPrivate?: boolean;
-}
-
-export interface RuleCreateRulesetResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
 }
 
 export interface RuleUpdateRulesetParams {
@@ -297,7 +310,6 @@ export type RuleDeleteRulesetAccessGroupResponse = null;
 export declare namespace Rules {
   export {
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
-    type RuleCreateRulesetResponse as RuleCreateRulesetResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
     type RuleRetrieveRulesetDocumentResponse as RuleRetrieveRulesetDocumentResponse,
