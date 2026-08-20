@@ -37,8 +37,6 @@ import {
   type RegistryRetrieveAPIDocumentVersionResponse,
   type RegistryUpdateAPIDocumentVersionResponse,
   type RegistryDeleteAPIDocumentVersionResponse,
-  type RegistryListAPIDocumentVersionMetadataResponse,
-  type RegistryCreateAPIDocumentVersionResponse,
   type RegistryCreateAPIDocumentAccessGroupResponse,
   type RegistryDeleteAPIDocumentAccessGroupResponse,
   type RegistryCreateAPIDocumentParams,
@@ -55,7 +53,6 @@ import {
 import {
   Schemas,
   type SchemaListResponse,
-  type SchemaCreateResponse,
   type SchemaUpdateResponse,
   type SchemaDeleteResponse,
   type SchemaCreateParams,
@@ -69,7 +66,6 @@ import {
   type LoginPortalRetrieveResponse,
   type LoginPortalUpdateResponse,
   type LoginPortalDeleteResponse,
-  type LoginPortalCreateResponse,
   type LoginPortalListResponse,
   type LoginPortalUpdateParams,
   type LoginPortalCreateParams,
@@ -77,7 +73,6 @@ import {
 import {
   Rules,
   type RuleListRulesetsResponse,
-  type RuleCreateRulesetResponse,
   type RuleUpdateRulesetResponse,
   type RuleDeleteRulesetResponse,
   type RuleRetrieveRulesetDocumentResponse,
@@ -93,7 +88,6 @@ import {
 import {
   Themes,
   type ThemeListResponse,
-  type ThemeCreateResponse,
   type ThemeUpdateResponse,
   type ThemeReplaceDocumentResponse,
   type ThemeDeleteResponse,
@@ -118,6 +112,7 @@ import {
   type AuthenticationListCurrentUserResponse,
   type AuthenticationExchangePersonalTokenParams,
 } from './resources/authentication';
+import * as SharedAPI from './resources/shared';
 
 export type AuthTokenProvider = () => string | Promise<string>;
 
@@ -197,12 +192,12 @@ export interface ClientOptions {
   logger?: Logger | undefined;
 }
 
-export type ScalarAPIOptions = ClientOptions;
+export type ScalarOptions = ClientOptions;
 
 /**
- * API Client for interfacing with the ScalarApi API.
+ * API Client for interfacing with the Scalar API.
  */
-export class ScalarAPI {
+export class Scalar {
   bearerAuth: string | AuthTokenProvider;
 
   baseURL: string;
@@ -219,7 +214,7 @@ export class ScalarAPI {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the ScalarApi API.
+   * API Client for interfacing with the Scalar API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
    * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
@@ -236,8 +231,8 @@ export class ScalarAPI {
     ...opts
   }: ClientOptions = {}) {
     if (bearerAuth === undefined) {
-      throw new Errors.ScalarAPIError(
-        "The BEARER_AUTH environment variable is missing or empty; either provide it, or instantiate the ScalarAPI client with an bearerAuth option, like new ScalarAPI({ bearerAuth: 'My Bearer Auth' }).",
+      throw new Errors.ScalarError(
+        "The BEARER_AUTH environment variable is missing or empty; either provide it, or instantiate the Scalar client with an bearerAuth option, like new Scalar({ bearerAuth: 'My Bearer Auth' }).",
       );
     }
 
@@ -249,7 +244,7 @@ export class ScalarAPI {
     const baseURLOverridden = baseURL !== null && baseURL !== undefined && baseURL !== '';
     const defaultBaseURL = 'https://access.scalar.com';
     this.baseURL = options.baseURL || defaultBaseURL;
-    this.timeout = options.timeout ?? ScalarAPI.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Scalar.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -872,7 +867,7 @@ export class ScalarAPI {
   ): Promise<string | undefined> {
     if (value == null) return undefined;
     const token = typeof value === 'function' ? await value() : value;
-    if (!token) throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+    if (!token) throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
@@ -883,14 +878,14 @@ export class ScalarAPI {
     if (value == null) return undefined;
     const token = typeof value === 'function' ? value() : value;
     if (typeof token !== 'string' || !token)
-      throw new Errors.ScalarAPIError(`Expected '${optionName}' to resolve to a non-empty string.`);
+      throw new Errors.ScalarError(`Expected '${optionName}' to resolve to a non-empty string.`);
     return token;
   }
 
-  static ScalarAPI = this;
+  static Scalar = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static ScalarAPIError = Errors.ScalarAPIError;
+  static ScalarError = Errors.ScalarError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -917,17 +912,17 @@ export class ScalarAPI {
   authentication: Authentication = new Authentication(this);
 }
 
-ScalarAPI.Registry = Registry;
-ScalarAPI.Schemas = Schemas;
-ScalarAPI.LoginPortals = LoginPortals;
-ScalarAPI.Rules = Rules;
-ScalarAPI.Themes = Themes;
-ScalarAPI.Teams = Teams;
-ScalarAPI.ScalarDocs = ScalarDocs;
-ScalarAPI.Namespaces = Namespaces;
-ScalarAPI.Authentication = Authentication;
+Scalar.Registry = Registry;
+Scalar.Schemas = Schemas;
+Scalar.LoginPortals = LoginPortals;
+Scalar.Rules = Rules;
+Scalar.Themes = Themes;
+Scalar.Teams = Teams;
+Scalar.ScalarDocs = ScalarDocs;
+Scalar.Namespaces = Namespaces;
+Scalar.Authentication = Authentication;
 
-export declare namespace ScalarAPI {
+export declare namespace Scalar {
   export type RequestOptions = Opts.RequestOptions;
   export {
     Registry as Registry,
@@ -941,8 +936,6 @@ export declare namespace ScalarAPI {
     type RegistryRetrieveAPIDocumentVersionResponse as RegistryRetrieveAPIDocumentVersionResponse,
     type RegistryUpdateAPIDocumentVersionResponse as RegistryUpdateAPIDocumentVersionResponse,
     type RegistryDeleteAPIDocumentVersionResponse as RegistryDeleteAPIDocumentVersionResponse,
-    type RegistryListAPIDocumentVersionMetadataResponse as RegistryListAPIDocumentVersionMetadataResponse,
-    type RegistryCreateAPIDocumentVersionResponse as RegistryCreateAPIDocumentVersionResponse,
     type RegistryCreateAPIDocumentAccessGroupResponse as RegistryCreateAPIDocumentAccessGroupResponse,
     type RegistryDeleteAPIDocumentAccessGroupResponse as RegistryDeleteAPIDocumentAccessGroupResponse,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
@@ -960,7 +953,6 @@ export declare namespace ScalarAPI {
   export {
     Schemas as Schemas,
     type SchemaListResponse as SchemaListResponse,
-    type SchemaCreateResponse as SchemaCreateResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
     type SchemaCreateParams as SchemaCreateParams,
@@ -975,7 +967,6 @@ export declare namespace ScalarAPI {
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
-    type LoginPortalCreateResponse as LoginPortalCreateResponse,
     type LoginPortalListResponse as LoginPortalListResponse,
     type LoginPortalUpdateParams as LoginPortalUpdateParams,
     type LoginPortalCreateParams as LoginPortalCreateParams,
@@ -984,7 +975,6 @@ export declare namespace ScalarAPI {
   export {
     Rules as Rules,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
-    type RuleCreateRulesetResponse as RuleCreateRulesetResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
     type RuleRetrieveRulesetDocumentResponse as RuleRetrieveRulesetDocumentResponse,
@@ -1001,7 +991,6 @@ export declare namespace ScalarAPI {
   export {
     Themes as Themes,
     type ThemeListResponse as ThemeListResponse,
-    type ThemeCreateResponse as ThemeCreateResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
     type ThemeDeleteResponse as ThemeDeleteResponse,
@@ -1030,6 +1019,18 @@ export declare namespace ScalarAPI {
     type AuthenticationListCurrentUserResponse as AuthenticationListCurrentUserResponse,
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
   };
+
+  export type ManagedDocVersion = SharedAPI.ManagedDocVersion;
+  export type Namespace = SharedAPI.Namespace;
+  export type Nanoid = SharedAPI.Nanoid;
+  export type Timestamp = SharedAPI.Timestamp;
+  export type UID = SharedAPI.UID;
+  export type Value400 = SharedAPI.Value400;
+  export type Value401 = SharedAPI.Value401;
+  export type Value403 = SharedAPI.Value403;
+  export type Value404 = SharedAPI.Value404;
+  export type Value422 = SharedAPI.Value422;
+  export type Value500 = SharedAPI.Value500;
 }
 
 const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string): boolean => {

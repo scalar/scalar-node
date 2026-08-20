@@ -5,6 +5,7 @@ import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { buildHeaders } from '../internal/headers';
 import { path as __scalarPath } from '../internal/utils/path';
+import type * as Shared from './shared';
 import type * as ScalarDocsAPI from './scalar-docs';
 import type * as RegistryAPI from './registry';
 
@@ -31,11 +32,11 @@ export class Rules extends APIResource {
    * @param {string} namespace_
    * @param {RuleCreateRulesetParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<RuleCreateRulesetResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
-   * const createRuleset = await client.rules.createRuleset('namespace', {
+   * const uID = await client.rules.createRuleset('namespace', {
    *   title: '',
    *   slug: '',
    *   document: '',
@@ -46,7 +47,7 @@ export class Rules extends APIResource {
     namespace_: string,
     body: RuleCreateRulesetParams,
     options?: RequestOptions,
-  ): APIPromise<RuleCreateRulesetResponse> {
+  ): APIPromise<Shared.UID> {
     return this._client.post(__scalarPath`/v1/rulesets/${namespace_}`, { body, ...options });
   }
 
@@ -189,7 +190,7 @@ export namespace RuleListRulesetsResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @maxLength 100
      */
@@ -206,7 +207,7 @@ export namespace RuleListRulesetsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
-    namespace: string;
+    namespace: Shared.Namespace;
     isPrivate: boolean;
   }
 }
@@ -217,13 +218,6 @@ export interface RuleCreateRulesetParams {
   document: string;
   description?: string;
   isPrivate?: boolean;
-}
-
-export interface RuleCreateRulesetResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
 }
 
 export interface RuleUpdateRulesetParams {
@@ -297,7 +291,6 @@ export type RuleDeleteRulesetAccessGroupResponse = null;
 export declare namespace Rules {
   export {
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
-    type RuleCreateRulesetResponse as RuleCreateRulesetResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
     type RuleRetrieveRulesetDocumentResponse as RuleRetrieveRulesetDocumentResponse,

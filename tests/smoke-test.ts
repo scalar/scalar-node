@@ -13,10 +13,10 @@ import { writeFileSync } from 'node:fs';
 
 // The package exports the client class. The client reads auth and the base URL from the
 // environment, so it needs no constructor options to point at a server.
-import ScalarAPI from '@scalar/sdk';
+import Scalar from '@scalar/sdk';
 
 // One shared client runs every case.
-const client = new ScalarAPI();
+const client = new Scalar();
 
 // The result of running one case, collected for the JSON report or the printed table.
 type SmokeResult = {
@@ -128,7 +128,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}/metadata',
     run: async () => {
-      const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
+      const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -140,7 +140,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/apis/{namespace}/{slug}/version',
     run: async () => {
-      const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
+      const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
         namespace: 'namespace',
         version: 'x',
         document: '',
@@ -186,7 +186,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/schemas/{namespace}',
     run: async () => {
-      const create = await client.schemas.create('namespace', {
+      const uID = await client.schemas.create('namespace', {
         title: '',
         version: 'x',
         slug: '',
@@ -246,7 +246,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/version',
     run: async () => {
-      const create = await client.schemas.version.create('slug', {
+      const uID = await client.schemas.version.create('slug', {
         namespace: 'namespace',
         version: 'x',
         document: '',
@@ -310,7 +310,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/login-portals',
     run: async () => {
-      const create = await client.loginPortals.create({
+      const uID = await client.loginPortals.create({
         title: '',
         slug: '',
         email: {
@@ -369,7 +369,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/rulesets/{namespace}',
     run: async () => {
-      const createRuleset = await client.rules.createRuleset('namespace', {
+      const uID = await client.rules.createRuleset('namespace', {
         title: '',
         slug: '',
         document: '',
@@ -448,7 +448,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/themes',
     run: async () => {
-      const create = await client.themes.create({
+      const uID = await client.themes.create({
         name: '',
         slug: '',
         document: '',

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
+export * from './resources/shared';
 export {
   Registry,
   Schemas,
@@ -29,16 +30,13 @@ export type {
   RegistryDeleteAPIDocumentVersionParams,
   RegistryDeleteAPIDocumentVersionResponse,
   RegistryListAPIDocumentVersionMetadataParams,
-  RegistryListAPIDocumentVersionMetadataResponse,
   RegistryCreateAPIDocumentVersionParams,
-  RegistryCreateAPIDocumentVersionResponse,
   RegistryCreateAPIDocumentAccessGroupParams,
   RegistryCreateAPIDocumentAccessGroupResponse,
   RegistryDeleteAPIDocumentAccessGroupParams,
   RegistryDeleteAPIDocumentAccessGroupResponse,
   SchemaListResponse,
   SchemaCreateParams,
-  SchemaCreateResponse,
   SchemaUpdateParams,
   SchemaUpdateResponse,
   SchemaDeleteParams,
@@ -50,11 +48,9 @@ export type {
   LoginPortalUpdateResponse,
   LoginPortalDeleteResponse,
   LoginPortalCreateParams,
-  LoginPortalCreateResponse,
   LoginPortalListResponse,
   RuleListRulesetsResponse,
   RuleCreateRulesetParams,
-  RuleCreateRulesetResponse,
   RuleUpdateRulesetParams,
   RuleUpdateRulesetResponse,
   RuleDeleteRulesetParams,
@@ -67,7 +63,6 @@ export type {
   RuleDeleteRulesetAccessGroupResponse,
   ThemeListResponse,
   ThemeCreateParams,
-  ThemeCreateResponse,
   ThemeUpdateParams,
   ThemeUpdateResponse,
   ThemeReplaceDocumentParams,

@@ -6,6 +6,7 @@ import type { RequestOptions } from '../../internal/request-options';
 import { path as __scalarPath } from '../../internal/utils/path';
 import type * as RegistryAPI from '../registry';
 import type * as ScalarDocsAPI from '../scalar-docs';
+import type * as Shared from '../shared';
 
 export class AccessGroup extends APIResource {
   /**

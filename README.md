@@ -1,6 +1,6 @@
-# Scalar API
+# Scalar
 
-This library provides convenient access to the Scalar API from TypeScript or JavaScript.
+This library provides convenient access to the Scalar REST API from TypeScript or JavaScript.
 
 The full API of this library can be found in [api.md](./api.md).
 
@@ -33,9 +33,9 @@ npm install @scalar/sdk
 ## Usage
 
 ```ts
-import ScalarAPI from '@scalar/sdk';
+import Scalar from '@scalar/sdk';
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
@@ -90,9 +90,9 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ts
-import ScalarAPI from '@scalar/sdk';
+import Scalar from '@scalar/sdk';
 
-const client = new ScalarAPI({
+const client = new Scalar({
   timeout: 60000,
   maxRetries: 2,
   logLevel: 'debug',

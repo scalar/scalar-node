@@ -4,6 +4,7 @@ import { APIResource } from '../resource';
 import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { path as __scalarPath } from '../internal/utils/path';
+import type * as Shared from './shared';
 import type * as ScalarDocsAPI from './scalar-docs';
 
 export class LoginPortals extends APIResource {
@@ -65,11 +66,11 @@ export class LoginPortals extends APIResource {
    *
    * @param {LoginPortalCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<LoginPortalCreateResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
-   * const create = await client.loginPortals.create({
+   * const uID = await client.loginPortals.create({
    *   title: '',
    *   slug: '',
    *   email: {
@@ -104,7 +105,7 @@ export class LoginPortals extends APIResource {
    * });
    * ```
    */
-  create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<LoginPortalCreateResponse> {
+  create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
     return this._client.post('/v1/login-portals', { body, ...options });
   }
 
@@ -220,13 +221,6 @@ export interface LoginPortalCreateParams {
   page: LoginPortalPage;
 }
 
-export interface LoginPortalCreateResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
-}
-
 export type LoginPortalListResponse = Array<LoginPortalListResponse.LoginPortalListResponseItem>;
 
 export namespace LoginPortalListResponse {
@@ -234,7 +228,7 @@ export namespace LoginPortalListResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @maxLength 200
      */
@@ -254,7 +248,6 @@ export declare namespace LoginPortals {
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
-    type LoginPortalCreateResponse as LoginPortalCreateResponse,
     type LoginPortalListResponse as LoginPortalListResponse,
     type LoginPortalUpdateParams as LoginPortalUpdateParams,
     type LoginPortalCreateParams as LoginPortalCreateParams,

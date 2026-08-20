@@ -65,14 +65,16 @@ Complete reference of every operation, grouped by resource. See [the README](./R
 ## Setup
 
 ```ts
-import ScalarAPI from '@scalar/sdk';
+import Scalar from '@scalar/sdk';
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 ```
 
 ## `Registry`
+
+Registry
 
 ### List all API Documents
 
@@ -202,10 +204,10 @@ Get metadata (uid, content shas, version sha, tags) for a specific API document 
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryListAPIDocumentVersionMetadataParams`](./src/resources/registry.ts) |
-| Response | [`RegistryListAPIDocumentVersionMetadataResponse`](./src/resources/registry.ts) |
+| Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
-const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
+const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -218,10 +220,10 @@ Create a new API document version.
 | Direction | Type |
 | --- | --- |
 | Request | [`RegistryCreateAPIDocumentVersionParams`](./src/resources/registry.ts) |
-| Response | [`RegistryCreateAPIDocumentVersionResponse`](./src/resources/registry.ts) |
+| Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
-const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
+const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -262,6 +264,8 @@ await client.registry.deleteAPIDocumentAccessGroup('slug', {
 
 ## `Schemas`
 
+Schemas
+
 ### List all shared components
 
 List schemas in a namespace.
@@ -281,10 +285,10 @@ Create a schema in a namespace.
 | Direction | Type |
 | --- | --- |
 | Request | [`SchemaCreateParams`](./src/resources/schemas/schemas.ts) |
-| Response | [`SchemaCreateResponse`](./src/resources/schemas/schemas.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const create = await client.schemas.create('namespace', {
+const uID = await client.schemas.create('namespace', {
   title: '',
   version: 'x',
   slug: '',
@@ -323,6 +327,8 @@ await client.schemas.delete('slug', {
 ```
 
 ### `Schemas Version`
+
+Schemas
 
 #### Get a shared component document
 
@@ -363,10 +369,10 @@ Create a schema version.
 | Direction | Type |
 | --- | --- |
 | Request | [`VersionCreateParams`](./src/resources/schemas/version.ts) |
-| Response | [`VersionCreateResponse`](./src/resources/schemas/version.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const create = await client.schemas.version.create('slug', {
+const uID = await client.schemas.version.create('slug', {
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -374,6 +380,8 @@ const create = await client.schemas.version.create('slug', {
 ```
 
 ### `Schemas AccessGroup`
+
+Schemas
 
 #### Add shared component access group
 
@@ -408,6 +416,8 @@ await client.schemas.accessGroup.delete('slug', {
 ```
 
 ## `LoginPortals`
+
+Login Portals
 
 ### Get a login portal
 
@@ -453,10 +463,10 @@ Create a login portal for the current team.
 | Direction | Type |
 | --- | --- |
 | Request | [`LoginPortalCreateParams`](./src/resources/login-portals.ts) |
-| Response | [`LoginPortalCreateResponse`](./src/resources/login-portals.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const create = await client.loginPortals.create({
+const uID = await client.loginPortals.create({
   title: '',
   slug: '',
   email: {
@@ -505,6 +515,8 @@ const list = await client.loginPortals.list();
 
 ## `Rules`
 
+Rules
+
 ### List all rules
 
 List all rulesets in a namespace.
@@ -524,10 +536,10 @@ Create a rule in a namespace.
 | Direction | Type |
 | --- | --- |
 | Request | [`RuleCreateRulesetParams`](./src/resources/rules.ts) |
-| Response | [`RuleCreateRulesetResponse`](./src/resources/rules.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const createRuleset = await client.rules.createRuleset('namespace', {
+const uID = await client.rules.createRuleset('namespace', {
   title: '',
   slug: '',
   document: '',
@@ -613,6 +625,8 @@ await client.rules.deleteRulesetAccessGroup('slug', {
 
 ## `Themes`
 
+Themes
+
 ### List all themes
 
 List all team themes.
@@ -632,10 +646,10 @@ Create a team theme.
 | Direction | Type |
 | --- | --- |
 | Request | [`ThemeCreateParams`](./src/resources/themes.ts) |
-| Response | [`ThemeCreateResponse`](./src/resources/themes.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const create = await client.themes.create({
+const uID = await client.themes.create({
   name: '',
   slug: '',
   document: '',
@@ -696,6 +710,8 @@ const string_ = await client.themes.retrieve('slug');
 
 ## `Teams`
 
+Teams
+
 ### List teams
 
 List all available teams
@@ -709,6 +725,8 @@ const list = await client.teams.list();
 ```
 
 ## `ScalarDocs`
+
+Scalar Docs
 
 ### List all projects
 
@@ -754,6 +772,8 @@ const publishGuide = await client.scalarDocs.publishGuide('slug');
 
 ## `Namespaces`
 
+Namespaces
+
 ### List namespaces
 
 Get all namespaces for the current team
@@ -767,6 +787,8 @@ const list = await client.namespaces.list();
 ```
 
 ## `Authentication`
+
+Authentication
 
 ### Exchange token
 

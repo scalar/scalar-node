@@ -1,9 +1,9 @@
 ---
-name: scalar-api-typescript-sdk
+name: scalar-typescript-sdk
 description: "TypeScript SDK for Scalar API. Use when writing TypeScript code that calls Scalar API with the @scalar/sdk package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
-# Scalar API TypeScript SDK
+# Scalar TypeScript SDK
 
 Generated TypeScript client for Scalar API, published as `@scalar/sdk`. Use the generated client instead of hand-writing HTTP requests.
 
@@ -16,9 +16,9 @@ npm install @scalar/sdk
 ## Client setup and authentication
 
 ```ts
-import ScalarAPI from '@scalar/sdk';
+import Scalar from '@scalar/sdk';
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 ```
@@ -30,9 +30,9 @@ Provide credentials using the options below. Environment variables are read auto
 ## Calling operations
 
 ```ts
-import ScalarAPI from '@scalar/sdk';
+import Scalar from '@scalar/sdk';
 
-const client = new ScalarAPI({
+const client = new Scalar({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
