@@ -1,6 +1,6 @@
 {
-  "name": "ScalarApi",
-  "slug": "scalarApi",
+  "name": "Scalar",
+  "slug": "scalar",
   "generatorVersion": "0.27.2",
   "servers": [
     "https://access.scalar.com"
