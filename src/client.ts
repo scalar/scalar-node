@@ -37,11 +37,6 @@ import {
   type RegistryRetrieveAPIDocumentVersionResponse,
   type RegistryUpdateAPIDocumentVersionResponse,
   type RegistryDeleteAPIDocumentVersionResponse,
-<<<<<<< HEAD
-  type RegistryListAPIDocumentVersionMetadataResponse,
-  type RegistryCreateAPIDocumentVersionResponse,
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type RegistryCreateAPIDocumentAccessGroupResponse,
   type RegistryDeleteAPIDocumentAccessGroupResponse,
   type RegistryCreateAPIDocumentParams,
@@ -58,10 +53,6 @@ import {
 import {
   Schemas,
   type SchemaListResponse,
-<<<<<<< HEAD
-  type SchemaCreateResponse,
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type SchemaUpdateResponse,
   type SchemaDeleteResponse,
   type SchemaCreateParams,
@@ -75,10 +66,6 @@ import {
   type LoginPortalRetrieveResponse,
   type LoginPortalUpdateResponse,
   type LoginPortalDeleteResponse,
-<<<<<<< HEAD
-  type LoginPortalCreateResponse,
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type LoginPortalListResponse,
   type LoginPortalUpdateParams,
   type LoginPortalCreateParams,
@@ -86,10 +73,6 @@ import {
 import {
   Rules,
   type RuleListRulesetsResponse,
-<<<<<<< HEAD
-  type RuleCreateRulesetResponse,
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type RuleUpdateRulesetResponse,
   type RuleDeleteRulesetResponse,
   type RuleRetrieveRulesetDocumentResponse,
@@ -105,10 +88,6 @@ import {
 import {
   Themes,
   type ThemeListResponse,
-<<<<<<< HEAD
-  type ThemeCreateResponse,
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type ThemeUpdateResponse,
   type ThemeReplaceDocumentResponse,
   type ThemeDeleteResponse,
@@ -133,10 +112,7 @@ import {
   type AuthenticationListCurrentUserResponse,
   type AuthenticationExchangePersonalTokenParams,
 } from './resources/authentication';
-<<<<<<< HEAD
-=======
 import * as SharedAPI from './resources/shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 
 export type AuthTokenProvider = () => string | Promise<string>;
 
@@ -843,22 +819,13 @@ export class Scalar {
     }
   }
 
-<<<<<<< HEAD
-  private validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
-=======
   protected validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     if (headers.has('Authorization')) return;
     if (headerExplicitlyOmitted(options.headers, 'Authorization')) return;
     throw new Errors.AuthenticationError(
       401,
-<<<<<<< HEAD
-      {},
-      'Could not resolve authentication method. Expected Authorization to be set.',
-=======
       undefined,
       'Could not resolve authentication method. Expected the bearerAuth to be set. Or for the "Authorization" headers to be explicitly omitted',
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
       headers,
     );
   }
@@ -894,16 +861,6 @@ export class Scalar {
     return cookies;
   }
 
-<<<<<<< HEAD
-  private async authHeadersAsync(): Promise<Record<string, string>> {
-    const headers: Record<string, string> = {};
-    const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
-    if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
-    return headers;
-  }
-
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   private async resolveAuthOption(
     optionName: string,
     value: string | AuthTokenProvider | null | undefined,
@@ -1063,8 +1020,6 @@ export declare namespace Scalar {
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
   };
 
-<<<<<<< HEAD
-=======
   export type ManagedDocVersion = SharedAPI.ManagedDocVersion;
   export type Namespace = SharedAPI.Namespace;
   export type Nanoid = SharedAPI.Nanoid;
@@ -1078,7 +1033,6 @@ export declare namespace Scalar {
   export type Value500 = SharedAPI.Value500;
 }
 
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string): boolean => {
   if (!source || Array.isArray(source) || source instanceof Headers) return false;
   const target = name.toLowerCase();

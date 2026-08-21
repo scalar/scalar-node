@@ -128,11 +128,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}/metadata',
     run: async () => {
-<<<<<<< HEAD
-      const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
-=======
       const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -144,11 +140,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/apis/{namespace}/{slug}/version',
     run: async () => {
-<<<<<<< HEAD
-      const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
-=======
       const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         version: 'x',
         document: '',
@@ -194,11 +186,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/schemas/{namespace}',
     run: async () => {
-<<<<<<< HEAD
-      const create = await client.schemas.create('namespace', {
-=======
       const uID = await client.schemas.create('namespace', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         title: '',
         version: 'x',
         slug: '',
@@ -230,19 +218,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-<<<<<<< HEAD
-    operation: 'retrieveSchema',
-    method: 'GET',
-    path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
-    run: async () => {
-      const string_ = await client.schemas.version.retrieveSchema('semver', {
-=======
     operation: 'retrieve',
     method: 'GET',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
       const string_ = await client.schemas.version.retrieve('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -250,19 +230,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-<<<<<<< HEAD
-    operation: 'deleteSchema',
-    method: 'DELETE',
-    path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
-    run: async () => {
-      await client.schemas.version.deleteSchema('semver', {
-=======
     operation: 'delete',
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
       await client.schemas.version.delete('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -270,19 +242,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-<<<<<<< HEAD
-    operation: 'createSchema',
-    method: 'POST',
-    path: '/v1/schemas/{namespace}/{slug}/version',
-    run: async () => {
-      const createSchema = await client.schemas.version.createSchema('slug', {
-=======
     operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/version',
     run: async () => {
       const uID = await client.schemas.version.create('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         version: 'x',
         document: '',
@@ -291,19 +255,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-<<<<<<< HEAD
-    operation: 'createSchema',
-    method: 'POST',
-    path: '/v1/schemas/{namespace}/{slug}/access-group',
-    run: async () => {
-      await client.schemas.accessGroup.createSchema('slug', {
-=======
     operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/access-group',
     run: async () => {
       await client.schemas.accessGroup.create('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         accessGroupSlug: 'xxx',
       });
@@ -311,19 +267,11 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
-<<<<<<< HEAD
-    operation: 'deleteSchema',
-    method: 'DELETE',
-    path: '/v1/schemas/{namespace}/{slug}/access-group',
-    run: async () => {
-      await client.schemas.accessGroup.deleteSchema('slug', {
-=======
     operation: 'delete',
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}/access-group',
     run: async () => {
       await client.schemas.accessGroup.delete('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         namespace: 'namespace',
         accessGroupSlug: 'xxx',
       });
@@ -362,11 +310,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/login-portals',
     run: async () => {
-<<<<<<< HEAD
-      const create = await client.loginPortals.create({
-=======
       const uID = await client.loginPortals.create({
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         title: '',
         slug: '',
         email: {
@@ -425,11 +369,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/rulesets/{namespace}',
     run: async () => {
-<<<<<<< HEAD
-      const createRuleset = await client.rules.createRuleset('namespace', {
-=======
       const uID = await client.rules.createRuleset('namespace', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         title: '',
         slug: '',
         document: '',
@@ -508,11 +448,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/themes',
     run: async () => {
-<<<<<<< HEAD
-      const create = await client.themes.create({
-=======
       const uID = await client.themes.create({
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
         name: '',
         slug: '',
         document: '',

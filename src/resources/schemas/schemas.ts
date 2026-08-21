@@ -4,44 +4,25 @@ import { APIResource } from '../../resource';
 import { APIPromise } from '../../api-promise';
 import type { RequestOptions } from '../../internal/request-options';
 import { path as __scalarPath } from '../../internal/utils/path';
-<<<<<<< HEAD
-=======
 import type * as Shared from '../shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from '../scalar-docs';
 import type * as RegistryAPI from '../registry';
 import * as VersionAPI from './version';
 import {
   Version,
-<<<<<<< HEAD
-  type VersionRetrieveSchemaResponse,
-  type VersionDeleteSchemaResponse,
-  type VersionCreateSchemaResponse,
-  type VersionRetrieveSchemaParams,
-  type VersionDeleteSchemaParams,
-  type VersionCreateSchemaParams,
-=======
   type VersionRetrieveResponse,
   type VersionDeleteResponse,
   type VersionRetrieveParams,
   type VersionDeleteParams,
   type VersionCreateParams,
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 } from './version';
 import * as AccessGroupAPI from './access-group';
 import {
   AccessGroup,
-<<<<<<< HEAD
-  type AccessGroupCreateSchemaResponse,
-  type AccessGroupDeleteSchemaResponse,
-  type AccessGroupCreateSchemaParams,
-  type AccessGroupDeleteSchemaParams,
-=======
   type AccessGroupCreateResponse,
   type AccessGroupDeleteResponse,
   type AccessGroupCreateParams,
   type AccessGroupDeleteParams,
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 } from './access-group';
 
 export class Schemas extends APIResource {
@@ -74,11 +55,7 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const create = await client.schemas.create('namespace', {
-=======
    * const uID = await client.schemas.create('namespace', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   title: '',
    *   version: 'x',
    *   slug: '',
@@ -86,15 +63,7 @@ export class Schemas extends APIResource {
    * });
    * ```
    */
-<<<<<<< HEAD
-  create(
-    namespace_: string,
-    body: SchemaCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<SchemaCreateResponse> {
-=======
   create(namespace_: string, body: SchemaCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     return this._client.post(__scalarPath`/v1/schemas/${namespace_}`, { body, ...options });
   }
 
@@ -171,11 +140,7 @@ export namespace SchemaListResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
-<<<<<<< HEAD
-    namespace: string;
-=======
     namespace: Shared.Namespace;
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     isPrivate: boolean;
     versions: Array<SchemaListResponseItem.Version>;
   }

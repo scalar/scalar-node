@@ -10,13 +10,6 @@ const RELATIVE_SPECIFIER_RE = /(from\s+["']|import\(\s*["'])(\.{1,2}\/[^"']+)(["
 // internal/types.d.ts unsuppressed and consumers with `skipLibCheck: false` fail with
 // TS2307. The trailing space keeps this from matching comments already on their own line.
 const INLINE_TS_IGNORE_RE = /\/\*\* @ts-ignore\b[^*]*\*\/ /g;
-<<<<<<< HEAD
-
-await Promise.all([
-  finalizeCompiledOutput(resolve(root, 'dist/esm'), { addJsExtensions: true }),
-  finalizeCompiledOutput(resolve(root, 'dist/cjs'), { addJsExtensions: false }),
-  markCommonJsOutput(resolve(root, 'dist/cjs')),
-=======
 // `tsc` opens every CommonJS module by tagging the exports object as an ES module. That line is
 // the seam the callable-entry shim below splices itself in front of: everything `tsc` emits after
 // it attaches the named exports to whatever `exports` refers to at that point.
@@ -48,7 +41,6 @@ await Promise.all([
   finalizeCompiledOutput(commonJsDir, { addJsExtensions: false })
     .then(() => markCommonJsOutput(commonJsDir))
     .then(() => makeCommonJsEntryCallable(commonJsDir)),
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 ]);
 
 /**
@@ -80,8 +72,6 @@ async function finalizeCompiledOutput(dir, { addJsExtensions }) {
       if (transformed !== source) await writeFile(path, transformed, 'utf8');
     }),
   );
-<<<<<<< HEAD
-=======
 }
 
 /**
@@ -115,7 +105,6 @@ async function makeCommonJsEntryCallable(dir) {
   if (!ESM_MARKER_RE.test(source)) return;
 
   await writeFile(entry, source.replace(ESM_MARKER_RE, `${CALLABLE_ENTRY_SHIM}$1`), 'utf8');
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 }
 
 async function markCommonJsOutput(dir) {

@@ -5,10 +5,7 @@ import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { buildHeaders } from '../internal/headers';
 import { path as __scalarPath } from '../internal/utils/path';
-<<<<<<< HEAD
-=======
 import type * as Shared from './shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Registry extends APIResource {
@@ -212,11 +209,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
-=======
    * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   slug: 'slug',
    * });
@@ -226,11 +219,7 @@ export class Registry extends APIResource {
     semver: string,
     params: RegistryListAPIDocumentVersionMetadataParams,
     options?: RequestOptions,
-<<<<<<< HEAD
-  ): APIPromise<RegistryListAPIDocumentVersionMetadataResponse> {
-=======
   ): APIPromise<Shared.ManagedDocVersion> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, slug } = params;
     return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}/metadata`, options);
   }
@@ -245,11 +234,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
-=======
    * const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   version: 'x',
    *   document: '',
@@ -260,11 +245,7 @@ export class Registry extends APIResource {
     slug: string,
     params: RegistryCreateAPIDocumentVersionParams,
     options?: RequestOptions,
-<<<<<<< HEAD
-  ): APIPromise<RegistryCreateAPIDocumentVersionResponse> {
-=======
   ): APIPromise<Shared.ManagedDocVersion> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/version`, { body, ...options });
   }
@@ -363,46 +344,10 @@ export namespace RegistryListAllAPIDocumentsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
-<<<<<<< HEAD
-    namespace: string;
-    isPrivate: boolean;
-    tags: unknown;
-    versions: Array<RegistryListAllAPIDocumentsResponseItem.Version>;
-  }
-
-  export namespace RegistryListAllAPIDocumentsResponseItem {
-    export interface Version {
-      /**
-       * @minLength 5
-       */
-      uid: string;
-      createdAt: number;
-      /**
-       * @minLength 1
-       */
-      version: Version;
-      upgraded: boolean;
-      embedStatus: 'complete' | 'failed' | null;
-      tags: Array<string>;
-      tools?: Array<Version.Tool>;
-      yamlSha?: string;
-      jsonSha?: string;
-      versionSha?: string;
-    }
-
-    export namespace Version {
-      export interface Tool {
-        path: string;
-        method: 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'trace';
-        enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
-      }
-    }
-=======
     namespace: Shared.Namespace;
     isPrivate: boolean;
     tags: unknown;
     versions: Array<Shared.ManagedDocVersion>;
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   }
 }
 
@@ -435,46 +380,10 @@ export namespace RegistryListAPIDocumentsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
-<<<<<<< HEAD
-    namespace: string;
-    isPrivate: boolean;
-    tags: unknown;
-    versions: Array<RegistryListAPIDocumentsResponseItem.Version>;
-  }
-
-  export namespace RegistryListAPIDocumentsResponseItem {
-    export interface Version {
-      /**
-       * @minLength 5
-       */
-      uid: string;
-      createdAt: number;
-      /**
-       * @minLength 1
-       */
-      version: Version;
-      upgraded: boolean;
-      embedStatus: 'complete' | 'failed' | null;
-      tags: Array<string>;
-      tools?: Array<Version.Tool>;
-      yamlSha?: string;
-      jsonSha?: string;
-      versionSha?: string;
-    }
-
-    export namespace Version {
-      export interface Tool {
-        path: string;
-        method: 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'trace';
-        enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
-      }
-    }
-=======
     namespace: Shared.Namespace;
     isPrivate: boolean;
     tags: unknown;
     versions: Array<Shared.ManagedDocVersion>;
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   }
 }
 
@@ -575,36 +484,6 @@ export interface RegistryListAPIDocumentVersionMetadataParams {
   slug: string;
 }
 
-<<<<<<< HEAD
-export interface RegistryListAPIDocumentVersionMetadataResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
-  createdAt: number;
-  /**
-   * @minLength 1
-   */
-  version: Version;
-  upgraded: boolean;
-  embedStatus: 'complete' | 'failed' | null;
-  tags: Array<string>;
-  tools?: Array<RegistryListAPIDocumentVersionMetadataResponse.Tool>;
-  yamlSha?: string;
-  jsonSha?: string;
-  versionSha?: string;
-}
-
-export namespace RegistryListAPIDocumentVersionMetadataResponse {
-  export interface Tool {
-    path: string;
-    method: 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'trace';
-    enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
-  }
-}
-
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 export interface RegistryCreateAPIDocumentVersionParams {
   /**
    * Path param
@@ -629,36 +508,6 @@ export interface RegistryCreateAPIDocumentVersionParams {
   lastKnownVersionSha?: string;
 }
 
-<<<<<<< HEAD
-export interface RegistryCreateAPIDocumentVersionResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
-  createdAt: number;
-  /**
-   * @minLength 1
-   */
-  version: Version;
-  upgraded: boolean;
-  embedStatus: 'complete' | 'failed' | null;
-  tags: Array<string>;
-  tools?: Array<RegistryCreateAPIDocumentVersionResponse.Tool>;
-  yamlSha?: string;
-  jsonSha?: string;
-  versionSha?: string;
-}
-
-export namespace RegistryCreateAPIDocumentVersionResponse {
-  export interface Tool {
-    path: string;
-    method: 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'trace';
-    enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
-  }
-}
-
-=======
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 export interface RegistryCreateAPIDocumentAccessGroupParams {
   /**
    * Path param

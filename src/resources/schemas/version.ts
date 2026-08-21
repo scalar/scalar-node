@@ -5,10 +5,7 @@ import { APIPromise } from '../../api-promise';
 import type { RequestOptions } from '../../internal/request-options';
 import { buildHeaders } from '../../internal/headers';
 import { path as __scalarPath } from '../../internal/utils/path';
-<<<<<<< HEAD
-=======
 import type * as Shared from '../shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as RegistryAPI from '../registry';
 
 export class Version extends APIResource {
@@ -22,29 +19,17 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const string_ = await client.schemas.version.retrieveSchema('semver', {
-=======
    * const string_ = await client.schemas.version.retrieve('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   slug: 'slug',
    * });
    * ```
    */
-<<<<<<< HEAD
-  retrieveSchema(
-    semver: string,
-    params: VersionRetrieveSchemaParams,
-    options?: RequestOptions,
-  ): APIPromise<VersionRetrieveSchemaResponse> {
-=======
   retrieve(
     semver: string,
     params: VersionRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<VersionRetrieveResponse> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, slug } = params;
     return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, {
       ...options,
@@ -62,29 +47,17 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * await client.schemas.version.deleteSchema('semver', {
-=======
    * await client.schemas.version.delete('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   slug: 'slug',
    * });
    * ```
    */
-<<<<<<< HEAD
-  deleteSchema(
-    semver: string,
-    params: VersionDeleteSchemaParams,
-    options?: RequestOptions,
-  ): APIPromise<VersionDeleteSchemaResponse> {
-=======
   delete(
     semver: string,
     params: VersionDeleteParams,
     options?: RequestOptions,
   ): APIPromise<VersionDeleteResponse> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, slug } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, options);
   }
@@ -99,26 +72,14 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const createSchema = await client.schemas.version.createSchema('slug', {
-=======
    * const uID = await client.schemas.version.create('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   version: 'x',
    *   document: '',
    * });
    * ```
    */
-<<<<<<< HEAD
-  createSchema(
-    slug: string,
-    params: VersionCreateSchemaParams,
-    options?: RequestOptions,
-  ): APIPromise<VersionCreateSchemaResponse> {
-=======
   create(slug: string, params: VersionCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body, ...options });
   }

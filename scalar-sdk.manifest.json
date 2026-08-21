@@ -1,22 +1,19 @@
 {
-<<<<<<< HEAD
-  "name": "ScalarApi",
-  "slug": "scalarApi",
-  "generatorVersion": "0.23.2",
-  "servers": ["https://access.scalar.com"],
-=======
   "name": "Scalar",
   "slug": "scalar",
   "generatorVersion": "0.27.2",
   "servers": [
     "https://access.scalar.com"
   ],
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   "environments": {
     "production": "https://access.scalar.com"
   },
-  "environmentOrder": ["production"],
-  "auth": ["bearer"],
+  "environmentOrder": [
+    "production"
+  ],
+  "auth": [
+    "bearer"
+  ],
   "authDetails": [
     {
       "kind": "bearer",
@@ -439,9 +436,18 @@
               "variants": [
                 {
                   "kind": "enum",
-                  "values": ["complete", "failed"],
-                  "names": ["Complete", "Failed"],
-                  "deprecations": [false, false]
+                  "values": [
+                    "complete",
+                    "failed"
+                  ],
+                  "names": [
+                    "Complete",
+                    "Failed"
+                  ],
+                  "deprecations": [
+                    false,
+                    false
+                  ]
                 },
                 {
                   "kind": "null"
@@ -501,9 +507,18 @@
                       "kind": "array",
                       "items": {
                         "kind": "enum",
-                        "values": ["execute-request", "get-mini-openapi-spec"],
-                        "names": ["ExecuteRequest", "GetMiniOpenapiSpec"],
-                        "deprecations": [false, false]
+                        "values": [
+                          "execute-request",
+                          "get-mini-openapi-spec"
+                        ],
+                        "names": [
+                          "ExecuteRequest",
+                          "GetMiniOpenapiSpec"
+                        ],
+                        "deprecations": [
+                          false,
+                          false
+                        ]
                       }
                     }
                   }
@@ -553,9 +568,36 @@
       "deprecated": false,
       "type": {
         "kind": "enum",
-        "values": ["delete", "get", "head", "options", "patch", "post", "put", "trace"],
-        "names": ["Delete", "Get", "Head", "Options", "Patch", "Post", "Put", "Trace"],
-        "deprecations": [false, false, false, false, false, false, false, false]
+        "values": [
+          "delete",
+          "get",
+          "head",
+          "options",
+          "patch",
+          "post",
+          "put",
+          "trace"
+        ],
+        "names": [
+          "Delete",
+          "Get",
+          "Head",
+          "Options",
+          "Patch",
+          "Post",
+          "Put",
+          "Trace"
+        ],
+        "deprecations": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
       }
     },
     {
@@ -1906,7 +1948,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2011,8 +2060,12 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/apis/{namespace}",
-      "pathParams": ["namespace"],
-      "publicPathParams": ["namespace"],
+      "pathParams": [
+        "namespace"
+      ],
+      "publicPathParams": [
+        "namespace"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -2049,7 +2102,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2154,14 +2214,34 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/apis/{namespace}",
-      "pathParams": ["namespace"],
-      "publicPathParams": ["namespace"],
+      "pathParams": [
+        "namespace"
+      ],
+      "publicPathParams": [
+        "namespace"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title", "description", "version", "slug", "ruleset", "isPrivate", "document"],
-      "publicBodyParams": ["title", "description", "version", "slug", "ruleset", "isPrivate", "document"],
+      "bodyParams": [
+        "title",
+        "description",
+        "version",
+        "slug",
+        "ruleset",
+        "isPrivate",
+        "document"
+      ],
+      "publicBodyParams": [
+        "title",
+        "description",
+        "version",
+        "slug",
+        "ruleset",
+        "isPrivate",
+        "document"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -2234,7 +2314,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2339,14 +2426,30 @@
       "deprecated": false,
       "method": "PATCH",
       "path": "/v1/apis/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title", "description", "isPrivate", "ruleset"],
-      "publicBodyParams": ["title", "description", "isPrivate", "ruleset"],
+      "bodyParams": [
+        "title",
+        "description",
+        "isPrivate",
+        "ruleset"
+      ],
+      "publicBodyParams": [
+        "title",
+        "description",
+        "isPrivate",
+        "ruleset"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -2413,7 +2516,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2518,8 +2628,14 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/apis/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -2562,7 +2678,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2667,8 +2790,16 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/apis/{namespace}/{slug}/version/{semver}",
-      "pathParams": ["namespace", "slug", "semver"],
-      "publicPathParams": ["namespace", "slug", "semver"],
+      "pathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -2717,7 +2848,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2822,14 +2960,28 @@
       "deprecated": false,
       "method": "PATCH",
       "path": "/v1/apis/{namespace}/{slug}/version/{semver}",
-      "pathParams": ["namespace", "slug", "semver"],
-      "publicPathParams": ["namespace", "slug", "semver"],
+      "pathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["document", "lastKnownVersionSha"],
-      "publicBodyParams": ["document", "lastKnownVersionSha"],
+      "bodyParams": [
+        "document",
+        "lastKnownVersionSha"
+      ],
+      "publicBodyParams": [
+        "document",
+        "lastKnownVersionSha"
+      ],
       "bodyParamDetails": [
         {
           "name": "document",
@@ -2894,7 +3046,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -2999,8 +3158,16 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/apis/{namespace}/{slug}/version/{semver}",
-      "pathParams": ["namespace", "slug", "semver"],
-      "publicPathParams": ["namespace", "slug", "semver"],
+      "pathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -3049,7 +3216,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -3154,8 +3328,16 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/apis/{namespace}/{slug}/version/{semver}/metadata",
-      "pathParams": ["namespace", "slug", "semver"],
-      "publicPathParams": ["namespace", "slug", "semver"],
+      "pathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -3208,7 +3390,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -3313,14 +3502,30 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/apis/{namespace}/{slug}/version",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["version", "document", "force", "lastKnownVersionSha"],
-      "publicBodyParams": ["version", "document", "force", "lastKnownVersionSha"],
+      "bodyParams": [
+        "version",
+        "document",
+        "force",
+        "lastKnownVersionSha"
+      ],
+      "publicBodyParams": [
+        "version",
+        "document",
+        "force",
+        "lastKnownVersionSha"
+      ],
       "bodyParamDetails": [
         {
           "name": "version",
@@ -3391,7 +3596,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -3496,14 +3708,24 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/apis/{namespace}/{slug}/access-group",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["accessGroupSlug"],
-      "publicBodyParams": ["accessGroupSlug"],
+      "bodyParams": [
+        "accessGroupSlug"
+      ],
+      "publicBodyParams": [
+        "accessGroupSlug"
+      ],
       "bodyParamDetails": [
         {
           "name": "accessGroupSlug",
@@ -3558,7 +3780,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -3663,14 +3892,24 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/apis/{namespace}/{slug}/access-group",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["accessGroupSlug"],
-      "publicBodyParams": ["accessGroupSlug"],
+      "bodyParams": [
+        "accessGroupSlug"
+      ],
+      "publicBodyParams": [
+        "accessGroupSlug"
+      ],
       "bodyParamDetails": [
         {
           "name": "accessGroupSlug",
@@ -3725,7 +3964,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -3830,8 +4076,12 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/schemas/{namespace}",
-      "pathParams": ["namespace"],
-      "publicPathParams": ["namespace"],
+      "pathParams": [
+        "namespace"
+      ],
+      "publicPathParams": [
+        "namespace"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -3868,7 +4118,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -3973,14 +4230,32 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/schemas/{namespace}",
-      "pathParams": ["namespace"],
-      "publicPathParams": ["namespace"],
+      "pathParams": [
+        "namespace"
+      ],
+      "publicPathParams": [
+        "namespace"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title", "description", "version", "slug", "isPrivate", "document"],
-      "publicBodyParams": ["title", "description", "version", "slug", "isPrivate", "document"],
+      "bodyParams": [
+        "title",
+        "description",
+        "version",
+        "slug",
+        "isPrivate",
+        "document"
+      ],
+      "publicBodyParams": [
+        "title",
+        "description",
+        "version",
+        "slug",
+        "isPrivate",
+        "document"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -4053,7 +4328,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -4158,14 +4440,28 @@
       "deprecated": false,
       "method": "PATCH",
       "path": "/v1/schemas/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title", "description", "isPrivate"],
-      "publicBodyParams": ["title", "description", "isPrivate"],
+      "bodyParams": [
+        "title",
+        "description",
+        "isPrivate"
+      ],
+      "publicBodyParams": [
+        "title",
+        "description",
+        "isPrivate"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -4228,7 +4524,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -4333,8 +4636,14 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/schemas/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -4377,7 +4686,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -4482,8 +4798,16 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/schemas/{namespace}/{slug}/version/{semver}",
-      "pathParams": ["namespace", "slug", "semver"],
-      "publicPathParams": ["namespace", "slug", "semver"],
+      "pathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -4532,7 +4856,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -4637,8 +4968,16 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/schemas/{namespace}/{slug}/version/{semver}",
-      "pathParams": ["namespace", "slug", "semver"],
-      "publicPathParams": ["namespace", "slug", "semver"],
+      "pathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug",
+        "semver"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -4687,7 +5026,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -4792,14 +5138,26 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/schemas/{namespace}/{slug}/version",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["version", "document"],
-      "publicBodyParams": ["version", "document"],
+      "bodyParams": [
+        "version",
+        "document"
+      ],
+      "publicBodyParams": [
+        "version",
+        "document"
+      ],
       "bodyParamDetails": [
         {
           "name": "version",
@@ -4862,7 +5220,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -4967,14 +5332,24 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/schemas/{namespace}/{slug}/access-group",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["accessGroupSlug"],
-      "publicBodyParams": ["accessGroupSlug"],
+      "bodyParams": [
+        "accessGroupSlug"
+      ],
+      "publicBodyParams": [
+        "accessGroupSlug"
+      ],
       "bodyParamDetails": [
         {
           "name": "accessGroupSlug",
@@ -5029,7 +5404,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -5134,14 +5516,24 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/schemas/{namespace}/{slug}/access-group",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["accessGroupSlug"],
-      "publicBodyParams": ["accessGroupSlug"],
+      "bodyParams": [
+        "accessGroupSlug"
+      ],
+      "publicBodyParams": [
+        "accessGroupSlug"
+      ],
       "bodyParamDetails": [
         {
           "name": "accessGroupSlug",
@@ -5196,7 +5588,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -5301,8 +5700,12 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/login-portals/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -5339,7 +5742,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -5444,14 +5854,22 @@
       "deprecated": false,
       "method": "PATCH",
       "path": "/v1/login-portals/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title"],
-      "publicBodyParams": ["title"],
+      "bodyParams": [
+        "title"
+      ],
+      "publicBodyParams": [
+        "title"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -5500,7 +5918,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -5605,8 +6030,12 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/login-portals/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -5643,7 +6072,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -5754,8 +6190,18 @@
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title", "slug", "email", "page"],
-      "publicBodyParams": ["title", "slug", "email", "page"],
+      "bodyParams": [
+        "title",
+        "slug",
+        "email",
+        "page"
+      ],
+      "publicBodyParams": [
+        "title",
+        "slug",
+        "email",
+        "page"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -5813,7 +6259,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -5946,7 +6399,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -6051,8 +6511,12 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/rulesets/{namespace}",
-      "pathParams": ["namespace"],
-      "publicPathParams": ["namespace"],
+      "pathParams": [
+        "namespace"
+      ],
+      "publicPathParams": [
+        "namespace"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -6089,7 +6553,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -6194,14 +6665,30 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/rulesets/{namespace}",
-      "pathParams": ["namespace"],
-      "publicPathParams": ["namespace"],
+      "pathParams": [
+        "namespace"
+      ],
+      "publicPathParams": [
+        "namespace"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["title", "description", "slug", "isPrivate", "document"],
-      "publicBodyParams": ["title", "description", "slug", "isPrivate", "document"],
+      "bodyParams": [
+        "title",
+        "description",
+        "slug",
+        "isPrivate",
+        "document"
+      ],
+      "publicBodyParams": [
+        "title",
+        "description",
+        "slug",
+        "isPrivate",
+        "document"
+      ],
       "bodyParamDetails": [
         {
           "name": "title",
@@ -6270,7 +6757,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -6375,14 +6869,32 @@
       "deprecated": false,
       "method": "PATCH",
       "path": "/v1/rulesets/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["namespace", "slug", "title", "description", "isPrivate"],
-      "publicBodyParams": ["namespace", "slug", "title", "description", "isPrivate"],
+      "bodyParams": [
+        "namespace",
+        "slug",
+        "title",
+        "description",
+        "isPrivate"
+      ],
+      "publicBodyParams": [
+        "namespace",
+        "slug",
+        "title",
+        "description",
+        "isPrivate"
+      ],
       "bodyParamDetails": [
         {
           "name": "namespace",
@@ -6453,7 +6965,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -6558,8 +7077,14 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/rulesets/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -6602,7 +7127,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -6707,8 +7239,14 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/rulesets/{namespace}/{slug}",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -6751,7 +7289,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -6856,14 +7401,24 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/rulesets/{namespace}/{slug}/access-group",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["accessGroupSlug"],
-      "publicBodyParams": ["accessGroupSlug"],
+      "bodyParams": [
+        "accessGroupSlug"
+      ],
+      "publicBodyParams": [
+        "accessGroupSlug"
+      ],
       "bodyParamDetails": [
         {
           "name": "accessGroupSlug",
@@ -6918,7 +7473,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7023,14 +7585,24 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/rulesets/{namespace}/{slug}/access-group",
-      "pathParams": ["namespace", "slug"],
-      "publicPathParams": ["namespace", "slug"],
+      "pathParams": [
+        "namespace",
+        "slug"
+      ],
+      "publicPathParams": [
+        "namespace",
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["accessGroupSlug"],
-      "publicBodyParams": ["accessGroupSlug"],
+      "bodyParams": [
+        "accessGroupSlug"
+      ],
+      "publicBodyParams": [
+        "accessGroupSlug"
+      ],
       "bodyParamDetails": [
         {
           "name": "accessGroupSlug",
@@ -7085,7 +7657,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7218,7 +7797,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7329,8 +7915,18 @@
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["name", "description", "slug", "document"],
-      "publicBodyParams": ["name", "description", "slug", "document"],
+      "bodyParams": [
+        "name",
+        "description",
+        "slug",
+        "document"
+      ],
+      "publicBodyParams": [
+        "name",
+        "description",
+        "slug",
+        "document"
+      ],
       "bodyParamDetails": [
         {
           "name": "name",
@@ -7388,7 +7984,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7493,14 +8096,24 @@
       "deprecated": false,
       "method": "PATCH",
       "path": "/v1/themes/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["name", "description"],
-      "publicBodyParams": ["name", "description"],
+      "bodyParams": [
+        "name",
+        "description"
+      ],
+      "publicBodyParams": [
+        "name",
+        "description"
+      ],
       "bodyParamDetails": [
         {
           "name": "name",
@@ -7553,7 +8166,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7658,14 +8278,22 @@
       "deprecated": false,
       "method": "PUT",
       "path": "/v1/themes/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["document"],
-      "publicBodyParams": ["document"],
+      "bodyParams": [
+        "document"
+      ],
+      "publicBodyParams": [
+        "document"
+      ],
       "bodyParamDetails": [
         {
           "name": "document",
@@ -7714,7 +8342,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7819,8 +8454,12 @@
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/themes/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -7857,7 +8496,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -7962,8 +8608,12 @@
       "deprecated": false,
       "method": "GET",
       "path": "/v1/themes/{slug}",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -8000,7 +8650,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -8133,7 +8790,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -8266,7 +8930,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -8377,8 +9048,20 @@
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["name", "slug", "isPrivate", "allowedUsers", "allowedDomains"],
-      "publicBodyParams": ["name", "slug", "isPrivate", "allowedUsers", "allowedDomains"],
+      "bodyParams": [
+        "name",
+        "slug",
+        "isPrivate",
+        "allowedUsers",
+        "allowedDomains"
+      ],
+      "publicBodyParams": [
+        "name",
+        "slug",
+        "isPrivate",
+        "allowedUsers",
+        "allowedDomains"
+      ],
       "bodyParamDetails": [
         {
           "name": "name",
@@ -8436,7 +9119,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -8541,8 +9231,12 @@
       "deprecated": false,
       "method": "POST",
       "path": "/v1/guides/{slug}/publish",
-      "pathParams": ["slug"],
-      "publicPathParams": ["slug"],
+      "pathParams": [
+        "slug"
+      ],
+      "publicPathParams": [
+        "slug"
+      ],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
@@ -8579,7 +9273,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -8712,7 +9413,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -8823,8 +9531,12 @@
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": ["personalToken"],
-      "publicBodyParams": ["personalToken"],
+      "bodyParams": [
+        "personalToken"
+      ],
+      "publicBodyParams": [
+        "personalToken"
+      ],
       "bodyParamDetails": [
         {
           "name": "personalToken",
@@ -8866,7 +9578,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {
@@ -9003,7 +9722,14 @@
       },
       "result": {
         "successStatus": "200",
-        "errorStatuses": ["400", "401", "403", "404", "422", "500"]
+        "errorStatuses": [
+          "400",
+          "401",
+          "403",
+          "404",
+          "422",
+          "500"
+        ]
       },
       "errorResponses": [
         {

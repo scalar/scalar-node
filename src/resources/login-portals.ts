@@ -4,10 +4,7 @@ import { APIResource } from '../resource';
 import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { path as __scalarPath } from '../internal/utils/path';
-<<<<<<< HEAD
-=======
 import type * as Shared from './shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from './scalar-docs';
 
 export class LoginPortals extends APIResource {
@@ -73,11 +70,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const create = await client.loginPortals.create({
-=======
    * const uID = await client.loginPortals.create({
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   title: '',
    *   slug: '',
    *   email: {
@@ -112,11 +105,7 @@ export class LoginPortals extends APIResource {
    * });
    * ```
    */
-<<<<<<< HEAD
-  create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<LoginPortalCreateResponse> {
-=======
   create(body: LoginPortalCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     return this._client.post('/v1/login-portals', { body, ...options });
   }
 

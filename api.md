@@ -207,11 +207,7 @@ Get metadata (uid, content shas, version sha, tags) for a specific API document 
 | Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
-=======
 const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -227,11 +223,7 @@ Create a new API document version.
 | Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
-=======
 const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -296,11 +288,7 @@ Create a schema in a namespace.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const create = await client.schemas.create('namespace', {
-=======
 const uID = await client.schemas.create('namespace', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   title: '',
   version: 'x',
   slug: '',
@@ -352,11 +340,7 @@ Get a specific schema version document.
 | Response | [`VersionRetrieveResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-<<<<<<< HEAD
-const string_ = await client.schemas.version.retrieveSchema('semver', {
-=======
 const string_ = await client.schemas.version.retrieve('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -372,11 +356,7 @@ Delete a schema version.
 | Response | [`VersionDeleteResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-<<<<<<< HEAD
-await client.schemas.version.deleteSchema('semver', {
-=======
 await client.schemas.version.delete('semver', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -392,11 +372,7 @@ Create a schema version.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const createSchema = await client.schemas.version.createSchema('slug', {
-=======
 const uID = await client.schemas.version.create('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -417,11 +393,7 @@ Add an access group to a schema.
 | Response | [`AccessGroupCreateResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
-<<<<<<< HEAD
-await client.schemas.accessGroup.createSchema('slug', {
-=======
 await client.schemas.accessGroup.create('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   accessGroupSlug: 'xxx',
 });
@@ -437,11 +409,7 @@ Remove an access group from a schema.
 | Response | [`AccessGroupDeleteResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
-<<<<<<< HEAD
-await client.schemas.accessGroup.deleteSchema('slug', {
-=======
 await client.schemas.accessGroup.delete('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   namespace: 'namespace',
   accessGroupSlug: 'xxx',
 });
@@ -498,11 +466,7 @@ Create a login portal for the current team.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const create = await client.loginPortals.create({
-=======
 const uID = await client.loginPortals.create({
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   title: '',
   slug: '',
   email: {
@@ -575,11 +539,7 @@ Create a rule in a namespace.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const createRuleset = await client.rules.createRuleset('namespace', {
-=======
 const uID = await client.rules.createRuleset('namespace', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   title: '',
   slug: '',
   document: '',
@@ -689,11 +649,7 @@ Create a team theme.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-<<<<<<< HEAD
-const create = await client.themes.create({
-=======
 const uID = await client.themes.create({
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   name: '',
   slug: '',
   document: '',

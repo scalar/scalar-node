@@ -6,10 +6,7 @@ import type { RequestOptions } from '../../internal/request-options';
 import { path as __scalarPath } from '../../internal/utils/path';
 import type * as RegistryAPI from '../registry';
 import type * as ScalarDocsAPI from '../scalar-docs';
-<<<<<<< HEAD
-=======
 import type * as Shared from '../shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 
 export class AccessGroup extends APIResource {
   /**
@@ -22,29 +19,17 @@ export class AccessGroup extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * await client.schemas.accessGroup.createSchema('slug', {
-=======
    * await client.schemas.accessGroup.create('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   accessGroupSlug: 'xxx',
    * });
    * ```
    */
-<<<<<<< HEAD
-  createSchema(
-    slug: string,
-    params: AccessGroupCreateSchemaParams,
-    options?: RequestOptions,
-  ): APIPromise<AccessGroupCreateSchemaResponse> {
-=======
   create(
     slug: string,
     params: AccessGroupCreateParams,
     options?: RequestOptions,
   ): APIPromise<AccessGroupCreateResponse> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, {
       body,
@@ -62,29 +47,17 @@ export class AccessGroup extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * await client.schemas.accessGroup.deleteSchema('slug', {
-=======
    * await client.schemas.accessGroup.delete('slug', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   accessGroupSlug: 'xxx',
    * });
    * ```
    */
-<<<<<<< HEAD
-  deleteSchema(
-    slug: string,
-    params: AccessGroupDeleteSchemaParams,
-    options?: RequestOptions,
-  ): APIPromise<AccessGroupDeleteSchemaResponse> {
-=======
   delete(
     slug: string,
     params: AccessGroupDeleteParams,
     options?: RequestOptions,
   ): APIPromise<AccessGroupDeleteResponse> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, ...body } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/access-group`, {
       body,

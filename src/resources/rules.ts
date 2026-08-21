@@ -5,10 +5,7 @@ import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { buildHeaders } from '../internal/headers';
 import { path as __scalarPath } from '../internal/utils/path';
-<<<<<<< HEAD
-=======
 import type * as Shared from './shared';
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from './scalar-docs';
 import type * as RegistryAPI from './registry';
 
@@ -39,11 +36,7 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-<<<<<<< HEAD
-   * const createRuleset = await client.rules.createRuleset('namespace', {
-=======
    * const uID = await client.rules.createRuleset('namespace', {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   title: '',
    *   slug: '',
    *   document: '',
@@ -54,11 +47,7 @@ export class Rules extends APIResource {
     namespace_: string,
     body: RuleCreateRulesetParams,
     options?: RequestOptions,
-<<<<<<< HEAD
-  ): APIPromise<RuleCreateRulesetResponse> {
-=======
   ): APIPromise<Shared.UID> {
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     return this._client.post(__scalarPath`/v1/rulesets/${namespace_}`, { body, ...options });
   }
 
@@ -78,11 +67,7 @@ export class Rules extends APIResource {
    * ```
    */
   updateRuleset(
-<<<<<<< HEAD
-    slug: string,
-=======
     slug2: string,
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     params: RuleUpdateRulesetParams,
     options?: RequestOptions,
   ): APIPromise<RuleUpdateRulesetResponse> {
@@ -222,11 +207,7 @@ export namespace RuleListRulesetsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
-<<<<<<< HEAD
-    namespace: string;
-=======
     namespace: Shared.Namespace;
->>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     isPrivate: boolean;
   }
 }
