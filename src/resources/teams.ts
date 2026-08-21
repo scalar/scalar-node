@@ -3,6 +3,10 @@
 import { APIResource } from '../resource';
 import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
+<<<<<<< HEAD
+=======
+import type * as Shared from './shared';
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Teams extends APIResource {
@@ -29,7 +33,7 @@ export namespace TeamListResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     name: string;
     /**
      * @minLength 3

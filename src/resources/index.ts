@@ -1,5 +1,9 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
+<<<<<<< HEAD
+=======
+export * from './shared';
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 export { Registry } from './registry';
 export type {
   Version,
@@ -19,9 +23,13 @@ export type {
   RegistryDeleteAPIDocumentVersionParams,
   RegistryDeleteAPIDocumentVersionResponse,
   RegistryListAPIDocumentVersionMetadataParams,
+<<<<<<< HEAD
   RegistryListAPIDocumentVersionMetadataResponse,
   RegistryCreateAPIDocumentVersionParams,
   RegistryCreateAPIDocumentVersionResponse,
+=======
+  RegistryCreateAPIDocumentVersionParams,
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   RegistryCreateAPIDocumentAccessGroupParams,
   RegistryCreateAPIDocumentAccessGroupResponse,
   RegistryDeleteAPIDocumentAccessGroupParams,
@@ -31,7 +39,10 @@ export { Schemas } from './schemas/schemas';
 export type {
   SchemaListResponse,
   SchemaCreateParams,
+<<<<<<< HEAD
   SchemaCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   SchemaUpdateParams,
   SchemaUpdateResponse,
   SchemaDeleteParams,
@@ -46,14 +57,20 @@ export type {
   LoginPortalUpdateResponse,
   LoginPortalDeleteResponse,
   LoginPortalCreateParams,
+<<<<<<< HEAD
   LoginPortalCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   LoginPortalListResponse,
 } from './login-portals';
 export { Rules } from './rules';
 export type {
   RuleListRulesetsResponse,
   RuleCreateRulesetParams,
+<<<<<<< HEAD
   RuleCreateRulesetResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   RuleUpdateRulesetParams,
   RuleUpdateRulesetResponse,
   RuleDeleteRulesetParams,
@@ -69,7 +86,10 @@ export { Themes } from './themes';
 export type {
   ThemeListResponse,
   ThemeCreateParams,
+<<<<<<< HEAD
   ThemeCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   ThemeUpdateParams,
   ThemeUpdateResponse,
   ThemeReplaceDocumentParams,

@@ -19,7 +19,7 @@ import {
 } from './internal/utils/log';
 export type { Logger, LogLevel } from './internal/utils/log';
 import type { RequestInit, RequestInfo, BodyInit, Fetch } from './internal/builtin-types';
-import { buildHeaders, type HeadersLike } from './internal/headers';
+import { buildHeaders, type HeadersLike, type NullableHeaders } from './internal/headers';
 import type { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import type { HTTPMethod, FinalizedRequestInit, MergedRequestInit, PromiseOrValue } from './internal/types';
 import { stringifyQuery } from './internal/utils/query';
@@ -37,8 +37,11 @@ import {
   type RegistryRetrieveAPIDocumentVersionResponse,
   type RegistryUpdateAPIDocumentVersionResponse,
   type RegistryDeleteAPIDocumentVersionResponse,
+<<<<<<< HEAD
   type RegistryListAPIDocumentVersionMetadataResponse,
   type RegistryCreateAPIDocumentVersionResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type RegistryCreateAPIDocumentAccessGroupResponse,
   type RegistryDeleteAPIDocumentAccessGroupResponse,
   type RegistryCreateAPIDocumentParams,
@@ -55,7 +58,10 @@ import {
 import {
   Schemas,
   type SchemaListResponse,
+<<<<<<< HEAD
   type SchemaCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type SchemaUpdateResponse,
   type SchemaDeleteResponse,
   type SchemaCreateParams,
@@ -69,7 +75,10 @@ import {
   type LoginPortalRetrieveResponse,
   type LoginPortalUpdateResponse,
   type LoginPortalDeleteResponse,
+<<<<<<< HEAD
   type LoginPortalCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type LoginPortalListResponse,
   type LoginPortalUpdateParams,
   type LoginPortalCreateParams,
@@ -77,7 +86,10 @@ import {
 import {
   Rules,
   type RuleListRulesetsResponse,
+<<<<<<< HEAD
   type RuleCreateRulesetResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type RuleUpdateRulesetResponse,
   type RuleDeleteRulesetResponse,
   type RuleRetrieveRulesetDocumentResponse,
@@ -93,7 +105,10 @@ import {
 import {
   Themes,
   type ThemeListResponse,
+<<<<<<< HEAD
   type ThemeCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   type ThemeUpdateResponse,
   type ThemeReplaceDocumentResponse,
   type ThemeDeleteResponse,
@@ -118,6 +133,10 @@ import {
   type AuthenticationListCurrentUserResponse,
   type AuthenticationExchangePersonalTokenParams,
 } from './resources/authentication';
+<<<<<<< HEAD
+=======
+import * as SharedAPI from './resources/shared';
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 
 export type AuthTokenProvider = () => string | Promise<string>;
 
@@ -200,10 +219,10 @@ export interface ClientOptions {
 export type ScalarOptions = ClientOptions;
 
 /**
- * API Client for interfacing with the ScalarApi API.
+ * API Client for interfacing with the Scalar API.
  */
 export class Scalar {
-  bearerAuth: string | AuthTokenProvider | undefined;
+  bearerAuth: string | AuthTokenProvider;
 
   baseURL: string;
   maxRetries: number;
@@ -219,7 +238,7 @@ export class Scalar {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the ScalarApi API.
+   * API Client for interfacing with the Scalar API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
    * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
@@ -235,6 +254,12 @@ export class Scalar {
     bearerAuth = readEnv('BEARER_AUTH'),
     ...opts
   }: ClientOptions = {}) {
+    if (bearerAuth === undefined) {
+      throw new Errors.ScalarError(
+        "The BEARER_AUTH environment variable is missing or empty; either provide it, or instantiate the Scalar client with an bearerAuth option, like new Scalar({ bearerAuth: 'My Bearer Auth' }).",
+      );
+    }
+
     const options: ClientOptions = {
       bearerAuth,
       ...opts,
@@ -694,7 +719,16 @@ export class Scalar {
     if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
     options.timeout = options.timeout ?? this.timeout;
     const { bodyHeaders, body } = this.buildBody({ options });
-    const reqHeaders = await this.buildHeaders({ options, method, bodyHeaders, retryCount, url });
+    // Headers read the caller's own options, not the copy defaulted above: `X-Scalar-Timeout`
+    // reports an explicit per-request timeout, and the idempotency key written back here has to
+    // land where the retry can see it.
+    const reqHeaders = await this.buildHeaders({
+      options: inputOptions,
+      method,
+      bodyHeaders,
+      retryCount,
+      url,
+    });
 
     const req: FinalizedRequestInit = {
       method,
@@ -809,13 +843,22 @@ export class Scalar {
     }
   }
 
+<<<<<<< HEAD
   private validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
+=======
+  protected validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     if (headers.has('Authorization')) return;
     if (headerExplicitlyOmitted(options.headers, 'Authorization')) return;
     throw new Errors.AuthenticationError(
       401,
+<<<<<<< HEAD
       {},
       'Could not resolve authentication method. Expected Authorization to be set.',
+=======
+      undefined,
+      'Could not resolve authentication method. Expected the bearerAuth to be set. Or for the "Authorization" headers to be explicitly omitted',
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
       headers,
     );
   }
@@ -833,8 +876,12 @@ export class Scalar {
     return {};
   }
 
-  protected async authHeaders(options: FinalRequestOptions): Promise<HeadersLike | undefined> {
-    return buildHeaders([await this.authHeadersAsync()]);
+  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
+    if (bearerAuth == null) {
+      return undefined;
+    }
+    return buildHeaders([{ Authorization: `Bearer ${bearerAuth}` }]);
   }
 
   private async authQueryAsync(): Promise<Record<string, string>> {
@@ -847,6 +894,7 @@ export class Scalar {
     return cookies;
   }
 
+<<<<<<< HEAD
   private async authHeadersAsync(): Promise<Record<string, string>> {
     const headers: Record<string, string> = {};
     const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
@@ -854,6 +902,8 @@ export class Scalar {
     return headers;
   }
 
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   private async resolveAuthOption(
     optionName: string,
     value: string | AuthTokenProvider | null | undefined,
@@ -929,8 +979,6 @@ export declare namespace Scalar {
     type RegistryRetrieveAPIDocumentVersionResponse as RegistryRetrieveAPIDocumentVersionResponse,
     type RegistryUpdateAPIDocumentVersionResponse as RegistryUpdateAPIDocumentVersionResponse,
     type RegistryDeleteAPIDocumentVersionResponse as RegistryDeleteAPIDocumentVersionResponse,
-    type RegistryListAPIDocumentVersionMetadataResponse as RegistryListAPIDocumentVersionMetadataResponse,
-    type RegistryCreateAPIDocumentVersionResponse as RegistryCreateAPIDocumentVersionResponse,
     type RegistryCreateAPIDocumentAccessGroupResponse as RegistryCreateAPIDocumentAccessGroupResponse,
     type RegistryDeleteAPIDocumentAccessGroupResponse as RegistryDeleteAPIDocumentAccessGroupResponse,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,
@@ -948,7 +996,6 @@ export declare namespace Scalar {
   export {
     Schemas as Schemas,
     type SchemaListResponse as SchemaListResponse,
-    type SchemaCreateResponse as SchemaCreateResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
     type SchemaCreateParams as SchemaCreateParams,
@@ -963,7 +1010,6 @@ export declare namespace Scalar {
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
-    type LoginPortalCreateResponse as LoginPortalCreateResponse,
     type LoginPortalListResponse as LoginPortalListResponse,
     type LoginPortalUpdateParams as LoginPortalUpdateParams,
     type LoginPortalCreateParams as LoginPortalCreateParams,
@@ -972,7 +1018,6 @@ export declare namespace Scalar {
   export {
     Rules as Rules,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
-    type RuleCreateRulesetResponse as RuleCreateRulesetResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
     type RuleRetrieveRulesetDocumentResponse as RuleRetrieveRulesetDocumentResponse,
@@ -989,7 +1034,6 @@ export declare namespace Scalar {
   export {
     Themes as Themes,
     type ThemeListResponse as ThemeListResponse,
-    type ThemeCreateResponse as ThemeCreateResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
     type ThemeDeleteResponse as ThemeDeleteResponse,
@@ -1018,8 +1062,23 @@ export declare namespace Scalar {
     type AuthenticationListCurrentUserResponse as AuthenticationListCurrentUserResponse,
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
   };
+
+<<<<<<< HEAD
+=======
+  export type ManagedDocVersion = SharedAPI.ManagedDocVersion;
+  export type Namespace = SharedAPI.Namespace;
+  export type Nanoid = SharedAPI.Nanoid;
+  export type Timestamp = SharedAPI.Timestamp;
+  export type UID = SharedAPI.UID;
+  export type Value400 = SharedAPI.Value400;
+  export type Value401 = SharedAPI.Value401;
+  export type Value403 = SharedAPI.Value403;
+  export type Value404 = SharedAPI.Value404;
+  export type Value422 = SharedAPI.Value422;
+  export type Value500 = SharedAPI.Value500;
 }
 
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string): boolean => {
   if (!source || Array.isArray(source) || source instanceof Headers) return false;
   const target = name.toLowerCase();

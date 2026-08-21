@@ -4,6 +4,12 @@ on:
   push:
   pull_request:
 
+# Least privilege for a verification-only workflow: every job below only reads the checked-out
+# tree, so the run's GITHUB_TOKEN is narrowed to that regardless of the repository's default
+# grants. Declared at the workflow level so a job added later inherits the floor.
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -17,5 +23,13 @@ jobs:
       - run: npm run build
       # Verification only, never auto-fix: the SDK is generated formatted, so a diff here means
       # either hand-edited custom code or a regenerate that was not committed. Auto-fixing would
+<<<<<<< HEAD
       # make the pushed bytes differ from generator output.
       - run: npx --yes @biomejs/biome@2.4.16 format --check .
+=======
+      # make the pushed bytes differ from generator output. `format` without `--write` is already
+      # check-only and exits non-zero on a diff; Biome has no `--check` flag, and `biome ci` is
+      # avoided so enabling the linter in this repo's biome.json cannot fail CI on generator-owned
+      # code the shipped config deliberately exempts.
+      - run: npx --yes @biomejs/biome@2.5.7 format .
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0

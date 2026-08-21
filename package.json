@@ -2,6 +2,7 @@
   "name": "@scalar/sdk",
   "version": "0.3.1",
   "description": "API for managing Scalar platform resources.",
+  "author": "Scalar",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scalar/scalar-node.git"

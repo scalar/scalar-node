@@ -4,7 +4,10 @@ export { Schemas } from './schemas';
 export type {
   SchemaListResponse,
   SchemaCreateParams,
+<<<<<<< HEAD
   SchemaCreateResponse,
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   SchemaUpdateParams,
   SchemaUpdateResponse,
   SchemaDeleteParams,
@@ -12,6 +15,7 @@ export type {
 } from './schemas';
 export { Version } from './version';
 export type {
+<<<<<<< HEAD
   VersionRetrieveSchemaParams,
   VersionRetrieveSchemaResponse,
   VersionDeleteSchemaParams,
@@ -25,4 +29,18 @@ export type {
   AccessGroupCreateSchemaResponse,
   AccessGroupDeleteSchemaParams,
   AccessGroupDeleteSchemaResponse,
+=======
+  VersionRetrieveParams,
+  VersionRetrieveResponse,
+  VersionDeleteParams,
+  VersionDeleteResponse,
+  VersionCreateParams,
+} from './version';
+export { AccessGroup } from './access-group';
+export type {
+  AccessGroupCreateParams,
+  AccessGroupCreateResponse,
+  AccessGroupDeleteParams,
+  AccessGroupDeleteResponse,
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 } from './access-group';

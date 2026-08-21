@@ -5,6 +5,10 @@ import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { buildHeaders } from '../internal/headers';
 import { path as __scalarPath } from '../internal/utils/path';
+<<<<<<< HEAD
+=======
+import type * as Shared from './shared';
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Registry extends APIResource {
@@ -204,11 +208,15 @@ export class Registry extends APIResource {
    * @param {string} semver
    * @param {RegistryListAPIDocumentVersionMetadataParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<RegistryListAPIDocumentVersionMetadataResponse>} Default Response
+   * @returns {APIPromise<Shared.ManagedDocVersion>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * const listAPIDocumentVersionMetadata = await client.registry.listAPIDocumentVersionMetadata('semver', {
+=======
+   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   slug: 'slug',
    * });
@@ -218,7 +226,11 @@ export class Registry extends APIResource {
     semver: string,
     params: RegistryListAPIDocumentVersionMetadataParams,
     options?: RequestOptions,
+<<<<<<< HEAD
   ): APIPromise<RegistryListAPIDocumentVersionMetadataResponse> {
+=======
+  ): APIPromise<Shared.ManagedDocVersion> {
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, slug } = params;
     return this._client.get(__scalarPath`/v1/apis/${namespace}/${slug}/version/${semver}/metadata`, options);
   }
@@ -229,11 +241,15 @@ export class Registry extends APIResource {
    * @param {string} slug
    * @param {RegistryCreateAPIDocumentVersionParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<RegistryCreateAPIDocumentVersionResponse>} Default Response
+   * @returns {APIPromise<Shared.ManagedDocVersion>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * const createAPIDocumentVersion = await client.registry.createAPIDocumentVersion('slug', {
+=======
+   * const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   namespace: 'namespace',
    *   version: 'x',
    *   document: '',
@@ -244,7 +260,11 @@ export class Registry extends APIResource {
     slug: string,
     params: RegistryCreateAPIDocumentVersionParams,
     options?: RequestOptions,
+<<<<<<< HEAD
   ): APIPromise<RegistryCreateAPIDocumentVersionResponse> {
+=======
+  ): APIPromise<Shared.ManagedDocVersion> {
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/apis/${namespace}/${slug}/version`, { body, ...options });
   }
@@ -322,7 +342,7 @@ export namespace RegistryListAllAPIDocumentsResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @minLength 1
      */
@@ -343,6 +363,7 @@ export namespace RegistryListAllAPIDocumentsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
+<<<<<<< HEAD
     namespace: string;
     isPrivate: boolean;
     tags: unknown;
@@ -376,6 +397,12 @@ export namespace RegistryListAllAPIDocumentsResponse {
         enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
       }
     }
+=======
+    namespace: Shared.Namespace;
+    isPrivate: boolean;
+    tags: unknown;
+    versions: Array<Shared.ManagedDocVersion>;
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   }
 }
 
@@ -387,7 +414,7 @@ export namespace RegistryListAPIDocumentsResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
      * @minLength 1
      */
@@ -408,6 +435,7 @@ export namespace RegistryListAPIDocumentsResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
+<<<<<<< HEAD
     namespace: string;
     isPrivate: boolean;
     tags: unknown;
@@ -441,6 +469,12 @@ export namespace RegistryListAPIDocumentsResponse {
         enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
       }
     }
+=======
+    namespace: Shared.Namespace;
+    isPrivate: boolean;
+    tags: unknown;
+    versions: Array<Shared.ManagedDocVersion>;
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
   }
 }
 
@@ -541,6 +575,7 @@ export interface RegistryListAPIDocumentVersionMetadataParams {
   slug: string;
 }
 
+<<<<<<< HEAD
 export interface RegistryListAPIDocumentVersionMetadataResponse {
   /**
    * @minLength 5
@@ -568,6 +603,8 @@ export namespace RegistryListAPIDocumentVersionMetadataResponse {
   }
 }
 
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 export interface RegistryCreateAPIDocumentVersionParams {
   /**
    * Path param
@@ -592,6 +629,7 @@ export interface RegistryCreateAPIDocumentVersionParams {
   lastKnownVersionSha?: string;
 }
 
+<<<<<<< HEAD
 export interface RegistryCreateAPIDocumentVersionResponse {
   /**
    * @minLength 5
@@ -619,6 +657,8 @@ export namespace RegistryCreateAPIDocumentVersionResponse {
   }
 }
 
+=======
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 export interface RegistryCreateAPIDocumentAccessGroupParams {
   /**
    * Path param
@@ -662,8 +702,6 @@ export declare namespace Registry {
     type RegistryRetrieveAPIDocumentVersionResponse as RegistryRetrieveAPIDocumentVersionResponse,
     type RegistryUpdateAPIDocumentVersionResponse as RegistryUpdateAPIDocumentVersionResponse,
     type RegistryDeleteAPIDocumentVersionResponse as RegistryDeleteAPIDocumentVersionResponse,
-    type RegistryListAPIDocumentVersionMetadataResponse as RegistryListAPIDocumentVersionMetadataResponse,
-    type RegistryCreateAPIDocumentVersionResponse as RegistryCreateAPIDocumentVersionResponse,
     type RegistryCreateAPIDocumentAccessGroupResponse as RegistryCreateAPIDocumentAccessGroupResponse,
     type RegistryDeleteAPIDocumentAccessGroupResponse as RegistryDeleteAPIDocumentAccessGroupResponse,
     type RegistryCreateAPIDocumentParams as RegistryCreateAPIDocumentParams,

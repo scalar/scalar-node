@@ -5,6 +5,10 @@ import { APIPromise } from '../api-promise';
 import type { RequestOptions } from '../internal/request-options';
 import { buildHeaders } from '../internal/headers';
 import { path as __scalarPath } from '../internal/utils/path';
+<<<<<<< HEAD
+=======
+import type * as Shared from './shared';
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
 import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Themes extends APIResource {
@@ -28,18 +32,26 @@ export class Themes extends APIResource {
    *
    * @param {ThemeCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<ThemeCreateResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
+<<<<<<< HEAD
    * const create = await client.themes.create({
+=======
+   * const uID = await client.themes.create({
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
    *   name: '',
    *   slug: '',
    *   document: '',
    * });
    * ```
    */
+<<<<<<< HEAD
   create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<ThemeCreateResponse> {
+=======
+  create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
+>>>>>>> 274c23688058bc3cb6b33c2683f15a70e0b314c0
     return this._client.post('/v1/themes', { body, ...options });
   }
 
@@ -126,7 +138,7 @@ export namespace ThemeListResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     name: string;
     description: string;
     /**
@@ -143,13 +155,6 @@ export interface ThemeCreateParams {
   slug: string;
   document: string;
   description?: string;
-}
-
-export interface ThemeCreateResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
 }
 
 export interface ThemeUpdateParams {
@@ -171,7 +176,6 @@ export type ThemeRetrieveResponse = string;
 export declare namespace Themes {
   export {
     type ThemeListResponse as ThemeListResponse,
-    type ThemeCreateResponse as ThemeCreateResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
     type ThemeDeleteResponse as ThemeDeleteResponse,
