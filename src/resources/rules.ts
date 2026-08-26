@@ -19,7 +19,7 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * const listRulesets = await client.rules.listRulesets('namespace');
+   * const rule = await client.rules.listRulesets('namespace');
    * ```
    */
   listRulesets(namespace_: string, options?: RequestOptions): APIPromise<RuleListRulesetsResponse> {
@@ -36,7 +36,7 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * const uID = await client.rules.createRuleset('namespace', {
+   * const uid = await client.rules.createRuleset('namespace', {
    *   title: '',
    *   slug: '',
    *   document: '',
@@ -109,7 +109,7 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.rules.retrieveRulesetDocument('slug', {
+   * const response = await client.rules.retrieveRulesetDocument('slug', {
    *   namespace: 'namespace',
    * });
    * ```

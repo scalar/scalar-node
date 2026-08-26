@@ -36,9 +36,9 @@ const client = new Scalar({
   bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
-const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+const registry = await client.registry.listAllAPIDocuments();
 
-console.log(listAllAPIDocuments);
+console.log(registry);
 ```
 
 Method names, parameter shapes, and response types are generated from the API description — do not guess them. Look up the exact call signature in [api.md](../../../api.md) before writing a call.
@@ -51,7 +51,7 @@ Non-success responses throw generated API errors. Error objects expose status, h
 import { APIError } from '@scalar/sdk';
 
 try {
-  const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+  const registry = await client.registry.listAllAPIDocuments();
 } catch (err) {
   if (err instanceof APIError) {
     console.log(err.status, err.name, err.headers);

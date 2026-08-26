@@ -17,7 +17,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.themes.list();
+   * const theme = await client.themes.list();
    * ```
    */
   list(options?: RequestOptions): APIPromise<ThemeListResponse> {
@@ -33,7 +33,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const uID = await client.themes.create({
+   * const uid = await client.themes.create({
    *   name: '',
    *   slug: '',
    *   document: '',
@@ -109,7 +109,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.themes.retrieve('slug');
+   * const response = await client.themes.retrieve('slug');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<ThemeRetrieveResponse> {

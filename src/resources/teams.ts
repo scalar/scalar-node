@@ -15,7 +15,7 @@ export class Teams extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.teams.list();
+   * const team = await client.teams.list();
    * ```
    */
   list(options?: RequestOptions): APIPromise<TeamListResponse> {

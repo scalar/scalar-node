@@ -85,7 +85,7 @@ List all API documents across every namespace the caller can access.
 | Response | [`RegistryListAllAPIDocumentsResponse`](./src/resources/registry.ts) |
 
 ```ts
-const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+const registry = await client.registry.listAllAPIDocuments();
 ```
 
 ### List API Documents in a namespace
@@ -97,7 +97,7 @@ List API documents in a namespace.
 | Response | [`RegistryListAPIDocumentsResponse`](./src/resources/registry.ts) |
 
 ```ts
-const listAPIDocuments = await client.registry.listAPIDocuments('namespace');
+const registry = await client.registry.listAPIDocuments('namespace');
 ```
 
 ### Create API Document
@@ -110,7 +110,7 @@ Create an API document.
 | Response | [`RegistryCreateAPIDocumentResponse`](./src/resources/registry.ts) |
 
 ```ts
-const createAPIDocument = await client.registry.createAPIDocument('namespace', {
+const registry = await client.registry.createAPIDocument('namespace', {
   title: '',
   version: 'x',
   slug: '',
@@ -158,7 +158,7 @@ Get a specific API document version.
 | Response | [`RegistryRetrieveAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
-const string_ = await client.registry.retrieveAPIDocumentVersion('semver', {
+const response = await client.registry.retrieveAPIDocumentVersion('semver', {
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -174,7 +174,7 @@ Update the registry file content for an API document version.
 | Response | [`RegistryUpdateAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
-const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion('semver', {
+const registry = await client.registry.updateAPIDocumentVersion('semver', {
   namespace: 'namespace',
   slug: 'slug',
   document: '',
@@ -275,7 +275,7 @@ List schemas in a namespace.
 | Response | [`SchemaListResponse`](./src/resources/schemas/schemas.ts) |
 
 ```ts
-const list = await client.schemas.list('namespace');
+const schema = await client.schemas.list('namespace');
 ```
 
 ### Create a shared component
@@ -288,7 +288,7 @@ Create a schema in a namespace.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uID = await client.schemas.create('namespace', {
+const uid = await client.schemas.create('namespace', {
   title: '',
   version: 'x',
   slug: '',
@@ -340,7 +340,7 @@ Get a specific schema version document.
 | Response | [`VersionRetrieveResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-const string_ = await client.schemas.version.retrieve('semver', {
+const response = await client.schemas.version.retrieve('semver', {
   namespace: 'namespace',
   slug: 'slug',
 });
@@ -372,7 +372,7 @@ Create a schema version.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uID = await client.schemas.version.create('slug', {
+const uid = await client.schemas.version.create('slug', {
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -428,7 +428,7 @@ Get a login portal by slug.
 | Response | [`LoginPortalRetrieveResponse`](./src/resources/login-portals.ts) |
 
 ```ts
-const retrieve = await client.loginPortals.retrieve('slug');
+const loginPortal = await client.loginPortals.retrieve('slug');
 ```
 
 ### Update portal metadata
@@ -466,7 +466,7 @@ Create a login portal for the current team.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uID = await client.loginPortals.create({
+const uid = await client.loginPortals.create({
   title: '',
   slug: '',
   email: {
@@ -510,7 +510,7 @@ List all login portals for the current team.
 | Response | [`LoginPortalListResponse`](./src/resources/login-portals.ts) |
 
 ```ts
-const list = await client.loginPortals.list();
+const loginPortal = await client.loginPortals.list();
 ```
 
 ## `Rules`
@@ -526,7 +526,7 @@ List all rulesets in a namespace.
 | Response | [`RuleListRulesetsResponse`](./src/resources/rules.ts) |
 
 ```ts
-const listRulesets = await client.rules.listRulesets('namespace');
+const rule = await client.rules.listRulesets('namespace');
 ```
 
 ### Create a rule
@@ -539,7 +539,7 @@ Create a rule in a namespace.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uID = await client.rules.createRuleset('namespace', {
+const uid = await client.rules.createRuleset('namespace', {
   title: '',
   slug: '',
   document: '',
@@ -586,7 +586,7 @@ Get a rule document by slug.
 | Response | [`RuleRetrieveRulesetDocumentResponse`](./src/resources/rules.ts) |
 
 ```ts
-const string_ = await client.rules.retrieveRulesetDocument('slug', {
+const response = await client.rules.retrieveRulesetDocument('slug', {
   namespace: 'namespace',
 });
 ```
@@ -636,7 +636,7 @@ List all team themes.
 | Response | [`ThemeListResponse`](./src/resources/themes.ts) |
 
 ```ts
-const list = await client.themes.list();
+const theme = await client.themes.list();
 ```
 
 ### Create a theme
@@ -649,7 +649,7 @@ Create a team theme.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uID = await client.themes.create({
+const uid = await client.themes.create({
   name: '',
   slug: '',
   document: '',
@@ -705,7 +705,7 @@ Get the theme document by slug.
 | Response | [`ThemeRetrieveResponse`](./src/resources/themes.ts) |
 
 ```ts
-const string_ = await client.themes.retrieve('slug');
+const response = await client.themes.retrieve('slug');
 ```
 
 ## `Teams`
@@ -721,7 +721,7 @@ List all available teams
 | Response | [`TeamListResponse`](./src/resources/teams.ts) |
 
 ```ts
-const list = await client.teams.list();
+const team = await client.teams.list();
 ```
 
 ## `ScalarDocs`
@@ -737,7 +737,7 @@ List all guide projects.
 | Response | [`ScalarDocListGuidesResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const listGuides = await client.scalarDocs.listGuides();
+const scalarDoc = await client.scalarDocs.listGuides();
 ```
 
 ### Create a project
@@ -750,7 +750,7 @@ Create a guide project.
 | Response | [`ScalarDocCreateGuideResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const createGuide = await client.scalarDocs.createGuide({
+const scalarDoc = await client.scalarDocs.createGuide({
   name: '',
   isPrivate: false,
   allowedUsers: [],
@@ -767,7 +767,7 @@ Start a new publish process.
 | Response | [`ScalarDocPublishGuideResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const publishGuide = await client.scalarDocs.publishGuide('slug');
+const scalarDoc = await client.scalarDocs.publishGuide('slug');
 ```
 
 ## `Namespaces`
@@ -783,7 +783,7 @@ Get all namespaces for the current team
 | Response | [`NamespaceListResponse`](./src/resources/namespaces.ts) |
 
 ```ts
-const list = await client.namespaces.list();
+const response = await client.namespaces.list();
 ```
 
 ## `Authentication`
@@ -800,7 +800,7 @@ Exchange an API key for an access token.
 | Response | [`AuthenticationExchangePersonalTokenResponse`](./src/resources/authentication.ts) |
 
 ```ts
-const exchangePersonalToken = await client.authentication.exchangePersonalToken({
+const authentication = await client.authentication.exchangePersonalToken({
   personalToken: '',
 });
 ```
@@ -814,5 +814,5 @@ Get the authenticated user, including their available teams and theme.
 | Response | [`AuthenticationListCurrentUserResponse`](./src/resources/authentication.ts) |
 
 ```ts
-const listCurrentUser = await client.authentication.listCurrentUser();
+const authentication = await client.authentication.listCurrentUser();
 ```

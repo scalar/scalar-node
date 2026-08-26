@@ -15,7 +15,7 @@ export class Authentication extends APIResource {
    *
    * @example
    * ```ts
-   * const exchangePersonalToken = await client.authentication.exchangePersonalToken({
+   * const authentication = await client.authentication.exchangePersonalToken({
    *   personalToken: '',
    * });
    * ```
@@ -35,7 +35,7 @@ export class Authentication extends APIResource {
    *
    * @example
    * ```ts
-   * const listCurrentUser = await client.authentication.listCurrentUser();
+   * const authentication = await client.authentication.listCurrentUser();
    * ```
    */
   listCurrentUser(options?: RequestOptions): APIPromise<AuthenticationListCurrentUserResponse> {

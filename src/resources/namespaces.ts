@@ -14,7 +14,7 @@ export class Namespaces extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.namespaces.list();
+   * const response = await client.namespaces.list();
    * ```
    */
   list(options?: RequestOptions): APIPromise<NamespaceListResponse> {

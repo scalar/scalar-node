@@ -23,21 +23,30 @@ type SmokeResult = {
   operation: string;
   method: string;
   path: string;
+  label?: string;
   status: 'passed' | 'failed';
   durationMs: number;
   error?: string;
 };
 
-// One entry per generated operation. `run` performs the real SDK call; the other fields are
-// metadata used for filtering and reporting. This list is generated, so it stays in sync with
-// the SDK surface.
-const cases: { operation: string; method: string; path: string; run: () => Promise<unknown> }[] = [
+// One or two entries per generated operation: the first passes only the arguments the method
+// requires, the second also fills every optional parameter and body property. `label` says which
+// is which, and is absent when the operation has no optional argument and so has only one case.
+// `run` performs the real SDK call; the other fields are metadata used for filtering and
+// reporting. This list is generated, so it stays in sync with the SDK surface.
+const cases: {
+  operation: string;
+  method: string;
+  path: string;
+  label?: string;
+  run: () => Promise<unknown>;
+}[] = [
   {
     operation: 'listAllApiDocuments',
     method: 'GET',
     path: '/v1/apis',
     run: async () => {
-      const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+      const registry = await client.registry.listAllAPIDocuments();
     },
   },
 
@@ -46,7 +55,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/apis/{namespace}',
     run: async () => {
-      const listAPIDocuments = await client.registry.listAPIDocuments('namespace');
+      const registry = await client.registry.listAPIDocuments('namespace');
     },
   },
 
@@ -54,8 +63,9 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'createApiDocument',
     method: 'POST',
     path: '/v1/apis/{namespace}',
+    label: 'required params',
     run: async () => {
-      const createAPIDocument = await client.registry.createAPIDocument('namespace', {
+      const registry = await client.registry.createAPIDocument('namespace', {
         title: '',
         version: 'x',
         slug: '',
@@ -65,12 +75,47 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
+    operation: 'createApiDocument',
+    method: 'POST',
+    path: '/v1/apis/{namespace}',
+    label: 'all params',
+    run: async () => {
+      const registry = await client.registry.createAPIDocument('namespace', {
+        title: '',
+        description: '',
+        version: 'x',
+        slug: '',
+        ruleset: '',
+        isPrivate: false,
+        document: '',
+      });
+    },
+  },
+
+  {
     operation: 'updateApiDocument',
     method: 'PATCH',
     path: '/v1/apis/{namespace}/{slug}',
+    label: 'required params',
     run: async () => {
       await client.registry.updateAPIDocument('slug', {
         namespace: 'namespace',
+      });
+    },
+  },
+
+  {
+    operation: 'updateApiDocument',
+    method: 'PATCH',
+    path: '/v1/apis/{namespace}/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.registry.updateAPIDocument('slug', {
+        namespace: 'namespace',
+        title: '',
+        description: '',
+        isPrivate: false,
+        ruleset: '',
       });
     },
   },
@@ -91,7 +136,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      const string_ = await client.registry.retrieveAPIDocumentVersion('semver', {
+      const response = await client.registry.retrieveAPIDocumentVersion('semver', {
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -102,11 +147,27 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'updateApiDocumentVersion',
     method: 'PATCH',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}',
+    label: 'required params',
     run: async () => {
-      const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion('semver', {
+      const registry = await client.registry.updateAPIDocumentVersion('semver', {
         namespace: 'namespace',
         slug: 'slug',
         document: '',
+      });
+    },
+  },
+
+  {
+    operation: 'updateApiDocumentVersion',
+    method: 'PATCH',
+    path: '/v1/apis/{namespace}/{slug}/version/{semver}',
+    label: 'all params',
+    run: async () => {
+      const registry = await client.registry.updateAPIDocumentVersion('semver', {
+        namespace: 'namespace',
+        slug: 'slug',
+        document: '',
+        lastKnownVersionSha: '',
       });
     },
   },
@@ -139,11 +200,28 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'createApiDocumentVersion',
     method: 'POST',
     path: '/v1/apis/{namespace}/{slug}/version',
+    label: 'required params',
     run: async () => {
       const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
         namespace: 'namespace',
         version: 'x',
         document: '',
+      });
+    },
+  },
+
+  {
+    operation: 'createApiDocumentVersion',
+    method: 'POST',
+    path: '/v1/apis/{namespace}/{slug}/version',
+    label: 'all params',
+    run: async () => {
+      const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
+        namespace: 'namespace',
+        version: 'x',
+        document: '',
+        force: false,
+        lastKnownVersionSha: '',
       });
     },
   },
@@ -177,7 +255,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/schemas/{namespace}',
     run: async () => {
-      const list = await client.schemas.list('namespace');
+      const schema = await client.schemas.list('namespace');
     },
   },
 
@@ -185,8 +263,9 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}',
+    label: 'required params',
     run: async () => {
-      const uID = await client.schemas.create('namespace', {
+      const uid = await client.schemas.create('namespace', {
         title: '',
         version: 'x',
         slug: '',
@@ -196,12 +275,45 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
   },
 
   {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/schemas/{namespace}',
+    label: 'all params',
+    run: async () => {
+      const uid = await client.schemas.create('namespace', {
+        title: '',
+        description: '',
+        version: 'x',
+        slug: '',
+        isPrivate: false,
+        document: '',
+      });
+    },
+  },
+
+  {
     operation: 'update',
     method: 'PATCH',
     path: '/v1/schemas/{namespace}/{slug}',
+    label: 'required params',
     run: async () => {
       await client.schemas.update('slug', {
         namespace: 'namespace',
+      });
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/schemas/{namespace}/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.schemas.update('slug', {
+        namespace: 'namespace',
+        title: '',
+        description: '',
+        isPrivate: false,
       });
     },
   },
@@ -222,7 +334,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      const string_ = await client.schemas.version.retrieve('semver', {
+      const response = await client.schemas.version.retrieve('semver', {
         namespace: 'namespace',
         slug: 'slug',
       });
@@ -246,7 +358,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/version',
     run: async () => {
-      const uID = await client.schemas.version.create('slug', {
+      const uid = await client.schemas.version.create('slug', {
         namespace: 'namespace',
         version: 'x',
         document: '',
@@ -283,7 +395,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/login-portals/{slug}',
     run: async () => {
-      const retrieve = await client.loginPortals.retrieve('slug');
+      const loginPortal = await client.loginPortals.retrieve('slug');
     },
   },
 
@@ -291,8 +403,21 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'update',
     method: 'PATCH',
     path: '/v1/login-portals/{slug}',
+    label: 'required params',
     run: async () => {
       await client.loginPortals.update('slug', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/login-portals/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.loginPortals.update('slug', {
+        title: '',
+      });
     },
   },
 
@@ -310,7 +435,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/login-portals',
     run: async () => {
-      const uID = await client.loginPortals.create({
+      const uid = await client.loginPortals.create({
         title: '',
         slug: '',
         email: {
@@ -351,7 +476,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/login-portals',
     run: async () => {
-      const list = await client.loginPortals.list();
+      const loginPortal = await client.loginPortals.list();
     },
   },
 
@@ -360,7 +485,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/rulesets/{namespace}',
     run: async () => {
-      const listRulesets = await client.rules.listRulesets('namespace');
+      const rule = await client.rules.listRulesets('namespace');
     },
   },
 
@@ -368,10 +493,27 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'createRuleset',
     method: 'POST',
     path: '/v1/rulesets/{namespace}',
+    label: 'required params',
     run: async () => {
-      const uID = await client.rules.createRuleset('namespace', {
+      const uid = await client.rules.createRuleset('namespace', {
         title: '',
         slug: '',
+        document: '',
+      });
+    },
+  },
+
+  {
+    operation: 'createRuleset',
+    method: 'POST',
+    path: '/v1/rulesets/{namespace}',
+    label: 'all params',
+    run: async () => {
+      const uid = await client.rules.createRuleset('namespace', {
+        title: '',
+        description: '',
+        slug: '',
+        isPrivate: false,
         document: '',
       });
     },
@@ -381,9 +523,26 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'updateRuleset',
     method: 'PATCH',
     path: '/v1/rulesets/{namespace}/{slug}',
+    label: 'required params',
     run: async () => {
       await client.rules.updateRuleset('slug', {
         namespace: 'namespace',
+      });
+    },
+  },
+
+  {
+    operation: 'updateRuleset',
+    method: 'PATCH',
+    path: '/v1/rulesets/{namespace}/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.rules.updateRuleset('slug', {
+        namespace: 'namespace',
+        slug: '',
+        title: '',
+        description: '',
+        isPrivate: false,
       });
     },
   },
@@ -404,7 +563,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/rulesets/{namespace}/{slug}',
     run: async () => {
-      const string_ = await client.rules.retrieveRulesetDocument('slug', {
+      const response = await client.rules.retrieveRulesetDocument('slug', {
         namespace: 'namespace',
       });
     },
@@ -439,7 +598,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/themes',
     run: async () => {
-      const list = await client.themes.list();
+      const theme = await client.themes.list();
     },
   },
 
@@ -447,9 +606,25 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'create',
     method: 'POST',
     path: '/v1/themes',
+    label: 'required params',
     run: async () => {
-      const uID = await client.themes.create({
+      const uid = await client.themes.create({
         name: '',
+        slug: '',
+        document: '',
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/themes',
+    label: 'all params',
+    run: async () => {
+      const uid = await client.themes.create({
+        name: '',
+        description: '',
         slug: '',
         document: '',
       });
@@ -460,8 +635,22 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'update',
     method: 'PATCH',
     path: '/v1/themes/{slug}',
+    label: 'required params',
     run: async () => {
       await client.themes.update('slug', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/themes/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.themes.update('slug', {
+        name: '',
+        description: '',
+      });
     },
   },
 
@@ -490,7 +679,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/themes/{slug}',
     run: async () => {
-      const string_ = await client.themes.retrieve('slug');
+      const response = await client.themes.retrieve('slug');
     },
   },
 
@@ -499,7 +688,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/teams',
     run: async () => {
-      const list = await client.teams.list();
+      const team = await client.teams.list();
     },
   },
 
@@ -508,7 +697,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/guides',
     run: async () => {
-      const listGuides = await client.scalarDocs.listGuides();
+      const scalarDoc = await client.scalarDocs.listGuides();
     },
   },
 
@@ -516,9 +705,26 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     operation: 'createGuide',
     method: 'POST',
     path: '/v1/guides',
+    label: 'required params',
     run: async () => {
-      const createGuide = await client.scalarDocs.createGuide({
+      const scalarDoc = await client.scalarDocs.createGuide({
         name: '',
+        isPrivate: false,
+        allowedUsers: [],
+        allowedDomains: [],
+      });
+    },
+  },
+
+  {
+    operation: 'createGuide',
+    method: 'POST',
+    path: '/v1/guides',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.createGuide({
+        name: '',
+        slug: 'xxx',
         isPrivate: false,
         allowedUsers: [],
         allowedDomains: [],
@@ -531,7 +737,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/guides/{slug}/publish',
     run: async () => {
-      const publishGuide = await client.scalarDocs.publishGuide('slug');
+      const scalarDoc = await client.scalarDocs.publishGuide('slug');
     },
   },
 
@@ -540,7 +746,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/namespaces',
     run: async () => {
-      const list = await client.namespaces.list();
+      const response = await client.namespaces.list();
     },
   },
 
@@ -549,7 +755,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'POST',
     path: '/v1/auth/exchange',
     run: async () => {
-      const exchangePersonalToken = await client.authentication.exchangePersonalToken({
+      const authentication = await client.authentication.exchangePersonalToken({
         personalToken: '',
       });
     },
@@ -560,7 +766,7 @@ const cases: { operation: string; method: string; path: string; run: () => Promi
     method: 'GET',
     path: '/v1/auth/me',
     run: async () => {
-      const listCurrentUser = await client.authentication.listCurrentUser();
+      const authentication = await client.authentication.listCurrentUser();
     },
   },
 ];
@@ -587,26 +793,21 @@ const main = async (): Promise<void> => {
   const settled = await Promise.allSettled(
     selected.map(async (testCase): Promise<SmokeResult> => {
       const startedAt = Date.now();
+      // `label` distinguishes the required-params run from the all-params run of the same
+      // operation; it is omitted entirely when the operation contributed only one case.
+      const identity = {
+        operation: testCase.operation,
+        method: testCase.method,
+        path: testCase.path,
+        ...(testCase.label ? { label: testCase.label } : {}),
+      };
       try {
         await testCase.run();
-        return {
-          operation: testCase.operation,
-          method: testCase.method,
-          path: testCase.path,
-          status: 'passed',
-          durationMs: Date.now() - startedAt,
-        };
+        return { ...identity, status: 'passed', durationMs: Date.now() - startedAt };
       } catch (error) {
         // Prefer the stack so a failure points at the failing SDK call; fall back to the message.
         const message = error instanceof Error ? (error.stack ?? error.message) : String(error);
-        return {
-          operation: testCase.operation,
-          method: testCase.method,
-          path: testCase.path,
-          status: 'failed',
-          durationMs: Date.now() - startedAt,
-          error: message,
-        };
+        return { ...identity, status: 'failed', durationMs: Date.now() - startedAt, error: message };
       }
     }),
   );
@@ -632,10 +833,15 @@ const main = async (): Promise<void> => {
     writeFileSync(reportPath, JSON.stringify({ total: results.length, failed: failed.length, results }));
   } else {
     for (const result of results) {
+      const suffix = result.label ? ` [${result.label}]` : '';
       if (result.status === 'passed')
-        console.log(`\u2714 ${result.operation} (${result.method} ${result.path}) ${result.durationMs}ms`);
+        console.log(
+          `\u2714 ${result.operation}${suffix} (${result.method} ${result.path}) ${result.durationMs}ms`,
+        );
       else
-        console.error(`\u2718 ${result.operation} (${result.method} ${result.path})\n${result.error ?? ''}`);
+        console.error(
+          `\u2718 ${result.operation}${suffix} (${result.method} ${result.path})\n${result.error ?? ''}`,
+        );
     }
     if (results.length === 0) {
       console.error('No code samples ran (empty SDK or a SCALAR_SMOKE_FILTER that matched nothing).');
