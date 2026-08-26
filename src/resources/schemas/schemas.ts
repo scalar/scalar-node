@@ -38,7 +38,7 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.schemas.list('namespace');
+   * const schema = await client.schemas.list('namespace');
    * ```
    */
   list(namespace_: string, options?: RequestOptions): APIPromise<SchemaListResponse> {
@@ -55,7 +55,7 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const uID = await client.schemas.create('namespace', {
+   * const uid = await client.schemas.create('namespace', {
    *   title: '',
    *   version: 'x',
    *   slug: '',

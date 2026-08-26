@@ -15,7 +15,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const listGuides = await client.scalarDocs.listGuides();
+   * const scalarDoc = await client.scalarDocs.listGuides();
    * ```
    */
   listGuides(options?: RequestOptions): APIPromise<ScalarDocListGuidesResponse> {
@@ -31,7 +31,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const createGuide = await client.scalarDocs.createGuide({
+   * const scalarDoc = await client.scalarDocs.createGuide({
    *   name: '',
    *   isPrivate: false,
    *   allowedUsers: [],
@@ -55,7 +55,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const publishGuide = await client.scalarDocs.publishGuide('slug');
+   * const scalarDoc = await client.scalarDocs.publishGuide('slug');
    * ```
    */
   publishGuide(slug: string, options?: RequestOptions): APIPromise<ScalarDocPublishGuideResponse> {

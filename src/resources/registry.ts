@@ -17,7 +17,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+   * const registry = await client.registry.listAllAPIDocuments();
    * ```
    */
   listAllAPIDocuments(options?: RequestOptions): APIPromise<RegistryListAllAPIDocumentsResponse> {
@@ -33,7 +33,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const listAPIDocuments = await client.registry.listAPIDocuments('namespace');
+   * const registry = await client.registry.listAPIDocuments('namespace');
    * ```
    */
   listAPIDocuments(
@@ -53,7 +53,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const createAPIDocument = await client.registry.createAPIDocument('namespace', {
+   * const registry = await client.registry.createAPIDocument('namespace', {
    *   title: '',
    *   version: 'x',
    *   slug: '',
@@ -127,7 +127,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.registry.retrieveAPIDocumentVersion('semver', {
+   * const response = await client.registry.retrieveAPIDocumentVersion('semver', {
    *   namespace: 'namespace',
    *   slug: 'slug',
    * });
@@ -155,7 +155,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const updateAPIDocumentVersion = await client.registry.updateAPIDocumentVersion('semver', {
+   * const registry = await client.registry.updateAPIDocumentVersion('semver', {
    *   namespace: 'namespace',
    *   slug: 'slug',
    *   document: '',

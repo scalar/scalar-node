@@ -19,7 +19,7 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.schemas.version.retrieve('semver', {
+   * const response = await client.schemas.version.retrieve('semver', {
    *   namespace: 'namespace',
    *   slug: 'slug',
    * });
@@ -72,7 +72,7 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const uID = await client.schemas.version.create('slug', {
+   * const uid = await client.schemas.version.create('slug', {
    *   namespace: 'namespace',
    *   version: 'x',
    *   document: '',

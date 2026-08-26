@@ -17,7 +17,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * const retrieve = await client.loginPortals.retrieve('slug');
+   * const loginPortal = await client.loginPortals.retrieve('slug');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<LoginPortalRetrieveResponse> {
@@ -70,7 +70,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * const uID = await client.loginPortals.create({
+   * const uid = await client.loginPortals.create({
    *   title: '',
    *   slug: '',
    *   email: {
@@ -117,7 +117,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.loginPortals.list();
+   * const loginPortal = await client.loginPortals.list();
    * ```
    */
   list(options?: RequestOptions): APIPromise<LoginPortalListResponse> {
