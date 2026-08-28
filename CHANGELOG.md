@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.4.0](https://github.com/scalar/scalar-node/compare/v0.3.1...v0.4.0) (2026-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** Renamed SDK from `ScalarApi` to `Scalar`.
+* **api:** Renamed SDK from `Scalar` to `ScalarApi`.
+* **api:** Renamed SDK from `ScalarApi` to `Scalar`.
+* **api:** 5 breaking changes to the SDK surface.
+    - Removed operation `schemas.version.retrieveSchema` (`GET /v1/schemas/{namespace}/{slug}/version/{semver}`).
+    - Removed operation `schemas.version.deleteSchema` (`DELETE /v1/schemas/{namespace}/{slug}/version/{semver}`).
+    - Removed operation `schemas.version.createSchema` (`POST /v1/schemas/{namespace}/{slug}/version`).
+    - Removed operation `schemas.accessGroup.createSchema` (`POST /v1/schemas/{namespace}/{slug}/access-group`).
+    - Removed operation `schemas.accessGroup.deleteSchema` (`DELETE /v1/schemas/{namespace}/{slug}/access-group`).
+
+### Features
+
+* **api:** update SDK name ([274c236](https://github.com/scalar/scalar-node/commit/274c23688058bc3cb6b33c2683f15a70e0b314c0))
+* **api:** update SDK name ([a493f8e](https://github.com/scalar/scalar-node/commit/a493f8efbc959086dff2ce28557894cb6bb1dc7c))
+* **api:** update SDK name (+1 more change) ([72f78c0](https://github.com/scalar/scalar-node/commit/72f78c0dd0a354e81ee3618b21191349d0e6fe85))
+* **api:** update SDK surface (11 changes) ([c44fd5a](https://github.com/scalar/scalar-node/commit/c44fd5aed362781510ff650fc4afb6663da0a590))
+
+
+### Chores
+
+* **api:** regenerate SDK ([ab0f242](https://github.com/scalar/scalar-node/commit/ab0f242e07f9bb21785ba19eb45bb06b719aac3c))
+* **api:** regenerate SDK ([a3f4ed8](https://github.com/scalar/scalar-node/commit/a3f4ed830e5f341f3d7b4eb3b0e6cb280f5b25af))
+* **api:** regenerate SDK ([5b4ec77](https://github.com/scalar/scalar-node/commit/5b4ec77ba62174c569f6146c00cab597d4177e49))
+* **api:** regenerate SDK ([60cb12d](https://github.com/scalar/scalar-node/commit/60cb12d2cceab4c65cef23a39dbc60c6c8557e93))
+* **api:** update generated SDK content ([301cf27](https://github.com/scalar/scalar-node/commit/301cf27b3f982b4ba7ab758de8f183b360b867ac))
+* **api:** update generated SDK content ([5861771](https://github.com/scalar/scalar-node/commit/58617719917ac9ea0ba090d6379d888a05d9d865))
+
 ## [0.3.1](https://github.com/scalar/scalar-node/compare/v0.3.0...v0.3.1) (2026-07-28)
 
 
