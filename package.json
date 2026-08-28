@@ -1,7 +1,8 @@
 {
   "name": "@scalar/sdk",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "API for managing Scalar platform resources.",
+  "author": "Scalar",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scalar/scalar-node.git"
@@ -17,12 +18,6 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
       "default": "./dist/esm/index.js"
-    },
-    "./resources/*": {
-      "types": "./dist/esm/resources/*.d.ts",
-      "import": "./dist/esm/resources/*.js",
-      "require": "./dist/cjs/resources/*.js",
-      "default": "./dist/esm/resources/*.js"
     },
     "./*.mjs": {
       "types": "./dist/esm/*.d.ts",

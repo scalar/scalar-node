@@ -1,6 +1,6 @@
-# Scalar API
+# Scalar
 
-This library provides convenient access to the Scalar API from TypeScript or JavaScript.
+This library provides convenient access to the Scalar REST API from TypeScript or JavaScript.
 
 The full API of this library can be found in [api.md](./api.md).
 
@@ -33,14 +33,15 @@ npm install @scalar/sdk
 ## Usage
 
 ```ts
-import Scalar from "@scalar/sdk";
+import Scalar from '@scalar/sdk';
 
 const client = new Scalar({
-  bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
-const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
-console.log(listAllAPIDocuments);
+const registry = await client.registry.listAllAPIDocuments();
+
+console.log(registry);
 ```
 
 The examples in the following sections assume a `client` configured as shown above.
@@ -68,10 +69,10 @@ Declared schemes:
 Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```ts
-import { APIError } from "@scalar/sdk";
+import { APIError } from '@scalar/sdk';
 
 try {
-  const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+  const registry = await client.registry.listAllAPIDocuments();
 } catch (err) {
   if (err instanceof APIError) {
     console.log(err.status, err.name, err.headers);
@@ -89,12 +90,12 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ts
-import Scalar from "@scalar/sdk";
+import Scalar from '@scalar/sdk';
 
 const client = new Scalar({
   timeout: 60000,
   maxRetries: 2,
-  logLevel: "debug",
+  logLevel: 'debug',
 });
 ```
 
@@ -124,7 +125,7 @@ const client = new Scalar({
 | `maxRetries` | `number` | - | Per-request retry count. |
 | `signal` | `AbortSignal` | - | Abort an in-flight request. |
 | `fetchOptions` | `RequestInit` | - | Per-request fetch options. |
-| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. |
+| `idempotencyKey` | `string` | - | Idempotency key for retry-safe operations. Applies to this request and its retries. |
 
 <br />
 

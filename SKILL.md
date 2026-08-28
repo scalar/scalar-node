@@ -1,9 +1,9 @@
 ---
-name: scalar-api-typescript-sdk
+name: scalar-typescript-sdk
 description: "TypeScript SDK for Scalar API. Use when writing TypeScript code that calls Scalar API with the @scalar/sdk package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
-# Scalar API TypeScript SDK
+# Scalar TypeScript SDK
 
 Generated TypeScript client for Scalar API, published as `@scalar/sdk`. Use the generated client instead of hand-writing HTTP requests.
 
@@ -16,10 +16,10 @@ npm install @scalar/sdk
 ## Client setup and authentication
 
 ```ts
-import Scalar from "@scalar/sdk";
+import Scalar from '@scalar/sdk';
 
 const client = new Scalar({
-  bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 ```
 
@@ -30,14 +30,15 @@ Provide credentials using the options below. Environment variables are read auto
 ## Calling operations
 
 ```ts
-import Scalar from "@scalar/sdk";
+import Scalar from '@scalar/sdk';
 
 const client = new Scalar({
-  bearerAuth: process.env["BEARER_AUTH"], // defaults to the BEARER_AUTH env var
+  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var
 });
 
-const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
-console.log(listAllAPIDocuments);
+const registry = await client.registry.listAllAPIDocuments();
+
+console.log(registry);
 ```
 
 Method names, parameter shapes, and response types are generated from the API description — do not guess them. Look up the exact call signature in [api.md](./api.md) before writing a call.
@@ -47,10 +48,10 @@ Method names, parameter shapes, and response types are generated from the API de
 Non-success responses throw generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```ts
-import { APIError } from "@scalar/sdk";
+import { APIError } from '@scalar/sdk';
 
 try {
-  const listAllAPIDocuments = await client.registry.listAllAPIDocuments();
+  const registry = await client.registry.listAllAPIDocuments();
 } catch (err) {
   if (err instanceof APIError) {
     console.log(err.status, err.name, err.headers);

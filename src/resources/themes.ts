@@ -1,11 +1,12 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
-import { buildHeaders } from "../internal/headers";
-import { path as __scalarPath } from "../internal/utils/path";
-import type * as ScalarDocsAPI from "./scalar-docs";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
+import { buildHeaders } from '../internal/headers';
+import { path as __scalarPath } from '../internal/utils/path';
+import type * as Shared from './shared';
+import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Themes extends APIResource {
   /**
@@ -16,11 +17,11 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.themes.list();
+   * const theme = await client.themes.list();
    * ```
    */
   list(options?: RequestOptions): APIPromise<ThemeListResponse> {
-    return this._client.get("/v1/themes", options);
+    return this._client.get('/v1/themes', options);
   }
 
   /**
@@ -28,19 +29,19 @@ export class Themes extends APIResource {
    *
    * @param {ThemeCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<ThemeCreateResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
-   * const create = await client.themes.create({
-   *   name: "",
-   *   slug: "",
-   *   document: "",
+   * const uid = await client.themes.create({
+   *   name: '',
+   *   slug: '',
+   *   document: '',
    * });
    * ```
    */
-  create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<ThemeCreateResponse> {
-    return this._client.post("/v1/themes", { body, ...options });
+  create(body: ThemeCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
+    return this._client.post('/v1/themes', { body, ...options });
   }
 
   /**
@@ -53,7 +54,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.update("slug", {});
+   * await client.themes.update('slug', {});
    * ```
    */
   update(slug: string, body: ThemeUpdateParams, options?: RequestOptions): APIPromise<ThemeUpdateResponse> {
@@ -70,12 +71,16 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.replaceDocument("slug", {
-   *   document: "",
+   * await client.themes.replaceDocument('slug', {
+   *   document: '',
    * });
    * ```
    */
-  replaceDocument(slug: string, body: ThemeReplaceDocumentParams, options?: RequestOptions): APIPromise<ThemeReplaceDocumentResponse> {
+  replaceDocument(
+    slug: string,
+    body: ThemeReplaceDocumentParams,
+    options?: RequestOptions,
+  ): APIPromise<ThemeReplaceDocumentResponse> {
     return this._client.put(__scalarPath`/v1/themes/${slug}`, { body, ...options });
   }
 
@@ -88,7 +93,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.delete("slug");
+   * await client.themes.delete('slug');
    * ```
    */
   delete(slug: string, options?: RequestOptions): APIPromise<ThemeDeleteResponse> {
@@ -104,11 +109,14 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const string_ = await client.themes.retrieve("slug");
+   * const response = await client.themes.retrieve('slug');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<ThemeRetrieveResponse> {
-    return this._client.get(__scalarPath`/v1/themes/${slug}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
+    return this._client.get(__scalarPath`/v1/themes/${slug}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
 }
 
@@ -119,7 +127,7 @@ export namespace ThemeListResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     name: string;
     description: string;
     /**
@@ -136,13 +144,6 @@ export interface ThemeCreateParams {
   slug: string;
   document: string;
   description?: string;
-}
-
-export interface ThemeCreateResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
 }
 
 export interface ThemeUpdateParams {
@@ -164,7 +165,6 @@ export type ThemeRetrieveResponse = string;
 export declare namespace Themes {
   export {
     type ThemeListResponse as ThemeListResponse,
-    type ThemeCreateResponse as ThemeCreateResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
     type ThemeDeleteResponse as ThemeDeleteResponse,

@@ -1,51 +1,63 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../../resource";
-import { APIPromise } from "../../api-promise";
-import type { RequestOptions } from "../../internal/request-options";
-import { buildHeaders } from "../../internal/headers";
-import { path as __scalarPath } from "../../internal/utils/path";
-import type * as RegistryAPI from "../registry";
+import { APIResource } from '../../resource';
+import { APIPromise } from '../../api-promise';
+import type { RequestOptions } from '../../internal/request-options';
+import { buildHeaders } from '../../internal/headers';
+import { path as __scalarPath } from '../../internal/utils/path';
+import type * as Shared from '../shared';
+import type * as RegistryAPI from '../registry';
 
 export class Version extends APIResource {
   /**
    * Get a specific schema version document.
    *
    * @param {string} semver
-   * @param {VersionRetrieveSchemaParams} params - The parameters to send with the request.
+   * @param {VersionRetrieveParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<VersionRetrieveSchemaResponse>} Default Response
+   * @returns {APIPromise<VersionRetrieveResponse>} Default Response
    *
    * @example
    * ```ts
-   * const string_ = await client.schemas.version.retrieveSchema("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
+   * const response = await client.schemas.version.retrieve('semver', {
+   *   namespace: 'namespace',
+   *   slug: 'slug',
    * });
    * ```
    */
-  retrieveSchema(semver: string, params: VersionRetrieveSchemaParams, options?: RequestOptions): APIPromise<VersionRetrieveSchemaResponse> {
+  retrieve(
+    semver: string,
+    params: VersionRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionRetrieveResponse> {
     const { namespace, slug } = params;
-    return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, { ...options, headers: buildHeaders([{ Accept: "text/plain" }, options?.headers]) });
+    return this._client.get(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
 
   /**
    * Delete a schema version.
    *
    * @param {string} semver
-   * @param {VersionDeleteSchemaParams} params - The parameters to send with the request.
+   * @param {VersionDeleteParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<VersionDeleteSchemaResponse>} Default Response
+   * @returns {APIPromise<VersionDeleteResponse>} Default Response
    *
    * @example
    * ```ts
-   * await client.schemas.version.deleteSchema("semver", {
-   *   namespace: "namespace",
-   *   slug: "slug",
+   * await client.schemas.version.delete('semver', {
+   *   namespace: 'namespace',
+   *   slug: 'slug',
    * });
    * ```
    */
-  deleteSchema(semver: string, params: VersionDeleteSchemaParams, options?: RequestOptions): APIPromise<VersionDeleteSchemaResponse> {
+  delete(
+    semver: string,
+    params: VersionDeleteParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionDeleteResponse> {
     const { namespace, slug } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}/version/${semver}`, options);
   }
@@ -54,40 +66,40 @@ export class Version extends APIResource {
    * Create a schema version.
    *
    * @param {string} slug
-   * @param {VersionCreateSchemaParams} params - The parameters to send with the request.
+   * @param {VersionCreateParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<VersionCreateSchemaResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
-   * const createSchema = await client.schemas.version.createSchema("slug", {
-   *   namespace: "namespace",
-   *   version: "x",
-   *   document: "",
+   * const uid = await client.schemas.version.create('slug', {
+   *   namespace: 'namespace',
+   *   version: 'x',
+   *   document: '',
    * });
    * ```
    */
-  createSchema(slug: string, params: VersionCreateSchemaParams, options?: RequestOptions): APIPromise<VersionCreateSchemaResponse> {
+  create(slug: string, params: VersionCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body, ...options });
   }
 }
 
-export interface VersionRetrieveSchemaParams {
+export interface VersionRetrieveParams {
   namespace: string;
   slug: string;
 }
 
-export type VersionRetrieveSchemaResponse = string;
+export type VersionRetrieveResponse = string;
 
-export interface VersionDeleteSchemaParams {
+export interface VersionDeleteParams {
   namespace: string;
   slug: string;
 }
 
-export type VersionDeleteSchemaResponse = null;
+export type VersionDeleteResponse = null;
 
-export interface VersionCreateSchemaParams {
+export interface VersionCreateParams {
   /**
    * Path param
    */
@@ -102,20 +114,12 @@ export interface VersionCreateSchemaParams {
    */
   document: string;
 }
-
-export interface VersionCreateSchemaResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
-}
 export declare namespace Version {
   export {
-    type VersionRetrieveSchemaResponse as VersionRetrieveSchemaResponse,
-    type VersionDeleteSchemaResponse as VersionDeleteSchemaResponse,
-    type VersionCreateSchemaResponse as VersionCreateSchemaResponse,
-    type VersionRetrieveSchemaParams as VersionRetrieveSchemaParams,
-    type VersionDeleteSchemaParams as VersionDeleteSchemaParams,
-    type VersionCreateSchemaParams as VersionCreateSchemaParams,
+    type VersionRetrieveResponse as VersionRetrieveResponse,
+    type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionRetrieveParams as VersionRetrieveParams,
+    type VersionDeleteParams as VersionDeleteParams,
+    type VersionCreateParams as VersionCreateParams,
   };
 }

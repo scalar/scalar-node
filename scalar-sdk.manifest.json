@@ -1,7 +1,7 @@
 {
-  "name": "ScalarApi",
-  "slug": "scalarApi",
-  "generatorVersion": "0.20.1",
+  "name": "Scalar",
+  "slug": "scalar",
+  "generatorVersion": "0.30.1",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -4793,8 +4793,8 @@
     {
       "resource": "schemas.version",
       "publicResource": "schemas.version",
-      "operation": "retrieveSchema",
-      "publicOperation": "retrieveSchema",
+      "operation": "retrieve",
+      "publicOperation": "retrieve",
       "deprecated": false,
       "method": "GET",
       "path": "/v1/schemas/{namespace}/{slug}/version/{semver}",
@@ -4841,7 +4841,7 @@
       "publicCookieParams": [],
       "cookieParamDetails": [],
       "paramsModel": {
-        "publicName": "VersionRetrieveSchemaParams"
+        "publicName": "VersionRetrieveParams"
       },
       "response": {
         "status": "200",
@@ -4963,8 +4963,8 @@
     {
       "resource": "schemas.version",
       "publicResource": "schemas.version",
-      "operation": "deleteSchema",
-      "publicOperation": "deleteSchema",
+      "operation": "delete",
+      "publicOperation": "delete",
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/schemas/{namespace}/{slug}/version/{semver}",
@@ -5011,7 +5011,7 @@
       "publicCookieParams": [],
       "cookieParamDetails": [],
       "paramsModel": {
-        "publicName": "VersionDeleteSchemaParams"
+        "publicName": "VersionDeleteParams"
       },
       "response": {
         "status": "200",
@@ -5133,8 +5133,8 @@
     {
       "resource": "schemas.version",
       "publicResource": "schemas.version",
-      "operation": "createSchema",
-      "publicOperation": "createSchema",
+      "operation": "create",
+      "publicOperation": "create",
       "deprecated": false,
       "method": "POST",
       "path": "/v1/schemas/{namespace}/{slug}/version",
@@ -5188,7 +5188,7 @@
       "publicCookieParams": [],
       "cookieParamDetails": [],
       "paramsModel": {
-        "publicName": "VersionCreateSchemaParams"
+        "publicName": "VersionCreateParams"
       },
       "requestBody": {
         "contentType": "application/json",
@@ -5327,8 +5327,8 @@
     {
       "resource": "schemas.accessGroup",
       "publicResource": "schemas.accessGroup",
-      "operation": "createSchema",
-      "publicOperation": "createSchema",
+      "operation": "create",
+      "publicOperation": "create",
       "deprecated": false,
       "method": "POST",
       "path": "/v1/schemas/{namespace}/{slug}/access-group",
@@ -5376,7 +5376,7 @@
       "publicCookieParams": [],
       "cookieParamDetails": [],
       "paramsModel": {
-        "publicName": "AccessGroupCreateSchemaParams"
+        "publicName": "AccessGroupCreateParams"
       },
       "requestBody": {
         "contentType": "application/json",
@@ -5511,8 +5511,8 @@
     {
       "resource": "schemas.accessGroup",
       "publicResource": "schemas.accessGroup",
-      "operation": "deleteSchema",
-      "publicOperation": "deleteSchema",
+      "operation": "delete",
+      "publicOperation": "delete",
       "deprecated": false,
       "method": "DELETE",
       "path": "/v1/schemas/{namespace}/{slug}/access-group",
@@ -5560,7 +5560,7 @@
       "publicCookieParams": [],
       "cookieParamDetails": [],
       "paramsModel": {
-        "publicName": "AccessGroupDeleteSchemaParams"
+        "publicName": "AccessGroupDeleteParams"
       },
       "requestBody": {
         "contentType": "application/json",

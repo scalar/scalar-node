@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../resource";
-import { APIPromise } from "../api-promise";
-import type { RequestOptions } from "../internal/request-options";
-import type * as ScalarDocsAPI from "./scalar-docs";
+import { APIResource } from '../resource';
+import { APIPromise } from '../api-promise';
+import type { RequestOptions } from '../internal/request-options';
+import type * as Shared from './shared';
+import type * as ScalarDocsAPI from './scalar-docs';
 
 export class Teams extends APIResource {
   /**
@@ -14,11 +15,11 @@ export class Teams extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.teams.list();
+   * const team = await client.teams.list();
    * ```
    */
   list(options?: RequestOptions): APIPromise<TeamListResponse> {
-    return this._client.get("/v1/teams", options);
+    return this._client.get('/v1/teams', options);
   }
 }
 
@@ -29,7 +30,7 @@ export namespace TeamListResponse {
     /**
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     name: string;
     /**
      * @minLength 3
@@ -42,7 +43,5 @@ export namespace TeamListResponse {
   }
 }
 export declare namespace Teams {
-  export {
-    type TeamListResponse as TeamListResponse,
-  };
+  export { type TeamListResponse as TeamListResponse };
 }

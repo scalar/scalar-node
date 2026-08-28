@@ -1,15 +1,29 @@
 // File generated from our OpenAPI spec by Scalar. See README.md for details.
 
-import { APIResource } from "../../resource";
-import { APIPromise } from "../../api-promise";
-import type { RequestOptions } from "../../internal/request-options";
-import { path as __scalarPath } from "../../internal/utils/path";
-import type * as ScalarDocsAPI from "../scalar-docs";
-import type * as RegistryAPI from "../registry";
-import * as VersionAPI from "./version";
-import { Version, type VersionRetrieveSchemaResponse, type VersionDeleteSchemaResponse, type VersionCreateSchemaResponse, type VersionRetrieveSchemaParams, type VersionDeleteSchemaParams, type VersionCreateSchemaParams } from "./version";
-import * as AccessGroupAPI from "./access-group";
-import { AccessGroup, type AccessGroupCreateSchemaResponse, type AccessGroupDeleteSchemaResponse, type AccessGroupCreateSchemaParams, type AccessGroupDeleteSchemaParams } from "./access-group";
+import { APIResource } from '../../resource';
+import { APIPromise } from '../../api-promise';
+import type { RequestOptions } from '../../internal/request-options';
+import { path as __scalarPath } from '../../internal/utils/path';
+import type * as Shared from '../shared';
+import type * as ScalarDocsAPI from '../scalar-docs';
+import type * as RegistryAPI from '../registry';
+import * as VersionAPI from './version';
+import {
+  Version,
+  type VersionRetrieveResponse,
+  type VersionDeleteResponse,
+  type VersionRetrieveParams,
+  type VersionDeleteParams,
+  type VersionCreateParams,
+} from './version';
+import * as AccessGroupAPI from './access-group';
+import {
+  AccessGroup,
+  type AccessGroupCreateResponse,
+  type AccessGroupDeleteResponse,
+  type AccessGroupCreateParams,
+  type AccessGroupDeleteParams,
+} from './access-group';
 
 export class Schemas extends APIResource {
   version: VersionAPI.Version = new VersionAPI.Version(this._client);
@@ -24,7 +38,7 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const list = await client.schemas.list("namespace");
+   * const schema = await client.schemas.list('namespace');
    * ```
    */
   list(namespace_: string, options?: RequestOptions): APIPromise<SchemaListResponse> {
@@ -37,19 +51,19 @@ export class Schemas extends APIResource {
    * @param {string} namespace_
    * @param {SchemaCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<SchemaCreateResponse>} Default Response
+   * @returns {APIPromise<Shared.UID>} Default Response
    *
    * @example
    * ```ts
-   * const create = await client.schemas.create("namespace", {
-   *   title: "",
-   *   version: "x",
-   *   slug: "",
-   *   document: "",
+   * const uid = await client.schemas.create('namespace', {
+   *   title: '',
+   *   version: 'x',
+   *   slug: '',
+   *   document: '',
    * });
    * ```
    */
-  create(namespace_: string, body: SchemaCreateParams, options?: RequestOptions): APIPromise<SchemaCreateResponse> {
+  create(namespace_: string, body: SchemaCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
     return this._client.post(__scalarPath`/v1/schemas/${namespace_}`, { body, ...options });
   }
 
@@ -63,12 +77,16 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.update("slug", {
-   *   namespace: "namespace",
+   * await client.schemas.update('slug', {
+   *   namespace: 'namespace',
    * });
    * ```
    */
-  update(slug: string, params: SchemaUpdateParams, options?: RequestOptions): APIPromise<SchemaUpdateResponse> {
+  update(
+    slug: string,
+    params: SchemaUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<SchemaUpdateResponse> {
     const { namespace, ...body } = params;
     return this._client.patch(__scalarPath`/v1/schemas/${namespace}/${slug}`, { body, ...options });
   }
@@ -83,12 +101,16 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.delete("slug", {
-   *   namespace: "namespace",
+   * await client.schemas.delete('slug', {
+   *   namespace: 'namespace',
    * });
    * ```
    */
-  delete(slug: string, params: SchemaDeleteParams, options?: RequestOptions): APIPromise<SchemaDeleteResponse> {
+  delete(
+    slug: string,
+    params: SchemaDeleteParams,
+    options?: RequestOptions,
+  ): APIPromise<SchemaDeleteResponse> {
     const { namespace } = params;
     return this._client.delete(__scalarPath`/v1/schemas/${namespace}/${slug}`, options);
   }
@@ -99,21 +121,15 @@ export type SchemaListResponse = Array<SchemaListResponse.SchemaListResponseItem
 export namespace SchemaListResponse {
   export interface SchemaListResponseItem {
     /**
-     * @default nanoid()
      * @minLength 5
      */
-    uid: string;
+    uid: Shared.Nanoid;
     /**
-     * @default ""
      * @maxLength 100
      */
     title: string;
-    /**
-     * @default ""
-     */
     description: string;
     /**
-     * @default randomManagedDocSlug()
      * @minLength 3
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
@@ -124,10 +140,7 @@ export namespace SchemaListResponse {
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
-    namespace: string;
-    /**
-     * @default false
-     */
+    namespace: Shared.Namespace;
     isPrivate: boolean;
     versions: Array<SchemaListResponseItem.Version>;
   }
@@ -135,24 +148,20 @@ export namespace SchemaListResponse {
   export namespace SchemaListResponseItem {
     export interface Version {
       /**
-       * @default nanoid()
        * @minLength 5
        */
-      uid: string;
+      uid: Shared.Nanoid;
       /**
-       * @default unixTimestamp()
        * @minimum 0
        * @maximum 9007199254740991
        */
-      createdAt: number;
+      createdAt: Shared.Timestamp;
       /**
-       * @default unixTimestamp()
        * @minimum 0
        * @maximum 9007199254740991
        */
-      updatedAt: number;
+      updatedAt: Shared.Timestamp;
       /**
-       * @default 0.0.1
        * @minLength 1
        */
       version: RegistryAPI.Version;
@@ -170,13 +179,6 @@ export interface SchemaCreateParams {
   document: string;
   description?: string;
   isPrivate?: boolean;
-}
-
-export interface SchemaCreateResponse {
-  /**
-   * @minLength 5
-   */
-  uid: string;
 }
 
 export interface SchemaUpdateParams {
@@ -211,7 +213,6 @@ Schemas.AccessGroup = AccessGroup;
 export declare namespace Schemas {
   export {
     type SchemaListResponse as SchemaListResponse,
-    type SchemaCreateResponse as SchemaCreateResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
     type SchemaCreateParams as SchemaCreateParams,
@@ -221,19 +222,18 @@ export declare namespace Schemas {
 
   export {
     Version as Version,
-    type VersionRetrieveSchemaResponse as VersionRetrieveSchemaResponse,
-    type VersionDeleteSchemaResponse as VersionDeleteSchemaResponse,
-    type VersionCreateSchemaResponse as VersionCreateSchemaResponse,
-    type VersionRetrieveSchemaParams as VersionRetrieveSchemaParams,
-    type VersionDeleteSchemaParams as VersionDeleteSchemaParams,
-    type VersionCreateSchemaParams as VersionCreateSchemaParams,
+    type VersionRetrieveResponse as VersionRetrieveResponse,
+    type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionRetrieveParams as VersionRetrieveParams,
+    type VersionDeleteParams as VersionDeleteParams,
+    type VersionCreateParams as VersionCreateParams,
   };
 
   export {
     AccessGroup as AccessGroup,
-    type AccessGroupCreateSchemaResponse as AccessGroupCreateSchemaResponse,
-    type AccessGroupDeleteSchemaResponse as AccessGroupDeleteSchemaResponse,
-    type AccessGroupCreateSchemaParams as AccessGroupCreateSchemaParams,
-    type AccessGroupDeleteSchemaParams as AccessGroupDeleteSchemaParams,
+    type AccessGroupCreateResponse as AccessGroupCreateResponse,
+    type AccessGroupDeleteResponse as AccessGroupDeleteResponse,
+    type AccessGroupCreateParams as AccessGroupCreateParams,
+    type AccessGroupDeleteParams as AccessGroupDeleteParams,
   };
 }
