@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.32.0",
+  "generatorVersion": "0.32.14",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -770,7 +770,10 @@
       "type": {
         "kind": "primitive",
         "type": "integer",
-        "validation": {}
+        "validation": {
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
       }
     },
     {
