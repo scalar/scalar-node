@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.5.0](https://github.com/scalar/scalar-node/compare/v0.4.1...v0.5.0) (2026-09-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** Schema `timestamp` shape changed.
+
+### Features
+
+* **api:** update schema timestamp (+1 more change) ([bd2ade8](https://github.com/scalar/scalar-node/commit/bd2ade8fd8dc9fd5f2b50bcfc7082e3c92894b33))
+
+
+### Chores
+
+* **api:** regenerate SDK ([a12790a](https://github.com/scalar/scalar-node/commit/a12790a69a78c5cb72c7546414185fed9d706b15))
+* **api:** regenerate SDK ([14a33a0](https://github.com/scalar/scalar-node/commit/14a33a0a635e5f79fe631d8d0719ed86ee315526))
+* **api:** update generated SDK content ([91db268](https://github.com/scalar/scalar-node/commit/91db268588ad2ec5fd3ab98b70cb5c0e0e290854))
+
 ## [0.4.1](https://github.com/scalar/scalar-node/compare/v0.4.0...v0.4.1) (2026-08-28)
 
 
