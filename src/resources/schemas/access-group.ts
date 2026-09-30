@@ -21,7 +21,7 @@ export class AccessGroup extends APIResource {
    * ```ts
    * await client.schemas.accessGroup.create('slug', {
    *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   *   accessGroupSlug: 'x',
    * });
    * ```
    */
@@ -49,7 +49,7 @@ export class AccessGroup extends APIResource {
    * ```ts
    * await client.schemas.accessGroup.delete('slug', {
    *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   *   accessGroupSlug: 'x',
    * });
    * ```
    */
@@ -73,7 +73,7 @@ export interface AccessGroupCreateParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -89,7 +89,7 @@ export interface AccessGroupDeleteParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */

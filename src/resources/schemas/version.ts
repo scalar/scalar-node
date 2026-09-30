@@ -68,18 +68,22 @@ export class Version extends APIResource {
    * @param {string} slug
    * @param {VersionCreateParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<Shared.UID>} Default Response
+   * @returns {APIPromise<VersionCreateResponse>} Default Response
    *
    * @example
    * ```ts
-   * const uid = await client.schemas.version.create('slug', {
+   * const version = await client.schemas.version.create('slug', {
    *   namespace: 'namespace',
    *   version: 'x',
    *   document: '',
    * });
    * ```
    */
-  create(slug: string, params: VersionCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
+  create(
+    slug: string,
+    params: VersionCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionCreateResponse> {
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body, ...options });
   }
@@ -113,11 +117,23 @@ export interface VersionCreateParams {
    * Body param
    */
   document: string;
+  /**
+   * Body param
+   */
+  force?: boolean;
+}
+
+export interface VersionCreateResponse {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
 }
 export declare namespace Version {
   export {
     type VersionRetrieveResponse as VersionRetrieveResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionCreateResponse as VersionCreateResponse,
     type VersionRetrieveParams as VersionRetrieveParams,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionCreateParams as VersionCreateParams,

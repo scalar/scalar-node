@@ -16,7 +16,7 @@ import { writeFileSync } from 'node:fs';
 import Scalar from '@scalar/sdk';
 
 // One shared client runs every case.
-const client = new Scalar();
+const client = new Scalar({ maxRetries: 2, timeout: 10_000 });
 
 // The result of running one case, collected for the JSON report or the printed table.
 type SmokeResult = {
@@ -147,27 +147,11 @@ const cases: {
     operation: 'updateApiDocumentVersion',
     method: 'PATCH',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}',
-    label: 'required params',
     run: async () => {
       const registry = await client.registry.updateAPIDocumentVersion('semver', {
         namespace: 'namespace',
         slug: 'slug',
         document: '',
-      });
-    },
-  },
-
-  {
-    operation: 'updateApiDocumentVersion',
-    method: 'PATCH',
-    path: '/v1/apis/{namespace}/{slug}/version/{semver}',
-    label: 'all params',
-    run: async () => {
-      const registry = await client.registry.updateAPIDocumentVersion('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
-        document: '',
-        lastKnownVersionSha: '',
       });
     },
   },
@@ -221,7 +205,6 @@ const cases: {
         version: 'x',
         document: '',
         force: false,
-        lastKnownVersionSha: '',
       });
     },
   },
@@ -233,7 +216,7 @@ const cases: {
     run: async () => {
       await client.registry.createAPIDocumentAccessGroup('slug', {
         namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+        accessGroupSlug: 'x',
       });
     },
   },
@@ -245,7 +228,7 @@ const cases: {
     run: async () => {
       await client.registry.deleteAPIDocumentAccessGroup('slug', {
         namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+        accessGroupSlug: 'x',
       });
     },
   },
@@ -357,11 +340,27 @@ const cases: {
     operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/version',
+    label: 'required params',
     run: async () => {
-      const uid = await client.schemas.version.create('slug', {
+      const version = await client.schemas.version.create('slug', {
         namespace: 'namespace',
         version: 'x',
         document: '',
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/schemas/{namespace}/{slug}/version',
+    label: 'all params',
+    run: async () => {
+      const version = await client.schemas.version.create('slug', {
+        namespace: 'namespace',
+        version: 'x',
+        document: '',
+        force: false,
       });
     },
   },
@@ -373,7 +372,7 @@ const cases: {
     run: async () => {
       await client.schemas.accessGroup.create('slug', {
         namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+        accessGroupSlug: 'x',
       });
     },
   },
@@ -385,7 +384,7 @@ const cases: {
     run: async () => {
       await client.schemas.accessGroup.delete('slug', {
         namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+        accessGroupSlug: 'x',
       });
     },
   },
@@ -446,7 +445,7 @@ const cases: {
           title: 'Private Docs',
           mainColor: '#2a2f45',
           mainBackground: '#f6f6f6',
-          cardColor: '2a2f45',
+          cardColor: '#2a2f45',
           cardBackground: '#fff',
           buttonColor: '#fff',
           buttonBackground: '#0f0f0f',
@@ -576,7 +575,7 @@ const cases: {
     run: async () => {
       await client.rules.createRulesetAccessGroup('slug', {
         namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+        accessGroupSlug: 'x',
       });
     },
   },
@@ -588,7 +587,7 @@ const cases: {
     run: async () => {
       await client.rules.deleteRulesetAccessGroup('slug', {
         namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+        accessGroupSlug: 'x',
       });
     },
   },
@@ -724,7 +723,7 @@ const cases: {
     run: async () => {
       const scalarDoc = await client.scalarDocs.createGuide({
         name: '',
-        slug: 'xxx',
+        slug: 'x',
         isPrivate: false,
         allowedUsers: [],
         allowedDomains: [],

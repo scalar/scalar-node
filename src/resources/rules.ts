@@ -138,7 +138,7 @@ export class Rules extends APIResource {
    * ```ts
    * await client.rules.createRulesetAccessGroup('slug', {
    *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   *   accessGroupSlug: 'x',
    * });
    * ```
    */
@@ -166,7 +166,7 @@ export class Rules extends APIResource {
    * ```ts
    * await client.rules.deleteRulesetAccessGroup('slug', {
    *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   *   accessGroupSlug: 'x',
    * });
    * ```
    */
@@ -197,13 +197,13 @@ export namespace RuleListRulesetsResponse {
     title: string;
     description: string;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
     slug: ScalarDocsAPI.Slug;
     /**
-     * @minLength 3
+     * @minLength 2
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
@@ -264,7 +264,7 @@ export interface RuleCreateRulesetAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -280,7 +280,7 @@ export interface RuleDeleteRulesetAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */

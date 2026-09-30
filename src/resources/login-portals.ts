@@ -81,7 +81,7 @@ export class LoginPortals extends APIResource {
    *     title: 'Private Docs',
    *     mainColor: '#2a2f45',
    *     mainBackground: '#f6f6f6',
-   *     cardColor: '2a2f45',
+   *     cardColor: '#2a2f45',
    *     cardBackground: '#fff',
    *     buttonColor: '#fff',
    *     buttonBackground: '#0f0f0f',
@@ -234,7 +234,7 @@ export namespace LoginPortalListResponse {
      */
     title: string;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */

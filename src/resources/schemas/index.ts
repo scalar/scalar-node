@@ -16,6 +16,7 @@ export type {
   VersionDeleteParams,
   VersionDeleteResponse,
   VersionCreateParams,
+  VersionCreateResponse,
 } from './version';
 export { AccessGroup } from './access-group';
 export type {

@@ -12,6 +12,7 @@ import {
   Version,
   type VersionRetrieveResponse,
   type VersionDeleteResponse,
+  type VersionCreateResponse,
   type VersionRetrieveParams,
   type VersionDeleteParams,
   type VersionCreateParams,
@@ -130,13 +131,13 @@ export namespace SchemaListResponse {
     title: string;
     description: string;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
     slug: ScalarDocsAPI.Slug;
     /**
-     * @minLength 3
+     * @minLength 2
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
@@ -165,6 +166,14 @@ export namespace SchemaListResponse {
        * @minLength 1
        */
       version: RegistryAPI.Version;
+      /**
+       * @pattern ^[a-f0-9]{64}$
+       */
+      yamlSha?: string;
+      /**
+       * @pattern ^[a-f0-9]{64}$
+       */
+      jsonSha?: string;
     }
   }
 }
@@ -224,6 +233,7 @@ export declare namespace Schemas {
     Version as Version,
     type VersionRetrieveResponse as VersionRetrieveResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionCreateResponse as VersionCreateResponse,
     type VersionRetrieveParams as VersionRetrieveParams,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionCreateParams as VersionCreateParams,

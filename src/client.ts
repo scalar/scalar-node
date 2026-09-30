@@ -14,6 +14,7 @@ import {
   formatRequestDetails,
   loggerFor,
   parseLogLevel,
+  redactUrl,
   type LogLevel,
   type Logger,
 } from './internal/utils/log';
@@ -123,6 +124,11 @@ export interface ClientOptions {
   bearerAuth?: string | AuthTokenProvider | undefined;
 
   /**
+   * Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones.
+   */
+  oAuth2?: string | AuthTokenProvider | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env["SCALAR_BASE_URL"].
@@ -198,7 +204,8 @@ export type ScalarOptions = ClientOptions;
  * API Client for interfacing with the Scalar API.
  */
 export class Scalar {
-  bearerAuth: string | AuthTokenProvider;
+  bearerAuth: string | AuthTokenProvider | undefined;
+  oAuth2: string | AuthTokenProvider | undefined;
 
   baseURL: string;
   maxRetries: number;
@@ -217,6 +224,7 @@ export class Scalar {
    * API Client for interfacing with the Scalar API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
+   * @param {string | AuthTokenProvider | undefined} [opts.oAuth2=process.env["SCALAR_O_AUTH2"] ?? undefined]
    * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -228,16 +236,12 @@ export class Scalar {
   constructor({
     baseURL = readEnv('SCALAR_BASE_URL'),
     bearerAuth = readEnv('BEARER_AUTH'),
+    oAuth2 = readEnv('SCALAR_O_AUTH2'),
     ...opts
   }: ClientOptions = {}) {
-    if (bearerAuth === undefined) {
-      throw new Errors.ScalarError(
-        "The BEARER_AUTH environment variable is missing or empty; either provide it, or instantiate the Scalar client with an bearerAuth option, like new Scalar({ bearerAuth: 'My Bearer Auth' }).",
-      );
-    }
-
     const options: ClientOptions = {
       bearerAuth,
+      oAuth2,
       ...opts,
       baseURL: baseURL || 'https://access.scalar.com',
     };
@@ -275,6 +279,7 @@ export class Scalar {
     this._defaultBaseURL = defaultBaseURL;
 
     this.bearerAuth = bearerAuth;
+    this.oAuth2 = oAuth2;
   }
 
   withOptions(options: Partial<ClientOptions>): this {
@@ -288,6 +293,7 @@ export class Scalar {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       bearerAuth: this.bearerAuth,
+      oAuth2: this.oAuth2,
       ...options,
     });
     return client;
@@ -307,7 +313,7 @@ export class Scalar {
   }
 
   private getUserAgent(): string {
-    return `${this.constructor.name}/JS ${VERSION}`;
+    return `Scalar/JS ${VERSION}`;
   }
 
   protected defaultIdempotencyKey(): string {
@@ -493,7 +499,7 @@ export class Scalar {
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${redactUrl(url)} ${
       response.ok ? 'succeeded' : 'failed'
     } with status ${response.status} in ${headersTime - startTime}ms`;
 
@@ -570,7 +576,8 @@ export class Scalar {
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
     const abort = this._makeAbort(controller);
-    if (signal) signal.addEventListener('abort', abort, { once: true });
+    if (signal?.aborted) abort();
+    else if (signal) signal.addEventListener('abort', abort, { once: true });
 
     const timeout = setTimeout(abort, ms);
 
@@ -591,7 +598,7 @@ export class Scalar {
     }
 
     try {
-      // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
+      // use undefined this binding; fetch errors if bound to something else in browsers and edge runtimes / workers
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
       clearTimeout(timeout);
@@ -778,18 +785,20 @@ export class Scalar {
     if (body == null) {
       return { bodyHeaders: undefined, body: undefined };
     }
-    const headers = buildHeaders([rawHeaders]);
+    // A `content-type` from either header bag says how the body is already encoded; the request's
+    // own wins over the client-wide default, as it does on the wire.
+    const headers = buildHeaders([this._options.defaultHeaders, rawHeaders]);
     if (
       // Pass raw type verbatim
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      // Always pass strings through verbatim. The previous guard required a caller-set
-      // `content-type` and otherwise fell through to `FallbackEncoder`, which JSON.stringifies
-      // the value and labels it `application/json` — silently quoting plain-text payloads and
-      // mislabeling them as JSON. fetch defaults a string body to `text/plain;charset=UTF-8`
-      // when no `content-type` is set, which is a safer default than misclaiming JSON.
-      typeof body === 'string' ||
+      // A string is only already-encoded when something has said what it is encoded as.
+      // Generated call sites state the declared request media type, so a `text/plain` or
+      // ndjson payload reaches the wire byte-for-byte. A string with no `content-type` came
+      // from a body the document declared as JSON — `{ "type": "string" }` — and encoding it
+      // below is what puts the quotes the server parses for around it.
+      (typeof body === 'string' && headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -825,7 +834,7 @@ export class Scalar {
     throw new Errors.AuthenticationError(
       401,
       undefined,
-      'Could not resolve authentication method. Expected the bearerAuth to be set. Or for the "Authorization" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected either bearerAuth or oAuth2 to be set. Or for the "Authorization" headers to be explicitly omitted',
       headers,
     );
   }
@@ -834,6 +843,8 @@ export class Scalar {
     const headers: Record<string, string> = {};
     const bearerAuth = this.resolveAuthOptionSync('bearerAuth', this.bearerAuth);
     if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
+    const oAuth2 = this.resolveAuthOptionSync('oAuth2', this.oAuth2);
+    if (oAuth2) headers['Authorization'] = `Bearer ${oAuth2}`;
     return headers;
   }
 
@@ -844,11 +855,23 @@ export class Scalar {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    return buildHeaders([await this.bearerAuth2(opts), await this.oAuth2Auth(opts)]);
+  }
+
+  protected async bearerAuth2(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
     if (bearerAuth == null) {
       return undefined;
     }
     return buildHeaders([{ Authorization: `Bearer ${bearerAuth}` }]);
+  }
+
+  protected async oAuth2Auth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    const oAuth2 = await this.resolveAuthOption('oAuth2', this.oAuth2);
+    if (oAuth2 == null) {
+      return undefined;
+    }
+    return buildHeaders([{ Authorization: `Bearer ${oAuth2}` }]);
   }
 
   private async authQueryAsync(): Promise<Record<string, string>> {

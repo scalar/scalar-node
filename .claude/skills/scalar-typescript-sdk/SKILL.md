@@ -26,6 +26,7 @@ const client = new Scalar({
 Provide credentials using the options below. Environment variables are read automatically when the target runtime supports them:
 
 - `bearerAuth` (env: `BEARER_AUTH`) — Credential for the BearerAuth scheme.
+- `oAuth2` (env: `SCALAR_O_AUTH2`) — Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones.
 
 ## Calling operations
 

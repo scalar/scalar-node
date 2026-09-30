@@ -92,12 +92,14 @@ export namespace ScalarDocListGuidesResponse {
     lastPublished: Shared.Timestamp | null;
     lastPublishedUid: string | null;
     loginPortalUid: string;
+    userInfoHookUrl: string;
     activeThemeId: string;
     isPrivate: boolean;
     agentEnabled: boolean;
+    analyticsEnabled: boolean;
     accessGroups: unknown;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
@@ -142,7 +144,7 @@ export interface ScalarDocCreateGuideParams {
   allowedUsers: Array<string>;
   allowedDomains: Array<string>;
   /**
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */

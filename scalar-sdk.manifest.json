@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.32.14",
+  "generatorVersion": "0.36.0",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -12,13 +12,31 @@
     "production"
   ],
   "auth": [
-    "bearer"
+    "bearer",
+    "oauth2"
   ],
   "authDetails": [
     {
       "kind": "bearer",
       "id": "BearerAuth",
       "bearerFormat": "JWT"
+    },
+    {
+      "kind": "oauth2",
+      "id": "OAuth2",
+      "flows": [
+        {
+          "kind": "authorizationCode",
+          "authorizationUrl": "https://access.scalar.com/v1/oauth/authorize",
+          "tokenUrl": "https://access.scalar.com/v1/oauth/token",
+          "refreshUrl": "https://access.scalar.com/v1/oauth/token",
+          "scopes": [
+            "read",
+            "write",
+            "admin"
+          ]
+        }
+      ]
     }
   ],
   "clientHeaderParams": [],
@@ -358,7 +376,7 @@
         "type": "string",
         "validation": {
           "pattern": "^[a-z](?:[a-z0-9-]*[a-z0-9])?$",
-          "minLength": 3,
+          "minLength": 1,
           "maxLength": 60
         }
       }
@@ -373,7 +391,7 @@
         "type": "string",
         "validation": {
           "pattern": "^[a-zA-Z0-9-_]+$",
-          "minLength": 3,
+          "minLength": 2,
           "maxLength": 50
         }
       }
@@ -424,6 +442,28 @@
             "type": {
               "kind": "primitive",
               "type": "boolean"
+            }
+          },
+          {
+            "name": "endpointCount",
+            "publicName": "endpointCount",
+            "required": true,
+            "deprecated": false,
+            "type": {
+              "kind": "union",
+              "variants": [
+                {
+                  "kind": "primitive",
+                  "type": "integer",
+                  "validation": {
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  }
+                },
+                {
+                  "kind": "null"
+                }
+              ]
             }
           },
           {
@@ -546,16 +586,6 @@
               "kind": "primitive",
               "type": "string"
             }
-          },
-          {
-            "name": "versionSha",
-            "publicName": "versionSha",
-            "required": false,
-            "deprecated": false,
-            "type": {
-              "kind": "primitive",
-              "type": "string"
-            }
           }
         ],
         "additionalProperties": false
@@ -576,6 +606,7 @@
           "patch",
           "post",
           "put",
+          "query",
           "trace"
         ],
         "names": [
@@ -586,9 +617,11 @@
           "Patch",
           "Post",
           "Put",
+          "Query",
           "Trace"
         ],
         "deprecations": [
+          false,
           false,
           false,
           false,
@@ -756,6 +789,32 @@
             "type": {
               "kind": "ref",
               "name": "version"
+            }
+          },
+          {
+            "name": "yamlSha",
+            "publicName": "yamlSha",
+            "required": false,
+            "deprecated": false,
+            "type": {
+              "kind": "primitive",
+              "type": "string",
+              "validation": {
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          {
+            "name": "jsonSha",
+            "publicName": "jsonSha",
+            "required": false,
+            "deprecated": false,
+            "type": {
+              "kind": "primitive",
+              "type": "string",
+              "validation": {
+                "pattern": "^[a-f0-9]{64}$"
+              }
             }
           }
         ],
@@ -1369,6 +1428,20 @@
       }
     },
     {
+      "name": "email",
+      "source": "email",
+      "publicAliases": [],
+      "deprecated": false,
+      "type": {
+        "kind": "primitive",
+        "type": "string",
+        "format": "email",
+        "validation": {
+          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        }
+      }
+    },
+    {
       "name": "github_project",
       "source": "github_project",
       "publicAliases": [],
@@ -1481,6 +1554,16 @@
             }
           },
           {
+            "name": "userInfoHookUrl",
+            "publicName": "userInfoHookUrl",
+            "required": true,
+            "deprecated": false,
+            "type": {
+              "kind": "primitive",
+              "type": "string"
+            }
+          },
+          {
             "name": "activeThemeId",
             "publicName": "activeThemeId",
             "required": true,
@@ -1513,6 +1596,16 @@
           {
             "name": "agentEnabled",
             "publicName": "agentEnabled",
+            "required": true,
+            "deprecated": false,
+            "type": {
+              "kind": "primitive",
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "analyticsEnabled",
+            "publicName": "analyticsEnabled",
             "required": true,
             "deprecated": false,
             "type": {
@@ -1726,20 +1819,6 @@
           }
         ],
         "additionalProperties": false
-      }
-    },
-    {
-      "name": "email",
-      "source": "email",
-      "publicAliases": [],
-      "deprecated": false,
-      "type": {
-        "kind": "primitive",
-        "type": "string",
-        "format": "email",
-        "validation": {
-          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-        }
       }
     },
     {
@@ -2978,21 +3057,15 @@
       "headerParams": [],
       "publicHeaderParams": [],
       "bodyParams": [
-        "document",
-        "lastKnownVersionSha"
+        "document"
       ],
       "publicBodyParams": [
-        "document",
-        "lastKnownVersionSha"
+        "document"
       ],
       "bodyParamDetails": [
         {
           "name": "document",
           "required": true
-        },
-        {
-          "name": "lastKnownVersionSha",
-          "required": false
         }
       ],
       "pathParamDetails": [
@@ -3520,14 +3593,12 @@
       "bodyParams": [
         "version",
         "document",
-        "force",
-        "lastKnownVersionSha"
+        "force"
       ],
       "publicBodyParams": [
         "version",
         "document",
-        "force",
-        "lastKnownVersionSha"
+        "force"
       ],
       "bodyParamDetails": [
         {
@@ -3540,10 +3611,6 @@
         },
         {
           "name": "force",
-          "required": false
-        },
-        {
-          "name": "lastKnownVersionSha",
           "required": false
         }
       ],
@@ -5155,11 +5222,13 @@
       "publicHeaderParams": [],
       "bodyParams": [
         "version",
-        "document"
+        "document",
+        "force"
       ],
       "publicBodyParams": [
         "version",
-        "document"
+        "document",
+        "force"
       ],
       "bodyParamDetails": [
         {
@@ -5169,6 +5238,10 @@
         {
           "name": "document",
           "required": true
+        },
+        {
+          "name": "force",
+          "required": false
         }
       ],
       "pathParamDetails": [
@@ -5216,10 +5289,6 @@
             "encoding": "json"
           }
         ]
-      },
-      "responseModel": {
-        "name": "uid",
-        "publicAliases": []
       },
       "result": {
         "successStatus": "200",
