@@ -57,10 +57,12 @@ Pass credentials to the generated client constructor. Environment variables are 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearerAuth` | `string \| provider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
+| `oAuth2` | `string \| provider` | - | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. Defaults to SCALAR_O_AUTH2. |
 
 Declared schemes:
 
 - `BearerAuth` bearer token
+- `OAuth2` OAuth2/OpenID Connect
 
 <br />
 
@@ -102,6 +104,7 @@ const client = new Scalar({
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearerAuth` | `string \| AuthTokenProvider` | `process.env["BEARER_AUTH"]` | Credential for the BearerAuth scheme. |
+| `oAuth2` | `string \| AuthTokenProvider` | `process.env["SCALAR_O_AUTH2"]` | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. |
 | `baseURL` | `string \| null` | `process.env["SCALAR_BASE_URL"]` | Override the default API base URL. Pass `null` when selecting a configured environment. |
 | `timeout` | `number` | `60000` | Maximum time in milliseconds to wait for a response before aborting a request. |
 | `maxRetries` | `number` | `2` | Number of retries for temporary failures. |

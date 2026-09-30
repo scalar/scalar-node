@@ -242,7 +242,7 @@ Add an access group to an API document.
 ```ts
 await client.registry.createAPIDocumentAccessGroup('slug', {
   namespace: 'namespace',
-  accessGroupSlug: 'xxx',
+  accessGroupSlug: 'x',
 });
 ```
 
@@ -258,7 +258,7 @@ Remove an access group from an API document.
 ```ts
 await client.registry.deleteAPIDocumentAccessGroup('slug', {
   namespace: 'namespace',
-  accessGroupSlug: 'xxx',
+  accessGroupSlug: 'x',
 });
 ```
 
@@ -369,10 +369,10 @@ Create a schema version.
 | Direction | Type |
 | --- | --- |
 | Request | [`VersionCreateParams`](./src/resources/schemas/version.ts) |
-| Response | [`UID`](./src/resources/shared.ts) |
+| Response | [`VersionCreateResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-const uid = await client.schemas.version.create('slug', {
+const version = await client.schemas.version.create('slug', {
   namespace: 'namespace',
   version: 'x',
   document: '',
@@ -395,7 +395,7 @@ Add an access group to a schema.
 ```ts
 await client.schemas.accessGroup.create('slug', {
   namespace: 'namespace',
-  accessGroupSlug: 'xxx',
+  accessGroupSlug: 'x',
 });
 ```
 
@@ -411,7 +411,7 @@ Remove an access group from a schema.
 ```ts
 await client.schemas.accessGroup.delete('slug', {
   namespace: 'namespace',
-  accessGroupSlug: 'xxx',
+  accessGroupSlug: 'x',
 });
 ```
 
@@ -477,7 +477,7 @@ const uid = await client.loginPortals.create({
     title: 'Private Docs',
     mainColor: '#2a2f45',
     mainBackground: '#f6f6f6',
-    cardColor: '2a2f45',
+    cardColor: '#2a2f45',
     cardBackground: '#fff',
     buttonColor: '#fff',
     buttonBackground: '#0f0f0f',
@@ -603,7 +603,7 @@ Grant an access group to a rule.
 ```ts
 await client.rules.createRulesetAccessGroup('slug', {
   namespace: 'namespace',
-  accessGroupSlug: 'xxx',
+  accessGroupSlug: 'x',
 });
 ```
 
@@ -619,7 +619,7 @@ Remove an access group from a rule.
 ```ts
 await client.rules.deleteRulesetAccessGroup('slug', {
   namespace: 'namespace',
-  accessGroupSlug: 'xxx',
+  accessGroupSlug: 'x',
 });
 ```
 

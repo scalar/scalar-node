@@ -262,7 +262,7 @@ export class Registry extends APIResource {
    * ```ts
    * await client.registry.createAPIDocumentAccessGroup('slug', {
    *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   *   accessGroupSlug: 'x',
    * });
    * ```
    */
@@ -287,7 +287,7 @@ export class Registry extends APIResource {
    * ```ts
    * await client.registry.deleteAPIDocumentAccessGroup('slug', {
    *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   *   accessGroupSlug: 'x',
    * });
    * ```
    */
@@ -308,7 +308,7 @@ export type Version = string;
 
 export interface AccessGroup {
   /**
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -333,14 +333,14 @@ export namespace RegistryListAllAPIDocumentsResponse {
      */
     title: string;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
     slug: ScalarDocsAPI.Slug;
     description: string;
     /**
-     * @minLength 3
+     * @minLength 2
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
@@ -369,14 +369,14 @@ export namespace RegistryListAPIDocumentsResponse {
      */
     title: string;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
     slug: ScalarDocsAPI.Slug;
     description: string;
     /**
-     * @minLength 3
+     * @minLength 2
      * @maxLength 50
      * @pattern ^[a-zA-Z0-9-_]+$
      */
@@ -406,7 +406,6 @@ export interface RegistryCreateAPIDocumentResponse {
   title: string;
   jsonSha: string;
   yamlSha: string;
-  versionSha: string;
 }
 
 export interface RegistryUpdateAPIDocumentParams {
@@ -460,16 +459,11 @@ export interface RegistryUpdateAPIDocumentVersionParams {
    * Body param
    */
   document: string;
-  /**
-   * Body param
-   */
-  lastKnownVersionSha?: string;
 }
 
 export interface RegistryUpdateAPIDocumentVersionResponse {
   jsonSha: string;
   yamlSha: string;
-  versionSha: string;
 }
 
 export interface RegistryDeleteAPIDocumentVersionParams {
@@ -502,10 +496,6 @@ export interface RegistryCreateAPIDocumentVersionParams {
    * Body param
    */
   force?: boolean;
-  /**
-   * Body param
-   */
-  lastKnownVersionSha?: string;
 }
 
 export interface RegistryCreateAPIDocumentAccessGroupParams {
@@ -515,7 +505,7 @@ export interface RegistryCreateAPIDocumentAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -531,7 +521,7 @@ export interface RegistryDeleteAPIDocumentAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */

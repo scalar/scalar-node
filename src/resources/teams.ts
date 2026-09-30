@@ -33,7 +33,7 @@ export namespace TeamListResponse {
     uid: Shared.Nanoid;
     name: string;
     /**
-     * @minLength 3
+     * @minLength 1
      * @maxLength 60
      * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
      */
