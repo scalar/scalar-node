@@ -17,9 +17,9 @@ export class Versions extends APIResource {
    *
    * @example
    * ```ts
-   * await client.sdks.versions.create('uidxx', {
-   *   version: '',
-   *   apiVersion: '',
+   * await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
+   *   version: '1.2.0',
+   *   apiVersion: '1.2.0',
    * });
    * ```
    */
@@ -41,8 +41,8 @@ export class Versions extends APIResource {
    *
    * @example
    * ```ts
-   * await client.sdks.versions.delete('version', {
-   *   uid: 'uidxx',
+   * await client.sdks.versions.delete('1.2.0', {
+   *   uid: 'UakgbKJ5m9gl0JDMbcJqL',
    * });
    * ```
    */

@@ -46,6 +46,15 @@
       "source": "400",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": {
+          "message": "Invalid request parameters.",
+          "code": "bad-request"
+        }
+      },
       "type": {
         "kind": "object",
         "properties": [
@@ -78,6 +87,15 @@
       "source": "401",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": {
+          "message": "Invalid authentication token.",
+          "code": "unauthorized"
+        }
+      },
       "type": {
         "kind": "object",
         "properties": [
@@ -110,6 +128,15 @@
       "source": "403",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": {
+          "message": "You do not have permission to access this resource.",
+          "code": "forbidden"
+        }
+      },
       "type": {
         "kind": "object",
         "properties": [
@@ -142,6 +169,15 @@
       "source": "404",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": {
+          "message": "Resource not found.",
+          "code": "not-found"
+        }
+      },
       "type": {
         "kind": "object",
         "properties": [
@@ -174,6 +210,15 @@
       "source": "422",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": {
+          "message": "The request body contains invalid values.",
+          "code": "invalid-payload"
+        }
+      },
       "type": {
         "kind": "object",
         "properties": [
@@ -206,6 +251,15 @@
       "source": "500",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": {
+          "message": "An unexpected error occurred.",
+          "code": "unknown"
+        }
+      },
       "type": {
         "kind": "object",
         "properties": [
@@ -246,6 +300,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -256,6 +316,12 @@
             "publicName": "version",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "ref",
               "name": "version"
@@ -266,6 +332,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -279,6 +351,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -289,6 +367,12 @@
             "publicName": "description",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "API for managing Acme products and orders."
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -299,6 +383,12 @@
             "publicName": "namespace",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme"
+            },
             "type": {
               "kind": "ref",
               "name": "namespace"
@@ -309,6 +399,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -319,8 +415,18 @@
             "publicName": "tags",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": [
+                "products",
+                "orders"
+              ]
+            },
             "type": {
-              "kind": "unknown"
+              "kind": "primitive",
+              "type": "string"
             }
           },
           {
@@ -345,6 +451,12 @@
       "source": "nanoid",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "UakgbKJ5m9gl0JDMbcJqL"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -358,6 +470,12 @@
       "source": "version",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "1.2.0"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -371,6 +489,12 @@
       "source": "slug",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "acme-api"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -386,6 +510,12 @@
       "source": "namespace",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "acme"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -409,6 +539,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -419,6 +555,12 @@
             "publicName": "createdAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600000
+            },
             "type": {
               "kind": "primitive",
               "type": "number"
@@ -429,6 +571,12 @@
             "publicName": "version",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "ref",
               "name": "version"
@@ -439,6 +587,12 @@
             "publicName": "upgraded",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -449,6 +603,12 @@
             "publicName": "endpointCount",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 12
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -471,6 +631,12 @@
             "publicName": "embedStatus",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "complete"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -500,6 +666,15 @@
             "publicName": "tags",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": [
+                "products",
+                "orders"
+              ]
+            },
             "type": {
               "kind": "array",
               "items": {
@@ -523,6 +698,12 @@
                     "publicName": "path",
                     "required": true,
                     "deprecated": false,
+                    "extensions": {
+                      "source": [
+                        "examples"
+                      ],
+                      "examples": "/products"
+                    },
                     "type": {
                       "kind": "primitive",
                       "type": "string"
@@ -572,6 +753,12 @@
             "publicName": "yamlSha",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -582,6 +769,12 @@
             "publicName": "jsonSha",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -646,6 +839,12 @@
             "publicName": "accessGroupSlug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -668,6 +867,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -678,6 +883,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -691,6 +902,12 @@
             "publicName": "description",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "API for managing Acme products and orders."
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -701,6 +918,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -711,6 +934,12 @@
             "publicName": "namespace",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme"
+            },
             "type": {
               "kind": "ref",
               "name": "namespace"
@@ -721,6 +950,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -756,6 +991,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -766,6 +1007,12 @@
             "publicName": "createdAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -776,6 +1023,12 @@
             "publicName": "updatedAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -786,6 +1039,12 @@
             "publicName": "version",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "ref",
               "name": "version"
@@ -796,6 +1055,12 @@
             "publicName": "yamlSha",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -809,6 +1074,12 @@
             "publicName": "jsonSha",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -826,6 +1097,12 @@
       "source": "timestamp",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": 1735689600
+      },
       "type": {
         "kind": "primitive",
         "type": "integer",
@@ -848,6 +1125,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -870,6 +1153,12 @@
             "publicName": "logo",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "<img src=\"https://example.com/logo.svg\" alt=\"Acme\" />"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -880,6 +1169,12 @@
             "publicName": "logoSize",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "100"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -890,6 +1185,12 @@
             "publicName": "buttonText",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Access documentation"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -903,6 +1204,12 @@
             "publicName": "message",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Click to access Acme private API documentation."
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -916,6 +1223,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -929,6 +1242,12 @@
             "publicName": "mainColor",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "#1f2937"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -942,6 +1261,12 @@
             "publicName": "mainBackground",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "#f9fafb"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -955,6 +1280,12 @@
             "publicName": "cardColor",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "#1f2937"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -968,6 +1299,12 @@
             "publicName": "cardBackground",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "#ffffff"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -981,6 +1318,12 @@
             "publicName": "buttonColor",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "#ffffff"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -994,6 +1337,12 @@
             "publicName": "buttonBackground",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "#2563eb"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1019,6 +1368,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1032,6 +1387,12 @@
             "publicName": "description",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Sign in with your work email to access Acme documentation."
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1045,6 +1406,12 @@
             "publicName": "head",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "<meta name=\"robots\" content=\"noindex\" />"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1055,6 +1422,12 @@
             "publicName": "script",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "document.documentElement.dataset.company = \"acme\";"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1065,6 +1438,12 @@
             "publicName": "theme",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "TakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1075,6 +1454,12 @@
             "publicName": "companyName",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1088,6 +1473,12 @@
             "publicName": "logo",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "<img src=\"https://example.com/logo.svg\" alt=\"Acme\" />"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1098,6 +1489,12 @@
             "publicName": "logoURL",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1108,6 +1505,12 @@
             "publicName": "favicon",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/favicon.ico"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1118,6 +1521,12 @@
             "publicName": "termsLink",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/terms"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1128,6 +1537,12 @@
             "publicName": "privacyLink",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/privacy"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1138,6 +1553,12 @@
             "publicName": "formTitle",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Sign in to Acme Documentation"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1151,6 +1572,12 @@
             "publicName": "formDescription",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Sign in with your work email to access Acme documentation."
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1164,6 +1591,12 @@
             "publicName": "formImage",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/login-banner.png"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1186,6 +1619,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1196,6 +1635,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1209,6 +1654,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -1223,6 +1674,12 @@
       "source": "access_group_name",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "Engineering"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -1236,6 +1693,12 @@
       "source": "email_domain",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "example.com"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -1258,6 +1721,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1268,6 +1737,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1281,6 +1756,12 @@
             "publicName": "description",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "API for managing Acme products and orders."
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1291,6 +1772,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -1301,6 +1788,12 @@
             "publicName": "namespace",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme"
+            },
             "type": {
               "kind": "ref",
               "name": "namespace"
@@ -1311,6 +1804,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1333,6 +1832,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1343,6 +1848,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme Theme"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1353,6 +1864,12 @@
             "publicName": "description",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Custom colors for Acme documentation."
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1363,6 +1880,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-theme"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -1385,6 +1908,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1395,6 +1924,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "ref",
               "name": "team_name"
@@ -1405,6 +1940,12 @@
             "publicName": "imageUri",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/alex.png"
+            },
             "type": {
               "kind": "ref",
               "name": "team_image"
@@ -1415,6 +1956,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -1425,6 +1972,12 @@
             "publicName": "theme",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "default"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1439,6 +1992,12 @@
       "source": "team_name",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "Acme"
+      },
       "type": {
         "kind": "primitive",
         "type": "string"
@@ -1449,6 +2008,12 @@
       "source": "team_image",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "https://example.com/logo.svg"
+      },
       "type": {
         "kind": "primitive",
         "type": "string"
@@ -1467,6 +2032,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1487,6 +2058,12 @@
             "publicName": "displayName",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Alex Morgan"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1497,6 +2074,12 @@
             "publicName": "imageUri",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/alex.png"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1546,6 +2129,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1556,6 +2145,12 @@
             "publicName": "email",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "alex@example.com"
+            },
             "type": {
               "kind": "ref",
               "name": "email"
@@ -1576,6 +2171,12 @@
             "publicName": "expires",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735776000
+            },
             "type": {
               "kind": "primitive",
               "type": "number"
@@ -1590,6 +2191,12 @@
       "source": "email",
       "publicAliases": [],
       "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "alex@example.com"
+      },
       "type": {
         "kind": "primitive",
         "type": "string",
@@ -1612,6 +2219,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -1622,6 +2235,12 @@
             "publicName": "createdAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -1632,6 +2251,12 @@
             "publicName": "updatedAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -1642,6 +2267,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme Documentation"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1670,6 +2301,12 @@
             "publicName": "lastPublished",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -1688,6 +2325,12 @@
             "publicName": "lastPublishedUid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "PakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -1706,6 +2349,12 @@
             "publicName": "loginPortalUid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "LakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1716,6 +2365,12 @@
             "publicName": "userInfoHookUrl",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/hooks/user-info"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1726,6 +2381,12 @@
             "publicName": "activeThemeId",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "TakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1736,6 +2397,12 @@
             "publicName": "typesenseId",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 42
+            },
             "type": {
               "kind": "primitive",
               "type": "number"
@@ -1746,6 +2413,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1756,6 +2429,12 @@
             "publicName": "agentEnabled",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1766,6 +2445,12 @@
             "publicName": "analyticsEnabled",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1776,8 +2461,17 @@
             "publicName": "accessGroups",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": [
+                "UakgbKJ5m9gl0JDMbcJqL"
+              ]
+            },
             "type": {
-              "kind": "unknown"
+              "kind": "primitive",
+              "type": "string"
             }
           },
           {
@@ -1785,6 +2479,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -1795,6 +2495,12 @@
             "publicName": "publishStatus",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "published"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1805,6 +2511,12 @@
             "publicName": "publishMessage",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Documentation published successfully."
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1845,6 +2557,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1855,6 +2573,12 @@
             "publicName": "domain",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "docs.example.com"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1865,6 +2589,12 @@
             "publicName": "publishedAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -1887,6 +2617,12 @@
             "publicName": "linkedBy",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1897,6 +2633,12 @@
             "publicName": "id",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 123456789
+            },
             "type": {
               "kind": "primitive",
               "type": "number"
@@ -1907,6 +2649,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme Documentation"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -1920,6 +2668,12 @@
             "publicName": "configPath",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "scalar.config.json"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1930,6 +2684,12 @@
             "publicName": "branch",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "main"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -1940,6 +2700,12 @@
             "publicName": "publishOnMerge",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1950,6 +2716,12 @@
             "publicName": "publishPreviews",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1960,6 +2732,12 @@
             "publicName": "prComments",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1970,6 +2748,12 @@
             "publicName": "expired",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -1992,6 +2776,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -2002,6 +2792,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "ref",
               "name": "team_name"
@@ -2012,6 +2808,12 @@
             "publicName": "imageUri",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/alex.png"
+            },
             "type": {
               "kind": "ref",
               "name": "team_image"
@@ -2034,6 +2836,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -2044,6 +2852,12 @@
             "publicName": "createdAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -2054,6 +2868,12 @@
             "publicName": "updatedAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -2064,6 +2884,12 @@
             "publicName": "email",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "alex@example.com"
+            },
             "type": {
               "kind": "ref",
               "name": "email"
@@ -2074,6 +2900,12 @@
             "publicName": "theme",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "default"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2084,6 +2916,12 @@
             "publicName": "activeTeamId",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "GakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -2102,6 +2940,12 @@
             "publicName": "hasGithub",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2137,6 +2981,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -2147,6 +2997,12 @@
             "publicName": "title",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string",
@@ -2160,6 +3016,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -2170,6 +3032,12 @@
             "publicName": "namespace",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme"
+            },
             "type": {
               "kind": "ref",
               "name": "namespace"
@@ -2180,6 +3048,12 @@
             "publicName": "description",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "API for managing Acme products and orders."
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2190,6 +3064,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2200,6 +3080,12 @@
             "publicName": "apiUid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -2218,6 +3104,12 @@
             "publicName": "apiVersion",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -2236,6 +3128,12 @@
             "publicName": "currentVersion",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "ref",
               "name": "version"
@@ -2284,6 +3182,12 @@
             "publicName": "language",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "typescript"
+            },
             "type": {
               "kind": "enum",
               "values": [
@@ -2338,6 +3242,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-sdk"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -2360,6 +3270,12 @@
             "publicName": "version",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "ref",
               "name": "version"
@@ -2370,6 +3286,12 @@
             "publicName": "apiVersion",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "ref",
               "name": "version"
@@ -2380,6 +3302,12 @@
             "publicName": "status",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "published"
+            },
             "type": {
               "kind": "enum",
               "values": [
@@ -2401,6 +3329,14 @@
             "publicName": "languages",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": [
+                "typescript"
+              ]
+            },
             "type": {
               "kind": "array",
               "items": {
@@ -2458,6 +3394,12 @@
             "publicName": "publishedAt",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -2468,6 +3410,12 @@
             "publicName": "createdAt",
             "required": false,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "ref",
               "name": "timestamp"
@@ -2490,6 +3438,12 @@
             "publicName": "uid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "ref",
               "name": "nanoid"
@@ -2500,6 +3454,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme Documentation"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2510,6 +3470,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -2520,6 +3486,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2530,8 +3502,17 @@
             "publicName": "accessGroups",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": [
+                "UakgbKJ5m9gl0JDMbcJqL"
+              ]
+            },
             "type": {
-              "kind": "unknown"
+              "kind": "primitive",
+              "type": "string"
             }
           },
           {
@@ -2539,6 +3520,12 @@
             "publicName": "loginPortalUid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "LakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2549,6 +3536,12 @@
             "publicName": "activeThemeId",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "TakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2559,6 +3552,12 @@
             "publicName": "agentEnabled",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2569,6 +3568,12 @@
             "publicName": "analyticsEnabled",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2579,6 +3584,12 @@
             "publicName": "lastPublished",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -2597,6 +3608,12 @@
             "publicName": "publishStatus",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "published"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2619,6 +3636,12 @@
             "publicName": "id",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "42"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2629,6 +3652,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2639,6 +3668,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -2649,6 +3684,12 @@
             "publicName": "autoAddOperations",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2659,6 +3700,12 @@
             "publicName": "createdAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "2025-01-01T00:00:00.000Z"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2669,6 +3716,12 @@
             "publicName": "updatedAt",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "2025-01-01T00:00:00.000Z"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2691,6 +3744,12 @@
             "publicName": "id",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "42"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2701,6 +3760,12 @@
             "publicName": "mcpServerId",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "42"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2711,6 +3776,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2721,6 +3792,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -2731,6 +3808,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2741,6 +3824,14 @@
             "publicName": "accessGroups",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": [
+                "UakgbKJ5m9gl0JDMbcJqL"
+              ]
+            },
             "type": {
               "kind": "array",
               "items": {
@@ -2754,6 +3845,12 @@
             "publicName": "loginPortalUid",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "LakgbKJ5m9gl0JDMbcJqL"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -2772,6 +3869,12 @@
             "publicName": "mcpVersion",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "union",
               "variants": [
@@ -2790,6 +3893,12 @@
             "publicName": "piiRedactionEnabled",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2800,6 +3909,12 @@
             "publicName": "credentialRedactionEnabled",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2822,6 +3937,12 @@
             "publicName": "id",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "42"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2832,6 +3953,12 @@
             "publicName": "name",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
             "type": {
               "kind": "primitive",
               "type": "string"
@@ -2842,6 +3969,12 @@
             "publicName": "slug",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme-api"
+            },
             "type": {
               "kind": "ref",
               "name": "slug"
@@ -2852,6 +3985,12 @@
             "publicName": "isPrivate",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": false
+            },
             "type": {
               "kind": "primitive",
               "type": "boolean"
@@ -2862,6 +4001,12 @@
             "publicName": "mcpVersion",
             "required": true,
             "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.2.0"
+            },
             "type": {
               "kind": "union",
               "variants": [

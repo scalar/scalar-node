@@ -33,7 +33,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const registry = await client.registry.listAPIDocuments('namespace');
+   * const registry = await client.registry.listAPIDocuments('acme');
    * ```
    */
   listAPIDocuments(
@@ -53,11 +53,11 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const registry = await client.registry.createAPIDocument('namespace', {
-   *   title: '',
-   *   version: 'x',
-   *   slug: '',
-   *   document: '',
+   * const registry = await client.registry.createAPIDocument('acme', {
+   *   title: 'Acme API',
+   *   version: '1.2.0',
+   *   slug: 'acme-api',
+   *   document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
    * });
    * ```
    */
@@ -79,8 +79,8 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.updateAPIDocument('slug', {
-   *   namespace: 'namespace',
+   * await client.registry.updateAPIDocument('acme-api', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -103,8 +103,8 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocument('slug', {
-   *   namespace: 'namespace',
+   * await client.registry.deleteAPIDocument('acme-api', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -127,9 +127,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.registry.retrieveAPIDocumentVersion('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * const response = await client.registry.retrieveAPIDocumentVersion('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
    * });
    * ```
    */
@@ -155,10 +155,10 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const registry = await client.registry.updateAPIDocumentVersion('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
-   *   document: '',
+   * const registry = await client.registry.updateAPIDocumentVersion('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
+   *   document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
    * });
    * ```
    */
@@ -184,9 +184,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocumentVersion('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * await client.registry.deleteAPIDocumentVersion('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
    * });
    * ```
    */
@@ -209,9 +209,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
    * });
    * ```
    */
@@ -234,10 +234,10 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
-   *   namespace: 'namespace',
-   *   version: 'x',
-   *   document: '',
+   * const managedDocVersion = await client.registry.createAPIDocumentVersion('acme-api', {
+   *   namespace: 'acme',
+   *   version: '1.2.0',
+   *   document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
    * });
    * ```
    */
@@ -260,9 +260,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.createAPIDocumentAccessGroup('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'x',
+   * await client.registry.createAPIDocumentAccessGroup('acme-api', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -285,9 +285,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocumentAccessGroup('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'x',
+   * await client.registry.deleteAPIDocumentAccessGroup('acme-api', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -331,7 +331,7 @@ export interface APIDocument {
    */
   namespace: Shared.Namespace;
   isPrivate: boolean;
-  tags: unknown;
+  tags: string;
   versions: Array<Shared.ManagedDocVersion>;
 }
 

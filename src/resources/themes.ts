@@ -34,9 +34,9 @@ export class Themes extends APIResource {
    * @example
    * ```ts
    * const uid = await client.themes.create({
-   *   name: '',
-   *   slug: '',
-   *   document: '',
+   *   name: 'Acme Theme',
+   *   slug: 'acme-theme',
+   *   document: ':root { --scalar-color-1: #1f2937; }',
    * });
    * ```
    */
@@ -54,7 +54,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.update('slug', {});
+   * await client.themes.update('acme-theme', {});
    * ```
    */
   update(slug: string, body: ThemeUpdateParams, options?: RequestOptions): APIPromise<ThemeUpdateResponse> {
@@ -71,8 +71,8 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.replaceDocument('slug', {
-   *   document: '',
+   * await client.themes.replaceDocument('acme-theme', {
+   *   document: ':root { --scalar-color-1: #1f2937; }',
    * });
    * ```
    */
@@ -93,7 +93,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * await client.themes.delete('slug');
+   * await client.themes.delete('acme-theme');
    * ```
    */
   delete(slug: string, options?: RequestOptions): APIPromise<ThemeDeleteResponse> {
@@ -109,7 +109,7 @@ export class Themes extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.themes.retrieve('slug');
+   * const response = await client.themes.retrieve('acme-theme');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<ThemeRetrieveResponse> {

@@ -17,7 +17,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * const loginPortal = await client.loginPortals.retrieve('slug');
+   * const loginPortal = await client.loginPortals.retrieve('acme-login');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<LoginPortalRetrieveResponse> {
@@ -34,7 +34,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * await client.loginPortals.update('slug', {});
+   * await client.loginPortals.update('acme-login', {});
    * ```
    */
   update(
@@ -54,7 +54,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * await client.loginPortals.delete('slug');
+   * await client.loginPortals.delete('acme-login');
    * ```
    */
   delete(slug: string, options?: RequestOptions): APIPromise<LoginPortalDeleteResponse> {
@@ -71,8 +71,8 @@ export class LoginPortals extends APIResource {
    * @example
    * ```ts
    * const uid = await client.loginPortals.create({
-   *   title: '',
-   *   slug: '',
+   *   title: 'Acme Private Documentation',
+   *   slug: 'acme-login',
    *   email: {
    *     logo: '',
    *     logoSize: '100',

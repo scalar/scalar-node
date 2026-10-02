@@ -44,7 +44,7 @@ export class AccessGroups extends APIResource {
    *
    * @example
    * ```ts
-   * const accessGroup = await client.accessGroups.retrieve('slug');
+   * const accessGroup = await client.accessGroups.retrieve('acme-api');
    * ```
    */
   retrieve(slug: ScalarDocsAPI.Slug, options?: RequestOptions): APIPromise<AccessGroupRetrieveResponse> {
@@ -61,7 +61,7 @@ export class AccessGroups extends APIResource {
    *
    * @example
    * ```ts
-   * await client.accessGroups.update('slug', {});
+   * await client.accessGroups.update('acme-api', {});
    * ```
    */
   update(
@@ -81,7 +81,7 @@ export class AccessGroups extends APIResource {
    *
    * @example
    * ```ts
-   * await client.accessGroups.delete('slug');
+   * await client.accessGroups.delete('acme-api');
    * ```
    */
   delete(slug: ScalarDocsAPI.Slug, options?: RequestOptions): APIPromise<AccessGroupDeleteResponse> {
@@ -102,7 +102,7 @@ export interface AccessGroupCreateParams {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug?: ScalarDocsAPI.Slug;
-  allowedDomains?: unknown;
+  allowedDomains?: string;
 }
 
 export interface AccessGroupCreateResponse {
@@ -120,8 +120,8 @@ export interface AccessGroupCreateResponse {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  allowedDomains: unknown;
-  allowedEmails: unknown;
+  allowedDomains: string;
+  allowedEmails: string;
 }
 
 export interface AccessGroupRetrieveResponse {
@@ -139,8 +139,8 @@ export interface AccessGroupRetrieveResponse {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  allowedDomains: unknown;
-  allowedEmails: unknown;
+  allowedDomains: string;
+  allowedEmails: string;
 }
 
 export interface AccessGroupUpdateParams {

@@ -50,7 +50,7 @@ export class Servers extends APIResource {
    * @example
    * ```ts
    * const server = await client.mcp.servers.create({
-   *   name: 'x',
+   *   name: 'Acme MCP',
    * });
    * ```
    */
@@ -67,7 +67,7 @@ export class Servers extends APIResource {
    *
    * @example
    * ```ts
-   * const mcpServer = await client.mcp.servers.retrieve('id');
+   * const mcpServer = await client.mcp.servers.retrieve('42');
    * ```
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<McpServer> {
@@ -84,7 +84,7 @@ export class Servers extends APIResource {
    *
    * @example
    * ```ts
-   * const mcpServer = await client.mcp.servers.update('id', {});
+   * const mcpServer = await client.mcp.servers.update('42', {});
    * ```
    */
   update(id: string, body: ServerUpdateParams, options?: RequestOptions): APIPromise<McpServer> {
@@ -100,7 +100,7 @@ export class Servers extends APIResource {
    *
    * @example
    * ```ts
-   * await client.mcp.servers.delete('id');
+   * await client.mcp.servers.delete('42');
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<ServerDeleteResponse> {

@@ -157,7 +157,7 @@ List API documents in a namespace.
 | Response | [`RegistryListAPIDocumentsResponse`](./src/resources/registry.ts) |
 
 ```ts
-const registry = await client.registry.listAPIDocuments('namespace');
+const registry = await client.registry.listAPIDocuments('acme');
 ```
 
 ### Create API Document
@@ -170,11 +170,11 @@ Create an API document.
 | Response | [`RegistryCreateAPIDocumentResponse`](./src/resources/registry.ts) |
 
 ```ts
-const registry = await client.registry.createAPIDocument('namespace', {
-  title: '',
-  version: 'x',
-  slug: '',
-  document: '',
+const registry = await client.registry.createAPIDocument('acme', {
+  title: 'Acme API',
+  version: '1.2.0',
+  slug: 'acme-api',
+  document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
 });
 ```
 
@@ -188,8 +188,8 @@ Update metadata for an API document.
 | Response | [`RegistryUpdateAPIDocumentResponse`](./src/resources/registry.ts) |
 
 ```ts
-await client.registry.updateAPIDocument('slug', {
-  namespace: 'namespace',
+await client.registry.updateAPIDocument('acme-api', {
+  namespace: 'acme',
 });
 ```
 
@@ -203,8 +203,8 @@ Delete an API document and all versions.
 | Response | [`RegistryDeleteAPIDocumentResponse`](./src/resources/registry.ts) |
 
 ```ts
-await client.registry.deleteAPIDocument('slug', {
-  namespace: 'namespace',
+await client.registry.deleteAPIDocument('acme-api', {
+  namespace: 'acme',
 });
 ```
 
@@ -218,9 +218,9 @@ Get a specific API document version.
 | Response | [`RegistryRetrieveAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
-const response = await client.registry.retrieveAPIDocumentVersion('semver', {
-  namespace: 'namespace',
-  slug: 'slug',
+const response = await client.registry.retrieveAPIDocumentVersion('1.2.0', {
+  namespace: 'acme',
+  slug: 'acme-api',
 });
 ```
 
@@ -234,10 +234,10 @@ Update the registry file content for an API document version.
 | Response | [`RegistryUpdateAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
-const registry = await client.registry.updateAPIDocumentVersion('semver', {
-  namespace: 'namespace',
-  slug: 'slug',
-  document: '',
+const registry = await client.registry.updateAPIDocumentVersion('1.2.0', {
+  namespace: 'acme',
+  slug: 'acme-api',
+  document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
 });
 ```
 
@@ -251,9 +251,9 @@ Delete a specific API document version.
 | Response | [`RegistryDeleteAPIDocumentVersionResponse`](./src/resources/registry.ts) |
 
 ```ts
-await client.registry.deleteAPIDocumentVersion('semver', {
-  namespace: 'namespace',
-  slug: 'slug',
+await client.registry.deleteAPIDocumentVersion('1.2.0', {
+  namespace: 'acme',
+  slug: 'acme-api',
 });
 ```
 
@@ -267,9 +267,9 @@ Get metadata (uid, content shas, version sha, tags) for a specific API document 
 | Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
-const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
-  namespace: 'namespace',
-  slug: 'slug',
+const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('1.2.0', {
+  namespace: 'acme',
+  slug: 'acme-api',
 });
 ```
 
@@ -283,10 +283,10 @@ Create a new API document version.
 | Response | [`ManagedDocVersion`](./src/resources/shared.ts) |
 
 ```ts
-const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
-  namespace: 'namespace',
-  version: 'x',
-  document: '',
+const managedDocVersion = await client.registry.createAPIDocumentVersion('acme-api', {
+  namespace: 'acme',
+  version: '1.2.0',
+  document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
 });
 ```
 
@@ -300,9 +300,9 @@ Add an access group to an API document.
 | Response | [`RegistryCreateAPIDocumentAccessGroupResponse`](./src/resources/registry.ts) |
 
 ```ts
-await client.registry.createAPIDocumentAccessGroup('slug', {
-  namespace: 'namespace',
-  accessGroupSlug: 'x',
+await client.registry.createAPIDocumentAccessGroup('acme-api', {
+  namespace: 'acme',
+  accessGroupSlug: 'acme-api',
 });
 ```
 
@@ -316,9 +316,9 @@ Remove an access group from an API document.
 | Response | [`RegistryDeleteAPIDocumentAccessGroupResponse`](./src/resources/registry.ts) |
 
 ```ts
-await client.registry.deleteAPIDocumentAccessGroup('slug', {
-  namespace: 'namespace',
-  accessGroupSlug: 'x',
+await client.registry.deleteAPIDocumentAccessGroup('acme-api', {
+  namespace: 'acme',
+  accessGroupSlug: 'acme-api',
 });
 ```
 
@@ -335,7 +335,7 @@ List schemas in a namespace.
 | Response | [`SchemaListResponse`](./src/resources/schemas/schemas.ts) |
 
 ```ts
-const schema = await client.schemas.list('namespace');
+const schema = await client.schemas.list('acme');
 ```
 
 ### Create a shared component
@@ -348,11 +348,11 @@ Create a schema in a namespace.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uid = await client.schemas.create('namespace', {
-  title: '',
-  version: 'x',
-  slug: '',
-  document: '',
+const uid = await client.schemas.create('acme', {
+  title: 'Customer',
+  version: '1.2.0',
+  slug: 'customer',
+  document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
 });
 ```
 
@@ -366,8 +366,8 @@ Update schema metadata.
 | Response | [`SchemaUpdateResponse`](./src/resources/schemas/schemas.ts) |
 
 ```ts
-await client.schemas.update('slug', {
-  namespace: 'namespace',
+await client.schemas.update('customer', {
+  namespace: 'acme',
 });
 ```
 
@@ -381,8 +381,8 @@ Delete a schema and all related versions.
 | Response | [`SchemaDeleteResponse`](./src/resources/schemas/schemas.ts) |
 
 ```ts
-await client.schemas.delete('slug', {
-  namespace: 'namespace',
+await client.schemas.delete('customer', {
+  namespace: 'acme',
 });
 ```
 
@@ -400,9 +400,9 @@ Get a specific schema version document.
 | Response | [`VersionRetrieveResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-const response = await client.schemas.version.retrieve('semver', {
-  namespace: 'namespace',
-  slug: 'slug',
+const response = await client.schemas.version.retrieve('1.2.0', {
+  namespace: 'acme',
+  slug: 'customer',
 });
 ```
 
@@ -416,9 +416,9 @@ Delete a schema version.
 | Response | [`VersionDeleteResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-await client.schemas.version.delete('semver', {
-  namespace: 'namespace',
-  slug: 'slug',
+await client.schemas.version.delete('1.2.0', {
+  namespace: 'acme',
+  slug: 'customer',
 });
 ```
 
@@ -432,10 +432,10 @@ Create a schema version.
 | Response | [`VersionCreateResponse`](./src/resources/schemas/version.ts) |
 
 ```ts
-const version = await client.schemas.version.create('slug', {
-  namespace: 'namespace',
-  version: 'x',
-  document: '',
+const version = await client.schemas.version.create('customer', {
+  namespace: 'acme',
+  version: '1.2.0',
+  document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
 });
 ```
 
@@ -453,9 +453,9 @@ Add an access group to a schema.
 | Response | [`AccessGroupCreateResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
-await client.schemas.accessGroup.create('slug', {
-  namespace: 'namespace',
-  accessGroupSlug: 'x',
+await client.schemas.accessGroup.create('customer', {
+  namespace: 'acme',
+  accessGroupSlug: 'acme-api',
 });
 ```
 
@@ -469,9 +469,9 @@ Remove an access group from a schema.
 | Response | [`AccessGroupDeleteResponse`](./src/resources/schemas/access-group.ts) |
 
 ```ts
-await client.schemas.accessGroup.delete('slug', {
-  namespace: 'namespace',
-  accessGroupSlug: 'x',
+await client.schemas.accessGroup.delete('customer', {
+  namespace: 'acme',
+  accessGroupSlug: 'acme-api',
 });
 ```
 
@@ -488,7 +488,7 @@ Get a login portal by slug.
 | Response | [`LoginPortalRetrieveResponse`](./src/resources/login-portals.ts) |
 
 ```ts
-const loginPortal = await client.loginPortals.retrieve('slug');
+const loginPortal = await client.loginPortals.retrieve('acme-login');
 ```
 
 ### Update portal metadata
@@ -501,7 +501,7 @@ Update metadata for a login portal.
 | Response | [`LoginPortalUpdateResponse`](./src/resources/login-portals.ts) |
 
 ```ts
-await client.loginPortals.update('slug', {});
+await client.loginPortals.update('acme-login', {});
 ```
 
 ### Delete a login portal
@@ -513,7 +513,7 @@ Delete a login portal.
 | Response | [`LoginPortalDeleteResponse`](./src/resources/login-portals.ts) |
 
 ```ts
-await client.loginPortals.delete('slug');
+await client.loginPortals.delete('acme-login');
 ```
 
 ### Create a portal
@@ -527,8 +527,8 @@ Create a login portal for the current team.
 
 ```ts
 const uid = await client.loginPortals.create({
-  title: '',
-  slug: '',
+  title: 'Acme Private Documentation',
+  slug: 'acme-login',
   email: {
     logo: '',
     logoSize: '100',
@@ -599,7 +599,7 @@ Get a group and its email and domain allowlists by slug.
 | Response | [`AccessGroupRetrieveResponse`](./src/resources/access-groups/access-groups.ts) |
 
 ```ts
-const accessGroup = await client.accessGroups.retrieve('slug');
+const accessGroup = await client.accessGroups.retrieve('acme-api');
 ```
 
 ### Update an access group
@@ -612,7 +612,7 @@ Update group metadata. Requires docs edit permission. After changing the slug, u
 | Response | [`AccessGroupUpdateResponse`](./src/resources/access-groups/access-groups.ts) |
 
 ```ts
-await client.accessGroups.update('slug', {});
+await client.accessGroups.update('acme-api', {});
 ```
 
 ### Delete an access group
@@ -624,7 +624,7 @@ Delete a group and remove its project assignments. Requires docs edit permission
 | Response | [`AccessGroupDeleteResponse`](./src/resources/access-groups/access-groups.ts) |
 
 ```ts
-await client.accessGroups.delete('slug');
+await client.accessGroups.delete('acme-api');
 ```
 
 ### `AccessGroups Domains`
@@ -641,8 +641,8 @@ Allow an exact email domain in a group. Requires docs edit permission. A group s
 | Response | [`DomainCreateResponse`](./src/resources/access-groups/domains.ts) |
 
 ```ts
-await client.accessGroups.domains.create('slug', {
-  domain: '',
+await client.accessGroups.domains.create('acme-api', {
+  domain: 'example.com',
 });
 ```
 
@@ -656,8 +656,8 @@ Remove an exact email domain from a group. Requires docs edit permission. Other 
 | Response | [`DomainDeleteResponse`](./src/resources/access-groups/domains.ts) |
 
 ```ts
-await client.accessGroups.domains.delete('slug', {
-  domain: '',
+await client.accessGroups.domains.delete('acme-api', {
+  domain: 'example.com',
 });
 ```
 
@@ -674,7 +674,7 @@ List all rulesets in a namespace.
 | Response | [`RuleListRulesetsResponse`](./src/resources/rules.ts) |
 
 ```ts
-const rule = await client.rules.listRulesets('namespace');
+const rule = await client.rules.listRulesets('acme');
 ```
 
 ### Create a rule
@@ -687,10 +687,10 @@ Create a rule in a namespace.
 | Response | [`UID`](./src/resources/shared.ts) |
 
 ```ts
-const uid = await client.rules.createRuleset('namespace', {
-  title: '',
-  slug: '',
-  document: '',
+const uid = await client.rules.createRuleset('acme', {
+  title: 'Acme API Rules',
+  slug: 'acme-rules',
+  document: 'extends: ["spectral:oas"]\nrules:\n  info-contact: warn\n',
 });
 ```
 
@@ -704,8 +704,8 @@ Update rule metadata by slug.
 | Response | [`RuleUpdateRulesetResponse`](./src/resources/rules.ts) |
 
 ```ts
-await client.rules.updateRuleset('slug', {
-  namespace: 'namespace',
+await client.rules.updateRuleset('acme-rules', {
+  namespace: 'acme',
 });
 ```
 
@@ -719,8 +719,8 @@ Delete a rule by slug.
 | Response | [`RuleDeleteRulesetResponse`](./src/resources/rules.ts) |
 
 ```ts
-await client.rules.deleteRuleset('slug', {
-  namespace: 'namespace',
+await client.rules.deleteRuleset('acme-rules', {
+  namespace: 'acme',
 });
 ```
 
@@ -734,8 +734,8 @@ Get a rule document by slug.
 | Response | [`RuleRetrieveRulesetDocumentResponse`](./src/resources/rules.ts) |
 
 ```ts
-const response = await client.rules.retrieveRulesetDocument('slug', {
-  namespace: 'namespace',
+const response = await client.rules.retrieveRulesetDocument('acme-rules', {
+  namespace: 'acme',
 });
 ```
 
@@ -749,9 +749,9 @@ Grant an access group to a rule.
 | Response | [`RuleCreateRulesetAccessGroupResponse`](./src/resources/rules.ts) |
 
 ```ts
-await client.rules.createRulesetAccessGroup('slug', {
-  namespace: 'namespace',
-  accessGroupSlug: 'x',
+await client.rules.createRulesetAccessGroup('acme-rules', {
+  namespace: 'acme',
+  accessGroupSlug: 'acme-api',
 });
 ```
 
@@ -765,9 +765,9 @@ Remove an access group from a rule.
 | Response | [`RuleDeleteRulesetAccessGroupResponse`](./src/resources/rules.ts) |
 
 ```ts
-await client.rules.deleteRulesetAccessGroup('slug', {
-  namespace: 'namespace',
-  accessGroupSlug: 'x',
+await client.rules.deleteRulesetAccessGroup('acme-rules', {
+  namespace: 'acme',
+  accessGroupSlug: 'acme-api',
 });
 ```
 
@@ -798,9 +798,9 @@ Create a team theme.
 
 ```ts
 const uid = await client.themes.create({
-  name: '',
-  slug: '',
-  document: '',
+  name: 'Acme Theme',
+  slug: 'acme-theme',
+  document: ':root { --scalar-color-1: #1f2937; }',
 });
 ```
 
@@ -814,7 +814,7 @@ Update theme metadata.
 | Response | [`ThemeUpdateResponse`](./src/resources/themes.ts) |
 
 ```ts
-await client.themes.update('slug', {});
+await client.themes.update('acme-theme', {});
 ```
 
 ### Update theme document
@@ -827,8 +827,8 @@ Replace the theme document.
 | Response | [`ThemeReplaceDocumentResponse`](./src/resources/themes.ts) |
 
 ```ts
-await client.themes.replaceDocument('slug', {
-  document: '',
+await client.themes.replaceDocument('acme-theme', {
+  document: ':root { --scalar-color-1: #1f2937; }',
 });
 ```
 
@@ -841,7 +841,7 @@ Delete a theme by slug.
 | Response | [`ThemeDeleteResponse`](./src/resources/themes.ts) |
 
 ```ts
-await client.themes.delete('slug');
+await client.themes.delete('acme-theme');
 ```
 
 ### Get a theme
@@ -853,7 +853,7 @@ Get the theme document by slug.
 | Response | [`ThemeRetrieveResponse`](./src/resources/themes.ts) |
 
 ```ts
-const response = await client.themes.retrieve('slug');
+const response = await client.themes.retrieve('acme-theme');
 ```
 
 ## `Teams`
@@ -898,7 +898,7 @@ Change what a member of the current team is allowed to do.
 | Response | [`MemberUpdateResponse`](./src/resources/teams/members.ts) |
 
 ```ts
-await client.teams.members.update('uidxx', {
+await client.teams.members.update('UakgbKJ5m9gl0JDMbcJqL', {
   role: 'owner',
 });
 ```
@@ -912,7 +912,7 @@ Remove someone from the current team.
 | Response | [`MemberDeleteResponse`](./src/resources/teams/members.ts) |
 
 ```ts
-await client.teams.members.delete('uidxx');
+await client.teams.members.delete('UakgbKJ5m9gl0JDMbcJqL');
 ```
 
 ### `Teams Invites`
@@ -930,7 +930,7 @@ Invite someone to the current team by email.
 
 ```ts
 await client.teams.invites.member({
-  email: 'user@example.com',
+  email: 'alex@example.com',
   role: 'owner',
 });
 ```
@@ -944,7 +944,7 @@ Send the invite email again.
 | Response | [`InviteResendResponse`](./src/resources/teams/invites.ts) |
 
 ```ts
-await client.teams.invites.resend('uidxx');
+await client.teams.invites.resend('UakgbKJ5m9gl0JDMbcJqL');
 ```
 
 #### Cancel an invite
@@ -956,7 +956,7 @@ Withdraw an invite that has not been accepted.
 | Response | [`InviteCancelResponse`](./src/resources/teams/invites.ts) |
 
 ```ts
-await client.teams.invites.cancel('uidxx');
+await client.teams.invites.cancel('UakgbKJ5m9gl0JDMbcJqL');
 ```
 
 ## `ScalarDocs`
@@ -986,7 +986,7 @@ Create a guide project.
 
 ```ts
 const scalarDoc = await client.scalarDocs.createGuide({
-  name: '',
+  name: 'Acme Documentation',
   isPrivate: false,
   allowedUsers: [],
   allowedDomains: [],
@@ -1002,7 +1002,7 @@ Start a new publish process.
 | Response | [`ScalarDocPublishGuideResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const scalarDoc = await client.scalarDocs.publishGuide('slug');
+const scalarDoc = await client.scalarDocs.publishGuide('acme-docs');
 ```
 
 ### List all docs projects
@@ -1029,7 +1029,7 @@ Create a docs project. Omit `provider` to have Scalar host the repository.
 
 ```ts
 const docsProject = await client.scalarDocs.createProject({
-  name: '',
+  name: 'Acme Documentation',
   provider: 'forgejo',
 });
 ```
@@ -1043,7 +1043,7 @@ Get a single docs project by its slug.
 | Response | [`DocsProject`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const docsProject = await client.scalarDocs.retrieveProject('slug');
+const docsProject = await client.scalarDocs.retrieveProject('acme-docs');
 ```
 
 ### Update a docs project
@@ -1056,7 +1056,7 @@ Update project settings. Set `isPrivate` with `accessGroups` to put the site beh
 | Response | [`ScalarDocUpdateProjectResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-await client.scalarDocs.updateProject('slug', {});
+await client.scalarDocs.updateProject('acme-docs', {});
 ```
 
 ### Delete a docs project
@@ -1068,7 +1068,7 @@ Delete a docs project, its deploys, its publish records and its cached builds.
 | Response | [`ScalarDocDeleteProjectResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-await client.scalarDocs.deleteProject('slug');
+await client.scalarDocs.deleteProject('acme-docs');
 ```
 
 ### Publish a docs project
@@ -1081,7 +1081,7 @@ Start a build and deploy. The returned `publishUid` identifies the publish recor
 | Response | [`ScalarDocPublishProjectResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const scalarDoc = await client.scalarDocs.publishProject('slug', {});
+const scalarDoc = await client.scalarDocs.publishProject('acme-docs', {});
 ```
 
 ### Read the site config
@@ -1094,7 +1094,7 @@ Read `scalar.config.json` straight from the project repository, without cloning 
 | Response | [`ScalarDocListProjectConfigResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const scalarDoc = await client.scalarDocs.listProjectConfig('slug');
+const scalarDoc = await client.scalarDocs.listProjectConfig('acme-docs');
 ```
 
 ### Write the site config
@@ -1107,8 +1107,8 @@ Commit `scalar.config.json` straight to the project repository. Pass the `baseTo
 | Response | [`ScalarDocUpdateProjectConfigResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const scalarDoc = await client.scalarDocs.updateProjectConfig('slug', {
-  content: '',
+const scalarDoc = await client.scalarDocs.updateProjectConfig('acme-docs', {
+  content: '{"name":"Acme Documentation"}',
 });
 ```
 
@@ -1121,7 +1121,7 @@ The domains the project serves on — the Scalar-hosted one and the custom one, 
 | Response | [`ScalarDocListProjectDomainResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const scalarDoc = await client.scalarDocs.listProjectDomain('slug');
+const scalarDoc = await client.scalarDocs.listProjectDomain('acme-docs');
 ```
 
 ### Check domain DNS
@@ -1133,7 +1133,7 @@ Whether the project custom domain points at Scalar yet. `expected` is the CNAME 
 | Response | [`ScalarDocListProjectDomainStatusResponse`](./src/resources/scalar-docs.ts) |
 
 ```ts
-const scalarDoc = await client.scalarDocs.listProjectDomainStatus('slug');
+const scalarDoc = await client.scalarDocs.listProjectDomainStatus('acme-docs');
 ```
 
 ## `Namespaces`
@@ -1167,7 +1167,7 @@ Exchange an API key for an access token.
 
 ```ts
 const authentication = await client.authentication.exchangePersonalToken({
-  personalToken: '',
+  personalToken: 'scalar_example_personal_token',
 });
 ```
 
@@ -1211,7 +1211,7 @@ Create an SDK from an API document, targeting one or more languages.
 
 ```ts
 const uid = await client.sdks.create({
-  apiUid: 'xxxxx',
+  apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
   languages: ['typescript'],
 });
 ```
@@ -1225,7 +1225,7 @@ Get a single SDK by its uid.
 | Response | [`Sdk`](./src/resources/sdks/sdks.ts) |
 
 ```ts
-const sdk = await client.sdks.retrieve('uidxx');
+const sdk = await client.sdks.retrieve('UakgbKJ5m9gl0JDMbcJqL');
 ```
 
 ### Update an SDK
@@ -1238,7 +1238,7 @@ Update SDK metadata, its linked API, or its config.
 | Response | [`SdkUpdateResponse`](./src/resources/sdks/sdks.ts) |
 
 ```ts
-await client.sdks.update('uidxx', {});
+await client.sdks.update('UakgbKJ5m9gl0JDMbcJqL', {});
 ```
 
 ### Delete an SDK
@@ -1250,7 +1250,7 @@ Delete an SDK and every version it holds.
 | Response | [`SdkDeleteResponse`](./src/resources/sdks/sdks.ts) |
 
 ```ts
-await client.sdks.delete('uidxx');
+await client.sdks.delete('UakgbKJ5m9gl0JDMbcJqL');
 ```
 
 ### Build an SDK
@@ -1263,7 +1263,7 @@ Start a build. Omit `version` to build the current work — the open draft, else
 | Response | [`SdkBuildResponse`](./src/resources/sdks/sdks.ts) |
 
 ```ts
-const sdk = await client.sdks.build('uidxx', {});
+const sdk = await client.sdks.build('UakgbKJ5m9gl0JDMbcJqL', {});
 ```
 
 ### `Sdks Versions`
@@ -1280,9 +1280,9 @@ Create a new SDK version against a specific API version.
 | Response | [`VersionCreateResponse`](./src/resources/sdks/versions.ts) |
 
 ```ts
-await client.sdks.versions.create('uidxx', {
-  version: '',
-  apiVersion: '',
+await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
+  version: '1.2.0',
+  apiVersion: '1.2.0',
 });
 ```
 
@@ -1296,8 +1296,8 @@ Permanently delete one version of an SDK.
 | Response | [`VersionDeleteResponse`](./src/resources/sdks/versions.ts) |
 
 ```ts
-await client.sdks.versions.delete('version', {
-  uid: 'uidxx',
+await client.sdks.versions.delete('1.2.0', {
+  uid: 'UakgbKJ5m9gl0JDMbcJqL',
 });
 ```
 
@@ -1315,10 +1315,10 @@ Link one language target to a GitHub repository, so builds sync there.
 | Response | [`RepositoryLinkResponse`](./src/resources/sdks/repositories.ts) |
 
 ```ts
-const repository = await client.sdks.repositories.link('uidxx', {
+const repository = await client.sdks.repositories.link('UakgbKJ5m9gl0JDMbcJqL', {
   language: 'typescript',
-  repositoryId: 0,
-  baseBranch: '',
+  repositoryId: 123456789,
+  baseBranch: 'main',
 });
 ```
 
@@ -1333,7 +1333,7 @@ Unlink one language target from its repository.
 
 ```ts
 await client.sdks.repositories.unlink('typescript', {
-  uid: 'uidxx',
+  uid: 'UakgbKJ5m9gl0JDMbcJqL',
 });
 ```
 
@@ -1348,8 +1348,8 @@ Toggle publish-on-merge and the release settings for a linked target.
 
 ```ts
 await client.sdks.repositories.updatePublishing('typescript', {
-  uid: 'uidxx',
-  publishOnMerge: false,
+  uid: 'UakgbKJ5m9gl0JDMbcJqL',
+  publishOnMerge: true,
 });
 ```
 
@@ -1382,7 +1382,7 @@ Create an MCP server over one or more API document versions. The response carrie
 
 ```ts
 const server = await client.mcp.servers.create({
-  name: 'x',
+  name: 'Acme MCP',
 });
 ```
 
@@ -1395,7 +1395,7 @@ Get a single MCP server by its id.
 | Response | [`McpServer`](./src/resources/mcp/servers/servers.ts) |
 
 ```ts
-const mcpServer = await client.mcp.servers.retrieve('id');
+const mcpServer = await client.mcp.servers.retrieve('42');
 ```
 
 #### Update an MCP server
@@ -1408,7 +1408,7 @@ Update MCP server metadata and which tools it exposes.
 | Response | [`McpServer`](./src/resources/mcp/servers/servers.ts) |
 
 ```ts
-const mcpServer = await client.mcp.servers.update('id', {});
+const mcpServer = await client.mcp.servers.update('42', {});
 ```
 
 #### Delete an MCP server
@@ -1420,7 +1420,7 @@ Delete an MCP server and every installation it serves.
 | Response | [`ServerDeleteResponse`](./src/resources/mcp/servers/servers.ts) |
 
 ```ts
-await client.mcp.servers.delete('id');
+await client.mcp.servers.delete('42');
 ```
 
 #### `Mcp Servers Installations`
@@ -1436,7 +1436,7 @@ List the installations of an MCP server. An installation is what an MCP client c
 | Response | [`InstallationListResponse`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-const installation = await client.mcp.servers.installations.list('id');
+const installation = await client.mcp.servers.installations.list('42');
 ```
 
 ##### Create an installation
@@ -1448,8 +1448,8 @@ Create an installation of an MCP server. `documentAuth` holds the credentials th
 | Request | [`InstallationCreateParams`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-const mcpInstallation = await client.mcp.servers.installations.create('id', {
-  name: 'x',
+const mcpInstallation = await client.mcp.servers.installations.create('42', {
+  name: 'Acme MCP',
   documentAuth: {},
 });
 ```
@@ -1463,8 +1463,8 @@ Get a single installation of an MCP server.
 | Request | [`InstallationRetrieveParams`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-const mcpInstallation = await client.mcp.servers.installations.retrieve('installationId', {
-  id: 'id',
+const mcpInstallation = await client.mcp.servers.installations.retrieve('84', {
+  id: '42',
 });
 ```
 
@@ -1477,8 +1477,8 @@ Update an installation. Set `isPrivate` and add access groups to put it behind a
 | Request | [`InstallationUpdateParams`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-const mcpInstallation = await client.mcp.servers.installations.update('installationId', {
-  id: 'id',
+const mcpInstallation = await client.mcp.servers.installations.update('84', {
+  id: '42',
 });
 ```
 
@@ -1492,8 +1492,8 @@ Delete an installation of an MCP server.
 | Response | [`InstallationDeleteResponse`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-await client.mcp.servers.installations.delete('installationId', {
-  id: 'id',
+await client.mcp.servers.installations.delete('84', {
+  id: '42',
 });
 ```
 
@@ -1507,9 +1507,9 @@ Let an access group reach a private installation.
 | Response | [`InstallationCreateAccessGroupResponse`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-await client.mcp.servers.installations.createAccessGroup('installationId', {
-  id: 'id',
-  accessGroupUid: 'xxxxx',
+await client.mcp.servers.installations.createAccessGroup('84', {
+  id: '42',
+  accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
 });
 ```
 
@@ -1523,9 +1523,9 @@ Stop an access group reaching a private installation.
 | Response | [`InstallationDeleteAccessGroupResponse`](./src/resources/mcp/servers/installations.ts) |
 
 ```ts
-await client.mcp.servers.installations.deleteAccessGroup('installationId', {
-  id: 'id',
-  accessGroupUid: 'xxxxx',
+await client.mcp.servers.installations.deleteAccessGroup('84', {
+  id: '42',
+  accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
 });
 ```
 
