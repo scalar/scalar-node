@@ -183,34 +183,32 @@ export class Rules extends APIResource {
   }
 }
 
-export type RuleListRulesetsResponse = Array<RuleListRulesetsResponse.RuleListRulesetsResponseItem>;
-
-export namespace RuleListRulesetsResponse {
-  export interface RuleListRulesetsResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    description: string;
-    /**
-     * @minLength 1
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    /**
-     * @minLength 2
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-  }
+export interface Rule {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @maxLength 100
+   */
+  title: string;
+  description: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+  /**
+   * @minLength 2
+   * @maxLength 50
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
+  namespace: Shared.Namespace;
+  isPrivate: boolean;
 }
+
+export type RuleListRulesetsResponse = Array<Rule>;
 
 export interface RuleCreateRulesetParams {
   title: string;
@@ -290,6 +288,7 @@ export interface RuleDeleteRulesetAccessGroupParams {
 export type RuleDeleteRulesetAccessGroupResponse = null;
 export declare namespace Rules {
   export {
+    type Rule as Rule,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,

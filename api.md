@@ -35,6 +35,14 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Delete a login portal](#delete-a-login-portal)
   - [Create a portal](#create-a-portal)
   - [List all portals](#list-all-portals)
+- [`AccessGroups`](#accessgroups)
+  - [Create an access group](#create-an-access-group)
+  - [Get an access group](#get-an-access-group)
+  - [Update an access group](#update-an-access-group)
+  - [Delete an access group](#delete-an-access-group)
+  - [`AccessGroups Domains`](#accessgroups-domains)
+    - [Add an allowed email domain](#add-an-allowed-email-domain)
+    - [Remove an allowed email domain](#remove-an-allowed-email-domain)
 - [`Rules`](#rules)
   - [List all rules](#list-all-rules)
   - [Create a rule](#create-a-rule)
@@ -52,15 +60,67 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Get a theme](#get-a-theme)
 - [`Teams`](#teams)
   - [List teams](#list-teams)
+  - [`Teams Members`](#teams-members)
+    - [List team members](#list-team-members)
+    - [Change a member role](#change-a-member-role)
+    - [Remove a member](#remove-a-member)
+  - [`Teams Invites`](#teams-invites)
+    - [Invite a member](#invite-a-member)
+    - [Resend an invite](#resend-an-invite)
+    - [Cancel an invite](#cancel-an-invite)
 - [`ScalarDocs`](#scalardocs)
   - [List all projects](#list-all-projects)
   - [Create a project](#create-a-project)
   - [Publish a project](#publish-a-project)
+  - [List all docs projects](#list-all-docs-projects)
+  - [Create a docs project](#create-a-docs-project)
+  - [Get a docs project](#get-a-docs-project)
+  - [Update a docs project](#update-a-docs-project)
+  - [Delete a docs project](#delete-a-docs-project)
+  - [Publish a docs project](#publish-a-docs-project)
+  - [Read the site config](#read-the-site-config)
+  - [Write the site config](#write-the-site-config)
+  - [Get the site domains](#get-the-site-domains)
+  - [Check domain DNS](#check-domain-dns)
 - [`Namespaces`](#namespaces)
   - [List namespaces](#list-namespaces)
 - [`Authentication`](#authentication)
   - [Exchange token](#exchange-token)
   - [Get current user](#get-current-user)
+- [`Sdks`](#sdks)
+  - [List all SDKs](#list-all-sdks)
+  - [Create an SDK](#create-an-sdk)
+  - [Get an SDK](#get-an-sdk)
+  - [Update an SDK](#update-an-sdk)
+  - [Delete an SDK](#delete-an-sdk)
+  - [Build an SDK](#build-an-sdk)
+  - [`Sdks Versions`](#sdks-versions)
+    - [Create an SDK version](#create-an-sdk-version)
+    - [Delete an SDK version](#delete-an-sdk-version)
+  - [`Sdks Repositories`](#sdks-repositories)
+    - [Link a repository](#link-a-repository)
+    - [Unlink a repository](#unlink-a-repository)
+    - [Update publishing settings](#update-publishing-settings)
+- [`Mcp`](#mcp)
+  - [`Mcp Servers`](#mcp-servers)
+    - [List all MCP servers](#list-all-mcp-servers)
+    - [Create an MCP server](#create-an-mcp-server)
+    - [Get an MCP server](#get-an-mcp-server)
+    - [Update an MCP server](#update-an-mcp-server)
+    - [Delete an MCP server](#delete-an-mcp-server)
+    - [`Mcp Servers Installations`](#mcp-servers-installations)
+      - [List installations](#list-installations)
+      - [Create an installation](#create-an-installation)
+      - [Get an installation](#get-an-installation)
+      - [Update an installation](#update-an-installation)
+      - [Delete an installation](#delete-an-installation)
+      - [Add an access group](#add-an-access-group)
+      - [Remove an access group](#remove-an-access-group)
+- [`OAuth`](#oauth)
+  - [Start an OAuth authorization](#start-an-oauth-authorization)
+  - [Exchange a code or refresh token](#exchange-a-code-or-refresh-token)
+  - [Revoke a refresh token](#revoke-a-refresh-token)
+  - [Authorization server metadata](#authorization-server-metadata)
 
 ## Setup
 
@@ -513,6 +573,94 @@ List all login portals for the current team.
 const loginPortal = await client.loginPortals.list();
 ```
 
+## `AccessGroups`
+
+Access Groups
+
+### Create an access group
+
+Create a group for the current team. Requires docs edit permission and the access groups billing feature. Domains are exact email domains, without wildcards or implicit subdomain matching.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`AccessGroupCreateParams`](./src/resources/access-groups/access-groups.ts) |
+| Response | [`AccessGroupCreateResponse`](./src/resources/access-groups/access-groups.ts) |
+
+```ts
+const accessGroup = await client.accessGroups.create({});
+```
+
+### Get an access group
+
+Get a group and its email and domain allowlists by slug.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`AccessGroupRetrieveResponse`](./src/resources/access-groups/access-groups.ts) |
+
+```ts
+const accessGroup = await client.accessGroups.retrieve('slug');
+```
+
+### Update an access group
+
+Update group metadata. Requires docs edit permission. After changing the slug, use the new slug in subsequent requests.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`AccessGroupUpdateParams`](./src/resources/access-groups/access-groups.ts) |
+| Response | [`AccessGroupUpdateResponse`](./src/resources/access-groups/access-groups.ts) |
+
+```ts
+await client.accessGroups.update('slug', {});
+```
+
+### Delete an access group
+
+Delete a group and remove its project assignments. Requires docs edit permission.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`AccessGroupDeleteResponse`](./src/resources/access-groups/access-groups.ts) |
+
+```ts
+await client.accessGroups.delete('slug');
+```
+
+### `AccessGroups Domains`
+
+Access Groups
+
+#### Add an allowed email domain
+
+Allow an exact email domain in a group. Requires docs edit permission. A group supports up to 1000 domains.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`DomainCreateParams`](./src/resources/access-groups/domains.ts) |
+| Response | [`DomainCreateResponse`](./src/resources/access-groups/domains.ts) |
+
+```ts
+await client.accessGroups.domains.create('slug', {
+  domain: '',
+});
+```
+
+#### Remove an allowed email domain
+
+Remove an exact email domain from a group. Requires docs edit permission. Other allowed domains and emails are preserved.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`DomainDeleteParams`](./src/resources/access-groups/domains.ts) |
+| Response | [`DomainDeleteResponse`](./src/resources/access-groups/domains.ts) |
+
+```ts
+await client.accessGroups.domains.delete('slug', {
+  domain: '',
+});
+```
+
 ## `Rules`
 
 Rules
@@ -718,10 +866,97 @@ List all available teams
 
 | Direction | Type |
 | --- | --- |
-| Response | [`TeamListResponse`](./src/resources/teams.ts) |
+| Response | [`TeamListResponse`](./src/resources/teams/teams.ts) |
 
 ```ts
 const team = await client.teams.list();
+```
+
+### `Teams Members`
+
+Teams
+
+#### List team members
+
+List the members of the current team, along with the invites still outstanding.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`MemberListResponse`](./src/resources/teams/members.ts) |
+
+```ts
+const member = await client.teams.members.list();
+```
+
+#### Change a member role
+
+Change what a member of the current team is allowed to do.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`MemberUpdateParams`](./src/resources/teams/members.ts) |
+| Response | [`MemberUpdateResponse`](./src/resources/teams/members.ts) |
+
+```ts
+await client.teams.members.update('uidxx', {
+  role: 'owner',
+});
+```
+
+#### Remove a member
+
+Remove someone from the current team.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`MemberDeleteResponse`](./src/resources/teams/members.ts) |
+
+```ts
+await client.teams.members.delete('uidxx');
+```
+
+### `Teams Invites`
+
+Teams
+
+#### Invite a member
+
+Invite someone to the current team by email.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InviteMemberParams`](./src/resources/teams/invites.ts) |
+| Response | [`InviteMemberResponse`](./src/resources/teams/invites.ts) |
+
+```ts
+await client.teams.invites.member({
+  email: 'user@example.com',
+  role: 'owner',
+});
+```
+
+#### Resend an invite
+
+Send the invite email again.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`InviteResendResponse`](./src/resources/teams/invites.ts) |
+
+```ts
+await client.teams.invites.resend('uidxx');
+```
+
+#### Cancel an invite
+
+Withdraw an invite that has not been accepted.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`InviteCancelResponse`](./src/resources/teams/invites.ts) |
+
+```ts
+await client.teams.invites.cancel('uidxx');
 ```
 
 ## `ScalarDocs`
@@ -770,6 +1005,137 @@ Start a new publish process.
 const scalarDoc = await client.scalarDocs.publishGuide('slug');
 ```
 
+### List all docs projects
+
+List every docs project on the team.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ScalarDocListProjectsParams`](./src/resources/scalar-docs.ts) |
+| Response | [`ScalarDocListProjectsResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+const scalarDoc = await client.scalarDocs.listProjects();
+```
+
+### Create a docs project
+
+Create a docs project. Omit `provider` to have Scalar host the repository.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ScalarDocCreateProjectParams`](./src/resources/scalar-docs.ts) |
+| Response | [`DocsProject`](./src/resources/scalar-docs.ts) |
+
+```ts
+const docsProject = await client.scalarDocs.createProject({
+  name: '',
+  provider: 'forgejo',
+});
+```
+
+### Get a docs project
+
+Get a single docs project by its slug.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`DocsProject`](./src/resources/scalar-docs.ts) |
+
+```ts
+const docsProject = await client.scalarDocs.retrieveProject('slug');
+```
+
+### Update a docs project
+
+Update project settings. Set `isPrivate` with `accessGroups` to put the site behind a login.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ScalarDocUpdateProjectParams`](./src/resources/scalar-docs.ts) |
+| Response | [`ScalarDocUpdateProjectResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+await client.scalarDocs.updateProject('slug', {});
+```
+
+### Delete a docs project
+
+Delete a docs project, its deploys, its publish records and its cached builds.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`ScalarDocDeleteProjectResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+await client.scalarDocs.deleteProject('slug');
+```
+
+### Publish a docs project
+
+Start a build and deploy. The returned `publishUid` identifies the publish record.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ScalarDocPublishProjectParams`](./src/resources/scalar-docs.ts) |
+| Response | [`ScalarDocPublishProjectResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+const scalarDoc = await client.scalarDocs.publishProject('slug', {});
+```
+
+### Read the site config
+
+Read `scalar.config.json` straight from the project repository, without cloning it. `baseToken` is the compare-and-swap handle for a later write.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ScalarDocListProjectConfigParams`](./src/resources/scalar-docs.ts) |
+| Response | [`ScalarDocListProjectConfigResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+const scalarDoc = await client.scalarDocs.listProjectConfig('slug');
+```
+
+### Write the site config
+
+Commit `scalar.config.json` straight to the project repository. Pass the `baseToken` from the read this edit was based on; a conflict means the file moved underneath it.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ScalarDocUpdateProjectConfigParams`](./src/resources/scalar-docs.ts) |
+| Response | [`ScalarDocUpdateProjectConfigResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+const scalarDoc = await client.scalarDocs.updateProjectConfig('slug', {
+  content: '',
+});
+```
+
+### Get the site domains
+
+The domains the project serves on — the Scalar-hosted one and the custom one, when set.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`ScalarDocListProjectDomainResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+const scalarDoc = await client.scalarDocs.listProjectDomain('slug');
+```
+
+### Check domain DNS
+
+Whether the project custom domain points at Scalar yet. `expected` is the CNAME record to create; `found` is what resolves today. A project with no custom domain reports `verified` with no expected record, because Scalar serves its own subdomain directly.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`ScalarDocListProjectDomainStatusResponse`](./src/resources/scalar-docs.ts) |
+
+```ts
+const scalarDoc = await client.scalarDocs.listProjectDomainStatus('slug');
+```
+
 ## `Namespaces`
 
 Namespaces
@@ -811,8 +1177,412 @@ Get the authenticated user, including their available teams and theme.
 
 | Direction | Type |
 | --- | --- |
-| Response | [`AuthenticationListCurrentUserResponse`](./src/resources/authentication.ts) |
+| Response | [`User`](./src/resources/authentication.ts) |
 
 ```ts
-const authentication = await client.authentication.listCurrentUser();
+const user = await client.authentication.listCurrentUser();
+```
+
+## `Sdks`
+
+SDKs
+
+### List all SDKs
+
+List every SDK on the team.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`SdkListParams`](./src/resources/sdks/sdks.ts) |
+| Response | [`SdkListResponse`](./src/resources/sdks/sdks.ts) |
+
+```ts
+const sdk = await client.sdks.list();
+```
+
+### Create an SDK
+
+Create an SDK from an API document, targeting one or more languages.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`SdkCreateParams`](./src/resources/sdks/sdks.ts) |
+| Response | [`UID`](./src/resources/shared.ts) |
+
+```ts
+const uid = await client.sdks.create({
+  apiUid: 'xxxxx',
+  languages: ['typescript'],
+});
+```
+
+### Get an SDK
+
+Get a single SDK by its uid.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`Sdk`](./src/resources/sdks/sdks.ts) |
+
+```ts
+const sdk = await client.sdks.retrieve('uidxx');
+```
+
+### Update an SDK
+
+Update SDK metadata, its linked API, or its config.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`SdkUpdateParams`](./src/resources/sdks/sdks.ts) |
+| Response | [`SdkUpdateResponse`](./src/resources/sdks/sdks.ts) |
+
+```ts
+await client.sdks.update('uidxx', {});
+```
+
+### Delete an SDK
+
+Delete an SDK and every version it holds.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`SdkDeleteResponse`](./src/resources/sdks/sdks.ts) |
+
+```ts
+await client.sdks.delete('uidxx');
+```
+
+### Build an SDK
+
+Start a build. Omit `version` to build the current work — the open draft, else the latest version — and the resolved version comes back in the response.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`SdkBuildParams`](./src/resources/sdks/sdks.ts) |
+| Response | [`SdkBuildResponse`](./src/resources/sdks/sdks.ts) |
+
+```ts
+const sdk = await client.sdks.build('uidxx', {});
+```
+
+### `Sdks Versions`
+
+SDKs
+
+#### Create an SDK version
+
+Create a new SDK version against a specific API version.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`VersionCreateParams`](./src/resources/sdks/versions.ts) |
+| Response | [`VersionCreateResponse`](./src/resources/sdks/versions.ts) |
+
+```ts
+await client.sdks.versions.create('uidxx', {
+  version: '',
+  apiVersion: '',
+});
+```
+
+#### Delete an SDK version
+
+Permanently delete one version of an SDK.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`VersionDeleteParams`](./src/resources/sdks/versions.ts) |
+| Response | [`VersionDeleteResponse`](./src/resources/sdks/versions.ts) |
+
+```ts
+await client.sdks.versions.delete('version', {
+  uid: 'uidxx',
+});
+```
+
+### `Sdks Repositories`
+
+SDKs
+
+#### Link a repository
+
+Link one language target to a GitHub repository, so builds sync there.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`RepositoryLinkParams`](./src/resources/sdks/repositories.ts) |
+| Response | [`RepositoryLinkResponse`](./src/resources/sdks/repositories.ts) |
+
+```ts
+const repository = await client.sdks.repositories.link('uidxx', {
+  language: 'typescript',
+  repositoryId: 0,
+  baseBranch: '',
+});
+```
+
+#### Unlink a repository
+
+Unlink one language target from its repository.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`RepositoryUnlinkParams`](./src/resources/sdks/repositories.ts) |
+| Response | [`RepositoryUnlinkResponse`](./src/resources/sdks/repositories.ts) |
+
+```ts
+await client.sdks.repositories.unlink('typescript', {
+  uid: 'uidxx',
+});
+```
+
+#### Update publishing settings
+
+Toggle publish-on-merge and the release settings for a linked target.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`RepositoryUpdatePublishingParams`](./src/resources/sdks/repositories.ts) |
+| Response | [`RepositoryUpdatePublishingResponse`](./src/resources/sdks/repositories.ts) |
+
+```ts
+await client.sdks.repositories.updatePublishing('typescript', {
+  uid: 'uidxx',
+  publishOnMerge: false,
+});
+```
+
+## `Mcp`
+
+### `Mcp Servers`
+
+MCP
+
+#### List all MCP servers
+
+List every MCP server on the team.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`ServerListResponse`](./src/resources/mcp/servers/servers.ts) |
+
+```ts
+const server = await client.mcp.servers.list();
+```
+
+#### Create an MCP server
+
+Create an MCP server over one or more API document versions. The response carries the server and its first installation.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ServerCreateParams`](./src/resources/mcp/servers/servers.ts) |
+| Response | [`ServerCreateResponse`](./src/resources/mcp/servers/servers.ts) |
+
+```ts
+const server = await client.mcp.servers.create({
+  name: 'x',
+});
+```
+
+#### Get an MCP server
+
+Get a single MCP server by its id.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`McpServer`](./src/resources/mcp/servers/servers.ts) |
+
+```ts
+const mcpServer = await client.mcp.servers.retrieve('id');
+```
+
+#### Update an MCP server
+
+Update MCP server metadata and which tools it exposes.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`ServerUpdateParams`](./src/resources/mcp/servers/servers.ts) |
+| Response | [`McpServer`](./src/resources/mcp/servers/servers.ts) |
+
+```ts
+const mcpServer = await client.mcp.servers.update('id', {});
+```
+
+#### Delete an MCP server
+
+Delete an MCP server and every installation it serves.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`ServerDeleteResponse`](./src/resources/mcp/servers/servers.ts) |
+
+```ts
+await client.mcp.servers.delete('id');
+```
+
+#### `Mcp Servers Installations`
+
+MCP
+
+##### List installations
+
+List the installations of an MCP server. An installation is what an MCP client connects to.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`InstallationListResponse`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+const installation = await client.mcp.servers.installations.list('id');
+```
+
+##### Create an installation
+
+Create an installation of an MCP server. `documentAuth` holds the credentials the server presents to the upstream API and is never returned.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InstallationCreateParams`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+const mcpInstallation = await client.mcp.servers.installations.create('id', {
+  name: 'x',
+  documentAuth: {},
+});
+```
+
+##### Get an installation
+
+Get a single installation of an MCP server.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InstallationRetrieveParams`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+const mcpInstallation = await client.mcp.servers.installations.retrieve('installationId', {
+  id: 'id',
+});
+```
+
+##### Update an installation
+
+Update an installation. Set `isPrivate` and add access groups to put it behind a login.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InstallationUpdateParams`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+const mcpInstallation = await client.mcp.servers.installations.update('installationId', {
+  id: 'id',
+});
+```
+
+##### Delete an installation
+
+Delete an installation of an MCP server.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InstallationDeleteParams`](./src/resources/mcp/servers/installations.ts) |
+| Response | [`InstallationDeleteResponse`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+await client.mcp.servers.installations.delete('installationId', {
+  id: 'id',
+});
+```
+
+##### Add an access group
+
+Let an access group reach a private installation.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InstallationCreateAccessGroupParams`](./src/resources/mcp/servers/installations.ts) |
+| Response | [`InstallationCreateAccessGroupResponse`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+await client.mcp.servers.installations.createAccessGroup('installationId', {
+  id: 'id',
+  accessGroupUid: 'xxxxx',
+});
+```
+
+##### Remove an access group
+
+Stop an access group reaching a private installation.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`InstallationDeleteAccessGroupParams`](./src/resources/mcp/servers/installations.ts) |
+| Response | [`InstallationDeleteAccessGroupResponse`](./src/resources/mcp/servers/installations.ts) |
+
+```ts
+await client.mcp.servers.installations.deleteAccessGroup('installationId', {
+  id: 'id',
+  accessGroupUid: 'xxxxx',
+});
+```
+
+## `OAuth`
+
+OAuth
+
+### Start an OAuth authorization
+
+Authorization endpoint (RFC 6749 §4.1.1 with PKCE, RFC 7636). Validates the request and sends the user to the Scalar dashboard to approve it; the user returns to `redirect_uri` with a `code` to exchange at the token endpoint. Only `response_type=code` with `code_challenge_method=S256` is supported.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`OAuthOauthAuthorizeResponse`](./src/resources/o-auth.ts) |
+
+```ts
+await client.oAuth.oauthAuthorize();
+```
+
+### Exchange a code or refresh token
+
+Token endpoint (RFC 6749 §4.1.3 and §6). Accepts `application/x-www-form-urlencoded`. Confidential clients authenticate with HTTP Basic or `client_secret` in the body; public clients send `client_id` alone. The `authorization_code` grant needs `code`, `redirect_uri` and `code_verifier`; the `refresh_token` grant needs `refresh_token` and may narrow `scope`.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`OAuthOauthTokenParams`](./src/resources/o-auth.ts) |
+| Response | [`OAuthOauthTokenResponse`](./src/resources/o-auth.ts) |
+
+```ts
+const oAuth = await client.oAuth.oauthToken({
+  grant_type: '',
+});
+```
+
+### Revoke a refresh token
+
+Revocation endpoint (RFC 7009). Revokes the refresh token and every token issued alongside it. The client authenticates as it does at the token endpoint. Responds 200 whether or not the token was live, as the RFC requires.
+
+| Direction | Type |
+| --- | --- |
+| Request | [`OAuthOauthRevokeParams`](./src/resources/o-auth.ts) |
+| Response | [`OauthError`](./src/resources/o-auth.ts) |
+
+```ts
+const oauthError = await client.oAuth.oauthRevoke({
+  token: '',
+});
+```
+
+### Authorization server metadata
+
+Discovery document for OAuth clients (RFC 8414): where the endpoints are and what they support.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`OauthAuthorizationServerMetadata`](./src/resources/o-auth.ts) |
+
+```ts
+const oauthAuthorizationServerMetadata = await client.oAuth.oauthAuthorizationServerMetadata();
 ```

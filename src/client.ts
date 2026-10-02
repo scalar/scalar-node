@@ -28,8 +28,10 @@ import { toFile } from './core/uploads';
 import { VERSION } from './version';
 import {
   Registry,
+  type APIDocument,
   type Version,
   type AccessGroup,
+  type Method,
   type RegistryListAllAPIDocumentsResponse,
   type RegistryListAPIDocumentsResponse,
   type RegistryCreateAPIDocumentResponse,
@@ -53,6 +55,8 @@ import {
 } from './resources/registry';
 import {
   Schemas,
+  type Schema,
+  type ManagedSchemaVersion,
   type SchemaListResponse,
   type SchemaUpdateResponse,
   type SchemaDeleteResponse,
@@ -64,6 +68,7 @@ import {
   LoginPortals,
   type LoginPortalEmail,
   type LoginPortalPage,
+  type LoginPortal,
   type LoginPortalRetrieveResponse,
   type LoginPortalUpdateResponse,
   type LoginPortalDeleteResponse,
@@ -72,7 +77,18 @@ import {
   type LoginPortalCreateParams,
 } from './resources/login-portals';
 import {
+  AccessGroups,
+  type AccessGroupName,
+  type AccessGroupCreateResponse,
+  type AccessGroupRetrieveResponse,
+  type AccessGroupUpdateResponse,
+  type AccessGroupDeleteResponse,
+  type AccessGroupCreateParams,
+  type AccessGroupUpdateParams,
+} from './resources/access-groups/access-groups';
+import {
   Rules,
+  type Rule,
   type RuleListRulesetsResponse,
   type RuleUpdateRulesetResponse,
   type RuleDeleteRulesetResponse,
@@ -88,6 +104,7 @@ import {
 } from './resources/rules';
 import {
   Themes,
+  type Theme,
   type ThemeListResponse,
   type ThemeUpdateResponse,
   type ThemeReplaceDocumentResponse,
@@ -97,22 +114,73 @@ import {
   type ThemeUpdateParams,
   type ThemeReplaceDocumentParams,
 } from './resources/themes';
-import { Teams, type TeamListResponse } from './resources/teams';
+import {
+  Teams,
+  type Team,
+  type TeamName,
+  type TeamImage,
+  type TeamListResponse,
+} from './resources/teams/teams';
 import {
   ScalarDocs,
+  type GithubProject,
+  type DocsProject,
+  type ActiveDeployment,
   type Slug,
+  type GithubProjectRepository,
   type ScalarDocListGuidesResponse,
   type ScalarDocCreateGuideResponse,
   type ScalarDocPublishGuideResponse,
+  type ScalarDocListProjectsResponse,
+  type ScalarDocUpdateProjectResponse,
+  type ScalarDocDeleteProjectResponse,
+  type ScalarDocPublishProjectResponse,
+  type ScalarDocListProjectConfigResponse,
+  type ScalarDocUpdateProjectConfigResponse,
+  type ScalarDocListProjectDomainResponse,
+  type ScalarDocListProjectDomainStatusResponse,
   type ScalarDocCreateGuideParams,
+  type ScalarDocListProjectsParams,
+  type ScalarDocCreateProjectParams,
+  type ScalarDocUpdateProjectParams,
+  type ScalarDocPublishProjectParams,
+  type ScalarDocListProjectConfigParams,
+  type ScalarDocUpdateProjectConfigParams,
 } from './resources/scalar-docs';
 import { Namespaces, type NamespaceListResponse } from './resources/namespaces';
 import {
   Authentication,
+  type User,
+  type TeamSummary,
   type AuthenticationExchangePersonalTokenResponse,
-  type AuthenticationListCurrentUserResponse,
   type AuthenticationExchangePersonalTokenParams,
 } from './resources/authentication';
+import {
+  Sdks,
+  type Sdk,
+  type SdkTargetSummary,
+  type SdkVersion,
+  type SdkListResponse,
+  type SdkUpdateResponse,
+  type SdkDeleteResponse,
+  type SdkBuildResponse,
+  type SdkListParams,
+  type SdkCreateParams,
+  type SdkUpdateParams,
+  type SdkBuildParams,
+} from './resources/sdks/sdks';
+import { Mcp } from './resources/mcp/mcp';
+import {
+  OAuth,
+  type OauthToken,
+  type OauthError,
+  type OauthAuthorizationServerMetadata,
+  type OauthScope,
+  type OAuthOauthAuthorizeResponse,
+  type OAuthOauthTokenResponse,
+  type OAuthOauthTokenParams,
+  type OAuthOauthRevokeParams,
+} from './resources/o-auth';
 import * as SharedAPI from './resources/shared';
 
 export type AuthTokenProvider = () => string | Promise<string>;
@@ -927,30 +995,40 @@ export class Scalar {
   registry: Registry = new Registry(this);
   schemas: Schemas = new Schemas(this);
   loginPortals: LoginPortals = new LoginPortals(this);
+  accessGroups: AccessGroups = new AccessGroups(this);
   rules: Rules = new Rules(this);
   themes: Themes = new Themes(this);
   teams: Teams = new Teams(this);
   scalarDocs: ScalarDocs = new ScalarDocs(this);
   namespaces: Namespaces = new Namespaces(this);
   authentication: Authentication = new Authentication(this);
+  sdks: Sdks = new Sdks(this);
+  mcp: Mcp = new Mcp(this);
+  oAuth: OAuth = new OAuth(this);
 }
 
 Scalar.Registry = Registry;
 Scalar.Schemas = Schemas;
 Scalar.LoginPortals = LoginPortals;
+Scalar.AccessGroups = AccessGroups;
 Scalar.Rules = Rules;
 Scalar.Themes = Themes;
 Scalar.Teams = Teams;
 Scalar.ScalarDocs = ScalarDocs;
 Scalar.Namespaces = Namespaces;
 Scalar.Authentication = Authentication;
+Scalar.Sdks = Sdks;
+Scalar.Mcp = Mcp;
+Scalar.OAuth = OAuth;
 
 export declare namespace Scalar {
   export type RequestOptions = Opts.RequestOptions;
   export {
     Registry as Registry,
+    type APIDocument as APIDocument,
     type Version as Version,
     type AccessGroup as AccessGroup,
+    type Method as Method,
     type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
     type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
     type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,
@@ -975,6 +1053,8 @@ export declare namespace Scalar {
 
   export {
     Schemas as Schemas,
+    type Schema as Schema,
+    type ManagedSchemaVersion as ManagedSchemaVersion,
     type SchemaListResponse as SchemaListResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
@@ -987,6 +1067,7 @@ export declare namespace Scalar {
     LoginPortals as LoginPortals,
     type LoginPortalEmail as LoginPortalEmail,
     type LoginPortalPage as LoginPortalPage,
+    type LoginPortal as LoginPortal,
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
@@ -996,7 +1077,19 @@ export declare namespace Scalar {
   };
 
   export {
+    AccessGroups as AccessGroups,
+    type AccessGroupName as AccessGroupName,
+    type AccessGroupCreateResponse as AccessGroupCreateResponse,
+    type AccessGroupRetrieveResponse as AccessGroupRetrieveResponse,
+    type AccessGroupUpdateResponse as AccessGroupUpdateResponse,
+    type AccessGroupDeleteResponse as AccessGroupDeleteResponse,
+    type AccessGroupCreateParams as AccessGroupCreateParams,
+    type AccessGroupUpdateParams as AccessGroupUpdateParams,
+  };
+
+  export {
     Rules as Rules,
+    type Rule as Rule,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
@@ -1013,6 +1106,7 @@ export declare namespace Scalar {
 
   export {
     Themes as Themes,
+    type Theme as Theme,
     type ThemeListResponse as ThemeListResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
@@ -1023,24 +1117,78 @@ export declare namespace Scalar {
     type ThemeReplaceDocumentParams as ThemeReplaceDocumentParams,
   };
 
-  export { Teams as Teams, type TeamListResponse as TeamListResponse };
+  export {
+    Teams as Teams,
+    type Team as Team,
+    type TeamName as TeamName,
+    type TeamImage as TeamImage,
+    type TeamListResponse as TeamListResponse,
+  };
 
   export {
     ScalarDocs as ScalarDocs,
+    type GithubProject as GithubProject,
+    type DocsProject as DocsProject,
+    type ActiveDeployment as ActiveDeployment,
     type Slug as Slug,
+    type GithubProjectRepository as GithubProjectRepository,
     type ScalarDocListGuidesResponse as ScalarDocListGuidesResponse,
     type ScalarDocCreateGuideResponse as ScalarDocCreateGuideResponse,
     type ScalarDocPublishGuideResponse as ScalarDocPublishGuideResponse,
+    type ScalarDocListProjectsResponse as ScalarDocListProjectsResponse,
+    type ScalarDocUpdateProjectResponse as ScalarDocUpdateProjectResponse,
+    type ScalarDocDeleteProjectResponse as ScalarDocDeleteProjectResponse,
+    type ScalarDocPublishProjectResponse as ScalarDocPublishProjectResponse,
+    type ScalarDocListProjectConfigResponse as ScalarDocListProjectConfigResponse,
+    type ScalarDocUpdateProjectConfigResponse as ScalarDocUpdateProjectConfigResponse,
+    type ScalarDocListProjectDomainResponse as ScalarDocListProjectDomainResponse,
+    type ScalarDocListProjectDomainStatusResponse as ScalarDocListProjectDomainStatusResponse,
     type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams,
+    type ScalarDocListProjectsParams as ScalarDocListProjectsParams,
+    type ScalarDocCreateProjectParams as ScalarDocCreateProjectParams,
+    type ScalarDocUpdateProjectParams as ScalarDocUpdateProjectParams,
+    type ScalarDocPublishProjectParams as ScalarDocPublishProjectParams,
+    type ScalarDocListProjectConfigParams as ScalarDocListProjectConfigParams,
+    type ScalarDocUpdateProjectConfigParams as ScalarDocUpdateProjectConfigParams,
   };
 
   export { Namespaces as Namespaces, type NamespaceListResponse as NamespaceListResponse };
 
   export {
     Authentication as Authentication,
+    type User as User,
+    type TeamSummary as TeamSummary,
     type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse,
-    type AuthenticationListCurrentUserResponse as AuthenticationListCurrentUserResponse,
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
+  };
+
+  export {
+    Sdks as Sdks,
+    type Sdk as Sdk,
+    type SdkTargetSummary as SdkTargetSummary,
+    type SdkVersion as SdkVersion,
+    type SdkListResponse as SdkListResponse,
+    type SdkUpdateResponse as SdkUpdateResponse,
+    type SdkDeleteResponse as SdkDeleteResponse,
+    type SdkBuildResponse as SdkBuildResponse,
+    type SdkListParams as SdkListParams,
+    type SdkCreateParams as SdkCreateParams,
+    type SdkUpdateParams as SdkUpdateParams,
+    type SdkBuildParams as SdkBuildParams,
+  };
+
+  export { Mcp as Mcp };
+
+  export {
+    OAuth as OAuth,
+    type OauthToken as OauthToken,
+    type OauthError as OauthError,
+    type OauthAuthorizationServerMetadata as OauthAuthorizationServerMetadata,
+    type OauthScope as OauthScope,
+    type OAuthOauthAuthorizeResponse as OAuthOauthAuthorizeResponse,
+    type OAuthOauthTokenResponse as OAuthOauthTokenResponse,
+    type OAuthOauthTokenParams as OAuthOauthTokenParams,
+    type OAuthOauthRevokeParams as OAuthOauthRevokeParams,
   };
 
   export type ManagedDocVersion = SharedAPI.ManagedDocVersion;

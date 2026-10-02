@@ -28,7 +28,7 @@ export interface ManagedDocVersion {
 export namespace ManagedDocVersion {
   export interface Tool {
     path: string;
-    method: 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'query' | 'trace';
+    method: RegistryAPI.Method;
     enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
   }
 }

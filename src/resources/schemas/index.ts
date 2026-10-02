@@ -2,6 +2,8 @@
 
 export { Schemas } from './schemas';
 export type {
+  Schema,
+  ManagedSchemaVersion,
   SchemaListResponse,
   SchemaCreateParams,
   SchemaUpdateParams,
