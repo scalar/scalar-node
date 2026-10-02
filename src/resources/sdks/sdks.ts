@@ -56,7 +56,7 @@ export class Sdks extends APIResource {
    * @example
    * ```ts
    * const uid = await client.sdks.create({
-   *   apiUid: 'xxxxx',
+   *   apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
    *   languages: ['typescript'],
    * });
    * ```
@@ -74,7 +74,7 @@ export class Sdks extends APIResource {
    *
    * @example
    * ```ts
-   * const sdk = await client.sdks.retrieve('uidxx');
+   * const sdk = await client.sdks.retrieve('UakgbKJ5m9gl0JDMbcJqL');
    * ```
    */
   retrieve(uid: Shared.Nanoid, options?: RequestOptions): APIPromise<Sdk> {
@@ -91,7 +91,7 @@ export class Sdks extends APIResource {
    *
    * @example
    * ```ts
-   * await client.sdks.update('uidxx', {});
+   * await client.sdks.update('UakgbKJ5m9gl0JDMbcJqL', {});
    * ```
    */
   update(uid: Shared.Nanoid, body: SdkUpdateParams, options?: RequestOptions): APIPromise<SdkUpdateResponse> {
@@ -107,7 +107,7 @@ export class Sdks extends APIResource {
    *
    * @example
    * ```ts
-   * await client.sdks.delete('uidxx');
+   * await client.sdks.delete('UakgbKJ5m9gl0JDMbcJqL');
    * ```
    */
   delete(uid: Shared.Nanoid, options?: RequestOptions): APIPromise<SdkDeleteResponse> {
@@ -124,7 +124,7 @@ export class Sdks extends APIResource {
    *
    * @example
    * ```ts
-   * const sdk = await client.sdks.build('uidxx', {});
+   * const sdk = await client.sdks.build('UakgbKJ5m9gl0JDMbcJqL', {});
    * ```
    */
   build(uid: Shared.Nanoid, body: SdkBuildParams, options?: RequestOptions): APIPromise<SdkBuildResponse> {

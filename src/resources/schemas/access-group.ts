@@ -19,9 +19,9 @@ export class AccessGroup extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.accessGroup.create('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'x',
+   * await client.schemas.accessGroup.create('customer', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -47,9 +47,9 @@ export class AccessGroup extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.accessGroup.delete('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'x',
+   * await client.schemas.accessGroup.delete('customer', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */

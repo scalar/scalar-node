@@ -17,10 +17,10 @@ export class Repositories extends APIResource {
    *
    * @example
    * ```ts
-   * const repository = await client.sdks.repositories.link('uidxx', {
+   * const repository = await client.sdks.repositories.link('UakgbKJ5m9gl0JDMbcJqL', {
    *   language: 'typescript',
-   *   repositoryId: 0,
-   *   baseBranch: '',
+   *   repositoryId: 123456789,
+   *   baseBranch: 'main',
    * });
    * ```
    */
@@ -43,7 +43,7 @@ export class Repositories extends APIResource {
    * @example
    * ```ts
    * await client.sdks.repositories.unlink('typescript', {
-   *   uid: 'uidxx',
+   *   uid: 'UakgbKJ5m9gl0JDMbcJqL',
    * });
    * ```
    */
@@ -80,8 +80,8 @@ export class Repositories extends APIResource {
    * @example
    * ```ts
    * await client.sdks.repositories.updatePublishing('typescript', {
-   *   uid: 'uidxx',
-   *   publishOnMerge: false,
+   *   uid: 'UakgbKJ5m9gl0JDMbcJqL',
+   *   publishOnMerge: true,
    * });
    * ```
    */

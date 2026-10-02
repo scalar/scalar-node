@@ -33,7 +33,7 @@ export class Members extends APIResource {
    *
    * @example
    * ```ts
-   * await client.teams.members.update('uidxx', {
+   * await client.teams.members.update('UakgbKJ5m9gl0JDMbcJqL', {
    *   role: 'owner',
    * });
    * ```
@@ -55,7 +55,7 @@ export class Members extends APIResource {
    *
    * @example
    * ```ts
-   * await client.teams.members.delete('uidxx');
+   * await client.teams.members.delete('UakgbKJ5m9gl0JDMbcJqL');
    * ```
    */
   delete(uid: Shared.Nanoid, options?: RequestOptions): APIPromise<MemberDeleteResponse> {

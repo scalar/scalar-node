@@ -18,7 +18,7 @@ export class Authentication extends APIResource {
    * @example
    * ```ts
    * const authentication = await client.authentication.exchangePersonalToken({
-   *   personalToken: '',
+   *   personalToken: 'scalar_example_personal_token',
    * });
    * ```
    */

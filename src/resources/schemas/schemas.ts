@@ -39,7 +39,7 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const schema = await client.schemas.list('namespace');
+   * const schema = await client.schemas.list('acme');
    * ```
    */
   list(namespace_: string, options?: RequestOptions): APIPromise<SchemaListResponse> {
@@ -56,11 +56,11 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const uid = await client.schemas.create('namespace', {
-   *   title: '',
-   *   version: 'x',
-   *   slug: '',
-   *   document: '',
+   * const uid = await client.schemas.create('acme', {
+   *   title: 'Customer',
+   *   version: '1.2.0',
+   *   slug: 'customer',
+   *   document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
    * });
    * ```
    */
@@ -78,8 +78,8 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.update('slug', {
-   *   namespace: 'namespace',
+   * await client.schemas.update('customer', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -102,8 +102,8 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.delete('slug', {
-   *   namespace: 'namespace',
+   * await client.schemas.delete('customer', {
+   *   namespace: 'acme',
    * });
    * ```
    */

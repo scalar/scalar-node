@@ -19,9 +19,9 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.schemas.version.retrieve('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * const response = await client.schemas.version.retrieve('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'customer',
    * });
    * ```
    */
@@ -47,9 +47,9 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.version.delete('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * await client.schemas.version.delete('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'customer',
    * });
    * ```
    */
@@ -72,10 +72,10 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const version = await client.schemas.version.create('slug', {
-   *   namespace: 'namespace',
-   *   version: 'x',
-   *   document: '',
+   * const version = await client.schemas.version.create('customer', {
+   *   namespace: 'acme',
+   *   version: '1.2.0',
+   *   document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
    * });
    * ```
    */

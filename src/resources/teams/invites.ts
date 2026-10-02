@@ -17,7 +17,7 @@ export class Invites extends APIResource {
    * @example
    * ```ts
    * await client.teams.invites.member({
-   *   email: 'user@example.com',
+   *   email: 'alex@example.com',
    *   role: 'owner',
    * });
    * ```
@@ -35,7 +35,7 @@ export class Invites extends APIResource {
    *
    * @example
    * ```ts
-   * await client.teams.invites.resend('uidxx');
+   * await client.teams.invites.resend('UakgbKJ5m9gl0JDMbcJqL');
    * ```
    */
   resend(uid: Shared.Nanoid, options?: RequestOptions): APIPromise<InviteResendResponse> {
@@ -51,7 +51,7 @@ export class Invites extends APIResource {
    *
    * @example
    * ```ts
-   * await client.teams.invites.cancel('uidxx');
+   * await client.teams.invites.cancel('UakgbKJ5m9gl0JDMbcJqL');
    * ```
    */
   cancel(uid: Shared.Nanoid, options?: RequestOptions): APIPromise<InviteCancelResponse> {

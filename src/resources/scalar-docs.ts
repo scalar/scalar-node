@@ -32,7 +32,7 @@ export class ScalarDocs extends APIResource {
    * @example
    * ```ts
    * const scalarDoc = await client.scalarDocs.createGuide({
-   *   name: '',
+   *   name: 'Acme Documentation',
    *   isPrivate: false,
    *   allowedUsers: [],
    *   allowedDomains: [],
@@ -55,7 +55,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const scalarDoc = await client.scalarDocs.publishGuide('slug');
+   * const scalarDoc = await client.scalarDocs.publishGuide('acme-docs');
    * ```
    */
   publishGuide(slug: string, options?: RequestOptions): APIPromise<ScalarDocPublishGuideResponse> {
@@ -91,7 +91,7 @@ export class ScalarDocs extends APIResource {
    * @example
    * ```ts
    * const docsProject = await client.scalarDocs.createProject({
-   *   name: '',
+   *   name: 'Acme Documentation',
    *   provider: 'forgejo',
    * });
    * ```
@@ -109,7 +109,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const docsProject = await client.scalarDocs.retrieveProject('slug');
+   * const docsProject = await client.scalarDocs.retrieveProject('acme-docs');
    * ```
    */
   retrieveProject(slug: string, options?: RequestOptions): APIPromise<DocsProject> {
@@ -126,7 +126,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * await client.scalarDocs.updateProject('slug', {});
+   * await client.scalarDocs.updateProject('acme-docs', {});
    * ```
    */
   updateProject(
@@ -146,7 +146,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * await client.scalarDocs.deleteProject('slug');
+   * await client.scalarDocs.deleteProject('acme-docs');
    * ```
    */
   deleteProject(slug: string, options?: RequestOptions): APIPromise<ScalarDocDeleteProjectResponse> {
@@ -163,7 +163,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const scalarDoc = await client.scalarDocs.publishProject('slug', {});
+   * const scalarDoc = await client.scalarDocs.publishProject('acme-docs', {});
    * ```
    */
   publishProject(
@@ -184,7 +184,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const scalarDoc = await client.scalarDocs.listProjectConfig('slug');
+   * const scalarDoc = await client.scalarDocs.listProjectConfig('acme-docs');
    * ```
    */
   listProjectConfig(
@@ -205,8 +205,8 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const scalarDoc = await client.scalarDocs.updateProjectConfig('slug', {
-   *   content: '',
+   * const scalarDoc = await client.scalarDocs.updateProjectConfig('acme-docs', {
+   *   content: '{"name":"Acme Documentation"}',
    * });
    * ```
    */
@@ -227,7 +227,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const scalarDoc = await client.scalarDocs.listProjectDomain('slug');
+   * const scalarDoc = await client.scalarDocs.listProjectDomain('acme-docs');
    * ```
    */
   listProjectDomain(slug: string, options?: RequestOptions): APIPromise<ScalarDocListProjectDomainResponse> {
@@ -243,7 +243,7 @@ export class ScalarDocs extends APIResource {
    *
    * @example
    * ```ts
-   * const scalarDoc = await client.scalarDocs.listProjectDomainStatus('slug');
+   * const scalarDoc = await client.scalarDocs.listProjectDomainStatus('acme-docs');
    * ```
    */
   listProjectDomainStatus(
@@ -283,7 +283,7 @@ export interface GithubProject {
   isPrivate: boolean;
   agentEnabled: boolean;
   analyticsEnabled: boolean;
-  accessGroups: unknown;
+  accessGroups: string;
   /**
    * @minLength 1
    * @maxLength 60
@@ -309,7 +309,7 @@ export interface DocsProject {
    */
   slug: Slug;
   isPrivate: boolean;
-  accessGroups: unknown;
+  accessGroups: string;
   loginPortalUid: string;
   activeThemeId: string;
   agentEnabled: boolean;

@@ -18,7 +18,7 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * const installation = await client.mcp.servers.installations.list('id');
+   * const installation = await client.mcp.servers.installations.list('42');
    * ```
    */
   list(id: string, options?: RequestOptions): APIPromise<InstallationListResponse> {
@@ -35,8 +35,8 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * const mcpInstallation = await client.mcp.servers.installations.create('id', {
-   *   name: 'x',
+   * const mcpInstallation = await client.mcp.servers.installations.create('42', {
+   *   name: 'Acme MCP',
    *   documentAuth: {},
    * });
    * ```
@@ -59,8 +59,8 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * const mcpInstallation = await client.mcp.servers.installations.retrieve('installationId', {
-   *   id: 'id',
+   * const mcpInstallation = await client.mcp.servers.installations.retrieve('84', {
+   *   id: '42',
    * });
    * ```
    */
@@ -83,8 +83,8 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * const mcpInstallation = await client.mcp.servers.installations.update('installationId', {
-   *   id: 'id',
+   * const mcpInstallation = await client.mcp.servers.installations.update('84', {
+   *   id: '42',
    * });
    * ```
    */
@@ -110,8 +110,8 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * await client.mcp.servers.installations.delete('installationId', {
-   *   id: 'id',
+   * await client.mcp.servers.installations.delete('84', {
+   *   id: '42',
    * });
    * ```
    */
@@ -134,9 +134,9 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * await client.mcp.servers.installations.createAccessGroup('installationId', {
-   *   id: 'id',
-   *   accessGroupUid: 'xxxxx',
+   * await client.mcp.servers.installations.createAccessGroup('84', {
+   *   id: '42',
+   *   accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
    * });
    * ```
    */
@@ -162,9 +162,9 @@ export class Installations extends APIResource {
    *
    * @example
    * ```ts
-   * await client.mcp.servers.installations.deleteAccessGroup('installationId', {
-   *   id: 'id',
-   *   accessGroupUid: 'xxxxx',
+   * await client.mcp.servers.installations.deleteAccessGroup('84', {
+   *   id: '42',
+   *   accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
    * });
    * ```
    */

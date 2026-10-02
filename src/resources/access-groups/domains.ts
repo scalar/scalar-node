@@ -18,8 +18,8 @@ export class Domains extends APIResource {
    *
    * @example
    * ```ts
-   * await client.accessGroups.domains.create('slug', {
-   *   domain: '',
+   * await client.accessGroups.domains.create('acme-api', {
+   *   domain: 'example.com',
    * });
    * ```
    */
@@ -41,8 +41,8 @@ export class Domains extends APIResource {
    *
    * @example
    * ```ts
-   * await client.accessGroups.domains.delete('slug', {
-   *   domain: '',
+   * await client.accessGroups.domains.delete('acme-api', {
+   *   domain: 'example.com',
    * });
    * ```
    */
