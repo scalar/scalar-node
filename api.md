@@ -116,11 +116,6 @@ Complete reference of every operation, grouped by resource. See [the README](./R
       - [Delete an installation](#delete-an-installation)
       - [Add an access group](#add-an-access-group)
       - [Remove an access group](#remove-an-access-group)
-- [`OAuth`](#oauth)
-  - [Start an OAuth authorization](#start-an-oauth-authorization)
-  - [Exchange a code or refresh token](#exchange-a-code-or-refresh-token)
-  - [Revoke a refresh token](#revoke-a-refresh-token)
-  - [Authorization server metadata](#authorization-server-metadata)
 
 ## Setup
 
@@ -1527,62 +1522,4 @@ await client.mcp.servers.installations.deleteAccessGroup('84', {
   id: '42',
   accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
 });
-```
-
-## `OAuth`
-
-OAuth
-
-### Start an OAuth authorization
-
-Authorization endpoint (RFC 6749 §4.1.1 with PKCE, RFC 7636). Validates the request and sends the user to the Scalar dashboard to approve it; the user returns to `redirect_uri` with a `code` to exchange at the token endpoint. Only `response_type=code` with `code_challenge_method=S256` is supported.
-
-| Direction | Type |
-| --- | --- |
-| Response | [`OAuthOauthAuthorizeResponse`](./src/resources/o-auth.ts) |
-
-```ts
-await client.oAuth.oauthAuthorize();
-```
-
-### Exchange a code or refresh token
-
-Token endpoint (RFC 6749 §4.1.3 and §6). Accepts `application/x-www-form-urlencoded`. Confidential clients authenticate with HTTP Basic or `client_secret` in the body; public clients send `client_id` alone. The `authorization_code` grant needs `code`, `redirect_uri` and `code_verifier`; the `refresh_token` grant needs `refresh_token` and may narrow `scope`.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`OAuthOauthTokenParams`](./src/resources/o-auth.ts) |
-| Response | [`OAuthOauthTokenResponse`](./src/resources/o-auth.ts) |
-
-```ts
-const oAuth = await client.oAuth.oauthToken({
-  grant_type: '',
-});
-```
-
-### Revoke a refresh token
-
-Revocation endpoint (RFC 7009). Revokes the refresh token and every token issued alongside it. The client authenticates as it does at the token endpoint. Responds 200 whether or not the token was live, as the RFC requires.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`OAuthOauthRevokeParams`](./src/resources/o-auth.ts) |
-| Response | [`OauthError`](./src/resources/o-auth.ts) |
-
-```ts
-const oauthError = await client.oAuth.oauthRevoke({
-  token: '',
-});
-```
-
-### Authorization server metadata
-
-Discovery document for OAuth clients (RFC 8414): where the endpoints are and what they support.
-
-| Direction | Type |
-| --- | --- |
-| Response | [`OauthAuthorizationServerMetadata`](./src/resources/o-auth.ts) |
-
-```ts
-const oauthAuthorizationServerMetadata = await client.oAuth.oauthAuthorizationServerMetadata();
 ```

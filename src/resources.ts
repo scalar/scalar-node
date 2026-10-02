@@ -14,7 +14,6 @@ export {
   Authentication,
   Sdks,
   Mcp,
-  OAuth,
 } from './resources/index';
 export type {
   APIDocument,
@@ -130,12 +129,4 @@ export type {
   SdkDeleteResponse,
   SdkBuildParams,
   SdkBuildResponse,
-  OauthToken,
-  OauthError,
-  OauthAuthorizationServerMetadata,
-  OauthScope,
-  OAuthOauthAuthorizeResponse,
-  OAuthOauthTokenParams,
-  OAuthOauthTokenResponse,
-  OAuthOauthRevokeParams,
 } from './resources/index';
