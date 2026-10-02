@@ -141,14 +141,3 @@ export type {
   SdkBuildResponse,
 } from './sdks/sdks';
 export { Mcp } from './mcp/mcp';
-export { OAuth } from './o-auth';
-export type {
-  OauthToken,
-  OauthError,
-  OauthAuthorizationServerMetadata,
-  OauthScope,
-  OAuthOauthAuthorizeResponse,
-  OAuthOauthTokenParams,
-  OAuthOauthTokenResponse,
-  OAuthOauthRevokeParams,
-} from './o-auth';

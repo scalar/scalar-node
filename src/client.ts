@@ -170,17 +170,6 @@ import {
   type SdkBuildParams,
 } from './resources/sdks/sdks';
 import { Mcp } from './resources/mcp/mcp';
-import {
-  OAuth,
-  type OauthToken,
-  type OauthError,
-  type OauthAuthorizationServerMetadata,
-  type OauthScope,
-  type OAuthOauthAuthorizeResponse,
-  type OAuthOauthTokenResponse,
-  type OAuthOauthTokenParams,
-  type OAuthOauthRevokeParams,
-} from './resources/o-auth';
 import * as SharedAPI from './resources/shared';
 
 export type AuthTokenProvider = () => string | Promise<string>;
@@ -292,7 +281,7 @@ export class Scalar {
    * API Client for interfacing with the Scalar API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
-   * @param {string | AuthTokenProvider | undefined} [opts.oAuth2=process.env["SCALAR_O_AUTH2"] ?? undefined]
+   * @param {string | AuthTokenProvider | undefined} [opts.oAuth2=process.env["SCALAR_OAUTH_TOKEN"] ?? undefined]
    * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -304,7 +293,7 @@ export class Scalar {
   constructor({
     baseURL = readEnv('SCALAR_BASE_URL'),
     bearerAuth = readEnv('BEARER_AUTH'),
-    oAuth2 = readEnv('SCALAR_O_AUTH2'),
+    oAuth2 = readEnv('SCALAR_OAUTH_TOKEN'),
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
@@ -1004,7 +993,6 @@ export class Scalar {
   authentication: Authentication = new Authentication(this);
   sdks: Sdks = new Sdks(this);
   mcp: Mcp = new Mcp(this);
-  oAuth: OAuth = new OAuth(this);
 }
 
 Scalar.Registry = Registry;
@@ -1019,7 +1007,6 @@ Scalar.Namespaces = Namespaces;
 Scalar.Authentication = Authentication;
 Scalar.Sdks = Sdks;
 Scalar.Mcp = Mcp;
-Scalar.OAuth = OAuth;
 
 export declare namespace Scalar {
   export type RequestOptions = Opts.RequestOptions;
@@ -1178,18 +1165,6 @@ export declare namespace Scalar {
   };
 
   export { Mcp as Mcp };
-
-  export {
-    OAuth as OAuth,
-    type OauthToken as OauthToken,
-    type OauthError as OauthError,
-    type OauthAuthorizationServerMetadata as OauthAuthorizationServerMetadata,
-    type OauthScope as OauthScope,
-    type OAuthOauthAuthorizeResponse as OAuthOauthAuthorizeResponse,
-    type OAuthOauthTokenResponse as OAuthOauthTokenResponse,
-    type OAuthOauthTokenParams as OAuthOauthTokenParams,
-    type OAuthOauthRevokeParams as OAuthOauthRevokeParams,
-  };
 
   export type ManagedDocVersion = SharedAPI.ManagedDocVersion;
   export type Namespace = SharedAPI.Namespace;
