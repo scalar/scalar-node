@@ -3,8 +3,10 @@
 export * from './shared';
 export { Registry } from './registry';
 export type {
+  APIDocument,
   Version,
   AccessGroup,
+  Method,
   RegistryListAllAPIDocumentsResponse,
   RegistryListAPIDocumentsResponse,
   RegistryCreateAPIDocumentParams,
@@ -28,6 +30,8 @@ export type {
 } from './registry';
 export { Schemas } from './schemas/schemas';
 export type {
+  Schema,
+  ManagedSchemaVersion,
   SchemaListResponse,
   SchemaCreateParams,
   SchemaUpdateParams,
@@ -39,6 +43,7 @@ export { LoginPortals } from './login-portals';
 export type {
   LoginPortalEmail,
   LoginPortalPage,
+  LoginPortal,
   LoginPortalRetrieveResponse,
   LoginPortalUpdateParams,
   LoginPortalUpdateResponse,
@@ -46,8 +51,19 @@ export type {
   LoginPortalCreateParams,
   LoginPortalListResponse,
 } from './login-portals';
+export { AccessGroups } from './access-groups/access-groups';
+export type {
+  AccessGroupName,
+  AccessGroupCreateParams,
+  AccessGroupCreateResponse,
+  AccessGroupRetrieveResponse,
+  AccessGroupUpdateParams,
+  AccessGroupUpdateResponse,
+  AccessGroupDeleteResponse,
+} from './access-groups/access-groups';
 export { Rules } from './rules';
 export type {
+  Rule,
   RuleListRulesetsResponse,
   RuleCreateRulesetParams,
   RuleUpdateRulesetParams,
@@ -63,6 +79,7 @@ export type {
 } from './rules';
 export { Themes } from './themes';
 export type {
+  Theme,
   ThemeListResponse,
   ThemeCreateParams,
   ThemeUpdateParams,
@@ -72,21 +89,66 @@ export type {
   ThemeDeleteResponse,
   ThemeRetrieveResponse,
 } from './themes';
-export { Teams } from './teams';
-export type { TeamListResponse } from './teams';
+export { Teams } from './teams/teams';
+export type { Team, TeamName, TeamImage, TeamListResponse } from './teams/teams';
 export { ScalarDocs } from './scalar-docs';
 export type {
+  GithubProject,
+  DocsProject,
+  ActiveDeployment,
   Slug,
+  GithubProjectRepository,
   ScalarDocListGuidesResponse,
   ScalarDocCreateGuideParams,
   ScalarDocCreateGuideResponse,
   ScalarDocPublishGuideResponse,
+  ScalarDocListProjectsParams,
+  ScalarDocListProjectsResponse,
+  ScalarDocCreateProjectParams,
+  ScalarDocUpdateProjectParams,
+  ScalarDocUpdateProjectResponse,
+  ScalarDocDeleteProjectResponse,
+  ScalarDocPublishProjectParams,
+  ScalarDocPublishProjectResponse,
+  ScalarDocListProjectConfigParams,
+  ScalarDocListProjectConfigResponse,
+  ScalarDocUpdateProjectConfigParams,
+  ScalarDocUpdateProjectConfigResponse,
+  ScalarDocListProjectDomainResponse,
+  ScalarDocListProjectDomainStatusResponse,
 } from './scalar-docs';
 export { Namespaces } from './namespaces';
 export type { NamespaceListResponse } from './namespaces';
 export { Authentication } from './authentication';
 export type {
+  User,
+  TeamSummary,
   AuthenticationExchangePersonalTokenParams,
   AuthenticationExchangePersonalTokenResponse,
-  AuthenticationListCurrentUserResponse,
 } from './authentication';
+export { Sdks } from './sdks/sdks';
+export type {
+  Sdk,
+  SdkTargetSummary,
+  SdkVersion,
+  SdkListParams,
+  SdkListResponse,
+  SdkCreateParams,
+  SdkUpdateParams,
+  SdkUpdateResponse,
+  SdkDeleteResponse,
+  SdkBuildParams,
+  SdkBuildResponse,
+} from './sdks/sdks';
+export { Mcp } from './mcp/mcp';
+export { OAuth } from './o-auth';
+export type {
+  OauthToken,
+  OauthError,
+  OauthAuthorizationServerMetadata,
+  OauthScope,
+  OAuthOauthAuthorizeResponse,
+  OAuthOauthTokenParams,
+  OAuthOauthTokenResponse,
+  OAuthOauthRevokeParams,
+} from './o-auth';

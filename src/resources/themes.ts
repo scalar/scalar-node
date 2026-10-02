@@ -120,24 +120,22 @@ export class Themes extends APIResource {
   }
 }
 
-export type ThemeListResponse = Array<ThemeListResponse.ThemeListResponseItem>;
-
-export namespace ThemeListResponse {
-  export interface ThemeListResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    name: string;
-    description: string;
-    /**
-     * @minLength 1
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-  }
+export interface Theme {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  name: string;
+  description: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
 }
+
+export type ThemeListResponse = Array<Theme>;
 
 export interface ThemeCreateParams {
   name: string;
@@ -164,6 +162,7 @@ export type ThemeDeleteResponse = null;
 export type ThemeRetrieveResponse = string;
 export declare namespace Themes {
   export {
+    type Theme as Theme,
     type ThemeListResponse as ThemeListResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,

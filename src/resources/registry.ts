@@ -304,6 +304,37 @@ export class Registry extends APIResource {
   }
 }
 
+export interface APIDocument {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @minLength 1
+   */
+  version: Version;
+  /**
+   * @maxLength 100
+   */
+  title: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+  description: string;
+  /**
+   * @minLength 2
+   * @maxLength 50
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
+  namespace: Shared.Namespace;
+  isPrivate: boolean;
+  tags: unknown;
+  versions: Array<Shared.ManagedDocVersion>;
+}
+
 export type Version = string;
 
 export interface AccessGroup {
@@ -315,77 +346,11 @@ export interface AccessGroup {
   accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
-export type RegistryListAllAPIDocumentsResponse =
-  Array<RegistryListAllAPIDocumentsResponse.RegistryListAllAPIDocumentsResponseItem>;
+export type Method = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'query' | 'trace';
 
-export namespace RegistryListAllAPIDocumentsResponse {
-  export interface RegistryListAllAPIDocumentsResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @minLength 1
-     */
-    version: Version;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    /**
-     * @minLength 1
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    description: string;
-    /**
-     * @minLength 2
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-    tags: unknown;
-    versions: Array<Shared.ManagedDocVersion>;
-  }
-}
+export type RegistryListAllAPIDocumentsResponse = Array<APIDocument>;
 
-export type RegistryListAPIDocumentsResponse =
-  Array<RegistryListAPIDocumentsResponse.RegistryListAPIDocumentsResponseItem>;
-
-export namespace RegistryListAPIDocumentsResponse {
-  export interface RegistryListAPIDocumentsResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @minLength 1
-     */
-    version: Version;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    /**
-     * @minLength 1
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    description: string;
-    /**
-     * @minLength 2
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-    tags: unknown;
-    versions: Array<Shared.ManagedDocVersion>;
-  }
-}
+export type RegistryListAPIDocumentsResponse = Array<APIDocument>;
 
 export interface RegistryCreateAPIDocumentParams {
   title: string;
@@ -531,8 +496,10 @@ export interface RegistryDeleteAPIDocumentAccessGroupParams {
 export type RegistryDeleteAPIDocumentAccessGroupResponse = null;
 export declare namespace Registry {
   export {
+    type APIDocument as APIDocument,
     type Version as Version,
     type AccessGroup as AccessGroup,
+    type Method as Method,
     type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
     type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
     type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,

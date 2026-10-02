@@ -198,6 +198,23 @@ export interface LoginPortalPage {
   formImage: string;
 }
 
+export interface LoginPortal {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @maxLength 200
+   */
+  title: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+}
+
 export interface LoginPortalRetrieveResponse {
   uid: string;
   title: string;
@@ -221,30 +238,12 @@ export interface LoginPortalCreateParams {
   page: LoginPortalPage;
 }
 
-export type LoginPortalListResponse = Array<LoginPortalListResponse.LoginPortalListResponseItem>;
-
-export namespace LoginPortalListResponse {
-  export interface LoginPortalListResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @maxLength 200
-     */
-    title: string;
-    /**
-     * @minLength 1
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-  }
-}
+export type LoginPortalListResponse = Array<LoginPortal>;
 export declare namespace LoginPortals {
   export {
     type LoginPortalEmail as LoginPortalEmail,
     type LoginPortalPage as LoginPortalPage,
+    type LoginPortal as LoginPortal,
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,

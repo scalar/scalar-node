@@ -480,6 +480,93 @@ const cases: {
   },
 
   {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/access-groups',
+    label: 'required params',
+    run: async () => {
+      const accessGroup = await client.accessGroups.create({});
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/access-groups',
+    label: 'all params',
+    run: async () => {
+      const accessGroup = await client.accessGroups.create({
+        name: '',
+        slug: 'x',
+        allowedDomains: {},
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/access-groups/{slug}',
+    run: async () => {
+      const accessGroup = await client.accessGroups.retrieve('slug');
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/access-groups/{slug}',
+    label: 'required params',
+    run: async () => {
+      await client.accessGroups.update('slug', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/access-groups/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.accessGroups.update('slug', {
+        name: '',
+        slug: 'x',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/access-groups/{slug}',
+    run: async () => {
+      await client.accessGroups.delete('slug');
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/access-groups/{slug}/domains',
+    run: async () => {
+      await client.accessGroups.domains.create('slug', {
+        domain: '',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/access-groups/{slug}/domains',
+    run: async () => {
+      await client.accessGroups.domains.delete('slug', {
+        domain: '',
+      });
+    },
+  },
+
+  {
     operation: 'listRulesets',
     method: 'GET',
     path: '/v1/rulesets/{namespace}',
@@ -692,6 +779,65 @@ const cases: {
   },
 
   {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/teams/members',
+    run: async () => {
+      const member = await client.teams.members.list();
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/teams/members/{uid}',
+    run: async () => {
+      await client.teams.members.update('uidxx', {
+        role: 'owner',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/teams/members/{uid}',
+    run: async () => {
+      await client.teams.members.delete('uidxx');
+    },
+  },
+
+  {
+    operation: 'member',
+    method: 'POST',
+    path: '/v1/teams/invites',
+    run: async () => {
+      await client.teams.invites.member({
+        email: 'user@example.com',
+        role: 'owner',
+      });
+    },
+  },
+
+  {
+    operation: 'resend',
+    method: 'PATCH',
+    path: '/v1/teams/invites/{uid}',
+    run: async () => {
+      await client.teams.invites.resend('uidxx');
+    },
+  },
+
+  {
+    operation: 'cancel',
+    method: 'DELETE',
+    path: '/v1/teams/invites/{uid}',
+    run: async () => {
+      await client.teams.invites.cancel('uidxx');
+    },
+  },
+
+  {
     operation: 'listGuides',
     method: 'GET',
     path: '/v1/guides',
@@ -741,6 +887,203 @@ const cases: {
   },
 
   {
+    operation: 'listProjects',
+    method: 'GET',
+    path: '/v1/docs',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjects();
+    },
+  },
+
+  {
+    operation: 'listProjects',
+    method: 'GET',
+    path: '/v1/docs',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjects({
+        limit: 1,
+      });
+    },
+  },
+
+  {
+    operation: 'createProject',
+    method: 'POST',
+    path: '/v1/docs',
+    label: 'required params',
+    run: async () => {
+      const docsProject = await client.scalarDocs.createProject({
+        name: '',
+        provider: 'forgejo',
+      });
+    },
+  },
+
+  {
+    operation: 'createProject',
+    method: 'POST',
+    path: '/v1/docs',
+    label: 'all params',
+    run: async () => {
+      const docsProject = await client.scalarDocs.createProject({
+        name: '',
+        slug: 'x',
+        isPrivate: false,
+        blank: false,
+        provider: 'forgejo',
+        githubRepository: {
+          installationId: 0,
+          repoId: 0,
+        },
+        bitbucketRepository: {
+          workspaceUuid: '',
+          repoUuid: '',
+        },
+      });
+    },
+  },
+
+  {
+    operation: 'retrieveProject',
+    method: 'GET',
+    path: '/v1/docs/{slug}',
+    run: async () => {
+      const docsProject = await client.scalarDocs.retrieveProject('slug');
+    },
+  },
+
+  {
+    operation: 'updateProject',
+    method: 'PATCH',
+    path: '/v1/docs/{slug}',
+    label: 'required params',
+    run: async () => {
+      await client.scalarDocs.updateProject('slug', {});
+    },
+  },
+
+  {
+    operation: 'updateProject',
+    method: 'PATCH',
+    path: '/v1/docs/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.scalarDocs.updateProject('slug', {
+        name: '',
+        isPrivate: false,
+        accessGroups: ['xxxxx'],
+        loginPortalUid: 'xxxxx',
+        activeThemeId: 'xxxxx',
+        agentEnabled: false,
+        analyticsEnabled: false,
+      });
+    },
+  },
+
+  {
+    operation: 'deleteProject',
+    method: 'DELETE',
+    path: '/v1/docs/{slug}',
+    run: async () => {
+      await client.scalarDocs.deleteProject('slug');
+    },
+  },
+
+  {
+    operation: 'publishProject',
+    method: 'POST',
+    path: '/v1/docs/{slug}/publish',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.publishProject('slug', {});
+    },
+  },
+
+  {
+    operation: 'publishProject',
+    method: 'POST',
+    path: '/v1/docs/{slug}/publish',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.publishProject('slug', {
+        commitSha: '',
+        preview: false,
+        configPath: '',
+      });
+    },
+  },
+
+  {
+    operation: 'listProjectConfig',
+    method: 'GET',
+    path: '/v1/docs/{slug}/config',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectConfig('slug');
+    },
+  },
+
+  {
+    operation: 'listProjectConfig',
+    method: 'GET',
+    path: '/v1/docs/{slug}/config',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectConfig('slug', {
+        ref: 'ref',
+      });
+    },
+  },
+
+  {
+    operation: 'updateProjectConfig',
+    method: 'PUT',
+    path: '/v1/docs/{slug}/config',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.updateProjectConfig('slug', {
+        content: '',
+      });
+    },
+  },
+
+  {
+    operation: 'updateProjectConfig',
+    method: 'PUT',
+    path: '/v1/docs/{slug}/config',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.updateProjectConfig('slug', {
+        content: '',
+        ref: '',
+        baseToken: '',
+        message: '',
+        path: '',
+      });
+    },
+  },
+
+  {
+    operation: 'listProjectDomain',
+    method: 'GET',
+    path: '/v1/docs/{slug}/domain',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectDomain('slug');
+    },
+  },
+
+  {
+    operation: 'listProjectDomainStatus',
+    method: 'GET',
+    path: '/v1/docs/{slug}/domain/status',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectDomainStatus('slug');
+    },
+  },
+
+  {
     operation: 'list',
     method: 'GET',
     path: '/v1/namespaces',
@@ -765,7 +1108,487 @@ const cases: {
     method: 'GET',
     path: '/v1/auth/me',
     run: async () => {
-      const authentication = await client.authentication.listCurrentUser();
+      const user = await client.authentication.listCurrentUser();
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/sdks',
+    label: 'required params',
+    run: async () => {
+      const sdk = await client.sdks.list();
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/sdks',
+    label: 'all params',
+    run: async () => {
+      const sdk = await client.sdks.list({
+        limit: 1,
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks',
+    label: 'required params',
+    run: async () => {
+      const uid = await client.sdks.create({
+        apiUid: 'xxxxx',
+        languages: ['typescript'],
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks',
+    label: 'all params',
+    run: async () => {
+      const uid = await client.sdks.create({
+        apiUid: 'xxxxx',
+        languages: ['typescript'],
+        title: '',
+        slug: 'x',
+        className: '',
+        config: '',
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/sdks/{uid}',
+    run: async () => {
+      const sdk = await client.sdks.retrieve('uidxx');
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/sdks/{uid}',
+    label: 'required params',
+    run: async () => {
+      await client.sdks.update('uidxx', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/sdks/{uid}',
+    label: 'all params',
+    run: async () => {
+      await client.sdks.update('uidxx', {
+        title: '',
+        slug: 'x',
+        isPrivate: false,
+        config: '',
+        apiUid: 'xxxxx',
+        apiVersion: '',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/sdks/{uid}',
+    run: async () => {
+      await client.sdks.delete('uidxx');
+    },
+  },
+
+  {
+    operation: 'build',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/build',
+    label: 'required params',
+    run: async () => {
+      const sdk = await client.sdks.build('uidxx', {});
+    },
+  },
+
+  {
+    operation: 'build',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/build',
+    label: 'all params',
+    run: async () => {
+      const sdk = await client.sdks.build('uidxx', {
+        version: '',
+        languages: ['typescript'],
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/versions',
+    run: async () => {
+      await client.sdks.versions.create('uidxx', {
+        version: '',
+        apiVersion: '',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/sdks/{uid}/versions/{version}',
+    run: async () => {
+      await client.sdks.versions.delete('version', {
+        uid: 'uidxx',
+      });
+    },
+  },
+
+  {
+    operation: 'link',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories',
+    label: 'required params',
+    run: async () => {
+      const repository = await client.sdks.repositories.link('uidxx', {
+        language: 'typescript',
+        repositoryId: 0,
+        baseBranch: '',
+      });
+    },
+  },
+
+  {
+    operation: 'link',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories',
+    label: 'all params',
+    run: async () => {
+      const repository = await client.sdks.repositories.link('uidxx', {
+        language: 'typescript',
+        repositoryId: 0,
+        baseBranch: '',
+        prereleaseType: '',
+      });
+    },
+  },
+
+  {
+    operation: 'unlink',
+    method: 'DELETE',
+    path: '/v1/sdks/{uid}/repositories/{language}',
+    run: async () => {
+      await client.sdks.repositories.unlink('typescript', {
+        uid: 'uidxx',
+      });
+    },
+  },
+
+  {
+    operation: 'updatePublishing',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories/{language}/publishing',
+    label: 'required params',
+    run: async () => {
+      await client.sdks.repositories.updatePublishing('typescript', {
+        uid: 'uidxx',
+        publishOnMerge: false,
+      });
+    },
+  },
+
+  {
+    operation: 'updatePublishing',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories/{language}/publishing',
+    label: 'all params',
+    run: async () => {
+      await client.sdks.repositories.updatePublishing('typescript', {
+        uid: 'uidxx',
+        publishOnMerge: false,
+        authMethod: 'oidc',
+        access: 'public',
+        tag: '',
+      });
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/mcp/servers',
+    run: async () => {
+      const server = await client.mcp.servers.list();
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers',
+    label: 'required params',
+    run: async () => {
+      const server = await client.mcp.servers.create({
+        name: 'x',
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers',
+    label: 'all params',
+    run: async () => {
+      const server = await client.mcp.servers.create({
+        name: 'x',
+        slug: 'x',
+        versionUids: [''],
+        projectUids: [''],
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/mcp/servers/{id}',
+    run: async () => {
+      const mcpServer = await client.mcp.servers.retrieve('id');
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}',
+    label: 'required params',
+    run: async () => {
+      const mcpServer = await client.mcp.servers.update('id', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}',
+    label: 'all params',
+    run: async () => {
+      const mcpServer = await client.mcp.servers.update('id', {
+        name: 'x',
+        slug: 'x',
+        autoAddOperations: false,
+        operations: [''],
+        docsPages: [''],
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/mcp/servers/{id}',
+    run: async () => {
+      await client.mcp.servers.delete('id');
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/mcp/servers/{id}/installations',
+    run: async () => {
+      const installation = await client.mcp.servers.installations.list('id');
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers/{id}/installations',
+    label: 'required params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.create('id', {
+        name: 'x',
+        documentAuth: {},
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers/{id}/installations',
+    label: 'all params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.create('id', {
+        name: 'x',
+        slug: 'x',
+        documentAuth: {},
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.retrieve('installationId', {
+        id: 'id',
+      });
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    label: 'required params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.update('installationId', {
+        id: 'id',
+      });
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    label: 'all params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.update('installationId', {
+        id: 'id',
+        name: 'x',
+        slug: 'x',
+        isPrivate: false,
+        loginPortalUid: '',
+        documentAuth: {},
+        mcpVersion: '',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    run: async () => {
+      await client.mcp.servers.installations.delete('installationId', {
+        id: 'id',
+      });
+    },
+  },
+
+  {
+    operation: 'createAccessGroup',
+    method: 'POST',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}/access-group',
+    run: async () => {
+      await client.mcp.servers.installations.createAccessGroup('installationId', {
+        id: 'id',
+        accessGroupUid: 'xxxxx',
+      });
+    },
+  },
+
+  {
+    operation: 'deleteAccessGroup',
+    method: 'DELETE',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}/access-group',
+    run: async () => {
+      await client.mcp.servers.installations.deleteAccessGroup('installationId', {
+        id: 'id',
+        accessGroupUid: 'xxxxx',
+      });
+    },
+  },
+
+  {
+    operation: 'oauthAuthorize',
+    method: 'GET',
+    path: '/v1/oauth/authorize',
+    run: async () => {
+      await client.oAuth.oauthAuthorize();
+    },
+  },
+
+  {
+    operation: 'oauthToken',
+    method: 'POST',
+    path: '/v1/oauth/token',
+    label: 'required params',
+    run: async () => {
+      const oAuth = await client.oAuth.oauthToken({
+        grant_type: '',
+      });
+    },
+  },
+
+  {
+    operation: 'oauthToken',
+    method: 'POST',
+    path: '/v1/oauth/token',
+    label: 'all params',
+    run: async () => {
+      const oAuth = await client.oAuth.oauthToken({
+        grant_type: '',
+        client_id: '',
+        client_secret: '',
+        code: '',
+        redirect_uri: '',
+        code_verifier: '',
+        refresh_token: '',
+        scope: '',
+      });
+    },
+  },
+
+  {
+    operation: 'oauthRevoke',
+    method: 'POST',
+    path: '/v1/oauth/revoke',
+    label: 'required params',
+    run: async () => {
+      const oauthError = await client.oAuth.oauthRevoke({
+        token: '',
+      });
+    },
+  },
+
+  {
+    operation: 'oauthRevoke',
+    method: 'POST',
+    path: '/v1/oauth/revoke',
+    label: 'all params',
+    run: async () => {
+      const oauthError = await client.oAuth.oauthRevoke({
+        token: '',
+        token_type_hint: '',
+        client_id: '',
+        client_secret: '',
+      });
+    },
+  },
+
+  {
+    operation: 'oauthAuthorizationServerMetadata',
+    method: 'GET',
+    path: '/.well-known/oauth-authorization-server',
+    run: async () => {
+      const oauthAuthorizationServerMetadata = await client.oAuth.oauthAuthorizationServerMetadata();
     },
   },
 ];
