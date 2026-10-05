@@ -56,8 +56,8 @@ Pass credentials to the generated client constructor. Environment variables are 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `bearerAuth` | `string \| provider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
-| `oAuth2` | `string \| provider` | - | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. Defaults to SCALAR_OAUTH_TOKEN. |
+| `bearerAuth` | `string \| AuthTokenProvider` | - | Credential for the BearerAuth scheme. Defaults to BEARER_AUTH. |
+| `oAuth2` | `string \| AuthTokenProvider` | - | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. Defaults to SCALAR_OAUTH_TOKEN. |
 
 Declared schemes:
 

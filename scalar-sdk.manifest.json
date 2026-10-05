@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.0",
+  "generatorVersion": "0.36.3",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -27,13 +27,12 @@
       "flows": [
         {
           "kind": "authorizationCode",
-          "authorizationUrl": "https://access.scalar.com/v1/oauth/authorize",
-          "tokenUrl": "https://access.scalar.com/v1/oauth/token",
-          "refreshUrl": "https://access.scalar.com/v1/oauth/token",
+          "authorizationUrl": "https://auth.scalar.com/_scalar/oauth/authorize",
+          "tokenUrl": "https://auth.scalar.com/_scalar/oauth/token",
           "scopes": [
-            "read",
-            "write",
-            "admin"
+            "platform:read",
+            "platform:write",
+            "platform:admin"
           ]
         }
       ]
