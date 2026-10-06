@@ -346,7 +346,7 @@ export interface AccessGroup {
   accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
-export type Method = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'query' | 'trace';
+export type Method = string;
 
 export type RegistryListAllAPIDocumentsResponse = Array<APIDocument>;
 
