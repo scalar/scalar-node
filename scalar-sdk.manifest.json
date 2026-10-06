@@ -789,40 +789,11 @@
       "publicAliases": [],
       "deprecated": false,
       "type": {
-        "kind": "enum",
-        "values": [
-          "delete",
-          "get",
-          "head",
-          "options",
-          "patch",
-          "post",
-          "put",
-          "query",
-          "trace"
-        ],
-        "names": [
-          "Delete",
-          "Get",
-          "Head",
-          "Options",
-          "Patch",
-          "Post",
-          "Put",
-          "Query",
-          "Trace"
-        ],
-        "deprecations": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ]
+        "kind": "primitive",
+        "type": "string",
+        "validation": {
+          "pattern": "^[!#$%&'*+.^_`|~0-9A-Za-z-]+$"
+        }
       }
     },
     {

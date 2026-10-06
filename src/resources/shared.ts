@@ -28,6 +28,9 @@ export interface ManagedDocVersion {
 export namespace ManagedDocVersion {
   export interface Tool {
     path: string;
+    /**
+     * @pattern ^[!#$%&'*+.^_`|~0-9A-Za-z-]+$
+     */
     method: RegistryAPI.Method;
     enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
   }
