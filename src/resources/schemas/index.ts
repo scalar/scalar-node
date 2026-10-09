@@ -2,6 +2,8 @@
 
 export { Schemas } from './schemas';
 export type {
+  Schema,
+  ManagedSchemaVersion,
   SchemaListResponse,
   SchemaCreateParams,
   SchemaUpdateParams,
@@ -16,6 +18,7 @@ export type {
   VersionDeleteParams,
   VersionDeleteResponse,
   VersionCreateParams,
+  VersionCreateResponse,
 } from './version';
 export { AccessGroup } from './access-group';
 export type {

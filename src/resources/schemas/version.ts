@@ -19,9 +19,9 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.schemas.version.retrieve('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * const response = await client.schemas.version.retrieve('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'customer',
    * });
    * ```
    */
@@ -47,9 +47,9 @@ export class Version extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.version.delete('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * await client.schemas.version.delete('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'customer',
    * });
    * ```
    */
@@ -68,18 +68,22 @@ export class Version extends APIResource {
    * @param {string} slug
    * @param {VersionCreateParams} params - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<Shared.UID>} Default Response
+   * @returns {APIPromise<VersionCreateResponse>} Default Response
    *
    * @example
    * ```ts
-   * const uid = await client.schemas.version.create('slug', {
-   *   namespace: 'namespace',
-   *   version: 'x',
-   *   document: '',
+   * const version = await client.schemas.version.create('customer', {
+   *   namespace: 'acme',
+   *   version: '1.2.0',
+   *   document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
    * });
    * ```
    */
-  create(slug: string, params: VersionCreateParams, options?: RequestOptions): APIPromise<Shared.UID> {
+  create(
+    slug: string,
+    params: VersionCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<VersionCreateResponse> {
     const { namespace, ...body } = params;
     return this._client.post(__scalarPath`/v1/schemas/${namespace}/${slug}/version`, { body, ...options });
   }
@@ -113,11 +117,23 @@ export interface VersionCreateParams {
    * Body param
    */
   document: string;
+  /**
+   * Body param
+   */
+  force?: boolean;
+}
+
+export interface VersionCreateResponse {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
 }
 export declare namespace Version {
   export {
     type VersionRetrieveResponse as VersionRetrieveResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionCreateResponse as VersionCreateResponse,
     type VersionRetrieveParams as VersionRetrieveParams,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionCreateParams as VersionCreateParams,

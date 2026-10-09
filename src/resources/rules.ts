@@ -19,7 +19,7 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * const rule = await client.rules.listRulesets('namespace');
+   * const rule = await client.rules.listRulesets('acme');
    * ```
    */
   listRulesets(namespace_: string, options?: RequestOptions): APIPromise<RuleListRulesetsResponse> {
@@ -36,10 +36,10 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * const uid = await client.rules.createRuleset('namespace', {
-   *   title: '',
-   *   slug: '',
-   *   document: '',
+   * const uid = await client.rules.createRuleset('acme', {
+   *   title: 'Acme API Rules',
+   *   slug: 'acme-rules',
+   *   document: 'extends: ["spectral:oas"]\nrules:\n  info-contact: warn\n',
    * });
    * ```
    */
@@ -61,8 +61,8 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * await client.rules.updateRuleset('slug', {
-   *   namespace: 'namespace',
+   * await client.rules.updateRuleset('acme-rules', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -85,8 +85,8 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * await client.rules.deleteRuleset('slug', {
-   *   namespace: 'namespace',
+   * await client.rules.deleteRuleset('acme-rules', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -109,8 +109,8 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.rules.retrieveRulesetDocument('slug', {
-   *   namespace: 'namespace',
+   * const response = await client.rules.retrieveRulesetDocument('acme-rules', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -136,9 +136,9 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * await client.rules.createRulesetAccessGroup('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   * await client.rules.createRulesetAccessGroup('acme-rules', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -164,9 +164,9 @@ export class Rules extends APIResource {
    *
    * @example
    * ```ts
-   * await client.rules.deleteRulesetAccessGroup('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   * await client.rules.deleteRulesetAccessGroup('acme-rules', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -183,34 +183,32 @@ export class Rules extends APIResource {
   }
 }
 
-export type RuleListRulesetsResponse = Array<RuleListRulesetsResponse.RuleListRulesetsResponseItem>;
-
-export namespace RuleListRulesetsResponse {
-  export interface RuleListRulesetsResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    description: string;
-    /**
-     * @minLength 3
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    /**
-     * @minLength 3
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-  }
+export interface Rule {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @maxLength 100
+   */
+  title: string;
+  description: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+  /**
+   * @minLength 2
+   * @maxLength 50
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
+  namespace: Shared.Namespace;
+  isPrivate: boolean;
 }
+
+export type RuleListRulesetsResponse = Array<Rule>;
 
 export interface RuleCreateRulesetParams {
   title: string;
@@ -264,7 +262,7 @@ export interface RuleCreateRulesetAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -280,7 +278,7 @@ export interface RuleDeleteRulesetAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -290,6 +288,7 @@ export interface RuleDeleteRulesetAccessGroupParams {
 export type RuleDeleteRulesetAccessGroupResponse = null;
 export declare namespace Rules {
   export {
+    type Rule as Rule,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,

@@ -12,6 +12,7 @@ import {
   Version,
   type VersionRetrieveResponse,
   type VersionDeleteResponse,
+  type VersionCreateResponse,
   type VersionRetrieveParams,
   type VersionDeleteParams,
   type VersionCreateParams,
@@ -38,7 +39,7 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const schema = await client.schemas.list('namespace');
+   * const schema = await client.schemas.list('acme');
    * ```
    */
   list(namespace_: string, options?: RequestOptions): APIPromise<SchemaListResponse> {
@@ -55,11 +56,11 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const uid = await client.schemas.create('namespace', {
-   *   title: '',
-   *   version: 'x',
-   *   slug: '',
-   *   document: '',
+   * const uid = await client.schemas.create('acme', {
+   *   title: 'Customer',
+   *   version: '1.2.0',
+   *   slug: 'customer',
+   *   document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
    * });
    * ```
    */
@@ -77,8 +78,8 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.update('slug', {
-   *   namespace: 'namespace',
+   * await client.schemas.update('customer', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -101,8 +102,8 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * await client.schemas.delete('slug', {
-   *   namespace: 'namespace',
+   * await client.schemas.delete('customer', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -116,58 +117,62 @@ export class Schemas extends APIResource {
   }
 }
 
-export type SchemaListResponse = Array<SchemaListResponse.SchemaListResponseItem>;
-
-export namespace SchemaListResponse {
-  export interface SchemaListResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    description: string;
-    /**
-     * @minLength 3
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    /**
-     * @minLength 3
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-    versions: Array<SchemaListResponseItem.Version>;
-  }
-
-  export namespace SchemaListResponseItem {
-    export interface Version {
-      /**
-       * @minLength 5
-       */
-      uid: Shared.Nanoid;
-      /**
-       * @minimum 0
-       * @maximum 9007199254740991
-       */
-      createdAt: Shared.Timestamp;
-      /**
-       * @minimum 0
-       * @maximum 9007199254740991
-       */
-      updatedAt: Shared.Timestamp;
-      /**
-       * @minLength 1
-       */
-      version: RegistryAPI.Version;
-    }
-  }
+export interface Schema {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @maxLength 100
+   */
+  title: string;
+  description: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+  /**
+   * @minLength 2
+   * @maxLength 50
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
+  namespace: Shared.Namespace;
+  isPrivate: boolean;
+  versions: Array<ManagedSchemaVersion>;
 }
+
+export interface ManagedSchemaVersion {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @minimum 0
+   * @maximum 9007199254740991
+   */
+  createdAt: Shared.Timestamp;
+  /**
+   * @minimum 0
+   * @maximum 9007199254740991
+   */
+  updatedAt: Shared.Timestamp;
+  /**
+   * @minLength 1
+   */
+  version: RegistryAPI.Version;
+  /**
+   * @pattern ^[a-f0-9]{64}$
+   */
+  yamlSha?: string;
+  /**
+   * @pattern ^[a-f0-9]{64}$
+   */
+  jsonSha?: string;
+}
+
+export type SchemaListResponse = Array<Schema>;
 
 export interface SchemaCreateParams {
   title: string;
@@ -212,6 +217,8 @@ Schemas.AccessGroup = AccessGroup;
 
 export declare namespace Schemas {
   export {
+    type Schema as Schema,
+    type ManagedSchemaVersion as ManagedSchemaVersion,
     type SchemaListResponse as SchemaListResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
@@ -224,6 +231,7 @@ export declare namespace Schemas {
     Version as Version,
     type VersionRetrieveResponse as VersionRetrieveResponse,
     type VersionDeleteResponse as VersionDeleteResponse,
+    type VersionCreateResponse as VersionCreateResponse,
     type VersionRetrieveParams as VersionRetrieveParams,
     type VersionDeleteParams as VersionDeleteParams,
     type VersionCreateParams as VersionCreateParams,

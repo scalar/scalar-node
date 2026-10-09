@@ -33,7 +33,7 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const registry = await client.registry.listAPIDocuments('namespace');
+   * const registry = await client.registry.listAPIDocuments('acme');
    * ```
    */
   listAPIDocuments(
@@ -53,11 +53,11 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const registry = await client.registry.createAPIDocument('namespace', {
-   *   title: '',
-   *   version: 'x',
-   *   slug: '',
-   *   document: '',
+   * const registry = await client.registry.createAPIDocument('acme', {
+   *   title: 'Acme API',
+   *   version: '1.2.0',
+   *   slug: 'acme-api',
+   *   document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
    * });
    * ```
    */
@@ -79,8 +79,8 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.updateAPIDocument('slug', {
-   *   namespace: 'namespace',
+   * await client.registry.updateAPIDocument('acme-api', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -103,8 +103,8 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocument('slug', {
-   *   namespace: 'namespace',
+   * await client.registry.deleteAPIDocument('acme-api', {
+   *   namespace: 'acme',
    * });
    * ```
    */
@@ -127,9 +127,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.registry.retrieveAPIDocumentVersion('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * const response = await client.registry.retrieveAPIDocumentVersion('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
    * });
    * ```
    */
@@ -155,10 +155,10 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const registry = await client.registry.updateAPIDocumentVersion('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
-   *   document: '',
+   * const registry = await client.registry.updateAPIDocumentVersion('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
+   *   document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
    * });
    * ```
    */
@@ -184,9 +184,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocumentVersion('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * await client.registry.deleteAPIDocumentVersion('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
    * });
    * ```
    */
@@ -209,9 +209,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
-   *   namespace: 'namespace',
-   *   slug: 'slug',
+   * const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('1.2.0', {
+   *   namespace: 'acme',
+   *   slug: 'acme-api',
    * });
    * ```
    */
@@ -234,10 +234,10 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
-   *   namespace: 'namespace',
-   *   version: 'x',
-   *   document: '',
+   * const managedDocVersion = await client.registry.createAPIDocumentVersion('acme-api', {
+   *   namespace: 'acme',
+   *   version: '1.2.0',
+   *   document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
    * });
    * ```
    */
@@ -260,9 +260,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.createAPIDocumentAccessGroup('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   * await client.registry.createAPIDocumentAccessGroup('acme-api', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -285,9 +285,9 @@ export class Registry extends APIResource {
    *
    * @example
    * ```ts
-   * await client.registry.deleteAPIDocumentAccessGroup('slug', {
-   *   namespace: 'namespace',
-   *   accessGroupSlug: 'xxx',
+   * await client.registry.deleteAPIDocumentAccessGroup('acme-api', {
+   *   namespace: 'acme',
+   *   accessGroupSlug: 'acme-api',
    * });
    * ```
    */
@@ -304,88 +304,53 @@ export class Registry extends APIResource {
   }
 }
 
+export interface APIDocument {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @minLength 1
+   */
+  version: Version;
+  /**
+   * @maxLength 100
+   */
+  title: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+  description: string;
+  /**
+   * @minLength 2
+   * @maxLength 50
+   * @pattern ^[a-zA-Z0-9-_]+$
+   */
+  namespace: Shared.Namespace;
+  isPrivate: boolean;
+  tags: string;
+  versions: Array<Shared.ManagedDocVersion>;
+}
+
 export type Version = string;
 
 export interface AccessGroup {
   /**
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   accessGroupSlug: ScalarDocsAPI.Slug;
 }
 
-export type RegistryListAllAPIDocumentsResponse =
-  Array<RegistryListAllAPIDocumentsResponse.RegistryListAllAPIDocumentsResponseItem>;
+export type Method = string;
 
-export namespace RegistryListAllAPIDocumentsResponse {
-  export interface RegistryListAllAPIDocumentsResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @minLength 1
-     */
-    version: Version;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    /**
-     * @minLength 3
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    description: string;
-    /**
-     * @minLength 3
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-    tags: unknown;
-    versions: Array<Shared.ManagedDocVersion>;
-  }
-}
+export type RegistryListAllAPIDocumentsResponse = Array<APIDocument>;
 
-export type RegistryListAPIDocumentsResponse =
-  Array<RegistryListAPIDocumentsResponse.RegistryListAPIDocumentsResponseItem>;
-
-export namespace RegistryListAPIDocumentsResponse {
-  export interface RegistryListAPIDocumentsResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @minLength 1
-     */
-    version: Version;
-    /**
-     * @maxLength 100
-     */
-    title: string;
-    /**
-     * @minLength 3
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-    description: string;
-    /**
-     * @minLength 3
-     * @maxLength 50
-     * @pattern ^[a-zA-Z0-9-_]+$
-     */
-    namespace: Shared.Namespace;
-    isPrivate: boolean;
-    tags: unknown;
-    versions: Array<Shared.ManagedDocVersion>;
-  }
-}
+export type RegistryListAPIDocumentsResponse = Array<APIDocument>;
 
 export interface RegistryCreateAPIDocumentParams {
   title: string;
@@ -406,7 +371,6 @@ export interface RegistryCreateAPIDocumentResponse {
   title: string;
   jsonSha: string;
   yamlSha: string;
-  versionSha: string;
 }
 
 export interface RegistryUpdateAPIDocumentParams {
@@ -460,16 +424,11 @@ export interface RegistryUpdateAPIDocumentVersionParams {
    * Body param
    */
   document: string;
-  /**
-   * Body param
-   */
-  lastKnownVersionSha?: string;
 }
 
 export interface RegistryUpdateAPIDocumentVersionResponse {
   jsonSha: string;
   yamlSha: string;
-  versionSha: string;
 }
 
 export interface RegistryDeleteAPIDocumentVersionParams {
@@ -502,10 +461,6 @@ export interface RegistryCreateAPIDocumentVersionParams {
    * Body param
    */
   force?: boolean;
-  /**
-   * Body param
-   */
-  lastKnownVersionSha?: string;
 }
 
 export interface RegistryCreateAPIDocumentAccessGroupParams {
@@ -515,7 +470,7 @@ export interface RegistryCreateAPIDocumentAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -531,7 +486,7 @@ export interface RegistryDeleteAPIDocumentAccessGroupParams {
   namespace: string;
   /**
    * Body param
-   * @minLength 3
+   * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
@@ -541,8 +496,10 @@ export interface RegistryDeleteAPIDocumentAccessGroupParams {
 export type RegistryDeleteAPIDocumentAccessGroupResponse = null;
 export declare namespace Registry {
   export {
+    type APIDocument as APIDocument,
     type Version as Version,
     type AccessGroup as AccessGroup,
+    type Method as Method,
     type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
     type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
     type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,

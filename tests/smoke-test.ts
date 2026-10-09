@@ -16,7 +16,7 @@ import { writeFileSync } from 'node:fs';
 import Scalar from '@scalar/sdk';
 
 // One shared client runs every case.
-const client = new Scalar();
+const client = new Scalar({ maxRetries: 2, timeout: 10_000 });
 
 // The result of running one case, collected for the JSON report or the printed table.
 type SmokeResult = {
@@ -55,7 +55,7 @@ const cases: {
     method: 'GET',
     path: '/v1/apis/{namespace}',
     run: async () => {
-      const registry = await client.registry.listAPIDocuments('namespace');
+      const registry = await client.registry.listAPIDocuments('acme');
     },
   },
 
@@ -65,11 +65,11 @@ const cases: {
     path: '/v1/apis/{namespace}',
     label: 'required params',
     run: async () => {
-      const registry = await client.registry.createAPIDocument('namespace', {
-        title: '',
-        version: 'x',
-        slug: '',
-        document: '',
+      const registry = await client.registry.createAPIDocument('acme', {
+        title: 'Acme API',
+        version: '1.2.0',
+        slug: 'acme-api',
+        document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
       });
     },
   },
@@ -80,14 +80,14 @@ const cases: {
     path: '/v1/apis/{namespace}',
     label: 'all params',
     run: async () => {
-      const registry = await client.registry.createAPIDocument('namespace', {
-        title: '',
-        description: '',
-        version: 'x',
-        slug: '',
-        ruleset: '',
+      const registry = await client.registry.createAPIDocument('acme', {
+        title: 'Acme API',
+        description: 'API for managing Acme products and orders.',
+        version: '1.2.0',
+        slug: 'acme-api',
+        ruleset: 'extends: ["spectral:oas"]',
         isPrivate: false,
-        document: '',
+        document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
       });
     },
   },
@@ -98,8 +98,8 @@ const cases: {
     path: '/v1/apis/{namespace}/{slug}',
     label: 'required params',
     run: async () => {
-      await client.registry.updateAPIDocument('slug', {
-        namespace: 'namespace',
+      await client.registry.updateAPIDocument('acme-api', {
+        namespace: 'acme',
       });
     },
   },
@@ -110,12 +110,12 @@ const cases: {
     path: '/v1/apis/{namespace}/{slug}',
     label: 'all params',
     run: async () => {
-      await client.registry.updateAPIDocument('slug', {
-        namespace: 'namespace',
-        title: '',
-        description: '',
+      await client.registry.updateAPIDocument('acme-api', {
+        namespace: 'acme',
+        title: 'Acme API',
+        description: 'API for managing Acme products and orders.',
         isPrivate: false,
-        ruleset: '',
+        ruleset: 'extends: ["spectral:oas"]',
       });
     },
   },
@@ -125,8 +125,8 @@ const cases: {
     method: 'DELETE',
     path: '/v1/apis/{namespace}/{slug}',
     run: async () => {
-      await client.registry.deleteAPIDocument('slug', {
-        namespace: 'namespace',
+      await client.registry.deleteAPIDocument('acme-api', {
+        namespace: 'acme',
       });
     },
   },
@@ -136,9 +136,9 @@ const cases: {
     method: 'GET',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      const response = await client.registry.retrieveAPIDocumentVersion('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
+      const response = await client.registry.retrieveAPIDocumentVersion('1.2.0', {
+        namespace: 'acme',
+        slug: 'acme-api',
       });
     },
   },
@@ -147,27 +147,11 @@ const cases: {
     operation: 'updateApiDocumentVersion',
     method: 'PATCH',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}',
-    label: 'required params',
     run: async () => {
-      const registry = await client.registry.updateAPIDocumentVersion('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
-        document: '',
-      });
-    },
-  },
-
-  {
-    operation: 'updateApiDocumentVersion',
-    method: 'PATCH',
-    path: '/v1/apis/{namespace}/{slug}/version/{semver}',
-    label: 'all params',
-    run: async () => {
-      const registry = await client.registry.updateAPIDocumentVersion('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
-        document: '',
-        lastKnownVersionSha: '',
+      const registry = await client.registry.updateAPIDocumentVersion('1.2.0', {
+        namespace: 'acme',
+        slug: 'acme-api',
+        document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
       });
     },
   },
@@ -177,9 +161,9 @@ const cases: {
     method: 'DELETE',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      await client.registry.deleteAPIDocumentVersion('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
+      await client.registry.deleteAPIDocumentVersion('1.2.0', {
+        namespace: 'acme',
+        slug: 'acme-api',
       });
     },
   },
@@ -189,9 +173,9 @@ const cases: {
     method: 'GET',
     path: '/v1/apis/{namespace}/{slug}/version/{semver}/metadata',
     run: async () => {
-      const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
+      const managedDocVersion = await client.registry.listAPIDocumentVersionMetadata('1.2.0', {
+        namespace: 'acme',
+        slug: 'acme-api',
       });
     },
   },
@@ -202,10 +186,10 @@ const cases: {
     path: '/v1/apis/{namespace}/{slug}/version',
     label: 'required params',
     run: async () => {
-      const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
-        namespace: 'namespace',
-        version: 'x',
-        document: '',
+      const managedDocVersion = await client.registry.createAPIDocumentVersion('acme-api', {
+        namespace: 'acme',
+        version: '1.2.0',
+        document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
       });
     },
   },
@@ -216,12 +200,11 @@ const cases: {
     path: '/v1/apis/{namespace}/{slug}/version',
     label: 'all params',
     run: async () => {
-      const managedDocVersion = await client.registry.createAPIDocumentVersion('slug', {
-        namespace: 'namespace',
-        version: 'x',
-        document: '',
+      const managedDocVersion = await client.registry.createAPIDocumentVersion('acme-api', {
+        namespace: 'acme',
+        version: '1.2.0',
+        document: '{"openapi":"3.1.0","info":{"title":"Acme API","version":"1.2.0"},"paths":{}}',
         force: false,
-        lastKnownVersionSha: '',
       });
     },
   },
@@ -231,9 +214,9 @@ const cases: {
     method: 'POST',
     path: '/v1/apis/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.registry.createAPIDocumentAccessGroup('slug', {
-        namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+      await client.registry.createAPIDocumentAccessGroup('acme-api', {
+        namespace: 'acme',
+        accessGroupSlug: 'acme-api',
       });
     },
   },
@@ -243,9 +226,9 @@ const cases: {
     method: 'DELETE',
     path: '/v1/apis/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.registry.deleteAPIDocumentAccessGroup('slug', {
-        namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+      await client.registry.deleteAPIDocumentAccessGroup('acme-api', {
+        namespace: 'acme',
+        accessGroupSlug: 'acme-api',
       });
     },
   },
@@ -255,7 +238,7 @@ const cases: {
     method: 'GET',
     path: '/v1/schemas/{namespace}',
     run: async () => {
-      const schema = await client.schemas.list('namespace');
+      const schema = await client.schemas.list('acme');
     },
   },
 
@@ -265,11 +248,11 @@ const cases: {
     path: '/v1/schemas/{namespace}',
     label: 'required params',
     run: async () => {
-      const uid = await client.schemas.create('namespace', {
-        title: '',
-        version: 'x',
-        slug: '',
-        document: '',
+      const uid = await client.schemas.create('acme', {
+        title: 'Customer',
+        version: '1.2.0',
+        slug: 'customer',
+        document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
       });
     },
   },
@@ -280,13 +263,13 @@ const cases: {
     path: '/v1/schemas/{namespace}',
     label: 'all params',
     run: async () => {
-      const uid = await client.schemas.create('namespace', {
-        title: '',
-        description: '',
-        version: 'x',
-        slug: '',
+      const uid = await client.schemas.create('acme', {
+        title: 'Customer',
+        description: 'API for managing Acme products and orders.',
+        version: '1.2.0',
+        slug: 'customer',
         isPrivate: false,
-        document: '',
+        document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
       });
     },
   },
@@ -297,8 +280,8 @@ const cases: {
     path: '/v1/schemas/{namespace}/{slug}',
     label: 'required params',
     run: async () => {
-      await client.schemas.update('slug', {
-        namespace: 'namespace',
+      await client.schemas.update('customer', {
+        namespace: 'acme',
       });
     },
   },
@@ -309,10 +292,10 @@ const cases: {
     path: '/v1/schemas/{namespace}/{slug}',
     label: 'all params',
     run: async () => {
-      await client.schemas.update('slug', {
-        namespace: 'namespace',
-        title: '',
-        description: '',
+      await client.schemas.update('customer', {
+        namespace: 'acme',
+        title: 'Customer',
+        description: 'API for managing Acme products and orders.',
         isPrivate: false,
       });
     },
@@ -323,8 +306,8 @@ const cases: {
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}',
     run: async () => {
-      await client.schemas.delete('slug', {
-        namespace: 'namespace',
+      await client.schemas.delete('customer', {
+        namespace: 'acme',
       });
     },
   },
@@ -334,9 +317,9 @@ const cases: {
     method: 'GET',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      const response = await client.schemas.version.retrieve('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
+      const response = await client.schemas.version.retrieve('1.2.0', {
+        namespace: 'acme',
+        slug: 'customer',
       });
     },
   },
@@ -346,9 +329,9 @@ const cases: {
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}/version/{semver}',
     run: async () => {
-      await client.schemas.version.delete('semver', {
-        namespace: 'namespace',
-        slug: 'slug',
+      await client.schemas.version.delete('1.2.0', {
+        namespace: 'acme',
+        slug: 'customer',
       });
     },
   },
@@ -357,11 +340,27 @@ const cases: {
     operation: 'create',
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/version',
+    label: 'required params',
     run: async () => {
-      const uid = await client.schemas.version.create('slug', {
-        namespace: 'namespace',
-        version: 'x',
-        document: '',
+      const version = await client.schemas.version.create('customer', {
+        namespace: 'acme',
+        version: '1.2.0',
+        document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/schemas/{namespace}/{slug}/version',
+    label: 'all params',
+    run: async () => {
+      const version = await client.schemas.version.create('customer', {
+        namespace: 'acme',
+        version: '1.2.0',
+        document: '{"type":"object","properties":{"name":{"type":"string","examples":["Acme"]}}}',
+        force: false,
       });
     },
   },
@@ -371,9 +370,9 @@ const cases: {
     method: 'POST',
     path: '/v1/schemas/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.schemas.accessGroup.create('slug', {
-        namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+      await client.schemas.accessGroup.create('customer', {
+        namespace: 'acme',
+        accessGroupSlug: 'acme-api',
       });
     },
   },
@@ -383,9 +382,9 @@ const cases: {
     method: 'DELETE',
     path: '/v1/schemas/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.schemas.accessGroup.delete('slug', {
-        namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+      await client.schemas.accessGroup.delete('customer', {
+        namespace: 'acme',
+        accessGroupSlug: 'acme-api',
       });
     },
   },
@@ -395,7 +394,7 @@ const cases: {
     method: 'GET',
     path: '/v1/login-portals/{slug}',
     run: async () => {
-      const loginPortal = await client.loginPortals.retrieve('slug');
+      const loginPortal = await client.loginPortals.retrieve('acme-login');
     },
   },
 
@@ -405,7 +404,7 @@ const cases: {
     path: '/v1/login-portals/{slug}',
     label: 'required params',
     run: async () => {
-      await client.loginPortals.update('slug', {});
+      await client.loginPortals.update('acme-login', {});
     },
   },
 
@@ -415,8 +414,8 @@ const cases: {
     path: '/v1/login-portals/{slug}',
     label: 'all params',
     run: async () => {
-      await client.loginPortals.update('slug', {
-        title: '',
+      await client.loginPortals.update('acme-login', {
+        title: 'Acme Private Documentation',
       });
     },
   },
@@ -426,7 +425,7 @@ const cases: {
     method: 'DELETE',
     path: '/v1/login-portals/{slug}',
     run: async () => {
-      await client.loginPortals.delete('slug');
+      await client.loginPortals.delete('acme-login');
     },
   },
 
@@ -436,8 +435,8 @@ const cases: {
     path: '/v1/login-portals',
     run: async () => {
       const uid = await client.loginPortals.create({
-        title: '',
-        slug: '',
+        title: 'Acme Private Documentation',
+        slug: 'acme-login',
         email: {
           logo: '',
           logoSize: '100',
@@ -446,7 +445,7 @@ const cases: {
           title: 'Private Docs',
           mainColor: '#2a2f45',
           mainBackground: '#f6f6f6',
-          cardColor: '2a2f45',
+          cardColor: '#2a2f45',
           cardBackground: '#fff',
           buttonColor: '#fff',
           buttonBackground: '#0f0f0f',
@@ -481,11 +480,98 @@ const cases: {
   },
 
   {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/access-groups',
+    label: 'required params',
+    run: async () => {
+      const accessGroup = await client.accessGroups.create({});
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/access-groups',
+    label: 'all params',
+    run: async () => {
+      const accessGroup = await client.accessGroups.create({
+        name: 'Engineering',
+        slug: 'engineering',
+        allowedDomains: 'example.com',
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/access-groups/{slug}',
+    run: async () => {
+      const accessGroup = await client.accessGroups.retrieve('acme-api');
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/access-groups/{slug}',
+    label: 'required params',
+    run: async () => {
+      await client.accessGroups.update('acme-api', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/access-groups/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.accessGroups.update('acme-api', {
+        name: 'Engineering',
+        slug: 'engineering',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/access-groups/{slug}',
+    run: async () => {
+      await client.accessGroups.delete('acme-api');
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/access-groups/{slug}/domains',
+    run: async () => {
+      await client.accessGroups.domains.create('acme-api', {
+        domain: 'example.com',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/access-groups/{slug}/domains',
+    run: async () => {
+      await client.accessGroups.domains.delete('acme-api', {
+        domain: 'example.com',
+      });
+    },
+  },
+
+  {
     operation: 'listRulesets',
     method: 'GET',
     path: '/v1/rulesets/{namespace}',
     run: async () => {
-      const rule = await client.rules.listRulesets('namespace');
+      const rule = await client.rules.listRulesets('acme');
     },
   },
 
@@ -495,10 +581,10 @@ const cases: {
     path: '/v1/rulesets/{namespace}',
     label: 'required params',
     run: async () => {
-      const uid = await client.rules.createRuleset('namespace', {
-        title: '',
-        slug: '',
-        document: '',
+      const uid = await client.rules.createRuleset('acme', {
+        title: 'Acme API Rules',
+        slug: 'acme-rules',
+        document: 'extends: ["spectral:oas"]\nrules:\n  info-contact: warn\n',
       });
     },
   },
@@ -509,12 +595,12 @@ const cases: {
     path: '/v1/rulesets/{namespace}',
     label: 'all params',
     run: async () => {
-      const uid = await client.rules.createRuleset('namespace', {
-        title: '',
-        description: '',
-        slug: '',
+      const uid = await client.rules.createRuleset('acme', {
+        title: 'Acme API Rules',
+        description: 'API for managing Acme products and orders.',
+        slug: 'acme-rules',
         isPrivate: false,
-        document: '',
+        document: 'extends: ["spectral:oas"]\nrules:\n  info-contact: warn\n',
       });
     },
   },
@@ -525,8 +611,8 @@ const cases: {
     path: '/v1/rulesets/{namespace}/{slug}',
     label: 'required params',
     run: async () => {
-      await client.rules.updateRuleset('slug', {
-        namespace: 'namespace',
+      await client.rules.updateRuleset('acme-rules', {
+        namespace: 'acme',
       });
     },
   },
@@ -537,11 +623,11 @@ const cases: {
     path: '/v1/rulesets/{namespace}/{slug}',
     label: 'all params',
     run: async () => {
-      await client.rules.updateRuleset('slug', {
-        namespace: 'namespace',
-        slug: '',
-        title: '',
-        description: '',
+      await client.rules.updateRuleset('acme-rules', {
+        namespace: 'acme',
+        slug: 'acme-rules',
+        title: 'Acme API Rules',
+        description: 'API for managing Acme products and orders.',
         isPrivate: false,
       });
     },
@@ -552,8 +638,8 @@ const cases: {
     method: 'DELETE',
     path: '/v1/rulesets/{namespace}/{slug}',
     run: async () => {
-      await client.rules.deleteRuleset('slug', {
-        namespace: 'namespace',
+      await client.rules.deleteRuleset('acme-rules', {
+        namespace: 'acme',
       });
     },
   },
@@ -563,8 +649,8 @@ const cases: {
     method: 'GET',
     path: '/v1/rulesets/{namespace}/{slug}',
     run: async () => {
-      const response = await client.rules.retrieveRulesetDocument('slug', {
-        namespace: 'namespace',
+      const response = await client.rules.retrieveRulesetDocument('acme-rules', {
+        namespace: 'acme',
       });
     },
   },
@@ -574,9 +660,9 @@ const cases: {
     method: 'POST',
     path: '/v1/rulesets/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.rules.createRulesetAccessGroup('slug', {
-        namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+      await client.rules.createRulesetAccessGroup('acme-rules', {
+        namespace: 'acme',
+        accessGroupSlug: 'acme-api',
       });
     },
   },
@@ -586,9 +672,9 @@ const cases: {
     method: 'DELETE',
     path: '/v1/rulesets/{namespace}/{slug}/access-group',
     run: async () => {
-      await client.rules.deleteRulesetAccessGroup('slug', {
-        namespace: 'namespace',
-        accessGroupSlug: 'xxx',
+      await client.rules.deleteRulesetAccessGroup('acme-rules', {
+        namespace: 'acme',
+        accessGroupSlug: 'acme-api',
       });
     },
   },
@@ -609,9 +695,9 @@ const cases: {
     label: 'required params',
     run: async () => {
       const uid = await client.themes.create({
-        name: '',
-        slug: '',
-        document: '',
+        name: 'Acme Theme',
+        slug: 'acme-theme',
+        document: ':root { --scalar-color-1: #1f2937; }',
       });
     },
   },
@@ -623,10 +709,10 @@ const cases: {
     label: 'all params',
     run: async () => {
       const uid = await client.themes.create({
-        name: '',
-        description: '',
-        slug: '',
-        document: '',
+        name: 'Acme Theme',
+        description: 'API for managing Acme products and orders.',
+        slug: 'acme-theme',
+        document: ':root { --scalar-color-1: #1f2937; }',
       });
     },
   },
@@ -637,7 +723,7 @@ const cases: {
     path: '/v1/themes/{slug}',
     label: 'required params',
     run: async () => {
-      await client.themes.update('slug', {});
+      await client.themes.update('acme-theme', {});
     },
   },
 
@@ -647,9 +733,9 @@ const cases: {
     path: '/v1/themes/{slug}',
     label: 'all params',
     run: async () => {
-      await client.themes.update('slug', {
-        name: '',
-        description: '',
+      await client.themes.update('acme-theme', {
+        name: 'Acme Theme',
+        description: 'API for managing Acme products and orders.',
       });
     },
   },
@@ -659,8 +745,8 @@ const cases: {
     method: 'PUT',
     path: '/v1/themes/{slug}',
     run: async () => {
-      await client.themes.replaceDocument('slug', {
-        document: '',
+      await client.themes.replaceDocument('acme-theme', {
+        document: ':root { --scalar-color-1: #1f2937; }',
       });
     },
   },
@@ -670,7 +756,7 @@ const cases: {
     method: 'DELETE',
     path: '/v1/themes/{slug}',
     run: async () => {
-      await client.themes.delete('slug');
+      await client.themes.delete('acme-theme');
     },
   },
 
@@ -679,7 +765,7 @@ const cases: {
     method: 'GET',
     path: '/v1/themes/{slug}',
     run: async () => {
-      const response = await client.themes.retrieve('slug');
+      const response = await client.themes.retrieve('acme-theme');
     },
   },
 
@@ -689,6 +775,65 @@ const cases: {
     path: '/v1/teams',
     run: async () => {
       const team = await client.teams.list();
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/teams/members',
+    run: async () => {
+      const member = await client.teams.members.list();
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/teams/members/{uid}',
+    run: async () => {
+      await client.teams.members.update('UakgbKJ5m9gl0JDMbcJqL', {
+        role: 'owner',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/teams/members/{uid}',
+    run: async () => {
+      await client.teams.members.delete('UakgbKJ5m9gl0JDMbcJqL');
+    },
+  },
+
+  {
+    operation: 'member',
+    method: 'POST',
+    path: '/v1/teams/invites',
+    run: async () => {
+      await client.teams.invites.member({
+        email: 'alex@example.com',
+        role: 'owner',
+      });
+    },
+  },
+
+  {
+    operation: 'resend',
+    method: 'PATCH',
+    path: '/v1/teams/invites/{uid}',
+    run: async () => {
+      await client.teams.invites.resend('UakgbKJ5m9gl0JDMbcJqL');
+    },
+  },
+
+  {
+    operation: 'cancel',
+    method: 'DELETE',
+    path: '/v1/teams/invites/{uid}',
+    run: async () => {
+      await client.teams.invites.cancel('UakgbKJ5m9gl0JDMbcJqL');
     },
   },
 
@@ -708,7 +853,7 @@ const cases: {
     label: 'required params',
     run: async () => {
       const scalarDoc = await client.scalarDocs.createGuide({
-        name: '',
+        name: 'Acme Documentation',
         isPrivate: false,
         allowedUsers: [],
         allowedDomains: [],
@@ -723,8 +868,8 @@ const cases: {
     label: 'all params',
     run: async () => {
       const scalarDoc = await client.scalarDocs.createGuide({
-        name: '',
-        slug: 'xxx',
+        name: 'Acme Documentation',
+        slug: 'acme-docs',
         isPrivate: false,
         allowedUsers: [],
         allowedDomains: [],
@@ -737,7 +882,204 @@ const cases: {
     method: 'POST',
     path: '/v1/guides/{slug}/publish',
     run: async () => {
-      const scalarDoc = await client.scalarDocs.publishGuide('slug');
+      const scalarDoc = await client.scalarDocs.publishGuide('acme-docs');
+    },
+  },
+
+  {
+    operation: 'listProjects',
+    method: 'GET',
+    path: '/v1/docs',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjects();
+    },
+  },
+
+  {
+    operation: 'listProjects',
+    method: 'GET',
+    path: '/v1/docs',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjects({
+        limit: 20,
+      });
+    },
+  },
+
+  {
+    operation: 'createProject',
+    method: 'POST',
+    path: '/v1/docs',
+    label: 'required params',
+    run: async () => {
+      const docsProject = await client.scalarDocs.createProject({
+        name: 'Acme Documentation',
+        provider: 'forgejo',
+      });
+    },
+  },
+
+  {
+    operation: 'createProject',
+    method: 'POST',
+    path: '/v1/docs',
+    label: 'all params',
+    run: async () => {
+      const docsProject = await client.scalarDocs.createProject({
+        name: 'Acme Documentation',
+        slug: 'acme-docs',
+        isPrivate: false,
+        blank: true,
+        provider: 'forgejo',
+        githubRepository: {
+          installationId: 84,
+          repoId: 123456789,
+        },
+        bitbucketRepository: {
+          workspaceUuid: '{12345678-1234-4234-8234-123456789abc}',
+          repoUuid: '{abcdef01-1234-4234-8234-123456789abc}',
+        },
+      });
+    },
+  },
+
+  {
+    operation: 'retrieveProject',
+    method: 'GET',
+    path: '/v1/docs/{slug}',
+    run: async () => {
+      const docsProject = await client.scalarDocs.retrieveProject('acme-docs');
+    },
+  },
+
+  {
+    operation: 'updateProject',
+    method: 'PATCH',
+    path: '/v1/docs/{slug}',
+    label: 'required params',
+    run: async () => {
+      await client.scalarDocs.updateProject('acme-docs', {});
+    },
+  },
+
+  {
+    operation: 'updateProject',
+    method: 'PATCH',
+    path: '/v1/docs/{slug}',
+    label: 'all params',
+    run: async () => {
+      await client.scalarDocs.updateProject('acme-docs', {
+        name: 'Acme Documentation',
+        isPrivate: false,
+        accessGroups: ['UakgbKJ5m9gl0JDMbcJqL'],
+        loginPortalUid: 'LakgbKJ5m9gl0JDMbcJqL',
+        activeThemeId: 'TakgbKJ5m9gl0JDMbcJqL',
+        agentEnabled: true,
+        analyticsEnabled: true,
+      });
+    },
+  },
+
+  {
+    operation: 'deleteProject',
+    method: 'DELETE',
+    path: '/v1/docs/{slug}',
+    run: async () => {
+      await client.scalarDocs.deleteProject('acme-docs');
+    },
+  },
+
+  {
+    operation: 'publishProject',
+    method: 'POST',
+    path: '/v1/docs/{slug}/publish',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.publishProject('acme-docs', {});
+    },
+  },
+
+  {
+    operation: 'publishProject',
+    method: 'POST',
+    path: '/v1/docs/{slug}/publish',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.publishProject('acme-docs', {
+        commitSha: '0123456789abcdef0123456789abcdef01234567',
+        preview: false,
+        configPath: 'scalar.config.json',
+      });
+    },
+  },
+
+  {
+    operation: 'listProjectConfig',
+    method: 'GET',
+    path: '/v1/docs/{slug}/config',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectConfig('acme-docs');
+    },
+  },
+
+  {
+    operation: 'listProjectConfig',
+    method: 'GET',
+    path: '/v1/docs/{slug}/config',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectConfig('acme-docs', {
+        ref: 'main',
+      });
+    },
+  },
+
+  {
+    operation: 'updateProjectConfig',
+    method: 'PUT',
+    path: '/v1/docs/{slug}/config',
+    label: 'required params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.updateProjectConfig('acme-docs', {
+        content: '{"name":"Acme Documentation"}',
+      });
+    },
+  },
+
+  {
+    operation: 'updateProjectConfig',
+    method: 'PUT',
+    path: '/v1/docs/{slug}/config',
+    label: 'all params',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.updateProjectConfig('acme-docs', {
+        content: '{"name":"Acme Documentation"}',
+        ref: 'main',
+        baseToken: 'example-edit-token',
+        message: 'Update documentation configuration',
+        path: 'scalar.config.json',
+      });
+    },
+  },
+
+  {
+    operation: 'listProjectDomain',
+    method: 'GET',
+    path: '/v1/docs/{slug}/domain',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectDomain('acme-docs');
+    },
+  },
+
+  {
+    operation: 'listProjectDomainStatus',
+    method: 'GET',
+    path: '/v1/docs/{slug}/domain/status',
+    run: async () => {
+      const scalarDoc = await client.scalarDocs.listProjectDomainStatus('acme-docs');
     },
   },
 
@@ -756,7 +1098,7 @@ const cases: {
     path: '/v1/auth/exchange',
     run: async () => {
       const authentication = await client.authentication.exchangePersonalToken({
-        personalToken: '',
+        personalToken: 'scalar_example_personal_token',
       });
     },
   },
@@ -766,7 +1108,411 @@ const cases: {
     method: 'GET',
     path: '/v1/auth/me',
     run: async () => {
-      const authentication = await client.authentication.listCurrentUser();
+      const user = await client.authentication.listCurrentUser();
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/sdks',
+    label: 'required params',
+    run: async () => {
+      const sdk = await client.sdks.list();
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/sdks',
+    label: 'all params',
+    run: async () => {
+      const sdk = await client.sdks.list({
+        limit: 20,
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks',
+    label: 'required params',
+    run: async () => {
+      const uid = await client.sdks.create({
+        apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
+        languages: ['typescript'],
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks',
+    label: 'all params',
+    run: async () => {
+      const uid = await client.sdks.create({
+        apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
+        languages: ['typescript'],
+        title: 'Acme SDK',
+        slug: 'acme-sdk',
+        className: 'Acme',
+        config: '{"targets":{"typescript":{"packageName":"@acme/sdk"}}}',
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/sdks/{uid}',
+    run: async () => {
+      const sdk = await client.sdks.retrieve('UakgbKJ5m9gl0JDMbcJqL');
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/sdks/{uid}',
+    label: 'required params',
+    run: async () => {
+      await client.sdks.update('UakgbKJ5m9gl0JDMbcJqL', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/sdks/{uid}',
+    label: 'all params',
+    run: async () => {
+      await client.sdks.update('UakgbKJ5m9gl0JDMbcJqL', {
+        title: 'Acme SDK',
+        slug: 'acme-sdk',
+        isPrivate: false,
+        config: '{"targets":{"typescript":{"packageName":"@acme/sdk"}}}',
+        apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
+        apiVersion: '1.2.0',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/sdks/{uid}',
+    run: async () => {
+      await client.sdks.delete('UakgbKJ5m9gl0JDMbcJqL');
+    },
+  },
+
+  {
+    operation: 'build',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/build',
+    label: 'required params',
+    run: async () => {
+      const sdk = await client.sdks.build('UakgbKJ5m9gl0JDMbcJqL', {});
+    },
+  },
+
+  {
+    operation: 'build',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/build',
+    label: 'all params',
+    run: async () => {
+      const sdk = await client.sdks.build('UakgbKJ5m9gl0JDMbcJqL', {
+        version: '1.2.0',
+        languages: ['typescript'],
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/versions',
+    run: async () => {
+      await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
+        version: '1.2.0',
+        apiVersion: '1.2.0',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/sdks/{uid}/versions/{version}',
+    run: async () => {
+      await client.sdks.versions.delete('1.2.0', {
+        uid: 'UakgbKJ5m9gl0JDMbcJqL',
+      });
+    },
+  },
+
+  {
+    operation: 'link',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories',
+    label: 'required params',
+    run: async () => {
+      const repository = await client.sdks.repositories.link('UakgbKJ5m9gl0JDMbcJqL', {
+        language: 'typescript',
+        repositoryId: 123456789,
+        baseBranch: 'main',
+      });
+    },
+  },
+
+  {
+    operation: 'link',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories',
+    label: 'all params',
+    run: async () => {
+      const repository = await client.sdks.repositories.link('UakgbKJ5m9gl0JDMbcJqL', {
+        language: 'typescript',
+        repositoryId: 123456789,
+        baseBranch: 'main',
+        prereleaseType: 'beta',
+      });
+    },
+  },
+
+  {
+    operation: 'unlink',
+    method: 'DELETE',
+    path: '/v1/sdks/{uid}/repositories/{language}',
+    run: async () => {
+      await client.sdks.repositories.unlink('typescript', {
+        uid: 'UakgbKJ5m9gl0JDMbcJqL',
+      });
+    },
+  },
+
+  {
+    operation: 'updatePublishing',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories/{language}/publishing',
+    label: 'required params',
+    run: async () => {
+      await client.sdks.repositories.updatePublishing('typescript', {
+        uid: 'UakgbKJ5m9gl0JDMbcJqL',
+        publishOnMerge: true,
+      });
+    },
+  },
+
+  {
+    operation: 'updatePublishing',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/repositories/{language}/publishing',
+    label: 'all params',
+    run: async () => {
+      await client.sdks.repositories.updatePublishing('typescript', {
+        uid: 'UakgbKJ5m9gl0JDMbcJqL',
+        publishOnMerge: true,
+        authMethod: 'oidc',
+        access: 'public',
+        tag: 'latest',
+      });
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/mcp/servers',
+    run: async () => {
+      const server = await client.mcp.servers.list();
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers',
+    label: 'required params',
+    run: async () => {
+      const server = await client.mcp.servers.create({
+        name: 'Acme MCP',
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers',
+    label: 'all params',
+    run: async () => {
+      const server = await client.mcp.servers.create({
+        name: 'Acme MCP',
+        slug: 'acme-mcp',
+        versionUids: ['VakgbKJ5m9gl0JDMbcJqL'],
+        projectUids: ['PakgbKJ5m9gl0JDMbcJqL'],
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/mcp/servers/{id}',
+    run: async () => {
+      const mcpServer = await client.mcp.servers.retrieve('42');
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}',
+    label: 'required params',
+    run: async () => {
+      const mcpServer = await client.mcp.servers.update('42', {});
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}',
+    label: 'all params',
+    run: async () => {
+      const mcpServer = await client.mcp.servers.update('42', {
+        name: 'Acme MCP',
+        slug: 'acme-mcp',
+        autoAddOperations: true,
+        operations: ['42'],
+        docsPages: ['getting-started'],
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/mcp/servers/{id}',
+    run: async () => {
+      await client.mcp.servers.delete('42');
+    },
+  },
+
+  {
+    operation: 'list',
+    method: 'GET',
+    path: '/v1/mcp/servers/{id}/installations',
+    run: async () => {
+      const installation = await client.mcp.servers.installations.list('42');
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers/{id}/installations',
+    label: 'required params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.create('42', {
+        name: 'Acme MCP',
+        documentAuth: {},
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/mcp/servers/{id}/installations',
+    label: 'all params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.create('42', {
+        name: 'Acme MCP',
+        slug: 'acme-mcp',
+        documentAuth: {},
+      });
+    },
+  },
+
+  {
+    operation: 'retrieve',
+    method: 'GET',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.retrieve('84', {
+        id: '42',
+      });
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    label: 'required params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.update('84', {
+        id: '42',
+      });
+    },
+  },
+
+  {
+    operation: 'update',
+    method: 'PATCH',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    label: 'all params',
+    run: async () => {
+      const mcpInstallation = await client.mcp.servers.installations.update('84', {
+        id: '42',
+        name: 'Acme MCP',
+        slug: 'acme-api',
+        isPrivate: false,
+        loginPortalUid: '',
+        documentAuth: {},
+        mcpVersion: '',
+      });
+    },
+  },
+
+  {
+    operation: 'delete',
+    method: 'DELETE',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}',
+    run: async () => {
+      await client.mcp.servers.installations.delete('84', {
+        id: '42',
+      });
+    },
+  },
+
+  {
+    operation: 'createAccessGroup',
+    method: 'POST',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}/access-group',
+    run: async () => {
+      await client.mcp.servers.installations.createAccessGroup('84', {
+        id: '42',
+        accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
+      });
+    },
+  },
+
+  {
+    operation: 'deleteAccessGroup',
+    method: 'DELETE',
+    path: '/v1/mcp/servers/{id}/installations/{installationId}/access-group',
+    run: async () => {
+      await client.mcp.servers.installations.deleteAccessGroup('84', {
+        id: '42',
+        accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
+      });
     },
   },
 ];

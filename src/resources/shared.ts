@@ -13,18 +13,25 @@ export interface ManagedDocVersion {
    */
   version: RegistryAPI.Version;
   upgraded: boolean;
+  /**
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
+   */
+  endpointCount: number | null;
   embedStatus: 'complete' | 'failed' | null;
   tags: Array<string>;
   tools?: Array<ManagedDocVersion.Tool>;
   yamlSha?: string;
   jsonSha?: string;
-  versionSha?: string;
 }
 
 export namespace ManagedDocVersion {
   export interface Tool {
     path: string;
-    method: 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put' | 'trace';
+    /**
+     * @pattern ^[!#$%&'*+.^_`|~0-9A-Za-z-]+$
+     */
+    method: RegistryAPI.Method;
     enabledTools: Array<'execute-request' | 'get-mini-openapi-spec'>;
   }
 }

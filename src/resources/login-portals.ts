@@ -17,7 +17,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * const loginPortal = await client.loginPortals.retrieve('slug');
+   * const loginPortal = await client.loginPortals.retrieve('acme-login');
    * ```
    */
   retrieve(slug: string, options?: RequestOptions): APIPromise<LoginPortalRetrieveResponse> {
@@ -34,7 +34,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * await client.loginPortals.update('slug', {});
+   * await client.loginPortals.update('acme-login', {});
    * ```
    */
   update(
@@ -54,7 +54,7 @@ export class LoginPortals extends APIResource {
    *
    * @example
    * ```ts
-   * await client.loginPortals.delete('slug');
+   * await client.loginPortals.delete('acme-login');
    * ```
    */
   delete(slug: string, options?: RequestOptions): APIPromise<LoginPortalDeleteResponse> {
@@ -71,8 +71,8 @@ export class LoginPortals extends APIResource {
    * @example
    * ```ts
    * const uid = await client.loginPortals.create({
-   *   title: '',
-   *   slug: '',
+   *   title: 'Acme Private Documentation',
+   *   slug: 'acme-login',
    *   email: {
    *     logo: '',
    *     logoSize: '100',
@@ -81,7 +81,7 @@ export class LoginPortals extends APIResource {
    *     title: 'Private Docs',
    *     mainColor: '#2a2f45',
    *     mainBackground: '#f6f6f6',
-   *     cardColor: '2a2f45',
+   *     cardColor: '#2a2f45',
    *     cardBackground: '#fff',
    *     buttonColor: '#fff',
    *     buttonBackground: '#0f0f0f',
@@ -198,6 +198,23 @@ export interface LoginPortalPage {
   formImage: string;
 }
 
+export interface LoginPortal {
+  /**
+   * @minLength 5
+   */
+  uid: Shared.Nanoid;
+  /**
+   * @maxLength 200
+   */
+  title: string;
+  /**
+   * @minLength 1
+   * @maxLength 60
+   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
+   */
+  slug: ScalarDocsAPI.Slug;
+}
+
 export interface LoginPortalRetrieveResponse {
   uid: string;
   title: string;
@@ -221,30 +238,12 @@ export interface LoginPortalCreateParams {
   page: LoginPortalPage;
 }
 
-export type LoginPortalListResponse = Array<LoginPortalListResponse.LoginPortalListResponseItem>;
-
-export namespace LoginPortalListResponse {
-  export interface LoginPortalListResponseItem {
-    /**
-     * @minLength 5
-     */
-    uid: Shared.Nanoid;
-    /**
-     * @maxLength 200
-     */
-    title: string;
-    /**
-     * @minLength 3
-     * @maxLength 60
-     * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-     */
-    slug: ScalarDocsAPI.Slug;
-  }
-}
+export type LoginPortalListResponse = Array<LoginPortal>;
 export declare namespace LoginPortals {
   export {
     type LoginPortalEmail as LoginPortalEmail,
     type LoginPortalPage as LoginPortalPage,
+    type LoginPortal as LoginPortal,
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,

@@ -14,6 +14,7 @@ import {
   formatRequestDetails,
   loggerFor,
   parseLogLevel,
+  redactUrl,
   type LogLevel,
   type Logger,
 } from './internal/utils/log';
@@ -27,8 +28,10 @@ import { toFile } from './core/uploads';
 import { VERSION } from './version';
 import {
   Registry,
+  type APIDocument,
   type Version,
   type AccessGroup,
+  type Method,
   type RegistryListAllAPIDocumentsResponse,
   type RegistryListAPIDocumentsResponse,
   type RegistryCreateAPIDocumentResponse,
@@ -52,6 +55,8 @@ import {
 } from './resources/registry';
 import {
   Schemas,
+  type Schema,
+  type ManagedSchemaVersion,
   type SchemaListResponse,
   type SchemaUpdateResponse,
   type SchemaDeleteResponse,
@@ -63,6 +68,7 @@ import {
   LoginPortals,
   type LoginPortalEmail,
   type LoginPortalPage,
+  type LoginPortal,
   type LoginPortalRetrieveResponse,
   type LoginPortalUpdateResponse,
   type LoginPortalDeleteResponse,
@@ -71,7 +77,18 @@ import {
   type LoginPortalCreateParams,
 } from './resources/login-portals';
 import {
+  AccessGroups,
+  type AccessGroupName,
+  type AccessGroupCreateResponse,
+  type AccessGroupRetrieveResponse,
+  type AccessGroupUpdateResponse,
+  type AccessGroupDeleteResponse,
+  type AccessGroupCreateParams,
+  type AccessGroupUpdateParams,
+} from './resources/access-groups/access-groups';
+import {
   Rules,
+  type Rule,
   type RuleListRulesetsResponse,
   type RuleUpdateRulesetResponse,
   type RuleDeleteRulesetResponse,
@@ -87,6 +104,7 @@ import {
 } from './resources/rules';
 import {
   Themes,
+  type Theme,
   type ThemeListResponse,
   type ThemeUpdateResponse,
   type ThemeReplaceDocumentResponse,
@@ -96,22 +114,62 @@ import {
   type ThemeUpdateParams,
   type ThemeReplaceDocumentParams,
 } from './resources/themes';
-import { Teams, type TeamListResponse } from './resources/teams';
+import {
+  Teams,
+  type Team,
+  type TeamName,
+  type TeamImage,
+  type TeamListResponse,
+} from './resources/teams/teams';
 import {
   ScalarDocs,
+  type GithubProject,
+  type DocsProject,
+  type ActiveDeployment,
   type Slug,
+  type GithubProjectRepository,
   type ScalarDocListGuidesResponse,
   type ScalarDocCreateGuideResponse,
   type ScalarDocPublishGuideResponse,
+  type ScalarDocListProjectsResponse,
+  type ScalarDocUpdateProjectResponse,
+  type ScalarDocDeleteProjectResponse,
+  type ScalarDocPublishProjectResponse,
+  type ScalarDocListProjectConfigResponse,
+  type ScalarDocUpdateProjectConfigResponse,
+  type ScalarDocListProjectDomainResponse,
+  type ScalarDocListProjectDomainStatusResponse,
   type ScalarDocCreateGuideParams,
+  type ScalarDocListProjectsParams,
+  type ScalarDocCreateProjectParams,
+  type ScalarDocUpdateProjectParams,
+  type ScalarDocPublishProjectParams,
+  type ScalarDocListProjectConfigParams,
+  type ScalarDocUpdateProjectConfigParams,
 } from './resources/scalar-docs';
 import { Namespaces, type NamespaceListResponse } from './resources/namespaces';
 import {
   Authentication,
+  type User,
+  type TeamSummary,
   type AuthenticationExchangePersonalTokenResponse,
-  type AuthenticationListCurrentUserResponse,
   type AuthenticationExchangePersonalTokenParams,
 } from './resources/authentication';
+import {
+  Sdks,
+  type Sdk,
+  type SdkTargetSummary,
+  type SdkVersion,
+  type SdkListResponse,
+  type SdkUpdateResponse,
+  type SdkDeleteResponse,
+  type SdkBuildResponse,
+  type SdkListParams,
+  type SdkCreateParams,
+  type SdkUpdateParams,
+  type SdkBuildParams,
+} from './resources/sdks/sdks';
+import { Mcp } from './resources/mcp/mcp';
 import * as SharedAPI from './resources/shared';
 
 export type AuthTokenProvider = () => string | Promise<string>;
@@ -121,6 +179,11 @@ export interface ClientOptions {
    * The token used for authentication.
    */
   bearerAuth?: string | AuthTokenProvider | undefined;
+
+  /**
+   * Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones.
+   */
+  oAuth2?: string | AuthTokenProvider | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -198,7 +261,8 @@ export type ScalarOptions = ClientOptions;
  * API Client for interfacing with the Scalar API.
  */
 export class Scalar {
-  bearerAuth: string | AuthTokenProvider;
+  bearerAuth: string | AuthTokenProvider | undefined;
+  oAuth2: string | AuthTokenProvider | undefined;
 
   baseURL: string;
   maxRetries: number;
@@ -217,6 +281,7 @@ export class Scalar {
    * API Client for interfacing with the Scalar API.
    *
    * @param {string | AuthTokenProvider | undefined} [opts.bearerAuth=process.env["BEARER_AUTH"] ?? undefined]
+   * @param {string | AuthTokenProvider | undefined} [opts.oAuth2=process.env["SCALAR_OAUTH_TOKEN"] ?? undefined]
    * @param {string} [opts.baseURL=process.env["SCALAR_BASE_URL"] ?? https://access.scalar.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -228,16 +293,12 @@ export class Scalar {
   constructor({
     baseURL = readEnv('SCALAR_BASE_URL'),
     bearerAuth = readEnv('BEARER_AUTH'),
+    oAuth2 = readEnv('SCALAR_OAUTH_TOKEN'),
     ...opts
   }: ClientOptions = {}) {
-    if (bearerAuth === undefined) {
-      throw new Errors.ScalarError(
-        "The BEARER_AUTH environment variable is missing or empty; either provide it, or instantiate the Scalar client with an bearerAuth option, like new Scalar({ bearerAuth: 'My Bearer Auth' }).",
-      );
-    }
-
     const options: ClientOptions = {
       bearerAuth,
+      oAuth2,
       ...opts,
       baseURL: baseURL || 'https://access.scalar.com',
     };
@@ -275,6 +336,7 @@ export class Scalar {
     this._defaultBaseURL = defaultBaseURL;
 
     this.bearerAuth = bearerAuth;
+    this.oAuth2 = oAuth2;
   }
 
   withOptions(options: Partial<ClientOptions>): this {
@@ -288,6 +350,7 @@ export class Scalar {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       bearerAuth: this.bearerAuth,
+      oAuth2: this.oAuth2,
       ...options,
     });
     return client;
@@ -307,7 +370,7 @@ export class Scalar {
   }
 
   private getUserAgent(): string {
-    return `${this.constructor.name}/JS ${VERSION}`;
+    return `Scalar/JS ${VERSION}`;
   }
 
   protected defaultIdempotencyKey(): string {
@@ -493,7 +556,7 @@ export class Scalar {
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${redactUrl(url)} ${
       response.ok ? 'succeeded' : 'failed'
     } with status ${response.status} in ${headersTime - startTime}ms`;
 
@@ -570,7 +633,8 @@ export class Scalar {
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
     const abort = this._makeAbort(controller);
-    if (signal) signal.addEventListener('abort', abort, { once: true });
+    if (signal?.aborted) abort();
+    else if (signal) signal.addEventListener('abort', abort, { once: true });
 
     const timeout = setTimeout(abort, ms);
 
@@ -591,7 +655,7 @@ export class Scalar {
     }
 
     try {
-      // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
+      // use undefined this binding; fetch errors if bound to something else in browsers and edge runtimes / workers
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
       clearTimeout(timeout);
@@ -778,18 +842,20 @@ export class Scalar {
     if (body == null) {
       return { bodyHeaders: undefined, body: undefined };
     }
-    const headers = buildHeaders([rawHeaders]);
+    // A `content-type` from either header bag says how the body is already encoded; the request's
+    // own wins over the client-wide default, as it does on the wire.
+    const headers = buildHeaders([this._options.defaultHeaders, rawHeaders]);
     if (
       // Pass raw type verbatim
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      // Always pass strings through verbatim. The previous guard required a caller-set
-      // `content-type` and otherwise fell through to `FallbackEncoder`, which JSON.stringifies
-      // the value and labels it `application/json` — silently quoting plain-text payloads and
-      // mislabeling them as JSON. fetch defaults a string body to `text/plain;charset=UTF-8`
-      // when no `content-type` is set, which is a safer default than misclaiming JSON.
-      typeof body === 'string' ||
+      // A string is only already-encoded when something has said what it is encoded as.
+      // Generated call sites state the declared request media type, so a `text/plain` or
+      // ndjson payload reaches the wire byte-for-byte. A string with no `content-type` came
+      // from a body the document declared as JSON — `{ "type": "string" }` — and encoding it
+      // below is what puts the quotes the server parses for around it.
+      (typeof body === 'string' && headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -825,7 +891,7 @@ export class Scalar {
     throw new Errors.AuthenticationError(
       401,
       undefined,
-      'Could not resolve authentication method. Expected the bearerAuth to be set. Or for the "Authorization" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected either bearerAuth or oAuth2 to be set. Or for the "Authorization" headers to be explicitly omitted',
       headers,
     );
   }
@@ -834,6 +900,8 @@ export class Scalar {
     const headers: Record<string, string> = {};
     const bearerAuth = this.resolveAuthOptionSync('bearerAuth', this.bearerAuth);
     if (bearerAuth) headers['Authorization'] = `Bearer ${bearerAuth}`;
+    const oAuth2 = this.resolveAuthOptionSync('oAuth2', this.oAuth2);
+    if (oAuth2) headers['Authorization'] = `Bearer ${oAuth2}`;
     return headers;
   }
 
@@ -844,11 +912,23 @@ export class Scalar {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    return buildHeaders([await this.bearerAuth2(opts), await this.oAuth2Auth(opts)]);
+  }
+
+  protected async bearerAuth2(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     const bearerAuth = await this.resolveAuthOption('bearerAuth', this.bearerAuth);
     if (bearerAuth == null) {
       return undefined;
     }
     return buildHeaders([{ Authorization: `Bearer ${bearerAuth}` }]);
+  }
+
+  protected async oAuth2Auth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    const oAuth2 = await this.resolveAuthOption('oAuth2', this.oAuth2);
+    if (oAuth2 == null) {
+      return undefined;
+    }
+    return buildHeaders([{ Authorization: `Bearer ${oAuth2}` }]);
   }
 
   private async authQueryAsync(): Promise<Record<string, string>> {
@@ -904,30 +984,38 @@ export class Scalar {
   registry: Registry = new Registry(this);
   schemas: Schemas = new Schemas(this);
   loginPortals: LoginPortals = new LoginPortals(this);
+  accessGroups: AccessGroups = new AccessGroups(this);
   rules: Rules = new Rules(this);
   themes: Themes = new Themes(this);
   teams: Teams = new Teams(this);
   scalarDocs: ScalarDocs = new ScalarDocs(this);
   namespaces: Namespaces = new Namespaces(this);
   authentication: Authentication = new Authentication(this);
+  sdks: Sdks = new Sdks(this);
+  mcp: Mcp = new Mcp(this);
 }
 
 Scalar.Registry = Registry;
 Scalar.Schemas = Schemas;
 Scalar.LoginPortals = LoginPortals;
+Scalar.AccessGroups = AccessGroups;
 Scalar.Rules = Rules;
 Scalar.Themes = Themes;
 Scalar.Teams = Teams;
 Scalar.ScalarDocs = ScalarDocs;
 Scalar.Namespaces = Namespaces;
 Scalar.Authentication = Authentication;
+Scalar.Sdks = Sdks;
+Scalar.Mcp = Mcp;
 
 export declare namespace Scalar {
   export type RequestOptions = Opts.RequestOptions;
   export {
     Registry as Registry,
+    type APIDocument as APIDocument,
     type Version as Version,
     type AccessGroup as AccessGroup,
+    type Method as Method,
     type RegistryListAllAPIDocumentsResponse as RegistryListAllAPIDocumentsResponse,
     type RegistryListAPIDocumentsResponse as RegistryListAPIDocumentsResponse,
     type RegistryCreateAPIDocumentResponse as RegistryCreateAPIDocumentResponse,
@@ -952,6 +1040,8 @@ export declare namespace Scalar {
 
   export {
     Schemas as Schemas,
+    type Schema as Schema,
+    type ManagedSchemaVersion as ManagedSchemaVersion,
     type SchemaListResponse as SchemaListResponse,
     type SchemaUpdateResponse as SchemaUpdateResponse,
     type SchemaDeleteResponse as SchemaDeleteResponse,
@@ -964,6 +1054,7 @@ export declare namespace Scalar {
     LoginPortals as LoginPortals,
     type LoginPortalEmail as LoginPortalEmail,
     type LoginPortalPage as LoginPortalPage,
+    type LoginPortal as LoginPortal,
     type LoginPortalRetrieveResponse as LoginPortalRetrieveResponse,
     type LoginPortalUpdateResponse as LoginPortalUpdateResponse,
     type LoginPortalDeleteResponse as LoginPortalDeleteResponse,
@@ -973,7 +1064,19 @@ export declare namespace Scalar {
   };
 
   export {
+    AccessGroups as AccessGroups,
+    type AccessGroupName as AccessGroupName,
+    type AccessGroupCreateResponse as AccessGroupCreateResponse,
+    type AccessGroupRetrieveResponse as AccessGroupRetrieveResponse,
+    type AccessGroupUpdateResponse as AccessGroupUpdateResponse,
+    type AccessGroupDeleteResponse as AccessGroupDeleteResponse,
+    type AccessGroupCreateParams as AccessGroupCreateParams,
+    type AccessGroupUpdateParams as AccessGroupUpdateParams,
+  };
+
+  export {
     Rules as Rules,
+    type Rule as Rule,
     type RuleListRulesetsResponse as RuleListRulesetsResponse,
     type RuleUpdateRulesetResponse as RuleUpdateRulesetResponse,
     type RuleDeleteRulesetResponse as RuleDeleteRulesetResponse,
@@ -990,6 +1093,7 @@ export declare namespace Scalar {
 
   export {
     Themes as Themes,
+    type Theme as Theme,
     type ThemeListResponse as ThemeListResponse,
     type ThemeUpdateResponse as ThemeUpdateResponse,
     type ThemeReplaceDocumentResponse as ThemeReplaceDocumentResponse,
@@ -1000,25 +1104,67 @@ export declare namespace Scalar {
     type ThemeReplaceDocumentParams as ThemeReplaceDocumentParams,
   };
 
-  export { Teams as Teams, type TeamListResponse as TeamListResponse };
+  export {
+    Teams as Teams,
+    type Team as Team,
+    type TeamName as TeamName,
+    type TeamImage as TeamImage,
+    type TeamListResponse as TeamListResponse,
+  };
 
   export {
     ScalarDocs as ScalarDocs,
+    type GithubProject as GithubProject,
+    type DocsProject as DocsProject,
+    type ActiveDeployment as ActiveDeployment,
     type Slug as Slug,
+    type GithubProjectRepository as GithubProjectRepository,
     type ScalarDocListGuidesResponse as ScalarDocListGuidesResponse,
     type ScalarDocCreateGuideResponse as ScalarDocCreateGuideResponse,
     type ScalarDocPublishGuideResponse as ScalarDocPublishGuideResponse,
+    type ScalarDocListProjectsResponse as ScalarDocListProjectsResponse,
+    type ScalarDocUpdateProjectResponse as ScalarDocUpdateProjectResponse,
+    type ScalarDocDeleteProjectResponse as ScalarDocDeleteProjectResponse,
+    type ScalarDocPublishProjectResponse as ScalarDocPublishProjectResponse,
+    type ScalarDocListProjectConfigResponse as ScalarDocListProjectConfigResponse,
+    type ScalarDocUpdateProjectConfigResponse as ScalarDocUpdateProjectConfigResponse,
+    type ScalarDocListProjectDomainResponse as ScalarDocListProjectDomainResponse,
+    type ScalarDocListProjectDomainStatusResponse as ScalarDocListProjectDomainStatusResponse,
     type ScalarDocCreateGuideParams as ScalarDocCreateGuideParams,
+    type ScalarDocListProjectsParams as ScalarDocListProjectsParams,
+    type ScalarDocCreateProjectParams as ScalarDocCreateProjectParams,
+    type ScalarDocUpdateProjectParams as ScalarDocUpdateProjectParams,
+    type ScalarDocPublishProjectParams as ScalarDocPublishProjectParams,
+    type ScalarDocListProjectConfigParams as ScalarDocListProjectConfigParams,
+    type ScalarDocUpdateProjectConfigParams as ScalarDocUpdateProjectConfigParams,
   };
 
   export { Namespaces as Namespaces, type NamespaceListResponse as NamespaceListResponse };
 
   export {
     Authentication as Authentication,
+    type User as User,
+    type TeamSummary as TeamSummary,
     type AuthenticationExchangePersonalTokenResponse as AuthenticationExchangePersonalTokenResponse,
-    type AuthenticationListCurrentUserResponse as AuthenticationListCurrentUserResponse,
     type AuthenticationExchangePersonalTokenParams as AuthenticationExchangePersonalTokenParams,
   };
+
+  export {
+    Sdks as Sdks,
+    type Sdk as Sdk,
+    type SdkTargetSummary as SdkTargetSummary,
+    type SdkVersion as SdkVersion,
+    type SdkListResponse as SdkListResponse,
+    type SdkUpdateResponse as SdkUpdateResponse,
+    type SdkDeleteResponse as SdkDeleteResponse,
+    type SdkBuildResponse as SdkBuildResponse,
+    type SdkListParams as SdkListParams,
+    type SdkCreateParams as SdkCreateParams,
+    type SdkUpdateParams as SdkUpdateParams,
+    type SdkBuildParams as SdkBuildParams,
+  };
+
+  export { Mcp as Mcp };
 
   export type ManagedDocVersion = SharedAPI.ManagedDocVersion;
   export type Namespace = SharedAPI.Namespace;
