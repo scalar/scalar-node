@@ -26,31 +26,7 @@ export class Installations extends APIResource {
   }
 
   /**
-   * Create an installation of an MCP server. `documentAuth` holds the credentials the server presents to the upstream API and is never returned.
-   *
-   * @param {string} id
-   * @param {InstallationCreateParams} body - The request body to send.
-   * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
-   * @returns {APIPromise<ServersAPI.McpInstallation>} Default Response
-   *
-   * @example
-   * ```ts
-   * const mcpInstallation = await client.mcp.servers.installations.create('42', {
-   *   name: 'Acme MCP',
-   *   documentAuth: {},
-   * });
-   * ```
-   */
-  create(
-    id: string,
-    body: InstallationCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<ServersAPI.McpInstallation> {
-    return this._client.post(__scalarPath`/v1/mcp/servers/${id}/installations`, { body, ...options });
-  }
-
-  /**
-   * Get a single installation of an MCP server.
+   * Get a single installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
    *
    * @param {string} installationID
    * @param {InstallationRetrieveParams} params - The parameters to send with the request.
@@ -63,6 +39,8 @@ export class Installations extends APIResource {
    *   id: '42',
    * });
    * ```
+   *
+   * @deprecated
    */
   retrieve(
     installationID: string,
@@ -74,7 +52,7 @@ export class Installations extends APIResource {
   }
 
   /**
-   * Update an installation. Set `isPrivate` and add access groups to put it behind a login.
+   * Update an installation. Deprecated: address the environment by slug with the `/environments/:environment` form.
    *
    * @param {string} installationID
    * @param {InstallationUpdateParams} params - The parameters to send with the request.
@@ -87,6 +65,8 @@ export class Installations extends APIResource {
    *   id: '42',
    * });
    * ```
+   *
+   * @deprecated
    */
   update(
     installationID: string,
@@ -101,7 +81,7 @@ export class Installations extends APIResource {
   }
 
   /**
-   * Delete an installation of an MCP server.
+   * Delete an installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
    *
    * @param {string} installationID
    * @param {InstallationDeleteParams} params - The parameters to send with the request.
@@ -114,6 +94,8 @@ export class Installations extends APIResource {
    *   id: '42',
    * });
    * ```
+   *
+   * @deprecated
    */
   delete(
     installationID: string,
@@ -125,7 +107,7 @@ export class Installations extends APIResource {
   }
 
   /**
-   * Let an access group reach a private installation.
+   * Let an access group reach a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
    *
    * @param {string} installationID
    * @param {InstallationCreateAccessGroupParams} params - The parameters to send with the request.
@@ -139,6 +121,8 @@ export class Installations extends APIResource {
    *   accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
    * });
    * ```
+   *
+   * @deprecated
    */
   createAccessGroup(
     installationID: string,
@@ -153,7 +137,7 @@ export class Installations extends APIResource {
   }
 
   /**
-   * Stop an access group reaching a private installation.
+   * Stop an access group reaching a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
    *
    * @param {string} installationID
    * @param {InstallationDeleteAccessGroupParams} params - The parameters to send with the request.
@@ -167,6 +151,8 @@ export class Installations extends APIResource {
    *   accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
    * });
    * ```
+   *
+   * @deprecated
    */
   deleteAccessGroup(
     installationID: string,
@@ -190,26 +176,10 @@ export interface McpInstallationListItem {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  isPrivate: boolean;
   mcpVersion: string | null;
 }
 
 export type InstallationListResponse = Array<McpInstallationListItem>;
-
-export interface InstallationCreateParams {
-  /**
-   * @minLength 1
-   * @maxLength 100
-   */
-  name: string;
-  documentAuth: Record<string, unknown>;
-  /**
-   * @minLength 1
-   * @maxLength 60
-   * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
-   */
-  slug?: ScalarDocsAPI.Slug;
-}
 
 export interface InstallationRetrieveParams {
   id: string;
@@ -227,24 +197,12 @@ export interface InstallationUpdateParams {
    */
   name?: string;
   /**
-   * Body param
+   * Body param: The environment’s current slug. An environment cannot be renamed, so any other slug is refused.
    * @minLength 1
    * @maxLength 60
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug?: ScalarDocsAPI.Slug;
-  /**
-   * Body param
-   */
-  isPrivate?: boolean;
-  /**
-   * Body param
-   */
-  loginPortalUid?: string | null;
-  /**
-   * Body param
-   */
-  documentAuth?: Record<string, unknown>;
   /**
    * Body param
    */
@@ -291,7 +249,6 @@ export declare namespace Installations {
     type InstallationDeleteResponse as InstallationDeleteResponse,
     type InstallationCreateAccessGroupResponse as InstallationCreateAccessGroupResponse,
     type InstallationDeleteAccessGroupResponse as InstallationDeleteAccessGroupResponse,
-    type InstallationCreateParams as InstallationCreateParams,
     type InstallationRetrieveParams as InstallationRetrieveParams,
     type InstallationUpdateParams as InstallationUpdateParams,
     type InstallationDeleteParams as InstallationDeleteParams,

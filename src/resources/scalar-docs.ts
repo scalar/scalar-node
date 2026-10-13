@@ -292,6 +292,10 @@ export interface GithubProject {
   slug: Slug;
   publishStatus: string;
   publishMessage: string;
+  /**
+   * @minLength 5
+   */
+  userInfoHookSecretUid?: Shared.Nanoid | null;
   typesenseId?: number;
   repository?: GithubProjectRepository | null;
 }
