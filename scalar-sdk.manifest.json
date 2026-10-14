@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.3",
+  "generatorVersion": "0.36.5",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -35,7 +35,8 @@
             "platform:admin"
           ]
         }
-      ]
+      ],
+      "oauth2MetadataUrl": "https://auth.scalar.com/.well-known/oauth-authorization-server"
     }
   ],
   "clientHeaderParams": [],
@@ -424,8 +425,7 @@
               ]
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -2464,8 +2464,7 @@
               ]
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -3505,8 +3504,7 @@
               ]
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
