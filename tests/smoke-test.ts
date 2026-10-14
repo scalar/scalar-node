@@ -1388,7 +1388,6 @@ const cases: {
       const mcpServer = await client.mcp.servers.update('42', {
         name: 'Acme MCP',
         slug: 'acme-mcp',
-        autoAddOperations: true,
         operations: ['42'],
         docsPages: ['getting-started'],
       });
@@ -1410,33 +1409,6 @@ const cases: {
     path: '/v1/mcp/servers/{id}/installations',
     run: async () => {
       const installation = await client.mcp.servers.installations.list('42');
-    },
-  },
-
-  {
-    operation: 'create',
-    method: 'POST',
-    path: '/v1/mcp/servers/{id}/installations',
-    label: 'required params',
-    run: async () => {
-      const mcpInstallation = await client.mcp.servers.installations.create('42', {
-        name: 'Acme MCP',
-        documentAuth: {},
-      });
-    },
-  },
-
-  {
-    operation: 'create',
-    method: 'POST',
-    path: '/v1/mcp/servers/{id}/installations',
-    label: 'all params',
-    run: async () => {
-      const mcpInstallation = await client.mcp.servers.installations.create('42', {
-        name: 'Acme MCP',
-        slug: 'acme-mcp',
-        documentAuth: {},
-      });
     },
   },
 
@@ -1473,9 +1445,6 @@ const cases: {
         id: '42',
         name: 'Acme MCP',
         slug: 'acme-api',
-        isPrivate: false,
-        loginPortalUid: '',
-        documentAuth: {},
         mcpVersion: '',
       });
     },

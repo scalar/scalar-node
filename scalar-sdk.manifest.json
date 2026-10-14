@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.3",
+  "generatorVersion": "0.36.5",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -35,7 +35,8 @@
             "platform:admin"
           ]
         }
-      ]
+      ],
+      "oauth2MetadataUrl": "https://auth.scalar.com/.well-known/oauth-authorization-server"
     }
   ],
   "clientHeaderParams": [],
@@ -424,8 +425,7 @@
               ]
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -2347,6 +2347,30 @@
             }
           },
           {
+            "name": "userInfoHookSecretUid",
+            "publicName": "userInfoHookSecretUid",
+            "required": false,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
+            },
+            "type": {
+              "kind": "union",
+              "variants": [
+                {
+                  "kind": "ref",
+                  "name": "nanoid"
+                },
+                {
+                  "kind": "null"
+                }
+              ]
+            }
+          },
+          {
             "name": "activeThemeId",
             "publicName": "activeThemeId",
             "required": true,
@@ -2440,8 +2464,7 @@
               ]
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -3481,8 +3504,7 @@
               ]
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "unknown"
             }
           },
           {
@@ -3650,22 +3672,6 @@
             }
           },
           {
-            "name": "autoAddOperations",
-            "publicName": "autoAddOperations",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": true
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "boolean"
-            }
-          },
-          {
             "name": "createdAt",
             "publicName": "createdAt",
             "required": true,
@@ -3771,22 +3777,6 @@
             "type": {
               "kind": "ref",
               "name": "slug"
-            }
-          },
-          {
-            "name": "isPrivate",
-            "publicName": "isPrivate",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": false
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "boolean"
             }
           },
           {
@@ -3948,22 +3938,6 @@
             "type": {
               "kind": "ref",
               "name": "slug"
-            }
-          },
-          {
-            "name": "isPrivate",
-            "publicName": "isPrivate",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": false
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "boolean"
             }
           },
           {
@@ -18115,14 +18089,12 @@
       "bodyParams": [
         "name",
         "slug",
-        "autoAddOperations",
         "operations",
         "docsPages"
       ],
       "publicBodyParams": [
         "name",
         "slug",
-        "autoAddOperations",
         "operations",
         "docsPages"
       ],
@@ -18133,10 +18105,6 @@
         },
         {
           "name": "slug",
-          "required": false
-        },
-        {
-          "name": "autoAddOperations",
           "required": false
         },
         {
@@ -18609,201 +18577,9 @@
     {
       "resource": "mcp.servers.installations",
       "publicResource": "mcp.servers.installations",
-      "operation": "create",
-      "publicOperation": "create",
-      "deprecated": false,
-      "method": "POST",
-      "path": "/v1/mcp/servers/{id}/installations",
-      "pathParams": [
-        "id"
-      ],
-      "publicPathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [
-        "name",
-        "slug",
-        "documentAuth"
-      ],
-      "publicBodyParams": [
-        "name",
-        "slug",
-        "documentAuth"
-      ],
-      "bodyParamDetails": [
-        {
-          "name": "name",
-          "required": true
-        },
-        {
-          "name": "slug",
-          "required": false
-        },
-        {
-          "name": "documentAuth",
-          "required": true
-        }
-      ],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationCreateParams"
-      },
-      "requestBody": {
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ],
-        "required": true,
-        "publicName": "body",
-        "publicIdentifier": "body"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "responseModel": {
-        "name": "mcp_installation",
-        "publicAliases": []
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
       "operation": "retrieve",
       "publicOperation": "retrieve",
-      "deprecated": false,
+      "deprecated": true,
       "method": "GET",
       "path": "/v1/mcp/servers/{id}/installations/{installationId}",
       "pathParams": [
@@ -18969,7 +18745,7 @@
       "publicResource": "mcp.servers.installations",
       "operation": "update",
       "publicOperation": "update",
-      "deprecated": false,
+      "deprecated": true,
       "method": "PATCH",
       "path": "/v1/mcp/servers/{id}/installations/{installationId}",
       "pathParams": [
@@ -18987,17 +18763,11 @@
       "bodyParams": [
         "name",
         "slug",
-        "isPrivate",
-        "loginPortalUid",
-        "documentAuth",
         "mcpVersion"
       ],
       "publicBodyParams": [
         "name",
         "slug",
-        "isPrivate",
-        "loginPortalUid",
-        "documentAuth",
         "mcpVersion"
       ],
       "bodyParamDetails": [
@@ -19007,18 +18777,6 @@
         },
         {
           "name": "slug",
-          "required": false
-        },
-        {
-          "name": "isPrivate",
-          "required": false
-        },
-        {
-          "name": "loginPortalUid",
-          "required": false
-        },
-        {
-          "name": "documentAuth",
           "required": false
         },
         {
@@ -19187,7 +18945,7 @@
       "publicResource": "mcp.servers.installations",
       "operation": "delete",
       "publicOperation": "delete",
-      "deprecated": false,
+      "deprecated": true,
       "method": "DELETE",
       "path": "/v1/mcp/servers/{id}/installations/{installationId}",
       "pathParams": [
@@ -19349,7 +19107,7 @@
       "publicResource": "mcp.servers.installations",
       "operation": "createAccessGroup",
       "publicOperation": "createAccessGroup",
-      "deprecated": false,
+      "deprecated": true,
       "method": "POST",
       "path": "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
       "pathParams": [
@@ -19533,7 +19291,7 @@
       "publicResource": "mcp.servers.installations",
       "operation": "deleteAccessGroup",
       "publicOperation": "deleteAccessGroup",
-      "deprecated": false,
+      "deprecated": true,
       "method": "DELETE",
       "path": "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
       "pathParams": [

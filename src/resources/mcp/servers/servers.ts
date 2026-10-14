@@ -14,7 +14,6 @@ import {
   type InstallationDeleteResponse,
   type InstallationCreateAccessGroupResponse,
   type InstallationDeleteAccessGroupResponse,
-  type InstallationCreateParams,
   type InstallationRetrieveParams,
   type InstallationUpdateParams,
   type InstallationDeleteParams,
@@ -117,7 +116,6 @@ export interface McpServer {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  autoAddOperations: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -132,7 +130,6 @@ export interface McpInstallation {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  isPrivate: boolean;
   accessGroups: Array<string>;
   loginPortalUid: string | null;
   mcpVersion: string | null;
@@ -175,7 +172,6 @@ export interface ServerUpdateParams {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug?: ScalarDocsAPI.Slug;
-  autoAddOperations?: boolean;
   operations?: Array<string>;
   docsPages?: Array<string>;
 }
@@ -201,7 +197,6 @@ export declare namespace Servers {
     type InstallationDeleteResponse as InstallationDeleteResponse,
     type InstallationCreateAccessGroupResponse as InstallationCreateAccessGroupResponse,
     type InstallationDeleteAccessGroupResponse as InstallationDeleteAccessGroupResponse,
-    type InstallationCreateParams as InstallationCreateParams,
     type InstallationRetrieveParams as InstallationRetrieveParams,
     type InstallationUpdateParams as InstallationUpdateParams,
     type InstallationDeleteParams as InstallationDeleteParams,

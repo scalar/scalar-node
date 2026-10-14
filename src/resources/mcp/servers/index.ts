@@ -14,7 +14,6 @@ export { Installations } from './installations';
 export type {
   McpInstallationListItem,
   InstallationListResponse,
-  InstallationCreateParams,
   InstallationRetrieveParams,
   InstallationUpdateParams,
   InstallationDeleteParams,

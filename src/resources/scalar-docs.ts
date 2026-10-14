@@ -283,7 +283,7 @@ export interface GithubProject {
   isPrivate: boolean;
   agentEnabled: boolean;
   analyticsEnabled: boolean;
-  accessGroups: string;
+  accessGroups: unknown;
   /**
    * @minLength 1
    * @maxLength 60
@@ -292,6 +292,10 @@ export interface GithubProject {
   slug: Slug;
   publishStatus: string;
   publishMessage: string;
+  /**
+   * @minLength 5
+   */
+  userInfoHookSecretUid?: Shared.Nanoid | null;
   typesenseId?: number;
   repository?: GithubProjectRepository | null;
 }
@@ -309,7 +313,7 @@ export interface DocsProject {
    */
   slug: Slug;
   isPrivate: boolean;
-  accessGroups: string;
+  accessGroups: unknown;
   loginPortalUid: string;
   activeThemeId: string;
   agentEnabled: boolean;
