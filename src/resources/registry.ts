@@ -331,7 +331,7 @@ export interface APIDocument {
    */
   namespace: Shared.Namespace;
   isPrivate: boolean;
-  tags: string;
+  tags: unknown;
   versions: Array<Shared.ManagedDocVersion>;
 }
 

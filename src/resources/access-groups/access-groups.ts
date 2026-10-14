@@ -102,7 +102,7 @@ export interface AccessGroupCreateParams {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug?: ScalarDocsAPI.Slug;
-  allowedDomains?: string;
+  allowedDomains?: unknown;
 }
 
 export interface AccessGroupCreateResponse {
@@ -120,8 +120,8 @@ export interface AccessGroupCreateResponse {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  allowedDomains: string;
-  allowedEmails: string;
+  allowedDomains: unknown;
+  allowedEmails: unknown;
 }
 
 export interface AccessGroupRetrieveResponse {
@@ -139,8 +139,8 @@ export interface AccessGroupRetrieveResponse {
    * @pattern ^[a-z](?:[a-z0-9-]*[a-z0-9])?$
    */
   slug: ScalarDocsAPI.Slug;
-  allowedDomains: string;
-  allowedEmails: string;
+  allowedDomains: unknown;
+  allowedEmails: unknown;
 }
 
 export interface AccessGroupUpdateParams {
