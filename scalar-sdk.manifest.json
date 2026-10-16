@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.5",
+  "generatorVersion": "0.36.6",
   "servers": [
     "https://access.scalar.com"
   ],
