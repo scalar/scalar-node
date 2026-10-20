@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.6",
+  "generatorVersion": "0.36.8",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -17409,13 +17409,19 @@
         "publishOnMerge",
         "authMethod",
         "access",
-        "tag"
+        "tag",
+        "artifactId",
+        "tapRepo",
+        "registry"
       ],
       "publicBodyParams": [
         "publishOnMerge",
         "authMethod",
         "access",
-        "tag"
+        "tag",
+        "artifactId",
+        "tapRepo",
+        "registry"
       ],
       "bodyParamDetails": [
         {
@@ -17432,6 +17438,18 @@
         },
         {
           "name": "tag",
+          "required": false
+        },
+        {
+          "name": "artifactId",
+          "required": false
+        },
+        {
+          "name": "tapRepo",
+          "required": false
+        },
+        {
+          "name": "registry",
           "required": false
         }
       ],
