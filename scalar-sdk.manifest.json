@@ -1659,6 +1659,26 @@
       }
     },
     {
+      "name": "email",
+      "source": "email",
+      "publicAliases": [],
+      "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "alex@example.com"
+      },
+      "type": {
+        "kind": "primitive",
+        "type": "string",
+        "format": "email",
+        "validation": {
+          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        }
+      }
+    },
+    {
       "name": "email_domain",
       "source": "email_domain",
       "publicAliases": [],
@@ -2154,26 +2174,6 @@
           }
         ],
         "additionalProperties": false
-      }
-    },
-    {
-      "name": "email",
-      "source": "email",
-      "publicAliases": [],
-      "deprecated": false,
-      "extensions": {
-        "source": [
-          "examples"
-        ],
-        "examples": "alex@example.com"
-      },
-      "type": {
-        "kind": "primitive",
-        "type": "string",
-        "format": "email",
-        "validation": {
-          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-        }
       }
     },
     {
