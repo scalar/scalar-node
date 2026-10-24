@@ -2451,6 +2451,22 @@
             }
           },
           {
+            "name": "chatInsightsEnabled",
+            "publicName": "chatInsightsEnabled",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "boolean"
+            }
+          },
+          {
             "name": "accessGroups",
             "publicName": "accessGroups",
             "required": true,
