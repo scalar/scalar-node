@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.5",
+  "generatorVersion": "0.36.9",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -1659,6 +1659,26 @@
       }
     },
     {
+      "name": "email",
+      "source": "email",
+      "publicAliases": [],
+      "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "alex@example.com"
+      },
+      "type": {
+        "kind": "primitive",
+        "type": "string",
+        "format": "email",
+        "validation": {
+          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        }
+      }
+    },
+    {
       "name": "email_domain",
       "source": "email_domain",
       "publicAliases": [],
@@ -2157,26 +2177,6 @@
       }
     },
     {
-      "name": "email",
-      "source": "email",
-      "publicAliases": [],
-      "deprecated": false,
-      "extensions": {
-        "source": [
-          "examples"
-        ],
-        "examples": "alex@example.com"
-      },
-      "type": {
-        "kind": "primitive",
-        "type": "string",
-        "format": "email",
-        "validation": {
-          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-        }
-      }
-    },
-    {
       "name": "github_project",
       "source": "github_project",
       "publicAliases": [],
@@ -2437,6 +2437,22 @@
           {
             "name": "analyticsEnabled",
             "publicName": "analyticsEnabled",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "chatInsightsEnabled",
+            "publicName": "chatInsightsEnabled",
             "required": true,
             "deprecated": false,
             "extensions": {
@@ -17409,13 +17425,19 @@
         "publishOnMerge",
         "authMethod",
         "access",
-        "tag"
+        "tag",
+        "artifactId",
+        "tapRepo",
+        "registry"
       ],
       "publicBodyParams": [
         "publishOnMerge",
         "authMethod",
         "access",
-        "tag"
+        "tag",
+        "artifactId",
+        "tapRepo",
+        "registry"
       ],
       "bodyParamDetails": [
         {
@@ -17432,6 +17454,18 @@
         },
         {
           "name": "tag",
+          "required": false
+        },
+        {
+          "name": "artifactId",
+          "required": false
+        },
+        {
+          "name": "tapRepo",
+          "required": false
+        },
+        {
+          "name": "registry",
           "required": false
         }
       ],

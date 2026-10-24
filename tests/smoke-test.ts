@@ -1320,6 +1320,9 @@ const cases: {
         authMethod: 'oidc',
         access: 'public',
         tag: 'latest',
+        artifactId: 'scalar-galaxy',
+        tapRepo: 'scalar/homebrew-tap',
+        registry: 'npm',
       });
     },
   },
