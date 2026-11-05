@@ -283,6 +283,7 @@ export interface GithubProject {
   isPrivate: boolean;
   agentEnabled: boolean;
   analyticsEnabled: boolean;
+  chatInsightsEnabled: boolean;
   accessGroups: unknown;
   /**
    * @minLength 1
