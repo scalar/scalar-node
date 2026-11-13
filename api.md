@@ -1183,7 +1183,7 @@ SDKs
 
 ### List all SDKs
 
-List every SDK on the team.
+List every SDK on the team with the languages its config declares, each with its version labels highest first, the current version label per language (`current`), and the `currentVersion` and `latestVersion` tags.
 
 | Direction | Type |
 | --- | --- |
@@ -1212,7 +1212,7 @@ const uid = await client.sdks.create({
 
 ### Get an SDK
 
-Get a single SDK by its uid.
+Get a single SDK by its uid with the languages its config declares, its version labels highest first, the current version label per language (`current`), and the `currentVersion` and `latestVersion` tags.
 
 | Direction | Type |
 | --- | --- |
@@ -1249,7 +1249,7 @@ await client.sdks.delete('UakgbKJ5m9gl0JDMbcJqL');
 
 ### Build an SDK
 
-Start a build. Omit `version` to build the current work — the open draft, else the latest version — and the resolved version comes back in the response.
+Start a build with the SDK's saved config. Every input is optional: `version` is the version of the linked API description to build (default: its latest version), `customCodeRef` the branch, tag or commit each language merges as custom code (default: each language's `scalar-next` branch), and `languages` the languages to build (default: every language the config declares). The response names the version built. A 503 means the custom code could not be read from GitHub and nothing was built; try again.
 
 | Direction | Type |
 | --- | --- |
@@ -1266,7 +1266,7 @@ SDKs
 
 #### Create an SDK version
 
-Create a new SDK version against a specific API version.
+Create a version label from a version of the SDK's API document and start its build. The label is the document version, and it becomes `latestVersion` when it is the highest.
 
 | Direction | Type |
 | --- | --- |
@@ -1276,13 +1276,12 @@ Create a new SDK version against a specific API version.
 ```ts
 await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
   version: '1.2.0',
-  apiVersion: '1.2.0',
 });
 ```
 
 #### Delete an SDK version
 
-Permanently delete one version of an SDK.
+Permanently delete one version label of an SDK and its builds. A label that is the current build of any language promoting manually is refused with 409 and nothing is deleted; promote or roll back to another build for that language first. Each other language whose current build was of that label moves to the active build of the highest remaining label that has one for the language, and has no current build when none has; `currentVersion` shows the result. Each language that moved to another build syncs it to its linked repository unless the repository already holds it. When it was `latestVersion`, that tag moves to the highest remaining label holding an active build. An SDK's last version cannot be deleted.
 
 | Direction | Type |
 | --- | --- |

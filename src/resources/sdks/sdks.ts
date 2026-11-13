@@ -6,7 +6,6 @@ import type { RequestOptions } from '../../internal/request-options';
 import { path as __scalarPath } from '../../internal/utils/path';
 import type * as Shared from '../shared';
 import type * as ScalarDocsAPI from '../scalar-docs';
-import type * as RegistryAPI from '../registry';
 import * as VersionsAPI from './versions';
 import {
   Versions,
@@ -31,7 +30,7 @@ export class Sdks extends APIResource {
   repositories: RepositoriesAPI.Repositories = new RepositoriesAPI.Repositories(this._client);
 
   /**
-   * List every SDK on the team.
+   * List every SDK on the team with the languages its config declares, each with its version labels highest first, the current version label per language (`current`), and the `currentVersion` and `latestVersion` tags.
    *
    * @param {SdkListParams} [query] - The parameters to send with the request.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
@@ -66,7 +65,7 @@ export class Sdks extends APIResource {
   }
 
   /**
-   * Get a single SDK by its uid.
+   * Get a single SDK by its uid with the languages its config declares, its version labels highest first, the current version label per language (`current`), and the `currentVersion` and `latestVersion` tags.
    *
    * @param {Shared.Nanoid} uid
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
@@ -115,7 +114,7 @@ export class Sdks extends APIResource {
   }
 
   /**
-   * Start a build. Omit `version` to build the current work — the open draft, else the latest version — and the resolved version comes back in the response.
+   * Start a build with the SDK's saved config. Every input is optional: `version` is the version of the linked API description to build (default: its latest version), `customCodeRef` the branch, tag or commit each language merges as custom code (default: each language's `scalar-next` branch), and `languages` the languages to build (default: every language the config declares). The response names the version built. A 503 means the custom code could not be read from GitHub and nothing was built; try again.
    *
    * @param {Shared.Nanoid} uid
    * @param {SdkBuildParams} body - The request body to send.
@@ -159,16 +158,11 @@ export interface Sdk {
    * @minLength 5
    */
   apiUid: Shared.Nanoid | null;
-  /**
-   * @minLength 1
-   */
-  currentVersion: RegistryAPI.Version;
+  current: Record<string, string>;
+  currentVersion: string;
+  latestVersion: string | null;
   targets: Array<SdkTargetSummary>;
   versions: Array<SdkVersion>;
-  /**
-   * @minLength 1
-   */
-  apiVersion?: RegistryAPI.Version | null;
 }
 
 export interface SdkTargetSummary {
@@ -195,15 +189,12 @@ export interface SdkTargetSummary {
 }
 
 export interface SdkVersion {
+  version: string;
   /**
-   * @minLength 1
+   * @minimum 0
+   * @maximum 9007199254740991
    */
-  version: RegistryAPI.Version;
-  /**
-   * @minLength 1
-   */
-  apiVersion: RegistryAPI.Version;
-  status: 'draft' | 'published';
+  createdAt: Shared.Timestamp;
   languages: Array<
     | 'typescript'
     | 'python'
@@ -219,16 +210,6 @@ export interface SdkVersion {
     | 'cpp'
     | 'dart'
   >;
-  /**
-   * @minimum 0
-   * @maximum 9007199254740991
-   */
-  publishedAt?: Shared.Timestamp;
-  /**
-   * @minimum 0
-   * @maximum 9007199254740991
-   */
-  createdAt?: Shared.Timestamp;
 }
 
 export interface SdkListParams {
@@ -292,7 +273,11 @@ export interface SdkUpdateParams {
    * @minLength 5
    */
   apiUid?: Shared.Nanoid | null;
-  apiVersion?: string | null;
+  /**
+   * Removed. A request that carries it is refused with a 400.
+   * @deprecated
+   */
+  apiVersion?: unknown;
 }
 
 export type SdkUpdateResponse = null;
@@ -301,6 +286,7 @@ export type SdkDeleteResponse = null;
 
 export interface SdkBuildParams {
   version?: string;
+  customCodeRef?: string;
   languages?: Array<
     | 'typescript'
     | 'python'

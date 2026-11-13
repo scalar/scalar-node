@@ -3109,27 +3109,28 @@
             }
           },
           {
-            "name": "apiVersion",
-            "publicName": "apiVersion",
-            "required": false,
+            "name": "current",
+            "publicName": "current",
+            "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "1.2.0"
+              "examples": {
+                "typescript": "1.2.0"
+              }
             },
             "type": {
-              "kind": "union",
-              "variants": [
-                {
-                  "kind": "ref",
-                  "name": "version"
-                },
-                {
-                  "kind": "null"
-                }
-              ]
+              "kind": "record",
+              "value": {
+                "kind": "primitive",
+                "type": "string"
+              },
+              "propertyNames": {
+                "kind": "primitive",
+                "type": "string"
+              }
             }
           },
           {
@@ -3144,8 +3145,32 @@
               "examples": "1.2.0"
             },
             "type": {
-              "kind": "ref",
-              "name": "version"
+              "kind": "primitive",
+              "type": "string"
+            }
+          },
+          {
+            "name": "latestVersion",
+            "publicName": "latestVersion",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.3.0"
+            },
+            "type": {
+              "kind": "union",
+              "variants": [
+                {
+                  "kind": "primitive",
+                  "type": "string"
+                },
+                {
+                  "kind": "null"
+                }
+              ]
             }
           },
           {
@@ -3286,51 +3311,24 @@
               "examples": "1.2.0"
             },
             "type": {
-              "kind": "ref",
-              "name": "version"
+              "kind": "primitive",
+              "type": "string"
             }
           },
           {
-            "name": "apiVersion",
-            "publicName": "apiVersion",
+            "name": "createdAt",
+            "publicName": "createdAt",
             "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "1.2.0"
+              "examples": 1735689600
             },
             "type": {
               "kind": "ref",
-              "name": "version"
-            }
-          },
-          {
-            "name": "status",
-            "publicName": "status",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "published"
-            },
-            "type": {
-              "kind": "enum",
-              "values": [
-                "draft",
-                "published"
-              ],
-              "names": [
-                "Draft",
-                "Published"
-              ],
-              "deprecations": [
-                false,
-                false
-              ]
+              "name": "timestamp"
             }
           },
           {
@@ -3396,38 +3394,6 @@
                   false
                 ]
               }
-            }
-          },
-          {
-            "name": "publishedAt",
-            "publicName": "publishedAt",
-            "required": false,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": 1735689600
-            },
-            "type": {
-              "kind": "ref",
-              "name": "timestamp"
-            }
-          },
-          {
-            "name": "createdAt",
-            "publicName": "createdAt",
-            "required": false,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": 1735689600
-            },
-            "type": {
-              "kind": "ref",
-              "name": "timestamp"
             }
           }
         ],
@@ -16539,15 +16505,21 @@
       "publicHeaderParams": [],
       "bodyParams": [
         "version",
+        "customCodeRef",
         "languages"
       ],
       "publicBodyParams": [
         "version",
+        "customCodeRef",
         "languages"
       ],
       "bodyParamDetails": [
         {
           "name": "version",
+          "required": false
+        },
+        {
+          "name": "customCodeRef",
           "required": false
         },
         {
@@ -16734,7 +16706,7 @@
         },
         {
           "name": "apiVersion",
-          "required": true
+          "required": false
         }
       ],
       "pathParamDetails": [

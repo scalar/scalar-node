@@ -8,7 +8,7 @@ import type * as Shared from '../shared';
 
 export class Versions extends APIResource {
   /**
-   * Create a new SDK version against a specific API version.
+   * Create a version label from a version of the SDK's API document and start its build. The label is the document version, and it becomes `latestVersion` when it is the highest.
    *
    * @param {Shared.Nanoid} uid
    * @param {VersionCreateParams} body - The request body to send.
@@ -19,7 +19,6 @@ export class Versions extends APIResource {
    * ```ts
    * await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
    *   version: '1.2.0',
-   *   apiVersion: '1.2.0',
    * });
    * ```
    */
@@ -32,7 +31,7 @@ export class Versions extends APIResource {
   }
 
   /**
-   * Permanently delete one version of an SDK.
+   * Permanently delete one version label of an SDK and its builds. A label that is the current build of any language promoting manually is refused with 409 and nothing is deleted; promote or roll back to another build for that language first. Each other language whose current build was of that label moves to the active build of the highest remaining label that has one for the language, and has no current build when none has; `currentVersion` shows the result. Each language that moved to another build syncs it to its linked repository unless the repository already holds it. When it was `latestVersion`, that tag moves to the highest remaining label holding an active build. An SDK's last version cannot be deleted.
    *
    * @param {string} version
    * @param {VersionDeleteParams} params - The parameters to send with the request.
@@ -58,7 +57,11 @@ export class Versions extends APIResource {
 
 export interface VersionCreateParams {
   version: string;
-  apiVersion: string;
+  /**
+   * Removed. A request that carries it is refused with a 400.
+   * @deprecated
+   */
+  apiVersion?: unknown;
 }
 
 export type VersionCreateResponse = null;
