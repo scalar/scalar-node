@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.8.0](https://github.com/scalar/scalar-node/compare/v0.7.0...v0.8.0) (2026-11-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** 9 breaking changes to the SDK surface.
+    - Added required property `sdk.current`.
+    - Property `sdk.currentVersion` type changed from `version` to `string`.
+    - Added required property `sdk.latestVersion`.
+    - Removed optional property `sdk.apiVersion`.
+    - Property `sdk_version.version` type changed from `version` to `string`.
+    - Property `sdk_version.createdAt` is now required.
+    - Removed required property `sdk_version.apiVersion`.
+    - Removed required property `sdk_version.status`.
+    - Removed optional property `sdk_version.publishedAt`.
+* **api:** Added required property `github_project.chatInsightsEnabled`.
+
+### Features
+
+* **api:** add property github_project.chatInsightsEnabled ([40d1314](https://github.com/scalar/scalar-node/commit/40d13146458f4be5ecba7852adee6bae9df2302e))
+* **api:** add property sdk.current (+9 more changes) ([ca051e9](https://github.com/scalar/scalar-node/commit/ca051e9fd6e9fde6653b25470c6a9f2e616c5b62))
+* **api:** update SDK surface (4 changes) ([70dfd43](https://github.com/scalar/scalar-node/commit/70dfd433f57070dbaf5774bc1e60ace43065224a))
+
+
+### Chores
+
+* **api:** regenerate SDK ([e45a233](https://github.com/scalar/scalar-node/commit/e45a2335bf3ab377fae31d83fad634e58920c0cc))
+* **api:** regenerate SDK ([cd83452](https://github.com/scalar/scalar-node/commit/cd83452f571aac446da2bff0fa50c41b81e48665))
+* **api:** regenerate SDK ([449f236](https://github.com/scalar/scalar-node/commit/449f23670166c2c32c3046a4776810ae6fc82cc3))
+* **api:** update generated SDK content ([a59d403](https://github.com/scalar/scalar-node/commit/a59d4032172b3c815627ac2b5195b83480fe6d84))
+
 ## [0.7.0](https://github.com/scalar/scalar-node/compare/v0.6.0...v0.7.0) (2026-10-14)
 
 
