@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.36.5",
+  "generatorVersion": "0.38.0",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -1659,6 +1659,26 @@
       }
     },
     {
+      "name": "email",
+      "source": "email",
+      "publicAliases": [],
+      "deprecated": false,
+      "extensions": {
+        "source": [
+          "examples"
+        ],
+        "examples": "alex@example.com"
+      },
+      "type": {
+        "kind": "primitive",
+        "type": "string",
+        "format": "email",
+        "validation": {
+          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        }
+      }
+    },
+    {
       "name": "email_domain",
       "source": "email_domain",
       "publicAliases": [],
@@ -2157,26 +2177,6 @@
       }
     },
     {
-      "name": "email",
-      "source": "email",
-      "publicAliases": [],
-      "deprecated": false,
-      "extensions": {
-        "source": [
-          "examples"
-        ],
-        "examples": "alex@example.com"
-      },
-      "type": {
-        "kind": "primitive",
-        "type": "string",
-        "format": "email",
-        "validation": {
-          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-        }
-      }
-    },
-    {
       "name": "github_project",
       "source": "github_project",
       "publicAliases": [],
@@ -2437,6 +2437,22 @@
           {
             "name": "analyticsEnabled",
             "publicName": "analyticsEnabled",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": true
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "chatInsightsEnabled",
+            "publicName": "chatInsightsEnabled",
             "required": true,
             "deprecated": false,
             "extensions": {
@@ -3093,27 +3109,28 @@
             }
           },
           {
-            "name": "apiVersion",
-            "publicName": "apiVersion",
-            "required": false,
+            "name": "current",
+            "publicName": "current",
+            "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "1.2.0"
+              "examples": {
+                "typescript": "1.2.0"
+              }
             },
             "type": {
-              "kind": "union",
-              "variants": [
-                {
-                  "kind": "ref",
-                  "name": "version"
-                },
-                {
-                  "kind": "null"
-                }
-              ]
+              "kind": "record",
+              "value": {
+                "kind": "primitive",
+                "type": "string"
+              },
+              "propertyNames": {
+                "kind": "primitive",
+                "type": "string"
+              }
             }
           },
           {
@@ -3128,8 +3145,32 @@
               "examples": "1.2.0"
             },
             "type": {
-              "kind": "ref",
-              "name": "version"
+              "kind": "primitive",
+              "type": "string"
+            }
+          },
+          {
+            "name": "latestVersion",
+            "publicName": "latestVersion",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "1.3.0"
+            },
+            "type": {
+              "kind": "union",
+              "variants": [
+                {
+                  "kind": "primitive",
+                  "type": "string"
+                },
+                {
+                  "kind": "null"
+                }
+              ]
             }
           },
           {
@@ -3270,51 +3311,24 @@
               "examples": "1.2.0"
             },
             "type": {
-              "kind": "ref",
-              "name": "version"
+              "kind": "primitive",
+              "type": "string"
             }
           },
           {
-            "name": "apiVersion",
-            "publicName": "apiVersion",
+            "name": "createdAt",
+            "publicName": "createdAt",
             "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "1.2.0"
+              "examples": 1735689600
             },
             "type": {
               "kind": "ref",
-              "name": "version"
-            }
-          },
-          {
-            "name": "status",
-            "publicName": "status",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "published"
-            },
-            "type": {
-              "kind": "enum",
-              "values": [
-                "draft",
-                "published"
-              ],
-              "names": [
-                "Draft",
-                "Published"
-              ],
-              "deprecations": [
-                false,
-                false
-              ]
+              "name": "timestamp"
             }
           },
           {
@@ -3380,38 +3394,6 @@
                   false
                 ]
               }
-            }
-          },
-          {
-            "name": "publishedAt",
-            "publicName": "publishedAt",
-            "required": false,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": 1735689600
-            },
-            "type": {
-              "kind": "ref",
-              "name": "timestamp"
-            }
-          },
-          {
-            "name": "createdAt",
-            "publicName": "createdAt",
-            "required": false,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": 1735689600
-            },
-            "type": {
-              "kind": "ref",
-              "name": "timestamp"
             }
           }
         ],
@@ -16523,15 +16505,21 @@
       "publicHeaderParams": [],
       "bodyParams": [
         "version",
+        "customCodeRef",
         "languages"
       ],
       "publicBodyParams": [
         "version",
+        "customCodeRef",
         "languages"
       ],
       "bodyParamDetails": [
         {
           "name": "version",
+          "required": false
+        },
+        {
+          "name": "customCodeRef",
           "required": false
         },
         {
@@ -16718,7 +16706,7 @@
         },
         {
           "name": "apiVersion",
-          "required": true
+          "required": false
         }
       ],
       "pathParamDetails": [
@@ -17409,13 +17397,19 @@
         "publishOnMerge",
         "authMethod",
         "access",
-        "tag"
+        "tag",
+        "artifactId",
+        "tapRepo",
+        "registry"
       ],
       "publicBodyParams": [
         "publishOnMerge",
         "authMethod",
         "access",
-        "tag"
+        "tag",
+        "artifactId",
+        "tapRepo",
+        "registry"
       ],
       "bodyParamDetails": [
         {
@@ -17432,6 +17426,18 @@
         },
         {
           "name": "tag",
+          "required": false
+        },
+        {
+          "name": "artifactId",
+          "required": false
+        },
+        {
+          "name": "tapRepo",
+          "required": false
+        },
+        {
+          "name": "registry",
           "required": false
         }
       ],

@@ -1195,7 +1195,7 @@ const cases: {
         isPrivate: false,
         config: '{"targets":{"typescript":{"packageName":"@acme/sdk"}}}',
         apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
-        apiVersion: '1.2.0',
+        apiVersion: {},
       });
     },
   },
@@ -1227,6 +1227,7 @@ const cases: {
     run: async () => {
       const sdk = await client.sdks.build('UakgbKJ5m9gl0JDMbcJqL', {
         version: '1.2.0',
+        customCodeRef: 'scalar-next',
         languages: ['typescript'],
       });
     },
@@ -1236,10 +1237,23 @@ const cases: {
     operation: 'create',
     method: 'POST',
     path: '/v1/sdks/{uid}/versions',
+    label: 'required params',
     run: async () => {
       await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
         version: '1.2.0',
-        apiVersion: '1.2.0',
+      });
+    },
+  },
+
+  {
+    operation: 'create',
+    method: 'POST',
+    path: '/v1/sdks/{uid}/versions',
+    label: 'all params',
+    run: async () => {
+      await client.sdks.versions.create('UakgbKJ5m9gl0JDMbcJqL', {
+        version: '1.2.0',
+        apiVersion: {},
       });
     },
   },
@@ -1320,6 +1334,9 @@ const cases: {
         authMethod: 'oidc',
         access: 'public',
         tag: 'latest',
+        artifactId: 'scalar-galaxy',
+        tapRepo: 'scalar/homebrew-tap',
+        registry: 'npm',
       });
     },
   },

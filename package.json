@@ -1,12 +1,16 @@
 {
   "name": "@scalar/sdk",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "API for managing Scalar platform resources.",
   "author": "Scalar",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scalar/scalar-node.git"
   },
+  "bugs": {
+    "url": "https://github.com/scalar/scalar-node/issues"
+  },
+  "homepage": "https://github.com/scalar/scalar-node",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/cjs/index.js",

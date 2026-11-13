@@ -169,8 +169,24 @@ export interface RepositoryUpdatePublishingParams {
   access?: 'public' | 'restricted';
   /**
    * Body param
+   * @maxLength 120
    */
   tag?: string;
+  /**
+   * Body param
+   * @maxLength 120
+   */
+  artifactId?: string;
+  /**
+   * Body param
+   * @maxLength 120
+   */
+  tapRepo?: string;
+  /**
+   * Body param
+   * @maxLength 60
+   */
+  registry?: string;
 }
 
 export type RepositoryUpdatePublishingResponse = null;
