@@ -566,7 +566,8 @@ export class Scalar {
       // A redirect the SDK refused to follow fails the same way on every attempt, so it is not retried.
       if (isRefusedRedirect(response)) throw response;
       const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
-      if (options.signal?.aborted) {
+      // The signal the request was sent with, so an aborted `fetchOptions.signal` reads as a cancel too.
+      if (req.signal?.aborted) {
         throw new Errors.APIUserAbortError();
       }
       // detect native connection timeout errors
@@ -589,7 +590,7 @@ export class Scalar {
             message: response.message,
           }),
         );
-        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, req.signal);
       }
       loggerFor(this).info(
         `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
@@ -636,6 +637,7 @@ export class Scalar {
           options,
           retriesRemaining,
           retryOfRequestLogID ?? requestLogID,
+          req.signal,
           response.headers,
         );
       }
@@ -900,6 +902,7 @@ export class Scalar {
     options: FinalRequestOptions,
     retriesRemaining: number,
     requestLogID: string,
+    signal: RequestInit['signal'],
     responseHeaders?: Headers | undefined,
   ): Promise<APIResponseProps> {
     let timeoutMillis: number | undefined;
@@ -939,7 +942,11 @@ export class Scalar {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
-    await sleep(timeoutMillis);
+    // Cancelling during the backoff ends the call now, rather than after the delay and one more request.
+    await sleep(timeoutMillis, signal);
+    if (signal?.aborted) {
+      throw new Errors.APIUserAbortError();
+    }
 
     return this.makeRequest(options, retriesRemaining - 1, requestLogID);
   }
@@ -984,13 +991,14 @@ export class Scalar {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal }),
       ...((globalThis as any).ReadableStream &&
         body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
       // `buildBody` already collapses no-body into `undefined`; here we only need to drop that
       // sentinel. A truthiness spread would also strip an intentional empty-string body.
       ...(body !== undefined && { body }),
       ...((this.fetchOptions as any) ?? {}),
+      // The call's own signal beats the client's `fetchOptions.signal`; the call's `fetchOptions` beats both.
+      ...(options.signal && { signal: options.signal }),
       ...((options.fetchOptions as any) ?? {}),
     };
     return { req, url, timeout: options.timeout };
