@@ -184,6 +184,14 @@ export interface RepositoryUpdatePublishingParams {
   tapRepo?: string;
   /**
    * Body param
+   */
+  cask?: boolean;
+  /**
+   * Body param
+   */
+  replaceFormula?: boolean;
+  /**
+   * Body param
    * @maxLength 60
    */
   registry?: string;

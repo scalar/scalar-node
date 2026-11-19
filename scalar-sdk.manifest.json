@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.42.1",
+  "generatorVersion": "0.44.0",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -17400,6 +17400,8 @@
         "tag",
         "artifactId",
         "tapRepo",
+        "cask",
+        "replaceFormula",
         "registry"
       ],
       "publicBodyParams": [
@@ -17409,6 +17411,8 @@
         "tag",
         "artifactId",
         "tapRepo",
+        "cask",
+        "replaceFormula",
         "registry"
       ],
       "bodyParamDetails": [
@@ -17434,6 +17438,14 @@
         },
         {
           "name": "tapRepo",
+          "required": false
+        },
+        {
+          "name": "cask",
+          "required": false
+        },
+        {
+          "name": "replaceFormula",
           "required": false
         },
         {
