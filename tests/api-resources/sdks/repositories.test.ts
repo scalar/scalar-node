@@ -65,6 +65,8 @@ describe.concurrent('resource repositories', () => {
         tag: 'latest',
         artifactId: 'scalar-galaxy',
         tapRepo: 'scalar/homebrew-tap',
+        cask: true,
+        replaceFormula: false,
         registry: 'npm',
       });
     },

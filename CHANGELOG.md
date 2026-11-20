@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.9.0](https://github.com/scalar/scalar-node/compare/v0.8.0...v0.9.0) (2026-11-20)
+
+
+### Features
+
+* **api:** update SDK surface (3 changes) ([2f17eb1](https://github.com/scalar/scalar-node/commit/2f17eb183f45136d94d093010140cfb2ffd66606))
+
+
+### Chores
+
+* **api:** regenerate SDK ([4198819](https://github.com/scalar/scalar-node/commit/4198819b7096df75da5863b557537856caaa4d4b))
+
 ## [0.8.0](https://github.com/scalar/scalar-node/compare/v0.7.0...v0.8.0) (2026-11-16)
 
 
