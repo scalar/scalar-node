@@ -105,16 +105,6 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [`Mcp Servers`](#mcp-servers)
     - [List all MCP servers](#list-all-mcp-servers)
     - [Create an MCP server](#create-an-mcp-server)
-    - [Get an MCP server](#get-an-mcp-server)
-    - [Update an MCP server](#update-an-mcp-server)
-    - [Delete an MCP server](#delete-an-mcp-server)
-    - [`Mcp Servers Installations`](#mcp-servers-installations)
-      - [List installations](#list-installations)
-      - [Get an installation](#get-an-installation)
-      - [Update an installation](#update-an-installation)
-      - [Delete an installation](#delete-an-installation)
-      - [Add an access group](#add-an-access-group)
-      - [Remove an access group](#remove-an-access-group)
 
 ## Setup
 
@@ -1354,11 +1344,11 @@ MCP
 
 #### List all MCP servers
 
-List every MCP server on the team.
+List every MCP server on the team, each with its environments and the version tag a request that names no version gets there.
 
 | Direction | Type |
 | --- | --- |
-| Response | [`ServerListResponse`](./src/resources/mcp/servers/servers.ts) |
+| Response | [`ServerListResponse`](./src/resources/mcp/servers.ts) |
 
 ```ts
 const server = await client.mcp.servers.list();
@@ -1366,143 +1356,15 @@ const server = await client.mcp.servers.list();
 
 #### Create an MCP server
 
-Create an MCP server over one or more API document versions. The response carries the server and its first installation.
+Create an MCP server linking the API documents of the named versions and the named docs projects. The server builds from each linked document’s versions, not only the version named.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ServerCreateParams`](./src/resources/mcp/servers/servers.ts) |
-| Response | [`ServerCreateResponse`](./src/resources/mcp/servers/servers.ts) |
+| Request | [`ServerCreateParams`](./src/resources/mcp/servers.ts) |
+| Response | [`ServerCreateResponse`](./src/resources/mcp/servers.ts) |
 
 ```ts
 const server = await client.mcp.servers.create({
   name: 'Acme MCP',
-});
-```
-
-#### Get an MCP server
-
-Get a single MCP server by its id.
-
-| Direction | Type |
-| --- | --- |
-| Response | [`McpServer`](./src/resources/mcp/servers/servers.ts) |
-
-```ts
-const mcpServer = await client.mcp.servers.retrieve('42');
-```
-
-#### Update an MCP server
-
-Update MCP server metadata and which tools it exposes.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`ServerUpdateParams`](./src/resources/mcp/servers/servers.ts) |
-| Response | [`McpServer`](./src/resources/mcp/servers/servers.ts) |
-
-```ts
-const mcpServer = await client.mcp.servers.update('42', {});
-```
-
-#### Delete an MCP server
-
-Delete an MCP server and every installation it serves.
-
-| Direction | Type |
-| --- | --- |
-| Response | [`ServerDeleteResponse`](./src/resources/mcp/servers/servers.ts) |
-
-```ts
-await client.mcp.servers.delete('42');
-```
-
-#### `Mcp Servers Installations`
-
-MCP
-
-##### List installations
-
-List the installations of an MCP server. An installation is what an MCP client connects to.
-
-| Direction | Type |
-| --- | --- |
-| Response | [`InstallationListResponse`](./src/resources/mcp/servers/installations.ts) |
-
-```ts
-const installation = await client.mcp.servers.installations.list('42');
-```
-
-##### Get an installation
-
-Get a single installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationRetrieveParams`](./src/resources/mcp/servers/installations.ts) |
-
-```ts
-const mcpInstallation = await client.mcp.servers.installations.retrieve('84', {
-  id: '42',
-});
-```
-
-##### Update an installation
-
-Update an installation. Deprecated: address the environment by slug with the `/environments/:environment` form.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationUpdateParams`](./src/resources/mcp/servers/installations.ts) |
-
-```ts
-const mcpInstallation = await client.mcp.servers.installations.update('84', {
-  id: '42',
-});
-```
-
-##### Delete an installation
-
-Delete an installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationDeleteParams`](./src/resources/mcp/servers/installations.ts) |
-| Response | [`InstallationDeleteResponse`](./src/resources/mcp/servers/installations.ts) |
-
-```ts
-await client.mcp.servers.installations.delete('84', {
-  id: '42',
-});
-```
-
-##### Add an access group
-
-Let an access group reach a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationCreateAccessGroupParams`](./src/resources/mcp/servers/installations.ts) |
-| Response | [`InstallationCreateAccessGroupResponse`](./src/resources/mcp/servers/installations.ts) |
-
-```ts
-await client.mcp.servers.installations.createAccessGroup('84', {
-  id: '42',
-  accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
-});
-```
-
-##### Remove an access group
-
-Stop an access group reaching a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationDeleteAccessGroupParams`](./src/resources/mcp/servers/installations.ts) |
-| Response | [`InstallationDeleteAccessGroupResponse`](./src/resources/mcp/servers/installations.ts) |
-
-```ts
-await client.mcp.servers.installations.deleteAccessGroup('84', {
-  id: '42',
-  accessGroupUid: 'UakgbKJ5m9gl0JDMbcJqL',
 });
 ```

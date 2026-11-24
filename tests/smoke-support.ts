@@ -28,7 +28,7 @@ import Scalar from '@scalar/sdk';
  * only for generator tooling). The runner refuses a list whose digest differs, so a list left by
  * an earlier generation is never trusted.
  */
-export const SMOKE_CASE_LIST_DIGEST = '243f005de70c3a4b';
+export const SMOKE_CASE_LIST_DIGEST = 'c0f35e70712a844b';
 
 const baseURL = process.env['TEST_API_BASE_URL'] || undefined;
 
