@@ -3598,43 +3598,27 @@
       }
     },
     {
-      "name": "mcp_server",
-      "source": "mcp_server",
+      "name": "mcp_server_list_item",
+      "source": "mcp_server_list_item",
       "publicAliases": [],
       "deprecated": false,
       "type": {
         "kind": "object",
         "properties": [
           {
-            "name": "id",
-            "publicName": "id",
+            "name": "uid",
+            "publicName": "uid",
             "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "42"
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "publicName": "name",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "Acme API"
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "ref",
+              "name": "nanoid"
             }
           },
           {
@@ -3651,6 +3635,40 @@
             "type": {
               "kind": "ref",
               "name": "slug"
+            }
+          },
+          {
+            "name": "namespace",
+            "publicName": "namespace",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "acme"
+            },
+            "type": {
+              "kind": "ref",
+              "name": "namespace"
+            }
+          },
+          {
+            "name": "domain",
+            "publicName": "domain",
+            "required": true,
+            "deprecated": false,
+            "type": {
+              "kind": "union",
+              "variants": [
+                {
+                  "kind": "primitive",
+                  "type": "string"
+                },
+                {
+                  "kind": "null"
+                }
+              ]
             }
           },
           {
@@ -3662,11 +3680,11 @@
               "source": [
                 "examples"
               ],
-              "examples": "2025-01-01T00:00:00.000Z"
+              "examples": 1735689600
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "ref",
+              "name": "timestamp"
             }
           },
           {
@@ -3678,55 +3696,11 @@
               "source": [
                 "examples"
               ],
-              "examples": "2025-01-01T00:00:00.000Z"
+              "examples": 1735689600
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
-            }
-          }
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
-      "name": "mcp_installation",
-      "source": "mcp_installation",
-      "publicAliases": [],
-      "deprecated": false,
-      "type": {
-        "kind": "object",
-        "properties": [
-          {
-            "name": "id",
-            "publicName": "id",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "42"
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "string"
-            }
-          },
-          {
-            "name": "mcpServerId",
-            "publicName": "mcpServerId",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "42"
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "ref",
+              "name": "timestamp"
             }
           },
           {
@@ -3742,124 +3716,53 @@
             },
             "type": {
               "kind": "primitive",
-              "type": "string"
-            }
-          },
-          {
-            "name": "slug",
-            "publicName": "slug",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "acme-api"
-            },
-            "type": {
-              "kind": "ref",
-              "name": "slug"
-            }
-          },
-          {
-            "name": "accessGroups",
-            "publicName": "accessGroups",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": [
-                "UakgbKJ5m9gl0JDMbcJqL"
-              ]
-            },
-            "type": {
-              "kind": "array",
-              "items": {
-                "kind": "primitive",
-                "type": "string"
+              "type": "string",
+              "validation": {
+                "maxLength": 100
               }
             }
           },
           {
-            "name": "loginPortalUid",
-            "publicName": "loginPortalUid",
+            "name": "environments",
+            "publicName": "environments",
             "required": true,
             "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "LakgbKJ5m9gl0JDMbcJqL"
-            },
             "type": {
-              "kind": "union",
-              "variants": [
-                {
-                  "kind": "primitive",
-                  "type": "string"
-                },
-                {
-                  "kind": "null"
-                }
-              ]
-            }
-          },
-          {
-            "name": "mcpVersion",
-            "publicName": "mcpVersion",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "1.2.0"
-            },
-            "type": {
-              "kind": "union",
-              "variants": [
-                {
-                  "kind": "primitive",
-                  "type": "string"
-                },
-                {
-                  "kind": "null"
-                }
-              ]
-            }
-          },
-          {
-            "name": "piiRedactionEnabled",
-            "publicName": "piiRedactionEnabled",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": true
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "credentialRedactionEnabled",
-            "publicName": "credentialRedactionEnabled",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": true
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "boolean"
+              "kind": "array",
+              "items": {
+                "kind": "object",
+                "properties": [
+                  {
+                    "name": "slug",
+                    "publicName": "slug",
+                    "required": true,
+                    "deprecated": false,
+                    "type": {
+                      "kind": "primitive",
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "name": "served",
+                    "publicName": "served",
+                    "required": true,
+                    "deprecated": false,
+                    "type": {
+                      "kind": "union",
+                      "variants": [
+                        {
+                          "kind": "primitive",
+                          "type": "string"
+                        },
+                        {
+                          "kind": "null"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "additionalProperties": false
+              }
             }
           }
         ],
@@ -3867,43 +3770,27 @@
       }
     },
     {
-      "name": "mcp_installation_list_item",
-      "source": "mcp_installation_list_item",
+      "name": "mcp_server",
+      "source": "mcp_server",
       "publicAliases": [],
       "deprecated": false,
       "type": {
         "kind": "object",
         "properties": [
           {
-            "name": "id",
-            "publicName": "id",
+            "name": "uid",
+            "publicName": "uid",
             "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "42"
+              "examples": "UakgbKJ5m9gl0JDMbcJqL"
             },
             "type": {
-              "kind": "primitive",
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "publicName": "name",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "Acme API"
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "string"
+              "kind": "ref",
+              "name": "nanoid"
             }
           },
           {
@@ -3923,16 +3810,26 @@
             }
           },
           {
-            "name": "mcpVersion",
-            "publicName": "mcpVersion",
+            "name": "namespace",
+            "publicName": "namespace",
             "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
                 "examples"
               ],
-              "examples": "1.2.0"
+              "examples": "acme"
             },
+            "type": {
+              "kind": "ref",
+              "name": "namespace"
+            }
+          },
+          {
+            "name": "domain",
+            "publicName": "domain",
+            "required": true,
+            "deprecated": false,
             "type": {
               "kind": "union",
               "variants": [
@@ -3944,6 +3841,57 @@
                   "kind": "null"
                 }
               ]
+            }
+          },
+          {
+            "name": "createdAt",
+            "publicName": "createdAt",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
+            "type": {
+              "kind": "ref",
+              "name": "timestamp"
+            }
+          },
+          {
+            "name": "updatedAt",
+            "publicName": "updatedAt",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1735689600
+            },
+            "type": {
+              "kind": "ref",
+              "name": "timestamp"
+            }
+          },
+          {
+            "name": "name",
+            "publicName": "name",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Acme API"
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "string",
+              "validation": {
+                "maxLength": 100
+              }
             }
           }
         ],
@@ -3971,8 +3919,7 @@
     "sdks.versions",
     "sdks.repositories",
     "mcp",
-    "mcp.servers",
-    "mcp.servers.installations"
+    "mcp.servers"
   ],
   "publicResources": [
     "registry",
@@ -3994,8 +3941,7 @@
     "sdks.versions",
     "sdks.repositories",
     "mcp",
-    "mcp.servers",
-    "mcp.servers.installations"
+    "mcp.servers"
   ],
   "operations": [
     {
@@ -17797,1566 +17743,6 @@
       "cookieParamDetails": [],
       "paramsModel": {
         "publicName": "ServerCreateParams"
-      },
-      "requestBody": {
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ],
-        "required": true,
-        "publicName": "body",
-        "publicIdentifier": "body"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers",
-      "publicResource": "mcp.servers",
-      "operation": "retrieve",
-      "publicOperation": "retrieve",
-      "deprecated": false,
-      "method": "GET",
-      "path": "/v1/mcp/servers/{id}",
-      "pathParams": [
-        "id"
-      ],
-      "publicPathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "ServerRetrieveParams"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "responseModel": {
-        "name": "mcp_server",
-        "publicAliases": []
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers",
-      "publicResource": "mcp.servers",
-      "operation": "update",
-      "publicOperation": "update",
-      "deprecated": false,
-      "method": "PATCH",
-      "path": "/v1/mcp/servers/{id}",
-      "pathParams": [
-        "id"
-      ],
-      "publicPathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [
-        "name",
-        "slug",
-        "operations",
-        "docsPages"
-      ],
-      "publicBodyParams": [
-        "name",
-        "slug",
-        "operations",
-        "docsPages"
-      ],
-      "bodyParamDetails": [
-        {
-          "name": "name",
-          "required": false
-        },
-        {
-          "name": "slug",
-          "required": false
-        },
-        {
-          "name": "operations",
-          "required": false
-        },
-        {
-          "name": "docsPages",
-          "required": false
-        }
-      ],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "ServerUpdateParams"
-      },
-      "requestBody": {
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ],
-        "required": true,
-        "publicName": "body",
-        "publicIdentifier": "body"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "responseModel": {
-        "name": "mcp_server",
-        "publicAliases": []
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers",
-      "publicResource": "mcp.servers",
-      "operation": "delete",
-      "publicOperation": "delete",
-      "deprecated": false,
-      "method": "DELETE",
-      "path": "/v1/mcp/servers/{id}",
-      "pathParams": [
-        "id"
-      ],
-      "publicPathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "ServerDeleteParams"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
-      "operation": "list",
-      "publicOperation": "list",
-      "deprecated": false,
-      "method": "GET",
-      "path": "/v1/mcp/servers/{id}/installations",
-      "pathParams": [
-        "id"
-      ],
-      "publicPathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationListParams"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
-      "operation": "retrieve",
-      "publicOperation": "retrieve",
-      "deprecated": true,
-      "method": "GET",
-      "path": "/v1/mcp/servers/{id}/installations/{installationId}",
-      "pathParams": [
-        "id",
-        "installationId"
-      ],
-      "publicPathParams": [
-        "id",
-        "installationId"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        },
-        {
-          "name": "installationId",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationRetrieveParams"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "responseModel": {
-        "name": "mcp_installation",
-        "publicAliases": []
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
-      "operation": "update",
-      "publicOperation": "update",
-      "deprecated": true,
-      "method": "PATCH",
-      "path": "/v1/mcp/servers/{id}/installations/{installationId}",
-      "pathParams": [
-        "id",
-        "installationId"
-      ],
-      "publicPathParams": [
-        "id",
-        "installationId"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [
-        "name",
-        "slug",
-        "mcpVersion"
-      ],
-      "publicBodyParams": [
-        "name",
-        "slug",
-        "mcpVersion"
-      ],
-      "bodyParamDetails": [
-        {
-          "name": "name",
-          "required": false
-        },
-        {
-          "name": "slug",
-          "required": false
-        },
-        {
-          "name": "mcpVersion",
-          "required": false
-        }
-      ],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        },
-        {
-          "name": "installationId",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationUpdateParams"
-      },
-      "requestBody": {
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ],
-        "required": true,
-        "publicName": "body",
-        "publicIdentifier": "body"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "responseModel": {
-        "name": "mcp_installation",
-        "publicAliases": []
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
-      "operation": "delete",
-      "publicOperation": "delete",
-      "deprecated": true,
-      "method": "DELETE",
-      "path": "/v1/mcp/servers/{id}/installations/{installationId}",
-      "pathParams": [
-        "id",
-        "installationId"
-      ],
-      "publicPathParams": [
-        "id",
-        "installationId"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        },
-        {
-          "name": "installationId",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationDeleteParams"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
-      "operation": "createAccessGroup",
-      "publicOperation": "createAccessGroup",
-      "deprecated": true,
-      "method": "POST",
-      "path": "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
-      "pathParams": [
-        "id",
-        "installationId"
-      ],
-      "publicPathParams": [
-        "id",
-        "installationId"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [
-        "accessGroupUid"
-      ],
-      "publicBodyParams": [
-        "accessGroupUid"
-      ],
-      "bodyParamDetails": [
-        {
-          "name": "accessGroupUid",
-          "required": true
-        }
-      ],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        },
-        {
-          "name": "installationId",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationCreateAccessGroupParams"
-      },
-      "requestBody": {
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ],
-        "required": true,
-        "publicName": "body",
-        "publicIdentifier": "body"
-      },
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
-      },
-      "result": {
-        "successStatus": "200",
-        "errorStatuses": [
-          "400",
-          "401",
-          "403",
-          "404",
-          "422",
-          "500"
-        ]
-      },
-      "errorResponses": [
-        {
-          "status": "400",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "400",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "401",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "401",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "403",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "403",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "404",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "404",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "422",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "422",
-            "publicAliases": []
-          }
-        },
-        {
-          "status": "500",
-          "contentType": "application/json",
-          "encoding": "json",
-          "contents": [
-            {
-              "contentType": "application/json",
-              "encoding": "json"
-            }
-          ],
-          "model": {
-            "name": "500",
-            "publicAliases": []
-          }
-        }
-      ],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "mcp.servers.installations",
-      "publicResource": "mcp.servers.installations",
-      "operation": "deleteAccessGroup",
-      "publicOperation": "deleteAccessGroup",
-      "deprecated": true,
-      "method": "DELETE",
-      "path": "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
-      "pathParams": [
-        "id",
-        "installationId"
-      ],
-      "publicPathParams": [
-        "id",
-        "installationId"
-      ],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [
-        "accessGroupUid"
-      ],
-      "publicBodyParams": [
-        "accessGroupUid"
-      ],
-      "bodyParamDetails": [
-        {
-          "name": "accessGroupUid",
-          "required": true
-        }
-      ],
-      "pathParamDetails": [
-        {
-          "name": "id",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        },
-        {
-          "name": "installationId",
-          "required": true,
-          "style": "simple",
-          "explode": false
-        }
-      ],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "paramsModel": {
-        "publicName": "InstallationDeleteAccessGroupParams"
       },
       "requestBody": {
         "contentType": "application/json",
