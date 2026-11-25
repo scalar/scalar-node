@@ -46,7 +46,7 @@ export class Sdks extends APIResource {
   }
 
   /**
-   * Create an SDK from an API document, targeting one or more languages.
+   * Create an SDK from an existing API document on the team. Its current version must have content. Send languages or a config declaring targets; omit languages to derive them from config. SDK and target counts must fit the team plan. Config is a JSON string.
    *
    * @param {SdkCreateParams} body - The request body to send.
    * @param {RequestOptions} [options] - Options to apply to the request, such as headers and an abort signal.
@@ -56,7 +56,6 @@ export class Sdks extends APIResource {
    * ```ts
    * const uid = await client.sdks.create({
    *   apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
-   *   languages: ['typescript'],
    * });
    * ```
    */
@@ -81,7 +80,7 @@ export class Sdks extends APIResource {
   }
 
   /**
-   * Update SDK metadata, its linked API, or its config.
+   * Update SDK metadata, its linked API, or its JSON-string config. Targets using native GitHub delivery need separate repositories; delivery writes each package at the repository root. Sharing a repository across language targets in this SDK and using reserved promote branches are rejected before config saves.
    *
    * @param {Shared.Nanoid} uid
    * @param {SdkUpdateParams} body - The request body to send.
@@ -231,9 +230,10 @@ export interface SdkCreateParams {
    */
   apiUid: Shared.Nanoid;
   /**
+   * Languages to create. Defaults to the targets declared by config.
    * @minItems 1
    */
-  languages: Array<
+  languages?: Array<
     | 'typescript'
     | 'python'
     | 'cli'

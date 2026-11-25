@@ -27,6 +27,7 @@ describe.concurrent('resource repositories', () => {
         language: 'typescript',
         repositoryId: 123456789,
         baseBranch: 'main',
+        promotion: 'automatic',
         prereleaseType: 'beta',
       });
     },
@@ -65,6 +66,8 @@ describe.concurrent('resource repositories', () => {
         tag: 'latest',
         artifactId: 'scalar-galaxy',
         tapRepo: 'scalar/homebrew-tap',
+        cask: true,
+        replaceFormula: false,
         registry: 'npm',
       });
     },
