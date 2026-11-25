@@ -1,7 +1,7 @@
 {
   "name": "Scalar",
   "slug": "scalar",
-  "generatorVersion": "0.45.0",
+  "generatorVersion": "0.46.2",
   "servers": [
     "https://access.scalar.com"
   ],
@@ -15751,7 +15751,7 @@
         },
         {
           "name": "languages",
-          "required": true
+          "required": false
         },
         {
           "name": "title",
@@ -16985,12 +16985,14 @@
         "language",
         "repositoryId",
         "baseBranch",
+        "promotion",
         "prereleaseType"
       ],
       "publicBodyParams": [
         "language",
         "repositoryId",
         "baseBranch",
+        "promotion",
         "prereleaseType"
       ],
       "bodyParamDetails": [
@@ -17005,6 +17007,10 @@
         {
           "name": "baseBranch",
           "required": true
+        },
+        {
+          "name": "promotion",
+          "required": false
         },
         {
           "name": "prereleaseType",

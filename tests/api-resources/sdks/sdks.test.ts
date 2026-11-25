@@ -31,7 +31,6 @@ describe.concurrent('resource sdks', () => {
     async () => {
       const uid = await client.sdks.create({
         apiUid: 'UakgbKJ5m9gl0JDMbcJqL',
-        languages: ['typescript'],
       });
     },
   );

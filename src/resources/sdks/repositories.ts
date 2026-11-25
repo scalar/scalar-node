@@ -8,7 +8,7 @@ import type * as Shared from '../shared';
 
 export class Repositories extends APIResource {
   /**
-   * Link one language target to a GitHub repository, so builds sync there.
+   * Link an existing language target to a GitHub repository accessible through the Scalar GitHub App. Requires team edit permission and a paid SDK automation plan. Native delivery writes at the repository root; use a separate repository for each target. Directory fields are unsupported. Linking can immediately sync the current build under automatic promotion; pass promotion: manual to hold it back. If GitHub access is missing, connect GitHub and grant the App access in Scalar Dashboard before retrying.
    *
    * @param {Shared.Nanoid} uid
    * @param {RepositoryLinkParams} body - The request body to send.
@@ -127,11 +127,19 @@ export interface RepositoryLinkParams {
     | 'cpp'
     | 'dart';
   /**
-   * @minimum -9007199254740991
    * @maximum 9007199254740991
+   * @exclusiveMinimum 0
    */
   repositoryId: number;
+  /**
+   * Release promote branch. Platform-managed branches such as scalar-next and scalar-generated are reserved.
+   * @minLength 1
+   */
   baseBranch: string;
+  /**
+   * Controls when a build becomes current and syncs to GitHub. Omit to preserve the saved policy.
+   */
+  promotion?: 'automatic' | 'manual';
   prereleaseType?: string;
 }
 
