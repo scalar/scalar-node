@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.9.0](https://github.com/scalar/scalar-node/compare/v0.8.0...v0.9.0) (2026-11-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** 18 breaking changes to the SDK surface.
+    - Removed operation `mcp.servers.retrieve` (`GET /v1/mcp/servers/{id}`).
+    - Removed operation `mcp.servers.update` (`PATCH /v1/mcp/servers/{id}`).
+    - Removed operation `mcp.servers.delete` (`DELETE /v1/mcp/servers/{id}`).
+    - Removed operation `mcp.servers.installations.list` (`GET /v1/mcp/servers/{id}/installations`).
+    - Removed operation `mcp.servers.installations.retrieve` (`GET /v1/mcp/servers/{id}/installations/{installationId}`).
+    - Removed operation `mcp.servers.installations.update` (`PATCH /v1/mcp/servers/{id}/installations/{installationId}`).
+    - Removed operation `mcp.servers.installations.delete` (`DELETE /v1/mcp/servers/{id}/installations/{installationId}`).
+    - Removed operation `mcp.servers.installations.createAccessGroup` (`POST /v1/mcp/servers/{id}/installations/{installationId}/access-group`).
+    - Removed operation `mcp.servers.installations.deleteAccessGroup` (`DELETE /v1/mcp/servers/{id}/installations/{installationId}/access-group`).
+    - Added required property `mcp_server.uid`.
+    - Added required property `mcp_server.namespace`.
+    - Added required property `mcp_server.domain`.
+    - Property `mcp_server.createdAt` type changed from `string` to `timestamp`.
+    - Property `mcp_server.updatedAt` type changed from `string` to `timestamp`.
+    - Property `mcp_server.name` validation changed (`maxLength` none → `100`).
+    - Removed required property `mcp_server.id`.
+    - Removed schema `mcp_installation`.
+    - Removed schema `mcp_installation_list_item`.
+
+### Features
+
+* **api:** remove operation mcp.servers.retrieve (+18 more changes) ([84beed8](https://github.com/scalar/scalar-node/commit/84beed886bb8c7095921a44430239b06cc1db332))
+* **api:** update SDK surface (2 changes) ([333b259](https://github.com/scalar/scalar-node/commit/333b25903ec82f1896860368130c084692673762))
+* **api:** update SDK surface (3 changes) ([2f17eb1](https://github.com/scalar/scalar-node/commit/2f17eb183f45136d94d093010140cfb2ffd66606))
+
+
+### Chores
+
+* **api:** regenerate SDK ([4198819](https://github.com/scalar/scalar-node/commit/4198819b7096df75da5863b557537856caaa4d4b))
+
 ## [0.8.0](https://github.com/scalar/scalar-node/compare/v0.7.0...v0.8.0) (2026-11-16)
 
 
