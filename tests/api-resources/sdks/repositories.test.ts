@@ -27,6 +27,7 @@ describe.concurrent('resource repositories', () => {
         language: 'typescript',
         repositoryId: 123456789,
         baseBranch: 'main',
+        promotion: 'automatic',
         prereleaseType: 'beta',
       });
     },
