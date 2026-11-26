@@ -447,7 +447,7 @@ export type ScalarDocUpdateProjectResponse = null;
 export type ScalarDocDeleteProjectResponse = null;
 
 export interface ScalarDocPublishProjectParams {
-  commitSha?: string;
+  commitSha?: '' | (string & {});
   preview?: boolean;
   configPath?: string;
 }

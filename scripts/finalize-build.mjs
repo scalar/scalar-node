@@ -32,10 +32,29 @@ const CALLABLE_ENTRY_SHIM =
   'exports = module.exports = (function (...args) { return new exports.default(...args) }).bind(null); ' +
   'delete exports.name; delete exports.length; ';
 
+// The webhook verifier's import of its `createRequire` stub, in the ES module build once `.js` has been
+// added. It is pointed at the package's private `imports` entry, whose `node` condition resolves to the
+// Node-only file below and whose `default` resolves back to the stub, so browsers and edge runtimes
+// never load a `node:` import. The specifier must match `NODE_REQUIRE_IMPORT` in the generated
+// `package.json`'s `imports` map.
+const NODE_REQUIRE_STUB_IMPORT_RE = /(from\s+["'])\.\/node-require\.js(["'])/;
+const NODE_REQUIRE_IMPORT = '#internal/node-require';
+// What Node loads in place of the stub: `createRequire` from a static import, which an ES module
+// application on a Node release without `process.getBuiltinModule` has no other synchronous way to.
+// Plain JavaScript written here rather than compiled, since compiling it would need Node's type
+// declarations, which an SDK without Node-only features does not install.
+const NODE_REQUIRE_NODE_SOURCE = [
+  '// Written by scripts/finalize-build.mjs. Loaded only under the `node` condition of the package',
+  '// `imports` map; every other runtime loads ./node-require.js, which imports nothing.',
+  "export { createRequire } from 'node:module';",
+  '',
+].join('\n');
+
 const commonJsDir = resolve(root, 'dist/cjs');
+const esmDir = resolve(root, 'dist/esm');
 
 await Promise.all([
-  finalizeCompiledOutput(resolve(root, 'dist/esm'), { addJsExtensions: true }),
+  finalizeCompiledOutput(esmDir, { addJsExtensions: true }).then(() => routeNodeRequire(esmDir)),
   // Sequenced, not concurrent: `finalizeCompiledOutput` also writes into this directory (`.d.ts`
   // rewrites today), so the steps after it never race it for a file it may also touch.
   finalizeCompiledOutput(commonJsDir, { addJsExtensions: false })
@@ -105,6 +124,33 @@ async function makeCommonJsEntryCallable(dir) {
   if (!ESM_MARKER_RE.test(source)) return;
 
   await writeFile(entry, source.replace(ESM_MARKER_RE, `${CALLABLE_ENTRY_SHIM}$1`), 'utf8');
+}
+
+/**
+ * Points the ES module webhook verifier's `createRequire` import at the package's `imports` entry and
+ * writes the Node-only file it resolves to under the `node` condition.
+ *
+ * Only the ES module build: the CommonJS one reaches `node:module` through its own `module` and keeps
+ * the stub. An SDK without the verifier has neither file, and a verifier whose import no longer
+ * matches is left alone rather than failing the consumer's build, since it then keeps the stub and
+ * only loses the old-Node bridge; the generator's webhooks e2e is what catches that.
+ */
+async function routeNodeRequire(dir) {
+  const verifier = resolve(dir, 'internal/webhook-verify.js');
+  let source;
+  try {
+    source = await readFile(verifier, 'utf8');
+  } catch (error) {
+    if (error && error.code === 'ENOENT') return;
+    throw error;
+  }
+  if (!NODE_REQUIRE_STUB_IMPORT_RE.test(source)) return;
+  await writeFile(resolve(dir, 'internal/node-require.node.js'), NODE_REQUIRE_NODE_SOURCE, 'utf8');
+  await writeFile(
+    verifier,
+    source.replace(NODE_REQUIRE_STUB_IMPORT_RE, `$1${NODE_REQUIRE_IMPORT}$2`),
+    'utf8',
+  );
 }
 
 async function markCommonJsOutput(dir) {
