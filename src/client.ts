@@ -519,11 +519,19 @@ export class Scalar {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, {
+    const { req, url, timeout, omittedHeaders } = await this.buildRequest(options, {
       retryCount: maxRetries - retriesRemaining,
     });
 
     await this.prepareRequest(req, { url, options });
+    // Checked on the headers as they will be sent, so a credential `prepareRequest` added counts;
+    // `omittedHeaders` are the names a header source set to `null` that no later source set again.
+    this.validateAuth(
+      url,
+      req.headers instanceof Headers ? req.headers : new Headers(req.headers),
+      options,
+      omittedHeaders,
+    );
 
     /** Not an API request ID, just for correlating local log entries. */
     const requestLogID = 'log_' + ((Math.random() * (1 << 24)) | 0).toString(16).padStart(6, '0');
@@ -969,7 +977,12 @@ export class Scalar {
   async buildRequest(
     inputOptions: FinalRequestOptions,
     { retryCount = 0 }: { retryCount?: number } = {},
-  ): Promise<{ req: FinalizedRequestInit; url: string; timeout: number }> {
+  ): Promise<{
+    req: FinalizedRequestInit;
+    url: string;
+    timeout: number;
+    omittedHeaders?: ReadonlySet<string>;
+  }> {
     const options = { ...inputOptions };
     const { method, path, query, defaultBaseURL } = options;
 
@@ -980,17 +993,11 @@ export class Scalar {
     // Headers read the caller's own options, not the copy defaulted above: `X-Scalar-Timeout`
     // reports an explicit per-request timeout, and the idempotency key written back here has to
     // land where the retry can see it.
-    const reqHeaders = await this.buildHeaders({
-      options: inputOptions,
-      method,
-      bodyHeaders,
-      retryCount,
-      url,
-    });
+    const reqHeaders = await this.buildHeaders({ options: inputOptions, method, bodyHeaders, retryCount });
 
     const req: FinalizedRequestInit = {
       method,
-      headers: reqHeaders,
+      headers: reqHeaders.values,
       ...((globalThis as any).ReadableStream &&
         body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
       // `buildBody` already collapses no-body into `undefined`; here we only need to drop that
@@ -1001,7 +1008,7 @@ export class Scalar {
       ...(options.signal && { signal: options.signal }),
       ...((options.fetchOptions as any) ?? {}),
     };
-    return { req, url, timeout: options.timeout };
+    return { req, url, timeout: options.timeout, omittedHeaders: reqHeaders.nulls };
   }
 
   private async buildHeaders({
@@ -1009,18 +1016,16 @@ export class Scalar {
     method,
     bodyHeaders,
     retryCount,
-    url,
   }: {
     options: FinalRequestOptions;
     method: HTTPMethod;
     bodyHeaders: HeadersLike;
     retryCount: number;
-    url: string;
-  }): Promise<Headers> {
+  }): Promise<NullableHeaders> {
     let idempotencyHeaders: HeadersLike = {};
-    if (this.idempotencyHeader && method !== 'get') {
-      if (!options.idempotencyKey) options.idempotencyKey = this.defaultIdempotencyKey();
-      idempotencyHeaders[this.idempotencyHeader] = options.idempotencyKey;
+    if (this.idempotencyHeader) {
+      if (!options.idempotencyKey && method !== 'get') options.idempotencyKey = this.defaultIdempotencyKey();
+      if (options.idempotencyKey) idempotencyHeaders[this.idempotencyHeader] = options.idempotencyKey;
     }
 
     const headers = buildHeaders([
@@ -1039,17 +1044,16 @@ export class Scalar {
     ]);
     appendAuthCookies(headers.values, await this.authCookiesAsync());
 
-    this.validateAuth(url, headers.values, options);
-    // Last, so a subclass sees the headers as they leave here, after the SDK has checked the auth.
+    // Last, so a subclass sees the headers as they leave here.
     await this.validateHeaders(headers);
 
-    return headers.values;
+    return headers;
   }
 
   /**
    * Runs once for every HTTP request built from the client's headers, at the end of header building,
    * with the headers it will be sent with: `values` holds them and `nulls` the names the call removed
-   * with a `null`.
+   * with a `null`. It runs before the SDK checks the credential, which waits for `prepareRequest`.
    * Throwing, or rejecting from an `async` override, which is awaited, rejects the request before it
    * is sent. Does nothing unless a subclass overrides it.
    * `fetchOptions.headers` and `prepareRequest` are applied afterwards, so the hook does not see them.
@@ -1116,9 +1120,23 @@ export class Scalar {
     }
   }
 
-  protected validateAuth(url: string, headers: Headers, options: FinalRequestOptions): void {
+  /**
+   * Refuses a request that carries none of the credentials the API requires, before it is sent, with
+   * an `AuthenticationError`. Runs after `prepareRequest`, on the headers the request is sent with, so
+   * a credential a subclass adds there counts. A credential header set to `null` in the client's
+   * `defaultHeaders`, the call's `headers` or by `prepareOptions` is explicitly omitted and not
+   * refused either: `omitted` holds those names, lowercased, minus any a later source set again.
+   * Called without `omitted`, as by an override passing three arguments to `super`, the call's own
+   * `headers` decide which are omitted.
+   */
+  protected validateAuth(
+    url: string,
+    headers: Headers,
+    options: FinalRequestOptions,
+    omitted?: ReadonlySet<string>,
+  ): void {
     if (headers.has('Authorization')) return;
-    if (headerExplicitlyOmitted(options.headers, 'Authorization')) return;
+    if ((omitted ?? buildHeaders([options.headers]).nulls).has('authorization')) return;
     throw new Errors.AuthenticationError(
       401,
       undefined,
@@ -1409,12 +1427,6 @@ export declare namespace Scalar {
   export type Value422 = SharedAPI.Value422;
   export type Value500 = SharedAPI.Value500;
 }
-
-const headerExplicitlyOmitted = (source: HeadersLike | undefined, name: string): boolean => {
-  if (!source || Array.isArray(source) || source instanceof Headers) return false;
-  const target = name.toLowerCase();
-  return Object.entries(source).some(([key, value]) => key.toLowerCase() === target && value === null);
-};
 
 const appendAuthCookies = (headers: Headers, cookies: Record<string, string>): void => {
   for (const [name, value] of Object.entries(cookies)) {
