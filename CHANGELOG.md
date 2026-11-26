@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/scalar/scalar-node/compare/v0.9.0...v0.9.1) (2026-11-26)
+
+
+### Chores
+
+* **api:** regenerate SDK ([cd4091a](https://github.com/scalar/scalar-node/commit/cd4091a65b407a82a1fa1f675915cb0a7f08bdf5))
+
 ## [0.9.0](https://github.com/scalar/scalar-node/compare/v0.8.0...v0.9.0) (2026-11-25)
 
 
